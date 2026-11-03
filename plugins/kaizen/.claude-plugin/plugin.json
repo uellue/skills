@@ -1,7 +1,7 @@
 {
   "name": "kaizen",
-  "version": "0.2.1",
-  "description": "Continuous improvement of the collaboration with agents (kaizen): a debrief with cited moments and coaching for the person, a stakeholder walk-through for requirements, and a hallway test by a fresh sub-agent, by behaviour and by eye.",
+  "version": "0.3.0",
+  "description": "Continuous improvement of the collaboration with agents (kaizen): a requirements interview in the structure of ER-C's demand form, a stakeholder walk-through, a hallway test by a fresh sub-agent (by behaviour and by eye), and a debrief with cited moments and coaching for the person.",
   "author": {
     "name": "Dieter Weber"
   },
@@ -9,11 +9,12 @@
   "license": "MIT",
   "keywords": [
     "kaizen",
-    "retrospective",
-    "debrief",
+    "requirements",
     "walkthrough",
     "usability",
     "hallway-test",
+    "retrospective",
+    "debrief",
     "process",
     "coaching"
   ]
