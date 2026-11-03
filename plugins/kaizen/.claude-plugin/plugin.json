@@ -1,6 +1,6 @@
 {
   "name": "kaizen",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Continuous improvement of the collaboration with agents (kaizen): a debrief with cited moments and coaching for the person, a stakeholder walk-through for requirements, and a hallway test by a fresh sub-agent, by behaviour and by eye.",
   "author": {
     "name": "Dieter Weber"

@@ -17,6 +17,10 @@ Settle these with the user before walking, and write them at the top of the outp
 2. **The process.** The thing they are trying to do, from their first step to the moment they consider it done. Examples: install the crawler on a server; find last week's measurement in the index; add a new file format as an external collection; start a new repository for development with agents; read the crawl log after a night run.
 3. **What exists.** The documents, code, commands and pages the persona would meet, so that the walk tests reality and not a plan. Read them as the persona would: in the order they would find them, skipping what they would skip.
 
+## Before the walk: the questionnaire
+
+Read `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`, a requirements questionnaire adapted from ER-C's demand and requirements form. Check which of its questions the project's record already answers and note the ones it skips; the skipped ones often decide the walk (who operates this after the project? what happens when it is wrong and nobody notices?). The walk-through itself produces the questionnaire's section 2.1, the use scenarios; the rest is filled from the conversation with the real stakeholder, and a question without an answer is a finding.
+
 ## The walk
 
 Take the process one step at a time, in the persona's shoes. For every step, write down:
@@ -59,6 +63,9 @@ What exists: <documents, code, commands read>.
 
 ## Acceptance examples
 - When <concrete situation>, then <observable outcome>.   (ready for a spec scenario or a test)
+
+## Questionnaire
+<the sections of the requirements questionnaire the record does not answer, each with the question in one line>
 ```
 
 ## Rules
