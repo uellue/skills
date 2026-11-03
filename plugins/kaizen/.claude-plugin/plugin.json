@@ -1,7 +1,7 @@
 {
   "name": "kaizen",
-  "version": "0.1.0",
-  "description": "Continuous improvement of the collaboration with agents (kaizen): a debrief skill with cited moments, coaching for the person, proposals with a destination, a usage check and a history of earlier debriefs.",
+  "version": "0.2.0",
+  "description": "Continuous improvement of the collaboration with agents (kaizen): a debrief with cited moments and coaching for the person, a stakeholder walk-through for requirements, and a hallway test by a fresh sub-agent, by behaviour and by eye.",
   "author": {
     "name": "Dieter Weber"
   },
@@ -11,6 +11,9 @@
     "kaizen",
     "retrospective",
     "debrief",
+    "walkthrough",
+    "usability",
+    "hallway-test",
     "process",
     "coaching"
   ]
