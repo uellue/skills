@@ -1,0 +1,14 @@
+{
+  "name": "uellue",
+  "description": "Dieter Weber's agent skills: debriefs and other process tools",
+  "owner": {
+    "name": "Dieter Weber"
+  },
+  "plugins": [
+    {
+      "name": "debrief",
+      "source": "./plugins/debrief",
+      "description": "Debrief a session on how the collaboration went, with coaching for the person and proposals with a destination"
+    }
+  ]
+}
