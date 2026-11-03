@@ -1,0 +1,17 @@
+{
+  "name": "kaizen",
+  "version": "0.1.0",
+  "description": "Continuous improvement of the collaboration with agents (kaizen): a debrief skill with cited moments, coaching for the person, proposals with a destination, a usage check and a history of earlier debriefs.",
+  "author": {
+    "name": "Dieter Weber"
+  },
+  "repository": "https://github.com/uellue/skills",
+  "license": "MIT",
+  "keywords": [
+    "kaizen",
+    "retrospective",
+    "debrief",
+    "process",
+    "coaching"
+  ]
+}
