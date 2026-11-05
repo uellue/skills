@@ -10,6 +10,8 @@ A skill is a procedure an agent follows; its test is a run of that procedure by 
 2. **Hallway test.** A toy command-line tool (a hundred lines) with planted defects: an option order that contradicts its help, a silent failure on a missing input, an error on stderr with exit 0, output that scrolls off in forty rows. Key: the defects. Grader: found or not; expectations file written before the first run (check the timestamps); report returned as the final message.
 3. **Requirements and walk-through.** A scripted principal (a sub-agent given a persona and a set of facts it may reveal when asked, with one need hidden behind a solution and one number it only gives when pressed). Key: the need behind the solution, the number, the deferred item recorded with stage and owner, the handover list of unconfirmed items. For the walk-through: the fixture's stakeholder record lacks the persona; the key says the skill must ask before walking.
 
+Order of building (principal, 2026-11-05): the debrief's fixture first, as the most frequent use; then the scripted principal; then the toy CLI.
+
 The first fixture exists: `benchmarks/notes-tags/` (a toy notes CLI and a change request, taken through the kaizen skills alone, OpenSpec alone and both; a reference key and the baseline of 2026-11-05). Like every fixture here, it shows how a change in the skills changes the output; it does not certify them. Real-world use, through the debriefs and the ledger, is authoritative.
 
 Each run is graded blind by an agent that did not run the skill, as in the instruction-file eval of 2026-11-04; the usage per run is recorded so that a change in a skill's cost is visible.

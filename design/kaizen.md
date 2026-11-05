@@ -99,6 +99,8 @@ The 2026-11-03 debrief (data-management-system) made seven proposals and five co
 - 2026-11-05, walkthrough (two walks of the plugin by a sub-agent, no person, no edits allowed outside its files): the closing duties (friction line, stakeholder-record update, persona confirmation) assume the walker may write and a person is there; no variant for a read-only caller without a person; the template has no place to say that "what exists" changed during the walk (the check appeared mid-walk); a measured walk was impossible because the process installs a plugin and reads transcripts.
 - 2026-11-05, requirements (handover check, by hand): confirm-items mixed with open questions in one message; the questions were answered, the items were not.
 
+- 2026-11-05, requirements (round on the walk-throughs' open questions): two recommendations used terms the principal did not know ("checkout or installed version", "behaviour fixture") and cost a round each; the skill asks for the person's words in the answers but has no rule to put the questions in the person's words, with an example of what a term means.
+
 ## Notes for the next debrief
 
 - 2026-11-05, walk-throughs of the plugin (`design/walkthroughs/`): 13 open questions wait for the principal, among them which sessions a debrief takes when none is named, whether it may write into a colleague's repository before the private report is ignored there, its expected cost, the minimum Python (the scripts need 3.10), what must be green before a release, and how a session runs the checkout's skills rather than the installed ones.
