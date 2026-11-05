@@ -92,6 +92,21 @@ Status changes from this debrief: 15 and 17 recurred in this repository too (esc
 
 Fourth independent review (2026-11-05, the commits after `849cd7e`, about 417 lines, one Opus agent with the diff and the design record): ready after fixes, no high findings. Fixed the same hour, each with a test that fails on the old code: a quoted "Text id" ahead of the real line hid a stale id; an edit without `--stamp` printed a new id labelled "current text", so `/reload-plugins` would loop; any enclosing git repository passed as the maintainer's checkout; `--stamp` stopped half-way on a malformed id; the pre-push hook ignored file names (now added files only). Also: a failing version line no longer blocks a skill; the ledger rule and the discovery test are pointers to the playbook instead of copies; the record and the first result corrected. **Deviation from an accepted lean:** the hallway test's hand-over (`cf6f9c6`, accepted as "if nothing is built yet or no requirements exist, stop") now stops only when nothing is built; with something built and no requirements it says so, offers the playbook and goes ahead if the person wants, because the accepted wording refused most real tools. Open for the principal: whether every skill run should show the version line to the person, or only on a mismatch or in a checkout (one tool call per run either way).
 
+### 2026-11-05 (self-test rerun at `d30ceac`, `benchmarks/newcomer-sem/results/2026-11-05-2.md`)
+
+Not applied: waiting for the principal. Leans in the last column.
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 54 | Hardware with no simulator: the decision record gets a required row "develop against what"; building or faking a simulator is planned work with its own must-examples, among them "it enforces the instrument's limits" | plugin (change-record, playbook) | small | proposed; lean: yes, safety |
+| 55 | Labelling simulated output in the build step, the decision record's hardware sentence and questionnaire 2.3, not only in the hallway test | plugin | small | proposed; lean: yes, safety |
+| 56 | No recommended answer for safety limits, authorisation and the owner (2.11, Release), or mark accepted recommendations there as `[assumed]` | plugin (requirements) | small | proposed; lean: no recommendation for those items |
+| 57 | A shared ledger template in `references/`, named by every skill's ledger line | plugin | small | proposed; lean: yes |
+| 58 | One session-start line in the playbook: work that acts on hardware names the owner and whether a simulator exists before planning | plugin (playbook) | small | proposed; lean: yes |
+| 59 | A cost note for the full path, and a feasibility spike between requirements and the decision record (with ledger 51) | plugin backlog (0.5) | small | proposed; lean: 0.5 |
+| 60 | `version.py <skill> <expected id>` prints "current" or "older text: run /reload-plugins", so the person reads a verdict, not two ids | plugin | small | proposed; lean: yes, with the question of whether the line is shown at every run |
+| 61 | Smaller: one debrief per session for several first uses; the exact invocation of `grill-me`; the requirements handover lists questions for an absent owner as a deliverable to send | plugin | small | proposed; lean: yes |
+
 ## Earlier recommendations
 
 The 2026-11-03 debrief (data-management-system) made seven proposals and five coaching points; their status after the week, as seen in the seven sessions: proposals 1, 3, 5, 6 acted on; 2 and 4 recurring in four sessions each (escalated, proposals 14 and 15 above); 7 done but its table row never closed. Coaching 1, 3, 5 acted on; 2 and 4 partly. Details in that repository's debrief history.
