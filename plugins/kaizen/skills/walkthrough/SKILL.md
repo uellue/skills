@@ -1,21 +1,25 @@
 ---
 name: walkthrough
-description: Put on the shoes of a stakeholder and walk through a process step by step to find the requirements, questions and acceptance examples nobody has written down. Use it during requirements gathering or design, before a change is specified, whenever the user says "walk through", "from the perspective of", "what would an operator / scientist / new colleague do", "how would X use this", or asks how a new repository, deployment, onboarding or workflow would go for someone; also before a play test, to decide what to test.
+description: Put on the shoes of a stakeholder and walk through a process step by step to find the requirements, questions and acceptance examples nobody has written down. Use it during requirements gathering or design, before a change is specified, whenever the user says "walk through", "from the perspective of", "what would an operator / scientist / new colleague do", "how would X use this", or asks how a new repository, deployment, onboarding or workflow would go for someone; also before a play test, to decide what to test, and after one, to compare what was imagined with what happened.
 ---
 
 # Stakeholder walk-through
 
 Requirements that nobody wrote down surface when someone who is not the author tries to do the thing: the operator installing the service, the scientist searching for their data, the colleague setting up a repository, the maintainer reading a log at three in the morning. A walk-through does that on paper, with a named persona and a concrete process, before the change is specified. Its output is not a design: it is questions for the owner, gaps, and acceptance examples that the specs and tests can use.
 
+The walk-through is one of three moments for the same persona and process: the walk-through imagines it before anything exists and produces the use scenarios (section 2.1 of the requirements) and the acceptance examples; the `hallway-test` skill executes it with fresh eyes once something exists; comparing the two, what was expected to go wrong against what did, validates the specification and the implementation. The `playbook` skill in this plugin says when each fires.
+
 Two borrowed habits, with thanks: interview from two hats, the product hat (user value, goals, success) and the developer hat (feasibility, security, edge cases), as the MIT-licensed Feature Forge skill by jeffallan does; and mark what a simulated stakeholder "said" as lower confidence than what a real one said, as melodic-software's requirements-elicitation skills do.
 
 ## Inputs
 
-Settle these with the user before walking, and write them at the top of the output:
+Settle these with the user before walking, and write them at the top of the output. The first one blocks: do not walk in a persona the user has not confirmed.
 
-1. **The persona.** Who they are, what they want from this process, what they know and do not know, what they have on their machine, and what they would never read. Prefer a real person's role at the institute over an archetype; prefer a real person's answers over your guesses when you can ask.
-2. **The process.** The thing they are trying to do, from their first step to the moment they consider it done. Examples: install the crawler on a server; find last week's measurement in the index; add a new file format as an external collection; start a new repository for development with agents; read the crawl log after a night run.
-3. **What exists.** The documents, code, commands and pages the persona would meet, so that the walk tests reality and not a plan. Read them as the persona would: in the order they would find them, skipping what they would skip.
+1. **The persona.** Read the project's stakeholder record first (`design/stakeholders.md`, or `docs/stakeholders.md`; the `requirements` skill writes it from section 1.4). Show the personas it has, ask which one to take, and offer to add a new one or to correct an existing one: this is the moment to learn from the people who know the project. If no record exists, ask who the stakeholders are and create the record with what the user says, one entry per persona: who they are, what they want from this process, what they know and do not know, what they have on their machine, what they would never read, and whether the entry comes from an interview or is simulated. Prefer a real person's role at the institute over an archetype; prefer a real person's answers over your guesses when you can ask.
+2. **The process.** The thing they are trying to do, from their first step to the moment they consider it done. Examples: install the crawler on a server; find last week's measurement in the index; add a new file format as an external collection; start a new repository for development with agents; read the crawl log after a night run; diagnose a search result that looks wrong.
+3. **What exists.** The documents, code, commands and pages the persona would meet, so that the walk tests reality and not a plan; read them as the persona would, in the order they would find them, skipping what they would skip. Where the system runs (a test deployment, a VM, a stack that can be started), walk against the running system and do what the persona would do, instead of reading about it: the live step finds what the document hides.
+
+When the user invokes this skill together with `requirements`, do the demand sections (1.1 to 1.4) first, then the walk-throughs as the use scenarios of 2.1, then the remaining sections; each walk's questionnaire footer names the sections it feeds.
 
 ## Before the walk: the questionnaire
 
@@ -36,6 +40,8 @@ Where the walk reaches a point the documents do not cover, do not invent the ans
 
 Go up a level when a step reveals something general (five whys): a confusing message is one step; "the tool never says what it will do before doing it" is a requirement.
 
+**A measured walk.** When the process can be carried out by an agent (a diagnosis, a setup, a search), run it instead of imagining it: give a fresh sub-agent only the persona, the process and the user-facing documents, with the `diagnosis-brief.md` template of the `hallway-test` skill when the process is finding out what is wrong, and inject the faults the walk is about. Record what it did, the calls, the time and the tokens (`usage.py <its transcript>`), and put the result in the walk as a measurement, not an assumption. An injected fault must look like a real one: an artefact the system never produces (a timestamp with microseconds, a file name with a test marker) is a tell that invalidates the measurement.
+
 ## Output
 
 Write the walk-through to the project's design notes if it has them (for example `design/walkthroughs/<persona>-<process>.md`), otherwise `docs/walkthroughs/`, and give a short summary in the reply. Template:
@@ -43,8 +49,8 @@ Write the walk-through to the project's design notes if it has them (for example
 ```markdown
 # Walk-through: <persona> <does process>
 
-Persona: <who, goal, knowledge, environment>. Confidence: <simulated | based on interviews with ...>.
-What exists: <documents, code, commands read>.
+Persona: <who, goal, knowledge, environment; the entry in the stakeholder record>. Confidence: <simulated | based on interviews with ... | answered by the owner on <date>>.
+What exists: <documents, code, commands read; the running system used>.
 
 ## Steps
 1. **<step>.** Does: <...>. Needs to know: <...>. Goes wrong: <...>. Would ask: "<...>".
@@ -58,20 +64,30 @@ What exists: <documents, code, commands read>.
 ## Questions for the owner
 - <question, in the persona's words, with the step it came from>
 
+## Answers from the owner (<who>, <date>)
+<each question with its answer, or "deferred to <stage>, owner <who>">
+
 ## Gaps
 - <requirement, behaviour or document that does not exist; the step that needs it>
 
 ## Acceptance examples
-- When <concrete situation>, then <observable outcome>.   (ready for a spec scenario or a test)
+- When <concrete situation>, then <observable outcome>.   (ready for a spec scenario or a hallway-test case)
 
 ## Questionnaire
 <the sections of the requirements questionnaire the record does not answer, each with the question in one line>
 ```
 
+## After the walk
+
+- **Put the questions to a real stakeholder when one is available.** If a person in that role is in the room or reachable, list the open questions for them before anything else is relayed; their answers go into "Answers from the owner" and the confidence line changes from simulated to answered. A question the owner defers is recorded with the stage it is deferred to and who owns it, in the walk and in the requirements' open questions; a deferred question that lives only in chat is lost.
+- **Update the stakeholder record** with what the walk taught about the persona.
+- **Hand the steps and the acceptance examples to the hallway test** as its coverage list when the thing exists or is built; after that test, add a line per step: imagined versus observed.
+
 ## Rules
 
-- Say which parts are simulated. A walk-through by an agent finds the gaps a careful colleague would find; it does not know what the real persona values. Hand the questions to a real stakeholder where one exists, and update the confidence line.
+- Say which parts are simulated. A walk-through by an agent finds the gaps a careful colleague would find; it does not know what the real persona values.
 - Stay in the shoes. If you know how the system works, the persona does not; write what they see, not what you know.
 - Concrete over general. "The operator runs `modama-crawler crawl` and sees nothing for two hours" is a finding; "feedback could be improved" is not.
 - Questions, gaps and examples are the deliverable. Do not design the fix here; the owner decides what becomes a requirement.
-- Consider a fresh pair of eyes: for a tool that exists, a sub-agent given only the persona, the process and the user-facing documents, with the instruction to run the tool, finds what the author cannot un-know. That is the `hallway-test` skill in this plugin; use it when the walk-through turns into "let's try it".
+- A number in the walk has a source (the owner, a measurement, a document); the agent's own estimate is marked as one.
+- At the end, say what in this skill did not fit the situation, in one line, so the plugin can be improved (the `kaizen` ledger in `design/`, see the `debrief` skill).
