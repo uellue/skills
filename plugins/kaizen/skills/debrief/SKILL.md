@@ -5,7 +5,7 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `d3f06890`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `8a004cb0`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 8a004cb0` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into three kinds of output: lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better), and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report.
 
@@ -13,10 +13,10 @@ Structure and rules adapted from two MIT-licensed skills, with thanks: `debrief`
 
 ## When
 
-Ends do not announce themselves (a compaction, a reboot, a refused turn), so the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Three cheap habits feed it between runs; the first capture into a new ledger first says where it goes:
+Ends do not announce themselves (a compaction, a reboot, a refused turn), so the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Several first uses in one session make one debrief, not one each. Three cheap habits feed it between runs; the first capture into a new ledger first says where it goes:
 
 - **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Sorting is the debrief's job; capture must cost nothing.
-- **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation. Several first uses in one session make one debrief, not one each.
+- **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation.
 - **Offered, not decided.** When the agent offers steps and the person neither picks nor drops them, the open offer goes into the ledger's notes before the topic changes; the debrief asks whether it was dropped on purpose.
 
 ## Inputs
@@ -78,7 +78,7 @@ And, for this plugin's own improvement (kaizen on kaizen): which of its skills w
 Two documents, in the repository that was debriefed:
 
 - **The report**, private: `.claude/debriefs/YYYY-MM-DD.md` (with a `-2` suffix if one exists). It is a subjective snapshot with the coaching in it, so it stays out of version control: before writing anything, run `git -C "$(git rev-parse --show-toplevel)" check-ignore -q .claude/debriefs/x.md` (exit 0: ignored; outside a git repository, ask where to write); if git would track it, offer the line `/.claude/debriefs/` for `.gitignore` (or `.git/info/exclude`, which is not shared) and write nothing until the person agrees. The user can name another place.
-- **The ledger**, in the repository: `design/kaizen.md` (create `design/` if the project has none, after telling the person where the ledger goes and that it is meant to be committed). If the repository is public or may become so, the ledger carries no details of other projects (those go to their own backlogs; the ledger says "transferred") and no security findings, secrets or credentials, not even as to-dos. Generalising an entry later does not remove it from git history: if one slipped in, say so before the branch is pushed, so the person can decide whether to rewrite the unpushed history. Only what is actionable leaves the session: the proposals table with their destinations and decisions, the status of earlier recommendations, the skill-friction lines, and the unsorted notes for the next debrief. Create it on the first debrief with the sections below; on later ones, append the proposals under the date and update the statuses.
+- **The ledger**, in the repository: `design/kaizen.md` (create `design/` if the project has none, after telling the person where the ledger goes and that it is meant to be committed). If the repository is public or may become so, the ledger carries no details of other projects (those go to their own backlogs; the ledger says "transferred") and no security findings, secrets or credentials, not even as to-dos. Generalising an entry later does not remove it from git history: if one slipped in, say so before the branch is pushed, so the person can decide whether to rewrite the unpushed history. Only what is actionable leaves the session: the proposals table with their destinations and decisions, the status of earlier recommendations, the skill-friction lines, and the unsorted notes for the next debrief. Create it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md` if no skill has yet; on later ones, append the proposals under the date and update the statuses.
 
 Show a short summary in the reply: the five lines and the proposals that are not small.
 

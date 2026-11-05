@@ -5,7 +5,7 @@ description: Run a hallway usability test of a tool, document, instruction file 
 
 # Hallway test
 
-Text id `674ac00b`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `7297b68c`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 7297b68c` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The name comes from grabbing a person in the hallway and watching them use the product. Here the person is a sub-agent that has not seen the implementation, the specs or the conversation that produced the code, so it cannot un-know what the author knows. It reads the requirements and the user-facing documentation, decides what should happen, tries it, and reports where reality differs. It regularly finds defects that the test suite has enshrined and that every scenario missed.
 
@@ -23,11 +23,11 @@ A borrowed checklist, with thanks: the eleven CLI usability criteria of the MIT-
 
 ## Before launching
 
-Settle these with the user; they become the tester's brief. When the subject is a framework, a plugin or a process, the persona brings a scenario (a project of their own): the scenario is input, not the subject, and the brief names both.
+Settle these with the user in one message, with your recommendation for each, so that one "yes" accepts them all; they become the tester's brief. When the subject is a framework, a plugin or a process, the persona brings a scenario (a project of their own): the scenario is input, not the subject, and the brief names both.
 
 1. **The persona**, from the stakeholder record; offer to add one if the first user of this thing is not in it. With no record and no wish to start one, ask one question (who uses it first, what do they already know?) and mark the persona "not on record" in the brief; never fall back on a default.
 2. **What the tester may read.** Only what a first user would have: the requirements, the user documentation, the command's help. Name the files or directories; forbid the rest explicitly (source, tests, specs, design notes, git history). The point of the test is the fresh view; every extra document weakens it. If nothing is built yet, stop and hand over to `/kaizen:playbook`, which decides between discovery and the requirements interview. If something is built but no requirements exist, say so and offer the playbook (unless it already ran in this session), and go ahead if the person wants: a tester that has to invent the requirement tests its own invention, so the brief says so.
-3. **The tool and how to run it.** The command line or entry point, where test inputs may be created (a scratch directory, never the repository), what may be installed, what must not be touched (a read-only data mount is read-only). A tool that drives hardware (an instrument, a stage, a robot) is tested against a simulator or in a dry-run mode only, unless the owner says otherwise; check first that the simulator enforces the instrument's limits, or safety findings mean nothing. Its output (images, measurements) is labelled as simulated wherever it is kept, and never presented as a real result.
+3. **The tool and how to run it.** The command line or entry point, where test inputs may be created (a scratch directory, never the repository), what may be installed, what must not be touched (a read-only data mount is read-only). A tool that drives hardware (an instrument, a stage, a robot) is tested only against a simulator or in a dry run unless its owner agrees otherwise, under the rules of the decision record's hardware row (`${CLAUDE_PLUGIN_ROOT}/references/change-record.md`); without a record, those rules apply as written there.
 4. **The coverage to insist on.** The acceptance examples by ID from `design/examples.md`, the walk-through's steps, the requirements' scenarios, the last test's gaps, plus "add experiments of your own". Each mandatory case names the example ID it serves, so that the tester asserts the outcome the user cares about and not the mechanism the author expects. Tell the tester to spend at least half its effort outside the list: the worst defects tend to lie outside every scenario. When the person cannot name any coverage, offer a short walk-through of the first user's first steps (`/kaizen:walkthrough`) to find it. For by-eye tests: the scenarios, the terminal size, the keys to press.
 5. **Who answers questions.** The tester asks the main session when the requirements do not say what should happen; the main session answers from the design and records what it could not answer confidently as TODO items for the owner. With no design, the owner answers: ask whether they stay available during the run, or collect the questions for afterwards.
 6. **Where the record goes** and the summary length.
@@ -66,5 +66,5 @@ Answer the tester's questions from the design, with the reasoning, and tell it w
 - A finding is a moment: the exact command, what was expected, what was observed, the relevant stderr lines or the screenshot file name.
 - Do not fix during the test what the tester reported as a question; decide first whether it is a bug or a design choice, then fix with its test.
 - A finding that is a vulnerability (data readable by the wrong user, a credential exposed, an unsafe default) is reported to the user first and the plan stops there; the fix path is the proposed next step, not an item further down the list.
-- After a first use of the plugin, mention the debrief in one line (`/kaizen:debrief`, after a stretch of work).
+- If the ledger shows no debrief yet, mention it in one line (`/kaizen:debrief`, after a stretch of work).
 - At the end, one line into the project's `design/kaizen.md`: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).

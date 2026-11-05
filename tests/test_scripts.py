@@ -326,6 +326,16 @@ class TestSelftestBrief(unittest.TestCase):
             self.assertIn("tally", brief)
             self.assertTrue((run / "project" / "tally.py").is_file())
             self.assertTrue((run / "project" / ".git").is_dir())
+            copy = run / "kaizen"
+            self.assertIn(str(copy), brief)
+            self.assertNotIn(str(repo) + "/", brief, "the tester reads the copy, never this repository")
+            self.assertTrue((copy / "plugins/kaizen/scripts/version.py").is_file())
+            skill = (copy / "plugins/kaizen/skills/debrief/SKILL.md").read_text()
+            written = re.search(r"^Text id `([0-9a-f]{8})`", skill, re.M).group(1)
+            silent = subprocess.run([sys.executable, copy / "plugins/kaizen/scripts/version.py", "debrief", written], capture_output=True, text=True)
+            self.assertEqual(silent.stdout, "", "the copy behaves as an installed plugin: silent when current")
+            bad = subprocess.run([sys.executable, repo / "benchmarks/plugin-newcomer/brief.py", "existing-tool", "--scratch", run / "brief.txt"], capture_output=True, text=True)
+            self.assertNotIn("Traceback", bad.stderr)
             again = subprocess.run([sys.executable, repo / "benchmarks/plugin-newcomer/brief.py", "existing-tool", "--scratch", run], capture_output=True, text=True)
             self.assertNotEqual(again.returncode, 0, "a used scratch directory is refused")
 

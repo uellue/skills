@@ -64,7 +64,7 @@ class TestSkills(unittest.TestCase):
                 self.assertEqual(len(found), 1, "exactly one line starting with 'Text id `...`'")
                 self.assertRegex(body(p), r"\A\s*# [^\n]+\n\s*Text id `", "the text id line comes right after the title")
                 self.assertEqual(found[0], version.text_id(p), "stale text id: run python3 plugins/kaizen/scripts/version.py --stamp")
-                self.assertIn(f"scripts/version.py {p.parent.name} <this text id>`", p.read_text())
+                self.assertIn(f"scripts/version.py {p.parent.name} {found[0]}`", p.read_text(), "the start-up command carries the same id, runnable as it stands")
 
     def test_dates_only_as_checked_facts(self):
         # A date in a skill body is a dated fact ("checked 2026-11-05"), never an anecdote.
