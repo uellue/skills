@@ -1,58 +1,78 @@
 #!/usr/bin/env python3
 """Find, render and export Claude Code session transcripts for a debrief.
 
-    transcript.py locate [DIR]                 list the transcripts of the project at DIR (default: cwd)
-    transcript.py render FILE.jsonl [options]  print a transcript as readable text
-    transcript.py export [ID|FILE] [--to DIR]  copy a session (with its sub-agents) and its rendering into
-                                               DIR (default: <repo>/.claude/transcripts/<id>/)
-
 Where transcripts live: the harness writes them to ~/.claude/projects/<slug>/<id>.jsonl, the slug being the
-checkout path with "/" replaced by "-", and the sub-agents' transcripts to <id>/subagents/ beside the file.
-A worktree or a VM has its own slug and its own home; projects also keep copies inside the checkout
-(.claude/transcripts/, .transcripts/, .claude/home-backup/projects/*/, .claude/projects/*/). `locate` looks in all
-of these.
+checkout path with every character other than a letter or digit replaced by "-", and the sub-agents'
+transcripts to <id>/subagents/agent-<agent id>.jsonl beside the file. A worktree or a VM has its own slug
+and its own home; projects also keep copies inside the checkout (.claude/transcripts/, .transcripts/,
+.claude/home-backup/projects/*/, .claude/projects/*/). `locate` looks in all of these.
 
-Render options: --results N, --tools N, --text N limit the characters kept per tool result, tool input and
-message text (defaults 400, 600, 6000). Every event carries the JSONL line number (L<n>) and a timestamp, so a
-finding can cite the moment. Messages the person queued while a turn was running appear as "USER (queued
-mid-turn)"; task notifications queued the same way appear as NOTIFICATION.
+A session or sub-agent can be named by its id, a unique prefix of it, or a path to its .jsonl file.
 
-Export copies files, it does not scan them: a transcript holds everything pasted into the chat, so keep the
-export directory out of version control (it is under .claude/ by default; check that .claude/ is ignored).
+Rendering: every event carries the JSONL line number (L<n>) and a timestamp, so a finding can cite the
+moment. Labels: USER (typed by the person, including messages queued while a turn ran), ASSISTANT, TOOL,
+RESULT, and HARNESS for everything the harness put in the user's place (skill texts, sub-agent reports,
+task notifications, slash-command output, reminders, interrupt markers).
+
+Export copies files and renders them; it does not scan them. A transcript holds everything pasted into
+the chat, credentials included, so the export refuses a destination that git would track, and the files
+it writes are readable by their owner only.
 """
 
+import argparse
 import json
 import os
+import re
 import shutil
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
 
+LIMITS = {"results": 400, "tools": 600, "text": 6000}
 
-def slug(path: Path) -> str:
-    return str(path.resolve()).replace("/", "-")
+# Text the harness writes in the user's place; never counted or labelled as the person's.
+HARNESS_PREFIXES = (
+    "<command-",
+    "<local-command",
+    "<task-notification",
+    "<agent-message",
+    "<system-reminder",
+    "<ide_",
+    "<user-prompt-submit-hook",
+    "Another Claude session sent a message",
+    "Base directory for this skill",
+    "[Request interrupted",
+    "Caveat: The messages below",
+    "This session is being continued",
+)
 
 
-def repo_root(start: Path) -> Path:
+def slugs(path: Path) -> list[str]:
+    """Candidate slugs: the harness's rule, and the older slash-only rule."""
+    p = str(path.resolve())
+    return list(dict.fromkeys([re.sub(r"[^A-Za-z0-9]", "-", p), p.replace("/", "-")]))
+
+
+def repo_root(start: Path) -> Path | None:
     p = start.resolve()
     for q in [p, *p.parents]:
         if (q / ".git").exists():
             return q
-    return p
+    return None
 
 
-def candidates(project: Path):
-    """Yield (origin, transcript path) for every session transcript of the project, newest last."""
+def candidates(project: Path) -> list[tuple[str, Path]]:
+    """(origin, path) for every session transcript of the project, oldest first."""
     home = Path.home() / ".claude" / "projects"
-    seen = set()
-    dirs = [("home", home / slug(project))]
+    dirs = [("home", home / s) for s in slugs(project)]
     root = repo_root(project)
-    for sub in (".claude/transcripts", ".transcripts"):
-        dirs.append(("checkout", root / sub))
-    for pattern in (".claude/home-backup/projects/*", ".claude/projects/*"):
-        for d in sorted(root.glob(pattern)):
-            dirs.append(("checkout", d))
-    out = []
+    if root is not None:
+        for sub in (".claude/transcripts", ".transcripts"):
+            dirs.append(("checkout", root / sub))
+        for pattern in (".claude/home-backup/projects/*", ".claude/projects/*"):
+            dirs.extend(("checkout", d) for d in sorted(root.glob(pattern)))
+    seen, out = set(), []
     for origin, d in dirs:
         if not d.is_dir():
             continue
@@ -60,58 +80,89 @@ def candidates(project: Path):
             if "subagents" in f.parts or f.name == "history.jsonl":
                 continue
             key = f.resolve()
-            if key in seen:
-                continue
-            seen.add(key)
-            out.append((origin, f))
+            if key not in seen:
+                seen.add(key)
+                out.append((origin, f))
     return sorted(out, key=lambda t: t[1].stat().st_mtime)
 
 
+def subagent_files(session: Path) -> list[Path]:
+    sub = session.with_suffix("") / "subagents"
+    return sorted(sub.rglob("*.jsonl")) if sub.is_dir() else []
+
+
 def read(path: Path):
+    """Yield (line number, object) for every JSON object line; other lines are skipped."""
     with open(path) as f:
         for n, line in enumerate(f, 1):
             try:
-                yield n, json.loads(line)
+                o = json.loads(line)
             except json.JSONDecodeError:
                 continue
+            if isinstance(o, dict):
+                yield n, o
+
+
+def as_text(value) -> str:
+    """Text of a string or a list of content blocks."""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, list):
+        return "\n".join(x.get("text", "") for x in value if isinstance(x, dict) and x.get("type") == "text")
+    return ""
+
+
+def is_harness(text: str) -> bool:
+    return text.lstrip().startswith(HARNESS_PREFIXES)
+
+
+def person_texts(o: dict) -> list[str]:
+    """What the person typed in this line: a user message or a message queued mid-turn. Empty otherwise."""
+    if o.get("isMeta") or o.get("isCompactSummary"):
+        return []
+    att = o.get("attachment")
+    if isinstance(att, dict) and att.get("type") == "queued_command":
+        text = as_text(att.get("prompt"))
+        return [text] if text.strip() and not is_harness(text) else []
+    if o.get("type") != "user":
+        return []
+    c = (o.get("message") or {}).get("content")
+    blocks = [c] if isinstance(c, str) else [x.get("text", "") for x in c or [] if isinstance(x, dict) and x.get("type") == "text"]
+    return [b for b in blocks if b.strip() and not is_harness(b)]
+
+
+def has_text(o: dict) -> bool:
+    """Kept for callers: true when the line carries text the person typed."""
+    return bool(person_texts(o))
 
 
 def summary(path: Path) -> dict:
     first = last = None
-    users = 0
-    ids = set()
+    users, ids = 0, set()
     for _, o in read(path):
         ts = o.get("timestamp")
         if ts:
             first = first or ts
             last = ts
-        if o.get("type") == "user" and has_text(o):
-            users += 1
-        elif o.get("type") == "assistant":
+        users += len(person_texts(o))
+        if o.get("type") == "assistant":
             ids.add((o.get("message") or {}).get("id"))
     return {"first": first, "last": last, "users": users, "messages": len(ids)}
-
-
-def has_text(o: dict) -> bool:
-    c = (o.get("message") or {}).get("content")
-    if isinstance(c, str):
-        return bool(c.strip())
-    return isinstance(c, list) and any(isinstance(x, dict) and x.get("type") == "text" for x in c)
 
 
 def locate(project: Path):
     rows = candidates(project)
     if not rows:
-        print(f"no transcripts found for {project} (slug {slug(project)})")
+        print(f"no transcripts found for {project} (slugs {', '.join(slugs(project))})")
         return
+    if repo_root(project) is None:
+        print(f"{project} is not inside a git checkout: only the harness's own directory was searched")
     for origin, f in rows:
         s = summary(f)
-        subs = f.with_suffix("") / "subagents"
-        n_sub = len(list(subs.glob("*.jsonl"))) if subs.is_dir() else 0
         span = f"{(s['first'] or '?')[:16]} to {(s['last'] or '?')[:16]}"
         print(
             f"{f.stem}  {span}  {f.stat().st_size / 1e6:.1f} MB  user messages {s['users']}, "
-            f"API messages {s['messages']}, sub-agents {n_sub}  [{origin}] {f}"
+            f"API messages {s['messages']}, sub-agents {len(subagent_files(f))}  [{origin}] {f}"
         )
 
 
@@ -122,7 +173,9 @@ def trunc(s, n: int) -> str:
 
 
 def render(path: Path, lim: dict, out=sys.stdout):
-    p = lambda *a: print(*a, file=out)  # noqa: E731
+    def p(*a):
+        print(*a, file=out)
+
     for n, o in read(path):
         t = o.get("type")
         ts = (o.get("timestamp") or "")[:16].replace("T", " ")
@@ -130,35 +183,23 @@ def render(path: Path, lim: dict, out=sys.stdout):
             p(f"\n##### L{n} {ts} COMPACTION SUMMARY #####")
         att = o.get("attachment")
         if isinstance(att, dict) and att.get("type") == "queued_command":
-            text = att.get("prompt") or ""
-            head = text.lstrip()
-            if head.startswith("<task-notification>"):
-                kind = "NOTIFICATION"
-            elif head.startswith("<agent-message"):
-                kind = "AGENT MESSAGE (queued)"
-            else:
-                kind = "USER (queued mid-turn)"
-            p(f"\n=== L{n} {ts} {kind}\n{trunc(text, lim['text'])}")
+            text = as_text(att.get("prompt"))
+            label = "HARNESS (queued)" if is_harness(text) else "USER (queued mid-turn)"
+            p(f"\n=== L{n} {ts} {label}\n{trunc(text, lim['text'])}")
             continue
-        m = o.get("message") or {}
-        content = m.get("content")
+        content = (o.get("message") or {}).get("content")
         if t == "user":
-            if isinstance(content, str):
-                p(f"\n=== L{n} {ts} USER\n{trunc(content, lim['text'])}")
-            elif isinstance(content, list):
-                for c in content:
-                    if not isinstance(c, dict):
-                        continue
-                    if c.get("type") == "text":
-                        p(f"\n=== L{n} {ts} USER\n{trunc(c.get('text', ''), lim['text'])}")
-                    elif c.get("type") == "tool_result":
-                        cc = c.get("content")
-                        if isinstance(cc, list):
-                            cc = "\n".join(x.get("text", "") for x in cc if isinstance(x, dict))
-                        flag = " ERROR" if c.get("is_error") else ""
-                        p(f"\n--- L{n} {ts} RESULT{flag}\n{trunc(cc or '', lim['results'])}")
+            blocks = [content] if isinstance(content, str) else content or []
+            for c in blocks:
+                if isinstance(c, str) or (isinstance(c, dict) and c.get("type") == "text"):
+                    text = c if isinstance(c, str) else c.get("text", "")
+                    label = "HARNESS" if (o.get("isMeta") or is_harness(text)) else "USER"
+                    p(f"\n=== L{n} {ts} {label}\n{trunc(text, lim['text'])}")
+                elif isinstance(c, dict) and c.get("type") == "tool_result":
+                    flag = " ERROR" if c.get("is_error") else ""
+                    p(f"\n--- L{n} {ts} RESULT{flag}\n{trunc(as_text(c.get('content')) or str(c.get('content') or ''), lim['results'])}")
         elif t == "assistant":
-            model = (m.get("model") or "?").replace("claude-", "")
+            model = ((o.get("message") or {}).get("model") or "?").replace("claude-", "")
             for c in content or []:
                 if not isinstance(c, dict):
                     continue
@@ -171,59 +212,89 @@ def render(path: Path, lim: dict, out=sys.stdout):
 
 
 def resolve(arg: str | None, project: Path) -> Path:
-    if arg and arg.endswith(".jsonl"):
-        return Path(arg)
+    """A session or sub-agent transcript by path, id or unique id prefix; the newest session without arg."""
+    if arg and (arg.endswith(".jsonl") or "/" in arg):
+        p = Path(arg)
+        if not p.is_file():
+            sys.exit(f"no such transcript file: {arg}")
+        return p
     rows = candidates(project)
-    if arg:
-        for _, f in rows:
-            if f.stem == arg or f.stem.startswith(arg):
-                return f
+    if not arg:
+        if not rows:
+            sys.exit(f"no transcripts found for {project}; try: transcript.py locate")
+        return rows[-1][1]
+    files = [f for _, f in rows]
+    files += [s for f in files for s in subagent_files(f)]
+    key = arg.removeprefix("agent-")
+    matches = [f for f in files if f.stem.removeprefix("agent-").startswith(key)]
+    if not matches:
         sys.exit(f"no transcript {arg} for {project}; try: transcript.py locate")
-    if not rows:
-        sys.exit(f"no transcripts found for {project}")
-    return rows[-1][1]
+    if len(matches) > 1:
+        sys.exit(f"{arg} is ambiguous: " + ", ".join(f.stem for f in matches))
+    return matches[0]
 
 
-def export(src: Path, to: Path | None):
+def tracked_by_git(dest: Path) -> bool:
+    """True when files written to dest would be visible to `git add` (inside a checkout and not ignored)."""
+    probe = dest / "probe.jsonl"
+    root = repo_root(dest)
+    if root is None:
+        return False
+    r = subprocess.run(["git", "-C", str(root), "check-ignore", "-q", str(probe)], capture_output=True)
+    return r.returncode != 0
+
+
+def export(src: Path, to: Path | None, allow_tracked: bool):
     root = repo_root(Path.cwd())
-    dest = to or root / ".claude" / "transcripts" / src.stem
-    dest.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(src, dest / src.name)
-    subs = src.with_suffix("") / "subagents"
-    if subs.is_dir():
-        shutil.copytree(subs, dest / "subagents", dirs_exist_ok=True)
-    with open(dest / f"{src.stem}.txt", "w") as f:
-        render(src, {"results": 400, "tools": 600, "text": 6000}, out=f)
-    n_sub = len(list(subs.glob("*.jsonl"))) if subs.is_dir() else 0
-    print(f"exported {src.name} and {n_sub} sub-agent transcripts to {dest}")
-    print(f"rendered text: {dest / (src.stem + '.txt')}")
-    print(f"exported {datetime.now().isoformat(timespec='seconds')}; keep this directory out of version control")
+    if to is None:
+        if root is None:
+            sys.exit("not inside a git checkout; name a destination with --to")
+        to = root / ".claude" / "transcripts" / src.stem
+    to.mkdir(parents=True, exist_ok=True)
+    if tracked_by_git(to) and not allow_tracked:
+        sys.exit(
+            f"{to} is inside a git checkout and not ignored: a transcript may hold credentials. "
+            "Add the directory to .gitignore (or .git/info/exclude), or pass --allow-tracked."
+        )
+    targets = [(src, to / src.name)] + [(s, to / "subagents" / s.name) for s in subagent_files(src)]
+    for a, b in targets:
+        b.parent.mkdir(parents=True, exist_ok=True)
+        if b.exists() and b.resolve() == a.resolve():
+            continue
+        shutil.copy2(a, b)
+        os.chmod(b, 0o600)
+    txt = to / f"{src.stem}.txt"
+    fd = os.open(txt, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, "w") as f:
+        render(src, LIMITS, out=f)
+    os.chmod(txt, 0o600)
+    print(f"exported {src.name} and {len(targets) - 1} sub-agent transcripts to {to} (owner-only permissions)")
+    print(f"rendered text: {txt}")
+    print(f"exported {datetime.now().isoformat(timespec='seconds')}")
 
 
 def main():
-    args = sys.argv[1:]
-    if not args or args[0] in ("-h", "--help"):
-        print(__doc__)
-        return
-    cmd, rest = args[0], args[1:]
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    a = sub.add_parser("locate", help="list the transcripts of a project")
+    a.add_argument("dir", nargs="?", default=".", help="the project directory (default: the current one)")
+    a = sub.add_parser("render", help="print a transcript as readable text")
+    a.add_argument("id", nargs="?", help="session or sub-agent id, prefix or .jsonl path (default: the newest session)")
+    for k, v in LIMITS.items():
+        a.add_argument(f"--{k}", type=int, default=v, help=f"characters kept per {k} item (default {v})")
+    a = sub.add_parser("export", help="copy a session with its sub-agents and its rendering")
+    a.add_argument("id", nargs="?", help="session id, prefix or .jsonl path (default: the newest session)")
+    a.add_argument("--to", type=Path, help="destination (default: <repo>/.claude/transcripts/<id>/)")
+    a.add_argument("--allow-tracked", action="store_true", help="export into a directory git would track")
+    args = ap.parse_args()
     project = Path.cwd()
-    if cmd == "locate":
-        locate(Path(rest[0]) if rest else project)
-    elif cmd == "render":
-        lim = {"results": 400, "tools": 600, "text": 6000}
-        for k in list(lim):
-            flag = f"--{k}"
-            if flag in rest:
-                lim[k] = int(rest[rest.index(flag) + 1])
-        render(resolve(rest[0] if rest and not rest[0].startswith("--") else None, project), lim)
-    elif cmd == "export":
-        to = Path(rest[rest.index("--to") + 1]) if "--to" in rest else None
-        arg = rest[0] if rest and not rest[0].startswith("--") else None
-        export(resolve(arg, project), to)
-    else:
-        sys.exit(f"unknown command {cmd}; see --help")
+    if args.cmd == "locate":
+        locate(Path(args.dir))
+    elif args.cmd == "render":
+        render(resolve(args.id, project), {k: getattr(args, k) for k in LIMITS})
+    elif args.cmd == "export":
+        export(resolve(args.id, project), args.to, args.allow_tracked)
 
 
 if __name__ == "__main__":
-    os.environ.setdefault("PYTHONIOENCODING", "utf-8")
     main()

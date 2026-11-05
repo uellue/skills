@@ -2,7 +2,7 @@
 """Usage summary of a Claude Code session for a debrief: messages, tools, sub-agents, tokens, span.
 
     usage.py              the newest transcript of the current project
-    usage.py SESSION_ID   that session of the current project (prefix is enough)
+    usage.py ID           a session or sub-agent of the current project (id, unique prefix, or agent-<id>)
     usage.py PATH.jsonl   a transcript file (a session or a sub-agent)
 
 Transcripts are found with transcript.py's rules (the harness's ~/.claude/projects/<slug>/ and the copies a
@@ -20,7 +20,7 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from transcript import has_text, read, resolve  # noqa: E402
+from transcript import person_texts, read, resolve, subagent_files  # noqa: E402
 
 
 def summarise(path: Path) -> dict:
@@ -36,9 +36,8 @@ def summarise(path: Path) -> dict:
         if ts:
             first = first or ts
             last = ts
-        if t == "user" and has_text(o):
-            users += 1
-        elif t == "assistant":
+        users += len(person_texts(o))
+        if t == "assistant":
             m = o.get("message") or {}
             for c in m.get("content") or []:
                 if isinstance(c, dict) and c.get("type") == "tool_use":
@@ -73,9 +72,7 @@ def subagents(session: Path) -> list[dict]:
     """Per sub-agent output tokens, from the transcripts beside the session file."""
     out = []
     sub = session.with_suffix("") / "subagents"
-    if not sub.is_dir():
-        return out
-    for f in sorted(sub.rglob("*.jsonl")):
+    for f in subagent_files(session):
         s = summarise(f)
         models = ", ".join(m.replace("claude-", "") for m in s["tokens"] if m != "<synthetic>")
         out.append(
@@ -103,11 +100,14 @@ def span(first: str | None, last: str | None, short: bool = False) -> str:
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] in ("-h", "--help"):
+        print(__doc__)
+        return
     path = resolve(sys.argv[1] if len(sys.argv) > 1 else None, Path.cwd())
     s = summarise(path)
     print(f"Session `{path.stem}`: {span(s['first'], s['last'])}, compactions: {s['compactions']}\n")
     print("| Measure | Value |\n|---|---|")
-    print(f"| User messages | {s['users']} |")
+    print(f"| User messages (typed by the person) | {s['users']} |")
     print(f"| API messages | {s['messages']} |")
     print(f"| Tool calls | {sum(s['tools'].values())} |")
     for name, n in s["tools"].most_common():
@@ -125,7 +125,7 @@ def main():
     if subs:
         total = sum(x["output_tokens"] for x in subs)
         print(f"| Sub-agent transcripts | {len(subs)}, {total:,} output tokens |")
-        for x in sorted(subs, key=lambda x: -x["output_tokens"])[:12]:
+        for x in sorted(subs, key=lambda x: -x["output_tokens"]):
             print(
                 f"| &nbsp;&nbsp;{x['name']} | {x['output_tokens']:,} output tokens, {x['messages']} messages, "
                 f"{x['tools']} tool calls, {x['span']}, {x['models']} |"
