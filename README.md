@@ -25,39 +25,70 @@ The plugin's own stakeholders, requirements, testing plan and kaizen ledger are 
 
 ## Working with agents: lessons learned
 
-Collected from debriefs of real sessions (a crawler, a dev-VM tool, a Nextcloud upgrade, autumn 2026). The skills above codify most of the process; this section keeps what does not map to a skill yet. Written for colleagues at ER-C starting with Claude Code or Codex; each item is a behaviour, with the reason.
+From debriefs of real sessions (a crawler, a dev-VM tool, a Nextcloud upgrade, autumn 2026). The skills above codify most of the process; this keeps what does not map to a skill yet. Two parts: what you do, and what you paste for the agent.
 
-**The picture.** Starting an agent session is onboarding a new employee: it knows nothing but the repository and its instructions. Everything that keeps a human organisation coherent works for agents for the same reasons: a written record of decisions, a backlog, conventions, a reviewer who did not write the code, a retrospective.
+### What you do
 
-**Leading the agent**
+Starting an agent session is onboarding a new employee that knows only the repository. So: write decisions, backlog and conventions into the repository, not into chat; and lead it like this.
 
-- State principles once and trust them: "keep changes tight, no speculative generality", "follow established formats and tools, invent only with a reason", "earlier notes are options, not requirements". They shape hundreds of small decisions you never see.
-- Specify the outcome, not the solution. "I want to see the diagnostics next to each entry when I pipe into `less`" produced a better answer than dictating one would have, and tested whether the requirement was clear.
-- Put outcome, boundary, model and effort in one message: what should work at the end, where the work may happen, which model at which effort. Send slash commands (`/model`, `/effort`) on their own line and read the model line back; typed inside a message they do nothing.
-- Ask for options with counter-arguments, not for decisions; then decide with numbered replies and a priority ("go with your leans; most important is a break-through, details later"). One such message unblocks a whole afternoon.
-- Label examples. A case named without "this is an example of ..." is sometimes taken literally and becomes a special case. Generalise your own corrections the same way.
-- Ask the behaviour question, once and early: "Is the test checking the right outcome for the user?", "What changes for the user?" One such question has exposed a systemic flaw that a review would have missed.
-- Order work by what validates what: run the tests against the known-good version before trusting them on the new one.
-- Decide or delegate what you would otherwise leave hanging. A deferred decision that lives only in chat costs round trips or is lost; say "you decide, tell me" or park it in the backlog under your name.
-- Constraints before, not after: who will review, in what shape, over which remote, with which account. Each one learned after the first attempt costs a redo.
-- Say when you will be away and what to do meanwhile: "away an hour; take the recommended option, list the rest". A blocking question in your absence blocks until you return.
-- When a real stakeholder is in the room, give the agent five minutes to list its open questions for them before relaying their wish.
+1. **Say the outcome, not the solution**, with the boundary, model and effort in one message. Keep your own solution idea back; it tests whether the requirement was clear.
+2. **Slash commands on their own line** (`/model`, `/effort`), then read the model line back. Typed inside a message they do nothing.
+3. **Decide in numbered replies with a priority**; ask for options with counter-arguments, not for decisions.
+4. **Label examples** ("this is one case of ..."), and generalise your own corrections.
+5. **Ask the behaviour question early**: "what changes for the user?", "does the test check the outcome the user cares about?"
+6. **Judge behaviour, not text**: try it, play-test it, screenshot it, run it against the real back-end. Measure when the agent has an opinion about itself.
+7. **Decide or delegate what you would leave hanging**; constraints (reviewer, MR shape, remote, account) before the work, not after.
+8. **Say when you are away**, and what to do meanwhile.
+9. **Challenge one recommendation per review**; give documents others build on thirty seconds: the unconfirmed items and two quotes.
+10. **Prefer a check to a sentence**: a hook, a lint rule or a template field holds; a rule in a file is the fallback.
 
-**Judging the work**
+### What you paste for the agent
 
-- Judge behaviour by trying it, not by reviewing generated text: play tests, oracle commands, screenshots of a real terminal, the real back-end instead of a stub. A test that passed while the documented command failed teaches more than a rule.
-- Measure instead of argue when the agent has an opinion about its own effectiveness: fresh agents, an answer key written before the runs, a blind grader. The agent's prior has been refuted this way.
-- Challenge one recommendation per review; accepting all leans in a line is defensible, but disagreement is where you add the most.
-- Documents others build on get thirty seconds: "which items still say pending, assumed or taken from the record?" and two quotes spot-checked.
-- Expect evidence: the command run and its output, the screenshot, the diff of a re-recorded expectation; "clean" only from the command the commit or CI actually runs.
+Standing instructions, for `AGENTS.md` or `CLAUDE.md`:
 
-**What costs, and the fix**
+```text
+- Keep changes tight: no speculative generality, no abstraction without a second concrete user.
+- Follow established formats, patterns and tools; before writing a mechanism a library implements, search for the library; flag every new dependency.
+- Every mechanism, option or output detail names the requirement, scenario or decision that asks for it; without one, leave it out and suggest it as a next step.
+- Earlier notes and brainstorming are options to evaluate, not requirements.
+- When a request names a specific case, say whether you read it as the whole ask or as an example of a rule, or ask.
+- Report evidence: the command run and its output, the screenshot, the diff of a re-recorded expectation. Report "clean" only from the command the commit or CI runs.
+- A change beyond a few hundred lines gets a review by an agent that did not write it before it is handed over.
+- Name any deviation from a lean the person accepted, at hand-over.
+- Use absolute paths and self-contained shell commands; edit files with the Edit tool, not with inline replacement scripts.
+- A vulnerability found while testing is reported first and stops the plan; the fix path is the proposed next step.
+- Output that leaves the project has a short part for people (what is wrong or decided, what to do, one example) and the details for agents below it, marked as reviewed by a person or not.
+```
 
-- Work launched in a session dies with the session; context compaction loses detail; what lives in files survives. Before logging off: what is running and does it survive, where do results land, who answers the tester's questions, what is committed, what does the next session need.
-- The agent's defaults are the manager's pet peeves: reinvented libraries, polish without a requirement, generality with one user. Standing instructions in `AGENTS.md`, a review by an agent that did not write the code, and "which scenario asks for this?" at commit time.
-- A rule in a file is not a habit; a check is. Where a lesson can be a hook, a lint rule or a template field, put it there; the instruction file is the fallback.
-- Agent memory is per user and per checkout path; a worktree or a VM starts empty. Team knowledge goes into the repository: instruction files, decision log, backlog, the `design/` documents.
-- Output that leaves the project is read by people and by their agents. A short part for humans (what is wrong or decided, what to do, one example), then the details for agents; mark whether a human endorsed the details or only attached them.
+Unblocking a round of questions:
+
+```text
+Go with your leans on all of these; most important is <the priority>. Details we can fix later. List what you decided.
+```
+
+Before stepping away:
+
+```text
+I am away for about <time>. Take the recommended option where you have one, keep going, and list every decision you took and every question you could not answer when I am back.
+```
+
+Before ending a session:
+
+```text
+Before we stop: what is running, and does it survive the session? Where do the results land, and is anything only in the scratchpad or /tmp? What is committed, what is not? What does the next session need to know that it cannot read from the repository?
+```
+
+When a sub-agent brief is written:
+
+```text
+For every assertion or check in the brief, name the scenario or acceptance example it serves. Assert the outcome the user cares about, not the mechanism you expect. Report what the test proves and what it does not.
+```
+
+When a document is handed over:
+
+```text
+List every item that is still marked pending, assumed, taken from the record or unknown, and every quote or figure you took from a sub-agent and did not check against the source.
+```
 
 ## Licence
 
