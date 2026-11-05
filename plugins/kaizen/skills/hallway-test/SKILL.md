@@ -5,7 +5,7 @@ description: Run a hallway usability test of a tool, document, instruction file 
 
 # Hallway test
 
-Text id `f860f02e`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `c1d90d1b`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The name comes from grabbing a person in the hallway and watching them use the product. Here the person is a sub-agent that has not seen the implementation, the specs or the conversation that produced the code, so it cannot un-know what the author knows. It reads the requirements and the user-facing documentation, decides what should happen, tries it, and reports where reality differs. It regularly finds defects that the test suite has enshrined and that every scenario missed.
 
@@ -23,7 +23,7 @@ A borrowed checklist, with thanks: the eleven CLI usability criteria of the MIT-
 
 ## Before launching
 
-Settle these with the user; they become the tester's brief:
+Settle these with the user; they become the tester's brief. When the subject is a framework, a plugin or a process, the persona brings a scenario (a project of their own): the scenario is input, not the subject, and the brief names both.
 
 1. **The persona**, from the stakeholder record; offer to add one if the first user of this thing is not in it.
 2. **What the tester may read.** Only what a first user would have: the requirements, the user documentation, the command's help. Name the files or directories; forbid the rest explicitly (source, tests, specs, design notes, git history). The point of the test is the fresh view; every extra document weakens it. If nothing is built yet, stop and hand over to `/kaizen:playbook`, which decides between discovery and the requirements interview. If something is built but no requirements exist, say so and offer the playbook, and go ahead if the person wants: a tester that has to invent the requirement tests its own invention, so the brief says so.

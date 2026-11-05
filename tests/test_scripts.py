@@ -305,6 +305,23 @@ class TestExport(Fixture):
         self.run_script(SCRIPTS / "usage.py", AGENT)
 
 
+class TestSelftestBrief(unittest.TestCase):
+    def test_brief_names_the_subject_and_prepares_the_project(self):
+        repo = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as d:
+            run = Path(d) / "run"
+            r = subprocess.run([sys.executable, repo / "benchmarks/plugin-newcomer/brief.py", "existing-tool", "--scratch", run], capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            brief = (run / "brief.txt").read_text()
+            self.assertTrue(brief.startswith("UNDER TEST: the kaizen plugin"))
+            self.assertNotRegex(brief, r"<(REPO|SCRATCH|SCENARIO)>")
+            self.assertIn("tally", brief)
+            self.assertTrue((run / "project" / "tally.py").is_file())
+            self.assertTrue((run / "project" / ".git").is_dir())
+            again = subprocess.run([sys.executable, repo / "benchmarks/plugin-newcomer/brief.py", "existing-tool", "--scratch", run], capture_output=True, text=True)
+            self.assertNotEqual(again.returncode, 0, "a used scratch directory is refused")
+
+
 class TestSkim(unittest.TestCase):
     def test_readme_skim_names_the_first_command_after_install(self):  # E7
         readme = Path(__file__).resolve().parents[1] / "README.md"

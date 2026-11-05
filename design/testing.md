@@ -12,7 +12,7 @@ A skill is a procedure an agent follows; its test is a run of that procedure by 
 
 Order of building (principal, 2026-11-05): the debrief's fixture first, as the most frequent use; then the scripted principal; then the toy CLI.
 
-A self-test of the whole path exists: `benchmarks/newcomer-sem/` (a fresh agent as a new colleague with an instrument project, from the README to the debrief, made-up answers, about 80 k tokens; rerun it after changing a skill).
+A self-test of the whole path exists: `/plugin-selftest <scenario>` runs `benchmarks/plugin-newcomer/` (a fresh agent meets the plugin from its README as a newcomer bringing a scenario project; the plugin is the subject, the scenario only input; about 15 k output tokens a run; rerun it after changing a skill).
 
 The first fixture exists: `benchmarks/notes-tags/` (a toy notes CLI and a change request, taken through the kaizen skills alone, OpenSpec alone and both; a reference key and the baseline of 2026-11-05). Like every fixture here, it shows how a change in the skills changes the output; it does not certify them. Real-world use, through the debriefs and the ledger, is authoritative.
 
