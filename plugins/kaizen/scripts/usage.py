@@ -19,6 +19,9 @@ from collections import Counter, defaultdict
 from datetime import datetime
 from pathlib import Path
 
+if sys.version_info < (3, 10):
+    sys.exit(f"{Path(sys.argv[0]).name} needs Python 3.10 or newer; this is {sys.version.split()[0]}")
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from transcript import person_texts, read, resolve, subagent_files  # noqa: E402
 

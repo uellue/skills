@@ -65,7 +65,7 @@ class TestReferences(unittest.TestCase):
     def files(self):
         return [*SKILLS, *sorted((PLUGIN / "references").glob("*"))]
 
-    def test_plugin_paths_exist(self):
+    def test_plugin_paths_exist(self):  # E12
         for p in self.files():
             for m in re.finditer(r"\$\{CLAUDE_PLUGIN_ROOT\}/([A-Za-z0-9_./-]+[A-Za-z0-9_])", p.read_text()):
                 with self.subTest(p.name, path=m.group(1)):

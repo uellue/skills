@@ -12,6 +12,15 @@ claude plugin install kaizen@uellue --scope user
 Or inside a session: `/plugin marketplace add uellue/skills`, then `/plugin install kaizen@uellue`.
 To follow updates, turn on auto-update for the `uellue` marketplace under `/plugin` → Marketplaces.
 
+## First steps
+
+In a Claude Code session in your project:
+
+```text
+/kaizen:playbook    which step of the work this is, and which skill fits now
+/kaizen:debrief     how the work since the last debrief went (it lists the sessions and asks before reading)
+```
+
 ## Plugins
 
 - **kaizen**: continuous improvement of how we work with agents (Toyota's word for improving the processes themselves). Five skills along the life of a project, sharing documents in the project's `design/` directory (`stakeholders.md`, `requirements.md`, `walkthroughs/`, `examples.md`, `changes/`, `hallway/`, `kaizen.md`):
@@ -45,6 +54,7 @@ Starting an agent session is onboarding a new employee that knows only the repos
 9. **Challenge one recommendation per review**; give documents others build on thirty seconds: the unconfirmed items and two quotes.
 10. **Don't polish in advance; fix unwanted outcomes when you have a concrete example**, with its test. Security and safety are the exception: think them through before.
 11. **Prefer a check to a sentence**: a hook, a lint rule or a template field holds; a rule in a file is the fallback.
+12. **Debrief at least once per release, in a fresh session**: wind the working session down, start a new one for the debrief (the session that did the work would mostly confirm itself), apply what belongs in this release, then push.
 
 ### What you paste for the agent
 
