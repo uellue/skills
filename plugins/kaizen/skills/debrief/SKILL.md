@@ -15,6 +15,7 @@ Ends do not announce themselves: compactions arrive without a turn, sessions end
 
 - **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Sorting is the debrief's job; capture must cost nothing.
 - **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation.
+- **Offered, not decided.** When the agent offers steps and the person neither picks nor drops them, the open offer goes into the ledger's notes before the topic changes; the debrief asks whether it was dropped on purpose.
 
 ## Inputs
 
@@ -39,7 +40,7 @@ Ends do not announce themselves: compactions arrive without a turn, sessions end
 
 Match the effort to the stretch: a short, clean session gets a quick pass; a multi-week session gets the full treatment, and the five whys on the bigger patterns.
 
-**Several sessions at once.** When the debrief covers more than one session (a week, three repositories, the first uses of a skill), render each session and give one reader agent per session the brief in `${CLAUDE_PLUGIN_ROOT}/references/reader-brief.md`, with the session's paths and numbers filled in; the readers report with cited moments, and the main session synthesises. Verify yourself any claim a reader makes about an instrument (a script, a count, a skill's text) before it goes into the report; a reader's claim is a lead, not a finding. Budget about 200 k tokens per reader for a day-long session.
+**Several sessions at once.** When the debrief covers more than one session (a week, three repositories, the first uses of a skill), render each session and give one reader agent per session the brief in `${CLAUDE_PLUGIN_ROOT}/references/reader-brief.md`, with the session's paths and numbers filled in; the readers report with cited moments, and the main session synthesises. Verify yourself any claim a reader makes about an instrument (a script, a count, a skill's text) before it goes into the report; a reader's claim is a lead, not a finding. Budget about 200 k tokens per reader for a day-long session, and set each reader's model explicitly: sub-agents otherwise inherit the main loop's model, and seven readers on the top model can exhaust a usage limit. Opus is enough for reading and citing; use the top model only when the person asks for it.
 
 ## What to look at
 
@@ -61,7 +62,7 @@ Then the two parts that make this skill personal:
 - **Coaching for the person.** How could the person writing the prompts have been more effective? Which of their moves helped the most (name them, so they are repeated) and which cost (vague scope, a missing label on an example, a decision withheld that the agent needed, a review skipped, a slash command typed inside a message that never ran)? Write it to the person directly, the way a peer in a supervision group would: specific, evidence-based, without flattery and without softening.
 - **Models and effort.** From the numbers: was the model and effort level proportionate to the work? Where did tokens go (main loop, sub-agents, workflows, context), and would a cheaper model or a lower effort have done for parts of it? Where did a high effort pay off? Check that the model the person asked for is the one in the transcript.
 
-Where Matt Pocock's `retro` skill is used too, it covers the agent's environment (checks, navigation, steering files) inside the session; the debrief does not repeat its findings, it cites them and adds the collaboration, the coaching and the history.
+Where Matt Pocock's `retro` skill is used too, it covers the agent's environment (checks, navigation, automated checks, steering files, tool economy); the debrief cites its findings rather than repeating them and adds the collaboration, the coaching and the history. `retro` is invoked by the person only (an agent cannot call it, and a slash command inside another command's arguments never runs): either the person types `/mattpocock-skills:retro <session>` as a message of its own, or the debrief gives retro's `SKILL.md` and the rendered transcript to an independent sub-agent that has not seen the debrief's findings. Compare the two reads: where they agree, the finding is stronger; say what each missed. Never write a prompt for the person with one slash command inside another.
 
 And, for this plugin's own improvement (kaizen on kaizen): which of its skills were used, how they ran, where one would have helped and was not used, and what no skill covers. Those findings become proposals with the destination "kaizen plugin", and with the person's say, issues or merge requests on the plugin's repository.
 

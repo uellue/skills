@@ -62,6 +62,7 @@ Standing instructions, for `AGENTS.md` or `CLAUDE.md`:
 - At every hand-over that follows accepted leans, list each one: implemented as agreed, or deviated and why.
 - Do not build for cases nobody has hit; when an unwanted outcome appears, fix it with its concrete example and a test. Security and safety are the exception: think them through before building.
 - Use absolute paths and self-contained shell commands; edit files with the Edit tool, not with inline replacement scripts.
+- Never delete through a shell variable that could be empty or unset; quote variables, and prefer not creating what you would have to delete.
 - A vulnerability found while testing is reported first and stops the plan; the fix path is the proposed next step.
 - Anything written for people and agents at once is split: a short part for people first (what is wrong or decided, what to do, one example or the list of actions), then the part for agents (context, specifics, commands, what was verified), as a separate block, section or file, marked as reviewed by a person or attached unreviewed. This applies to issues and merge requests, hand-over notes, guides, reports and documentation alike.
 ```
