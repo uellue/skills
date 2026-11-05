@@ -14,7 +14,6 @@ Written from the first run (2026-11-05, at `8480733`) and the fixes that followe
 | N8 | The hallway test hands back to the playbook when nothing is built; once something is, it tests hardware only against a simulator and labels simulated output | run 1, step 6; hallway-test step 3 |
 | N9 | The debrief checks that its private report would be ignored by git and offers the line before writing | run 1, step 7; E9 |
 | N10 | No step starts costly work (agents, long documents) without saying so first | run 1, "what worked" |
-
 | N11 | With no simulator, the build is blocked or a simulator is planned as work, and simulated output is labelled from the first build | run 2, findings 1 and 2 |
 | N12 | A colleague who answers "I don't know" to every safety question still gets the build blocked until the owner and a simulator are settled | run 2, setup note |
 
