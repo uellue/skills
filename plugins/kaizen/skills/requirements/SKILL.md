@@ -5,18 +5,22 @@ description: Interview the person who needs a solution and write a demand and re
 
 # Requirements interview
 
-The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them a few sections at a time, in the order of ER-C's demand and requirements form, writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
+The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of ER-C's demand and requirements form, writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
+
+This skill tightens an idea that exists, however loosely. To get from nothing to an idea, a free discovery interview serves better, for example `grill-me` from Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills); its result is the record this interview starts from.
 
 ## Who answers
 
 - **The principal**, the person who needs the solution, answering in the chat: the normal case. Their answers are the record.
 - **The record**, when the facts were gathered before the interview or the thing already exists: the conversation so far, the issue tracker and merge requests, the git history, the README, test reports, hallway-test records, earlier session transcripts. Read them first, draft every section the record answers and mark each such item `[record]` with its source, keep the principal's own words apart from what they merely accepted, and interview only for what the record does not answer or where sources disagree. This is also how a design record is reconstructed for a tool that grew out of "can you quickly solve this": the result is a requirements document with a source on every line and a question list instead of guesses. A reconstruction skips the sections the record is silent on; ask the questionnaire's questions for those, in particular current solutions (1.2), benefits (1.3), what happens when it fails and how a wrong result is noticed (2.5), performance (2.6) and lifetime (2.10): they are what the next day's bug or the next colleague's remark will be about.
-- **A simulated stakeholder**, when the principal is not available: say so, write the persona into the stakeholder record first (marked simulated), answer as that persona would, and mark every such item `[assumed]`, lower in confidence than anything a real person said (a rule borrowed from melodic-software's requirements-elicitation skills). A simulated principal may answer, but may not confirm personas, accept leans or unblock the build; those wait for a person. Hand the document to the real principal for correction before anyone builds on it.
+- **A simulated stakeholder**, when the principal is not available: follow the playbook's "Working without a person" and mark every such item `[assumed]`, lower in confidence than anything a real person said (a rule borrowed from melodic-software's requirements-elicitation skills). Hand the document to the real principal for correction before anyone builds on it.
 - **An existing document**: read it against the questionnaire and report what it answers, what it skips, and where an answer is a solution in disguise; then interview only for the gaps.
 
 ## The interview
 
-Work through the form's sections in order, two to four sections per round, and keep each round short. Before asking, check what is already known (the instruction files, design notes, the stakeholder record, an earlier walk-through or play test, the record above), draft the sections from it and ask the person to correct rather than repeat; ask only the two to four questions the record does not answer.
+Before asking, check what is already known (the instruction files, design notes, the stakeholder record, an earlier walk-through or play test, the record above), draft the sections from it and ask the person to correct rather than repeat.
+
+Then work in rounds (adapted, with thanks, from the `grilling` skill in Matt Pocock's MIT-licensed collection). Each round asks the **frontier**: every open question whose prerequisites are already settled, numbered, each with your recommended answer, worded so that "yes" accepts it. A question that depends on another one still open waits for a later round. Facts are yours to find (look them up, or send a sub-agent without blocking the round); decisions are the person's. The form's sections are the checklist of what must be covered, not an order: the demand (1.1 to 1.4) usually settles first because the rest depends on it; otherwise follow what the answers unblock. Keep rounds short; the interview is done when the frontier is empty or the rest is deferred.
 
 Habits that make the answers usable:
 
@@ -28,13 +32,13 @@ Habits that make the answers usable:
 - **Play back and confirm.** At the end of each round, summarise the answers in a few sentences in the person's words and ask whether that is right, before the next round. Items taken from the record are read back too: `[record]` becomes `[answered]` only when the principal confirms it.
 - **Prior art before "nothing exists".** For current solutions (1.2), search for upstream projects, libraries or services that address the problem before writing that none does; name what was found and what it lacks.
 - **The stakeholders are a document.** Section 1.4 writes or updates the project's stakeholder record (`design/stakeholders.md`): one entry per persona with who they are, what they want, what they know, what they have, what they would never read, and whether the entry is from an interview or simulated. The `walkthrough` and `hallway-test` skills take their personas from it; their desired experiences are requirements.
-- **Walk the main scenarios.** For section 2.1, the `walkthrough` skill is the method: when the two skills are invoked together, the walks become the scenarios and each walk's questionnaire footer names the sections it feeds.
+- **Walk the main scenarios.** For section 2.1, the `walkthrough` skill is the method: when the two skills are invoked together, the walks become the scenarios, and each walk's questionnaire footer lists the questions the record does not answer yet, for the next rounds.
 
 Match the depth to the project: a two-week tool gets the demand sections and the use scenarios in full and one line each for the rest; an instrument-facing service gets every section. Never skip a section silently; a one-line "not asked, because <reason>" is a legitimate entry.
 
 ## Output
 
-Write the document to `design/requirements.md` (or the project's existing requirements location), and keep it updated through the interview so nothing is lost if the session ends. Structure, with the form's numbering so that it transfers to the institute's Word template:
+Write the document to `design/requirements.md` (or the project's existing requirements location), and keep it updated through the interview so nothing is lost if the session ends. Structure, with the form's numbering as a checklist:
 
 ```markdown
 # Demand and requirements: <project title>
@@ -88,4 +92,4 @@ Before saying the document is ready, run the handover check and show its result:
 - A requirement that cannot be checked is not finished: for each main scenario, add one acceptance example ("when <situation>, then <observable outcome>") to `design/examples.md`, with the next free ID, a priority and the scenario it comes from, and cite the ID in 2.1. The examples live only there.
 - Keep names of people in the project's own record; keep them out of anything published.
 - Hand the document over with the handover check above, not with "ready for review" alone.
-- At the end, say what in this skill did not fit the situation, in one line, into the project's ledger, `design/kaizen.md`, so the plugin can be improved (see the `debrief` skill).
+- At the end, one line into the project's `design/kaizen.md`: what in this skill did not fit.

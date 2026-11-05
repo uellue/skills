@@ -32,6 +32,7 @@ See `stakeholders.md`: the manager, the colleague starting with agents, the codi
 
 ### 2.1 Use scenarios
 The lifecycle in the `playbook` skill: stakeholders → requirements → walk-throughs → specification (the project's method) → build → hallway test → debrief.
+- [answered] S0, discovery: going from nothing to a more specific idea is a free interview, for example Matt Pocock's `grill-me` (a colleague found it good for discovery); the requirements interview then tightens the loose idea (principal, 2026-11-05). The order of the ER-C form's sections is not binding: the form is hardly used as written, and the plugin gives it a second life as a checklist (principal, 2026-11-05).
 - [answered] S1, requirements interview: a few sections per round, pre-filled from the record, the person corrects rather than repeats; deferring is allowed and recorded with stage and owner; the result is handed over with a list of everything still unconfirmed.
 - [answered] S2, reconstruction: a tool that grew from "just playing around" gets its requirements and specification retconned from git history, code, issues, hallway reports and transcripts, every item with a source, questions where the sources are silent; the documents then onboard humans and agents and prevent drift (principal 2026-11-05: "worked very well in devvm").
 - [answered] S3, walk-through: a persona from the stakeholder record, confirmed with the user (never assumed), walks a process; against the running system where it exists; questions go to a real stakeholder when one is present; the walk feeds requirements 2.1 and the hallway test's coverage.
@@ -40,7 +41,7 @@ The lifecycle in the `playbook` skill: stakeholders → requirements → walk-th
 - [answered] S6, "note for the debrief": a one-line capture into the ledger at the moment, sorted later.
 - [answered] Frequency: the debrief and the "note for the debrief" daily or weekly; a requirements interview and walk-throughs once per project or larger change, and also on a specific topic whenever the need arises (open questions identified, an idea so far only general to be fleshed out), so the playbook has to judge what to do and what not to do at a given point; a hallway test per change a user would notice; a reconstruction once per tool that grew. (Principal, 2026-11-05.)
 - [answered] S7, playbook: at the start of a project or change, say which moment this is, which documents are missing, and which skill writes them; propose, do not write unasked.
-Acceptance examples: when a walk-through is invoked and the stakeholder record has no matching persona, then the skill asks and offers to add one before walking. When `usage.py` runs on a session, then its output tokens equal the sum over distinct API message ids. When a hallway test ends, then the record exists in the repository and names, per defect, what would have caught it.
+Acceptance examples: E1 to E6 in `examples.md`.
 
 ### 2.2 Demand uncertainties
 | Uncertainty | Resolves by |

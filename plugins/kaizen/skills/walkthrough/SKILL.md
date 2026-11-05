@@ -13,13 +13,13 @@ Two borrowed habits, with thanks: interview from two hats, the product hat (user
 
 ## Inputs
 
-Settle these with the user before walking, and write them at the top of the output. The first one blocks: do not walk in a persona the user has not confirmed.
+Settle these with the user before walking, and write them at the top of the output.
 
-1. **The persona.** Read the project's stakeholder record first (`design/stakeholders.md`; the `requirements` skill writes it from section 1.4). Without a person to confirm (an agent-only run), the persona is written to the record as simulated and the walk is marked as resting on it. Show the personas it has, ask which one to take, and offer to add a new one or to correct an existing one: this is the moment to learn from the people who know the project. If no record exists, ask who the stakeholders are and create the record with what the user says, one entry per persona: who they are, what they want from this process, what they know and do not know, what they have on their machine, what they would never read, and whether the entry comes from an interview or is simulated. Prefer a real person's role at the institute over an archetype; prefer a real person's answers over your guesses when you can ask.
+1. **The persona. This blocks: do not walk in a persona nobody confirmed.** Read the project's stakeholder record (`design/stakeholders.md`). Show the personas it has, ask which one to take, and offer to add a new one or correct an existing one: this is the moment to learn from the people who know the project. If no record exists, ask who the stakeholders are and create it with what the user says, one entry per persona: who they are, what they want from this process, what they know and do not know, what they have on their machine, what they would never read, and whether the entry comes from an interview or is simulated. Prefer a real person's role at the institute over an archetype. With no person available, follow the playbook's "Working without a person": the persona is recorded as simulated and the walk is marked as resting on it.
 2. **The process.** The thing they are trying to do, from their first step to the moment they consider it done. Examples: install the crawler on a server; find last week's measurement in the index; add a new file format as an external collection; start a new repository for development with agents; read the crawl log after a night run; diagnose a search result that looks wrong.
 3. **What exists.** The documents, code, commands and pages the persona would meet, so that the walk tests reality and not a plan; read them as the persona would, in the order they would find them, skipping what they would skip. Where the system runs (a test deployment, a VM, a stack that can be started), walk against the running system and do what the persona would do, instead of reading about it: the live step finds what the document hides.
 
-When the user invokes this skill together with `requirements`, do the demand sections (1.1 to 1.4) first, then the walk-throughs as the use scenarios of 2.1, then the remaining sections; each walk's questionnaire footer names the sections it feeds.
+When the user invokes this skill together with `requirements`, do the demand sections (1.1 to 1.4) first, then the walk-throughs as the use scenarios of 2.1, then the remaining sections; each walk's questionnaire footer lists the questions the record does not answer yet, which the interview then asks.
 
 ## Before the walk: the questionnaire
 
@@ -40,7 +40,7 @@ Where the walk reaches a point the documents do not cover, do not invent the ans
 
 Go up a level when a step reveals something general (five whys): a confusing message is one step; "the tool never says what it will do before doing it" is a requirement.
 
-**A measured walk.** When the process can be carried out by an agent (a diagnosis, a setup, a search), run it instead of imagining it: give a fresh sub-agent only the persona, the process and the user-facing documents, with the `diagnosis-brief.md` template of the `hallway-test` skill when the process is finding out what is wrong, and inject the faults the walk is about. Record what it did, the calls, the time and the tokens (`usage.py <its transcript>`), and put the result in the walk as a measurement, not an assumption. An injected fault must look like a real one: an artefact the system never produces (a timestamp with microseconds, a file name with a test marker) is a tell that invalidates the measurement.
+**A measured walk.** When the process can be carried out by an agent (a diagnosis, a setup, a search), run it instead of imagining it: give a fresh sub-agent only the persona, the process and the user-facing documents, with the template `${CLAUDE_PLUGIN_ROOT}/references/diagnosis-brief.md` when the process is finding out what is wrong, and inject the faults the walk is about. Record what it did, the calls, the time and the tokens (`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py agent-<its id>`), and put the result in the walk as a measurement, not an assumption. An injected fault must look like a real one: an artefact the system never produces (a timestamp with microseconds, a file name with a test marker) is a tell that invalidates the measurement.
 
 ## Output
 
@@ -90,4 +90,4 @@ What exists: <documents, code, commands read; the running system used>.
 - Concrete over general. "The operator runs `modama-crawler crawl` and sees nothing for two hours" is a finding; "feedback could be improved" is not.
 - Questions, gaps and examples are the deliverable. Do not design the fix here; the owner decides what becomes a requirement, and the decisions go into the decision record (the playbook's "what we decided" moment).
 - A number in the walk has a source (the owner, a measurement, a document); the agent's own estimate is marked as one.
-- At the end, say what in this skill did not fit the situation, in one line, into the project's ledger, `design/kaizen.md`, so the plugin can be improved (see the `debrief` skill).
+- At the end, one line into the project's `design/kaizen.md`: what in this skill did not fit.

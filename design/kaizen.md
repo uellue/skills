@@ -31,12 +31,33 @@ Destination "plugin" means this repository; "other repos" means the projects' ow
 | 19 | Lessons that travel: seed standing lessons into every checkout's memory (devvm provisioning) or keep them in the repository | devvm `setup-dev`; guide | medium | open; owner the manager |
 | 20 | Standing answer for absence in the guide: "away for N; take the recommended option, list the rest" | guide | small | to transfer |
 | 21 | Close the open items of the week: rotate or remove `keys.env`; commit the devvm hallway record or drop the `[HT]` citations; fix the markers in `requirements-pipeline.md`; decide `test --no-reset`; write the #213 direction and the 404/503 decision into the requirements record | other repos (backlogs) | small | to transfer |
+| 30 | A request phrased as a question is a question: verdict and strongest counter-argument first, act only if yes and cheap to undo (principal, 2026-11-05: questions were taken as instructions three times in this session: the README section, the standing instruction, the OpenSpec recommendation) | README standing instructions; projects' `AGENTS.md` | small | done in 0.4; to transfer |
+
+### 2026-11-05 (comparison of the kaizen skills with OpenSpec: alone, OpenSpec alone, both)
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 22 | A "decide" moment after the walk-throughs and a short change record of its own (interface, decision table with who decided and whether reversible, must/should/won't with a size budget, questions that block the build), mapped one-to-one onto OpenSpec's design and scenarios when a project uses it | plugin (playbook, new template) | medium | done in 0.4 |
+| 23 | Acceptance examples in one place with IDs, concrete data, priority and the walk step they came from; walks append to it, tests and hallway briefs cite the IDs; a coverage check lists examples with no scenario or test; add the section to the requirements template | plugin (requirements, walkthrough, hallway-test) | small | done in 0.4 |
+| 24 | A small-change path in the playbook: a short need note, one walk as a step table, the decision record, the hallway test; the full form and OpenSpec's specs and tasks only for larger changes | plugin (playbook) | small | done in 0.4 |
+| 25 | A ready-made OpenSpec `config.yaml` (context and rules: the proposal names the persona, says whether the requested solution is the whole need, lists unconfirmed premises; each scenario cites its example ID or says "(assumed)"; the last task group is a hallway test) offered by the playbook when `openspec/` exists; hallway test after apply and before archive; the debrief flags "archived without a hallway test" | plugin (references, playbook, debrief) | small | done in 0.4 |
+| 26 | Running without a person: what a simulated principal may confirm and what waits for a human; the simulated principal's persona comes first, before the interview | plugin (requirements, walkthrough, playbook) | small | done in 0.4 |
+| 27 | One canonical location, `design/`, in all skills; "the ledger" means the project's own `design/kaizen.md`; the handover check gains "may the build start, on which assumptions" | plugin | small | done in 0.4 |
+| 28 | Tester brief: name the input formats the tester invented and how long it waited before calling something permanent; ask "your caller" instead of `to: "main"` | plugin (references) | small | done in 0.4 |
+| 29 | Narrow the kaizen skills' trigger descriptions against `openspec-explore`; suggest not installing `openspec-explore` where kaizen is installed | plugin; guide | small | done in 0.4 |
+
+Done the same day: the tester brief templates told testers to write `REPORT.md` while the skill said "final message" (introduced in 0.4, found by condition C); fixed in `ca62d8c`, with "half the effort outside the coverage list".
+
+Independent review of the branch (2026-11-05, one Opus agent that did not write it, triggered by the standing instruction on changes beyond a few hundred lines): 24 findings, four high, all in `transcript.py` and verified by the main session: rendering crashed on messages the person queued mid-turn (the case the script was written for), an option before the ID selected another session, harness text was counted and labelled as the person's, and exports could land where git tracks them. All fixed and tested the same day, with the medium and low findings on consistency, locations, duplicated text and the plugin's own record; one finding (internal details in this public repository) waits for the principal.
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 31 | A ledger in a public repository carries no details of other projects (transferred to their backlogs) and no security findings or secrets, not even as to-dos (review finding 17: row 21 and requirements 1.3 named an unrotated key file and a vulnerability) | plugin (debrief) | small | done in 0.4 |
+| 32 | Discovery before the interview: an optional free interview such as `grill-me` (Matt Pocock) leads into `requirements`; the interview asks in rounds of unblocked questions with recommended answers (adapted from `grilling`); the form's section order is a checklist, not an order | plugin (playbook, requirements) | small | done in 0.4 |
 
 ## Earlier recommendations
 
 The 2026-11-03 debrief (data-management-system) made seven proposals and five coaching points; their status after the week, as seen in the seven sessions: proposals 1, 3, 5, 6 acted on; 2 and 4 recurring in four sessions each (escalated, proposals 14 and 15 above); 7 done but its table row never closed. Coaching 1, 3, 5 acted on; 2 and 4 partly. Details in that repository's debrief history.
-
-| 30 | A request phrased as a question is a question: verdict and strongest counter-argument first, act only if yes and cheap to undo (principal, 2026-11-05: questions were taken as instructions three times in this session: the README section, the standing instruction, the OpenSpec recommendation) | README standing instructions; projects' `AGENTS.md` | small | done in 0.4; to transfer |
 
 ## Skill friction
 
@@ -63,18 +84,6 @@ The 2026-11-03 debrief (data-management-system) made seven proposals and five co
 - 2026-11-05, principal: the intersection with OpenSpec was interesting; should they keep being used together? The impact of OpenSpec on the process cannot be judged, a lot happened behind the scenes. (Measurement proposed in the playbook: findings that cite a scenario; coverage from scenarios.)
 - 2026-11-05, principal: humans and bots communicate in all directions now; humans need a clear, short executive summary, bots benefit from all the context. Two distinct cases: details endorsed by humans (the design documents made with the skills, where not reading them and focusing on outcomes was found good in the earlier debrief) and details attached without endorsement (the comment on the warehouse's issue #151). (Proposal 13.)
 - 2026-11-05, principal: kaizen on kaizen means using personas, requirements, walk-throughs and the debrief on the plugin itself, and keeping design documents to test the skills against; whether skills can have unit tests is a new question. (`design/` of this repository; `testing.md`.)
-
-### 2026-11-05 (comparison of the kaizen skills with OpenSpec: alone, OpenSpec alone, both)
-
-| # | Proposal | Destination | Effort | Decision / status |
-|---|---|---|---|---|
-| 22 | A "decide" moment after the walk-throughs and a short change record of its own (interface, decision table with who decided and whether reversible, must/should/won't with a size budget, questions that block the build), mapped one-to-one onto OpenSpec's design and scenarios when a project uses it | plugin (playbook, new template) | medium | done in 0.4 \|
-| 23 | Acceptance examples in one place with IDs, concrete data, priority and the walk step they came from; walks append to it, tests and hallway briefs cite the IDs; a coverage check lists examples with no scenario or test; add the section to the requirements template | plugin (requirements, walkthrough, hallway-test) | small | done in 0.4 \|
-| 24 | A small-change path in the playbook: a short need note, one walk as a step table, the decision record, the hallway test; the full form and OpenSpec's specs and tasks only for larger changes | plugin (playbook) | small | done in 0.4 \|
-| 25 | A ready-made OpenSpec `config.yaml` (context and rules: the proposal names the persona, says whether the requested solution is the whole need, lists unconfirmed premises; each scenario cites its example ID or says "(assumed)"; the last task group is a hallway test) offered by the playbook when `openspec/` exists; hallway test after apply and before archive; the debrief flags "archived without a hallway test" | plugin (references, playbook, debrief) | small | done in 0.4 \|
-| 26 | Running without a person: what a simulated principal may confirm and what waits for a human; the simulated principal's persona comes first, before the interview | plugin (requirements, walkthrough, playbook) | small | done in 0.4 \|
-| 27 | One canonical location, `design/`, in all skills; "the ledger" means the project's own `design/kaizen.md`; the handover check gains "may the build start, on which assumptions" | plugin | small | done in 0.4 \|
-| 28 | Tester brief: name the input formats the tester invented and how long it waited before calling something permanent; ask "your caller" instead of `to: "main"` | plugin (references) | small | done in 0.4 \|
-| 29 | Narrow the kaizen skills' trigger descriptions against `openspec-explore`; suggest not installing `openspec-explore` where kaizen is installed | plugin; guide | small | done in 0.4 \|
-
-Done the same day: the tester brief templates told testers to write `REPORT.md` while the skill said "final message" (introduced in 0.4, found by condition C); fixed in `ca62d8c`, with "half the effort outside the coverage list".
+- 2026-11-05, principal: a colleague found `grilling` good for discovery (from nothing to something specific) and the requirements skill good for tightening a loose idea; one leads into the other. (Proposal 32.)
+- 2026-11-05, principal: the order of the ER-C form does not matter; nobody uses the form as written, people followed their own unstructured way; the plugin gives it a second life, from the insight that the tools and processes that keep large organisations on track also help with agents. (Proposal 32.)
+- 2026-11-05, principal: requests phrased as questions mean the principal is unsure and wants pushback; three were taken as instructions in this session. (Proposal 30.)
