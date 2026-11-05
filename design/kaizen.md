@@ -58,6 +58,23 @@ Independent review of the branch (2026-11-05, one Opus agent that did not write 
 | 34 | A hook in the plugin that adds the kaizen moments to the context when `/ask-matt` is typed; only if the paste-in line and the playbook's trigger description prove insufficient; plugin hooks to be verified first | plugin (hook) | small | parked |
 | 35 | A hint-following mode for the hallway test: a first user who skims the README for commands and then follows only the program's output; the skim view (`scripts/skim.py`) enforces the laziness, every return to the documents is a break whose fix belongs in the program's output; a brief template (from a colleague's remark that the tester is too smart and not lazy enough, and that devvm's chain of hints broke off) | plugin (hallway-test, script, brief) | small | done in 0.4; first real use: devvm |
 
+### 2026-11-05 (debrief of the 0.4 development session, with Matt Pocock's `retro` run alongside by an independent sub-agent)
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 36 | Test suite for the scripts and skill texts (stdlib `unittest`): synthetic transcript fixtures (list-shaped queued prompt, several lines per message id, sub-agent metadata, rendered transcript inside a result, option before the id, export into a tracked folder); lint for frontmatter, referenced paths, dates in skill bodies, stale strings, table columns, description and body budgets; one check command | plugin (0.4) | small | done in 0.4 (`tests/`, `./check.sh`, 22 tests; 10 of the script tests fail on the pre-review scripts) |
+| 37 | Pre-commit hook running the check (CI if the repository gets Actions); "ready to push" quotes its output | plugin repository | small | done in 0.4 (`.githooks/pre-commit`, enabled with `core.hooksPath`; `.github/workflows/check.yml`) |
+| 38 | Short `CLAUDE.md` for this repository: pointers, the check command, claims about Claude Code verified with `claude-code-guide` or `--help` and cited, the review threshold | plugin repository (0.4) | small | done in 0.4 |
+| 39 | `CODING_STANDARDS.md` for the reviewer, judgement calls only: one meaning in one place; skills self-contained under the plugin root; procedure, not history | plugin repository | small | done in 0.4 |
+| 40 | `transcript.py render` indents result bodies so that text inside a result cannot pass for a header | plugin (0.4) | small | done in 0.4 |
+| 41 | `retro` is user-invoked: the person types it as its own command, or its skill text goes to an independent sub-agent and the two reads are compared; no slash command inside another command's arguments | plugin (0.4: debrief, playbook) | small | done in 0.4 (debrief, playbook) |
+| 42 | Multi-session readers get an explicit model (sub-agents inherit the main loop's); Opus by default | plugin (0.4: debrief) | small | done in 0.4 (debrief) |
+| 43 | The plugin's next change through its own moments: decision record with a size budget, the two walk-throughs (a colleague's first debrief; the maintainer changes a skill), a first hallway test in real use; steps the agent offers go to the ledger | plugin backlog (0.5) | medium | partly done in 0.4: decision record `design/changes/kaizen-0.4.md` (after the fact, with the size budget now enforced by the lint); walk-throughs `design/walkthroughs/` (without a person, personas unconfirmed; 13 open questions for the principal); open offers captured by the debrief; the first hallway test in real use follows the release |
+| 44 | Standing instructions at user level on the maintainer's host, so that they reach every checkout (partial answer to 19) | maintainer's configuration | small | done (the maintainer's `~/.claude/CLAUDE.md`, a copy of the README block; keeping the two in step is by hand) |
+| 45 | Pre-push hook checking outgoing commits against a local, uncommitted denylist | plugin repository | small | done in 0.4 (`.githooks/pre-push`; the denylist in `.git/info/denylist` starts empty) |
+
+Status changes from this debrief: 15 and 17 recurred in this repository too (escalated, 37, 38, 44); 30 held for the rest of the session after adoption; 2 and 3 used for real and held, gaps in 40–42.
+
 ## Earlier recommendations
 
 The 2026-11-03 debrief (data-management-system) made seven proposals and five coaching points; their status after the week, as seen in the seven sessions: proposals 1, 3, 5, 6 acted on; 2 and 4 recurring in four sessions each (escalated, proposals 14 and 15 above); 7 done but its table row never closed. Coaching 1, 3, 5 acted on; 2 and 4 partly. Details in that repository's debrief history.
@@ -78,8 +95,13 @@ The 2026-11-03 debrief (data-management-system) made seven proposals and five co
 - 2026-11-05, debrief (this plugin): transcripts were not under `~/.claude/projects`; `usage.py` over-counted 2 to 5 times; no renderer; the renderer written ad hoc dropped queued mid-turn messages; no multi-session mode. Fixed in 0.4.
 - 2026-11-05, debrief (this plugin): the report was first written into the debriefed project's `docs/debriefs/`, which the principal found awkward (a subjective snapshot in the repository) and in the wrong repository (the debrief was about this plugin). Fixed in 0.4 (private report, ledger, repository that was debriefed).
 - 2026-11-05, requirements (this plugin's own handover check): the unconfirmed items were first asked for by number only ("items 1 to 8"); the principal could not review them until they were quoted in full. Fixed in 0.4 (quote every item in the message).
+- 2026-11-05, debrief 0.4 (first real use): `locate`, `render` and `usage` worked on the first call; rendered text inside a tool result looks like a real header (40); readers inherited the top model (42); `retro` cannot be called by an agent and the suggested prompt nested it in the debrief's arguments (41).
+- 2026-11-05, walkthrough (two walks of the plugin by a sub-agent, no person, no edits allowed outside its files): the closing duties (friction line, stakeholder-record update, persona confirmation) assume the walker may write and a person is there; no variant for a read-only caller without a person; the template has no place to say that "what exists" changed during the walk (the check appeared mid-walk); a measured walk was impossible because the process installs a plugin and reads transcripts.
+- 2026-11-05, requirements (handover check, by hand): confirm-items mixed with open questions in one message; the questions were answered, the items were not.
 
 ## Notes for the next debrief
+
+- 2026-11-05, walk-throughs of the plugin (`design/walkthroughs/`): 13 open questions wait for the principal, among them which sessions a debrief takes when none is named, whether it may write into a colleague's repository before the private report is ignored there, its expected cost, the minimum Python (the scripts need 3.10), what must be green before a release, and how a session runs the checkout's skills rather than the installed ones.
 
 - 2026-11-05, principal: the probing interview helped to clarify their own thoughts; deferring questions as "currently open" or "for a later stage" should be encouraged. (Taken into the requirements skill.)
 - 2026-11-05, principal: requirements, walk-through and hallway test intersect in the stakeholders; keep a separate stakeholder document: their desired experiences are requirements, their role is taken in a walk-through, the hallway test assumes their position. (Taken into the skills and the playbook.)
