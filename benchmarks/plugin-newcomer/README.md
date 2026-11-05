@@ -4,9 +4,9 @@
 
 ## Running it
 
-In a Claude Code session in this repository: `/plugin-selftest <scenario> [model]` (the project skill in `.claude/skills/plugin-selftest/`; a session started before that folder existed needs `/reload-skills` once). It prepares the run with `brief.py`, starts the tester, checks its claims, grades it against `key.md` and writes `results/`.
+In a Claude Code session in this repository: `/plugin-selftest <scenario> [model]` (the project skill in `.claude/skills/plugin-selftest/`; if a session started before that folder existed does not offer it, run `/reload-skills` or start a new session: Claude Code documentation, code.claude.com/docs/en/skills, "Edit a skill during a session", checked 2026-11-05). It prepares the run with `brief.py`, starts the tester, checks its claims, grades it against `key.md` and writes `results/`.
 
-By hand: `python3 benchmarks/plugin-newcomer/brief.py <scenario>` prints the filled brief and creates a scratch project; give the brief to one fresh agent; grade its report against `key.md` as the skill describes. Run `/reload-plugins` first if the session itself will also invoke the skills; the tester reads the skill files from disk.
+By hand: `python3 benchmarks/plugin-newcomer/brief.py <scenario>` prints the filled brief and creates a scratch project; give the brief to one fresh agent; grade its report against `key.md` as the skill describes. The tester reads an untracked copy of the README and the plugin that `brief.py` makes in the scratch directory, so it sees the version line as an installed plugin shows it and cannot touch this repository.
 
 ## Contents
 

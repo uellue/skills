@@ -4,8 +4,10 @@
     brief.py SCENARIO [--scratch DIR]   scenarios: the names of scenarios/*.md
 
 Creates DIR (default: a new directory under the system's temp directory) with `project/`, a git
-repository holding the scenario's files (scenarios/<name>/, if any), writes the filled brief to
-DIR/brief.txt and prints it, with a header naming the commit under test. The subject under test is
+repository holding the scenario's files (scenarios/<name>/, if any), and `kaizen/`, an untracked copy of
+the README and the plugin as a user would install them (so the version line behaves as in an installed
+copy, and the tester cannot touch this repository); writes the filled brief to DIR/brief.txt and prints
+it, with a header naming the commit under test. The subject under test is
 always the plugin; the scenario is only the input the newcomer brings.
 """
 
@@ -33,9 +35,12 @@ def main():
     ap.add_argument("--scratch", type=Path, help="directory for the run (created; must not exist or be empty)")
     a = ap.parse_args()
     scratch = a.scratch or Path(tempfile.mkdtemp(prefix=f"kaizen-selftest-{a.scenario}-"))
+    if scratch.exists() and (not scratch.is_dir() or any(scratch.iterdir())):
+        sys.exit(f"{scratch} exists and is not an empty directory")
     scratch.mkdir(parents=True, exist_ok=True)
-    if any(scratch.iterdir()):
-        sys.exit(f"{scratch} is not empty")
+    copy = scratch / "kaizen"
+    shutil.copytree(REPO / "plugins" / "kaizen", copy / "plugins" / "kaizen", ignore=shutil.ignore_patterns("__pycache__"))
+    shutil.copy2(REPO / "README.md", copy / "README.md")
     project = scratch / "project"
     fixture = HERE / "scenarios" / a.scenario
     if fixture.is_dir():
@@ -48,12 +53,12 @@ def main():
     text = (
         brief_text()
         .replace("<SCENARIO>", (HERE / "scenarios" / f"{a.scenario}.md").read_text().strip())
-        .replace("<REPO>", str(REPO))
+        .replace("<REPO>", str(copy))
         .replace("<SCRATCH>", str(scratch))
     )
     (scratch / "brief.txt").write_text(text)
     print(f"# self-test of the kaizen plugin: scenario {a.scenario}, commit {commit or '?'}"
-          + (" with uncommitted changes to the plugin or README" if dirty else "") + f", scratch {scratch}\n")
+          + (" with uncommitted changes to the plugin or README" if dirty else "") + f", scratch {scratch} (the tester reads the copy in kaizen/)\n")
     print(text)
 
 

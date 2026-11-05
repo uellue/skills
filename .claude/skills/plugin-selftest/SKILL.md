@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 # Plugin self-test
 
-The subject is always the kaizen plugin in this checkout. The scenario (`benchmarks/plugin-newcomer/scenarios/<name>.md`, with an optional project folder of the same name) is only the input the newcomer brings; when the run reaches one of the plugin's skills, including `kaizen:hallway-test`, that is a step to observe, never a test of the scenario's project. Do not invoke `kaizen:hallway-test` for this; this procedure is the hallway test of the plugin.
+The subject is always the kaizen plugin in this checkout. The scenario (`benchmarks/plugin-newcomer/scenarios/<name>.md`, with an optional project folder of the same name) is only the input the newcomer brings; when the run reaches one of the plugin's skills, including `kaizen:hallway-test`, that is a step to observe, never a test of the scenario's project. Do not invoke `kaizen:hallway-test` for this; this procedure is the hallway test of the plugin, and its results file stands in for the hallway record (`design/hallway/`).
 
 Run every command from the repository root (`cd "$(git rev-parse --show-toplevel)"`).
 

@@ -5,7 +5,7 @@ description: Interview the person who needs a solution and write a demand and re
 
 # Requirements interview
 
-Text id `050d7c12`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `01c0ae83`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements 01c0ae83` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of a demand and requirements form written at ER-C (a checklist; no institute requires it), writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
 

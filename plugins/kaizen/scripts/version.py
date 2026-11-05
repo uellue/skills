@@ -25,11 +25,13 @@ if sys.version_info < (3, 10):
 
 PLUGIN = Path(__file__).resolve().parents[1]
 STAMP = re.compile(r"^Text id `([^`\n]*)`", re.M)  # only at the start of a line; quotes elsewhere do not count
+CMD = re.compile(r"(scripts/version\.py [a-z-]+ )([0-9a-f]{8}|<this text id>)`")  # the start-up command carries the id too
 
 
 def text_id(path: Path) -> str:
     """Hash of the skill file with its stamp blanked, so that writing the stamp does not change it."""
-    return hashlib.sha256(STAMP.sub("Text id ``", path.read_text()).encode()).hexdigest()[:8]
+    blanked = CMD.sub(r"\1`", STAMP.sub("Text id ``", path.read_text()))
+    return hashlib.sha256(blanked.encode()).hexdigest()[:8]
 
 
 def written_id(path: Path) -> str | None:
@@ -62,8 +64,8 @@ def stamp(skills: list[Path]):
     if bad:
         sys.exit("need exactly one line starting with 'Text id `<8 hex digits or empty>`' in: " + ", ".join(map(str, bad)))
     for p in skills:
-        t = p.read_text()
-        p.write_text(STAMP.sub(f"Text id `{text_id(p)}`", t, count=1))
+        i, t = text_id(p), p.read_text()
+        p.write_text(CMD.sub(lambda m: f"{m.group(1)}{i}`", STAMP.sub(f"Text id `{i}`", t, count=1)))
     print(f"stamped {len(skills)} skills")
 
 
@@ -78,9 +80,11 @@ def verdict(p: Path, loaded: str, version: str):
 
 
 def main():
-    if len(sys.argv) not in (2, 3) or sys.argv[1] in ("-h", "--help"):
+    if len(sys.argv) == 2 and sys.argv[1] in ("-h", "--help"):
         print(__doc__)
         return
+    if len(sys.argv) not in (2, 3):
+        sys.exit("usage: version.py SKILL [ID] | --stamp | --help")
     skills = sorted(PLUGIN.glob("skills/*/SKILL.md"))
     if sys.argv[1] == "--stamp":
         return stamp(skills)
