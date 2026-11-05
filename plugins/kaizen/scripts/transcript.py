@@ -69,8 +69,11 @@ def repo_root(start: Path) -> Path | None:
 def candidates(project: Path) -> list[tuple[str, Path]]:
     """(origin, path) for every session transcript of the project, oldest first."""
     home = Path.home() / ".claude" / "projects"
-    dirs = [("home", home / s) for s in slugs(project)]
     root = repo_root(project)
+    # the harness names the folder after the directory the session started in, usually the checkout's root,
+    # so a script run from a subdirectory looks there too
+    starts = [project] + ([root] if root is not None and root != project.resolve() else [])
+    dirs = [("home", home / s) for p in starts for s in slugs(p)]
     if root is not None:
         for sub in (".claude/transcripts", ".transcripts"):
             dirs.append(("checkout", root / sub))
