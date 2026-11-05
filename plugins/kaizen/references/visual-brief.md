@@ -24,5 +24,5 @@ SCENARIOS, each with screenshots and a verdict (works / works but hard to read /
 5. <narrow terminal, 80 columns>: wrapping?
 <more>
 
-Then write a report to <path>/REPORT.md: per scenario the command, the screenshot file names, verdict, what you saw; an overall verdict on the requirement; concrete readability suggestions ranked by value; max <N> words, no flattery. Finish with a 10-line summary. Always stop every terminal you started.
+Then return your report as your final message (the main session writes the file; do not write report files yourself): per scenario the command, the screenshot file names, verdict, what you saw; an overall verdict on the requirement; concrete readability suggestions ranked by value; max <N> words, no flattery. Finish with a 10-line summary. Always stop every terminal you started.
 ```
