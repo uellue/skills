@@ -2,7 +2,8 @@
 # Refuses a push whose new commits add a line, or carry a commit message, matching the local denylist
 # .git/info/denylist (one extended regular expression per line, # for comments). The denylist is never
 # committed: it names what must not become public (other projects' internals, security findings).
-# Only added lines count, so removing or generalising an already-public line is not refused.
+# Only added lines and the names of files count, so removing or generalising an already-public line is
+# not refused. Text added only in a merge's conflict resolution is not seen (git log -p shows no diff for it).
 list="$(git rev-parse --git-path info/denylist)"
 patterns=$(grep -v -e '^#' -e '^[[:space:]]*$' "$list" 2>/dev/null) || exit 0
 re=$(printf '%s\n' "$patterns" | paste -sd '|' -)
@@ -17,7 +18,8 @@ while read -r local_ref local_sha remote_ref remote_sha; do
   [ "$local_sha" = "$zero" ] && continue
   if [ "$remote_sha" = "$zero" ]; then range="$local_sha --not --remotes"; else range="$remote_sha..$local_sha"; fi
   # shellcheck disable=SC2086
-  hits=$( { git log --format=%B $range; git log -p --no-color --format= $range | grep '^+' | grep -v '^+++'; } \
+  hits=$( { git log --format=%B $range; git log --name-only --diff-filter=ACR --format= $range;
+            git log -p --no-color --format= $range | grep '^+' | grep -v '^+++'; } \
     | grep -n -E -e "$re" | head -5)
   if [ -n "$hits" ]; then
     echo "pre-push: $local_ref adds denylisted text (from $list):" >&2

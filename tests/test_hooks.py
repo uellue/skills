@@ -52,6 +52,21 @@ class TestPrePush(unittest.TestCase):
         self.commit("hello\n", "harmless subject\n\nbody names SECRETX")
         self.assertEqual(self.push(), 1)
 
+    def test_file_name_refused(self):
+        (self.repo / "notes-SECRETX.md").write_text("harmless\n")
+        self.git("add", "notes-SECRETX.md")
+        self.git("commit", "-q", "-m", "harmless")
+        self.assertEqual(self.push(), 1)
+
+    def test_removing_a_badly_named_file_passes(self):
+        (self.repo / "notes-SECRETX.md").write_text("harmless\n")
+        self.git("add", "notes-SECRETX.md")
+        self.git("commit", "-q", "-m", "old")
+        base = self.published()
+        self.git("rm", "-q", "notes-SECRETX.md")
+        self.git("commit", "-q", "-m", "remove")
+        self.assertEqual(self.push(base), 0)
+
     def test_invalid_pattern_refuses_instead_of_passing(self):
         self.deny("(unclosed")
         self.commit("hello\n")
