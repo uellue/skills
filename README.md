@@ -57,7 +57,7 @@ Standing instructions, for `AGENTS.md` or `CLAUDE.md`:
 - Name any deviation from a lean the person accepted, at hand-over.
 - Use absolute paths and self-contained shell commands; edit files with the Edit tool, not with inline replacement scripts.
 - A vulnerability found while testing is reported first and stops the plan; the fix path is the proposed next step.
-- Output that leaves the project has a short part for people (what is wrong or decided, what to do, one example) and the details for agents below it, marked as reviewed by a person or not.
+- Anything written for people and agents at once is split: a short part for people first (what is wrong or decided, what to do, one example or the list of actions), then the part for agents (context, specifics, commands, what was verified), as a separate block, section or file, marked as reviewed by a person or attached unreviewed. This applies to issues and merge requests, hand-over notes, guides, reports and documentation alike.
 ```
 
 Unblocking a round of questions:
