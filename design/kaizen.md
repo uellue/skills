@@ -94,35 +94,35 @@ Fourth independent review (2026-11-05, the commits after `849cd7e`, about 417 li
 
 ### 2026-11-05 (self-test rerun at `d30ceac`, `benchmarks/plugin-newcomer/results/2026-11-05-sem-instrument-2.md`)
 
-Not applied: waiting for the principal. Leans in the last column.
+Applied as leaned (principal, 2026-11-05).
 
 | # | Proposal | Destination | Effort | Decision / status |
 |---|---|---|---|---|
-| 54 | Hardware with no simulator: the decision record gets a required row "develop against what"; building or faking a simulator is planned work with its own must-examples, among them "it enforces the instrument's limits" | plugin (change-record, playbook) | small | proposed; lean: yes, safety |
-| 55 | Labelling simulated output in the build step, the decision record's hardware sentence and questionnaire 2.3, not only in the hallway test | plugin | small | proposed; lean: yes, safety |
-| 56 | No recommended answer for safety limits, authorisation and the owner (2.11, Release), or mark accepted recommendations there as `[assumed]` | plugin (requirements) | small | proposed; lean: no recommendation for those items |
-| 57 | A shared ledger template in `references/`, named by every skill's ledger line | plugin | small | proposed; lean: yes |
-| 58 | One session-start line in the playbook: work that acts on hardware names the owner and whether a simulator exists before planning | plugin (playbook) | small | proposed; lean: yes |
-| 59 | A cost note for the full path, and a feasibility spike between requirements and the decision record (with ledger 51) | plugin backlog (0.5) | small | proposed; lean: 0.5 |
+| 54 | Hardware with no simulator: the decision record gets a required row "develop against what"; building or faking a simulator is planned work with its own must-examples, among them "it enforces the instrument's limits" | plugin (change-record, playbook) | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
+| 55 | Labelling simulated output in the build step, the decision record's hardware sentence and questionnaire 2.3, not only in the hallway test | plugin | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
+| 56 | No recommended answer for safety limits, authorisation and the owner (2.11, Release), or mark accepted recommendations there as `[assumed]` | plugin (requirements) | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
+| 57 | A shared ledger template in `references/`, named by every skill's ledger line | plugin | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
+| 58 | One session-start line in the playbook: work that acts on hardware names the owner and whether a simulator exists before planning | plugin (playbook) | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
+| 59 | A cost note for the full path, and a feasibility spike between requirements and the decision record (with ledger 51) | plugin backlog (0.5) | small | planned for 0.5 (principal, 2026-11-05: "go with your leans") |
 | 60 | `version.py <skill> <expected id>` prints "current" or "older text: run /reload-plugins", so the person reads a verdict, not two ids | plugin | small | done in 0.4: the script gives the verdict and is silent unless it matters (principal, 2026-11-05: only where it could be relevant) |
-| 61 | Smaller: one debrief per session for several first uses; the exact invocation of `grill-me`; the requirements handover lists questions for an absent owner as a deliverable to send | plugin | small | proposed; lean: yes |
+| 61 | Smaller: one debrief per session for several first uses; the exact invocation of `grill-me`; the requirements handover lists questions for an absent owner as a deliverable to send | plugin | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
 
-Open for the principal: the hallway test's hand-over deviation (stop only when nothing is built) is argued, not measured; neither self-test run reached that branch. Proposal: key item N13, a run on an existing small tool with a README and no requirements, before deciding.
+The hallway test's hand-over deviation (stop only when nothing is built) was measured in the existing-tool scenario (N14 held) and kept by the principal, 2026-11-05.
 
 ### 2026-11-05 (self-test, scenario existing-tool, `benchmarks/plugin-newcomer/results/2026-11-05-existing-tool.md`)
 
-The run supports keeping the hallway test's current hand-over (stop only when nothing is built): with something built and no requirements, the newcomer was told and could go ahead; the wording first accepted would have looped back to the playbook. Decision: the principal's. Not applied below: waiting for the principal; leans in the last column.
+The run supports keeping the hallway test's current hand-over (stop only when nothing is built): with something built and no requirements, the newcomer was told and could go ahead; the wording first accepted would have looped back to the playbook. Decision (principal, 2026-11-05, "go with your leans"): the current hand-over stays. The proposals below were applied as leaned.
 
 | # | Proposal | Destination | Effort | Decision / status |
 |---|---|---|---|---|
-| 62 | hallway-test, before launching: state the model, the expected cost and the duration, and wait | plugin (hallway-test) | small | proposed; lean: yes (the same rule as the debrief's E10) |
-| 63 | No stakeholder record: one question ("who uses it first, what do they already know?"), marked "not on record" in the brief; the tester template loses its default persona | plugin (hallway-test, tester-brief) | small | proposed; lean: yes |
-| 64 | The tester template gets an optional sentence: "no requirements exist; your expectations are your own, mark them as such" | plugin (tester-brief) | small | proposed; lean: yes |
-| 65 | A playbook path "existing tool, before its first hand-over": the hallway test now, a requirements retcon afterwards from its findings; the README's first steps name the hallway test for a working tool | plugin (playbook, README) | small | proposed; lean: yes |
-| 66 | No loop: the hallway test offers the playbook only if it has not run in this session | plugin (hallway-test) | small | proposed; lean: yes |
-| 67 | Questions during a run: with no design, the owner answers; ask whether they stay available or collect the questions for afterwards | plugin (hallway-test) | small | proposed; lean: yes |
-| 68 | The mode is chosen with the person (behaviour, impatient user, by eye, ...), with a recommendation | plugin (hallway-test) | small | proposed; lean: yes |
-| 69 | A short walk-through offered when the person cannot name the coverage; the debrief offered at the end of a first use | plugin (hallway-test) | small | proposed; lean: yes for the walk-through, the debrief only as one line |
+| 62 | hallway-test, before launching: state the model, the expected cost and the duration, and wait | plugin (hallway-test) | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
+| 63 | No stakeholder record: one question ("who uses it first, what do they already know?"), marked "not on record" in the brief; the tester template loses its default persona | plugin (hallway-test, tester-brief) | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
+| 64 | The tester template gets an optional sentence: "no requirements exist; your expectations are your own, mark them as such" | plugin (tester-brief) | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
+| 65 | A playbook path "existing tool, before its first hand-over": the hallway test now, a requirements retcon afterwards from its findings; the README's first steps name the hallway test for a working tool | plugin (playbook, README) | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
+| 66 | No loop: the hallway test offers the playbook only if it has not run in this session | plugin (hallway-test) | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
+| 67 | Questions during a run: with no design, the owner answers; ask whether they stay available or collect the questions for afterwards | plugin (hallway-test) | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
+| 68 | The mode is chosen with the person (behaviour, impatient user, by eye, ...), with a recommendation | plugin (hallway-test) | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
+| 69 | A short walk-through offered when the person cannot name the coverage; the debrief offered at the end of a first use | plugin (hallway-test) | small | done in 0.4 (principal, 2026-11-05: "go with your leans") |
 
 Fixed while grading: `usage.py` and `transcript.py` run from a subdirectory of the checkout found no sessions; they now also look under the checkout's root (test added).
 

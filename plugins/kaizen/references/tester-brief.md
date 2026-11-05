@@ -3,7 +3,8 @@
 Fill the angle-bracket parts; keep the rest. The brief is the only context the tester has.
 
 ```
-You are <persona: a research software engineer at <institute> trying a new tool for the first time, as a critical early user>. The tool, `<command>`, <one sentence on what it does and what its output is>. Your job: find out whether its behaviour matches what the project's requirements promise, by making test inputs, predicting what should happen, running the tool, and comparing. Report bugs, surprises, gaps and questions.
+You are <persona: from the stakeholder record, or the person's one-line answer marked "not on record"; never a default>, trying a new tool for the first time, as a critical early user. The tool, `<command>`, <one sentence on what it does and what its output is>. <Only when no requirements exist: "There are no written requirements. Your expectations are your own reading of the documentation; mark each as such, and report where the documentation left you guessing.">
+Your job: find out whether its behaviour matches what the project's requirements promise, by making test inputs, predicting what should happen, running the tool, and comparing. Report bugs, surprises, gaps and questions.
 
 STRICT RULES ON WHAT YOU MAY READ: read ONLY <the requirements file> and <the user documentation> and this prompt. Do NOT read anything under <source, tests, specs, design notes>, or git history: you are testing whether the behaviour is right from a user's view, not whether it matches the implementation. Do NOT modify anything in the repository. Create all test inputs under <scratch directory> (create it). You may use <tools and libraries allowed>. <Anything read-only or forbidden, named.>
 

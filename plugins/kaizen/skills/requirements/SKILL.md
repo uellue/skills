@@ -5,7 +5,7 @@ description: Interview the person who needs a solution and write a demand and re
 
 # Requirements interview
 
-Text id `1df9f2f9`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `050d7c12`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of a demand and requirements form written at ER-C (a checklist; no institute requires it), writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
 
@@ -22,7 +22,7 @@ This skill tightens an idea that exists, however loosely (the playbook's test de
 
 Before asking, check what is already known (the instruction files, design notes, the stakeholder record, an earlier walk-through or play test, the record above), draft the sections from it and ask the person to correct rather than repeat.
 
-Then work in rounds (adapted, with thanks, from the `grilling` skill in Matt Pocock's MIT-licensed collection). Each round asks the **frontier**: every open question whose prerequisites are already settled, numbered, each with your recommended answer, worded so that "yes" accepts it. A question that depends on another one still open waits for a later round. Facts are yours to find (look them up, or send a sub-agent without blocking the round); decisions are the person's. The form's sections are the checklist of what must be covered, not an order: the demand (1.1 to 1.4) usually settles first because the rest depends on it; otherwise follow what the answers unblock. Keep rounds short; the interview is done when the frontier is empty or the rest is deferred.
+Then work in rounds (adapted, with thanks, from the `grilling` skill in Matt Pocock's MIT-licensed collection). Each round asks the **frontier**: every open question whose prerequisites are already settled, numbered, each with your recommended answer, worded so that "yes" accepts it. Give no recommendation for safety limits, who may authorise what the software does, or who owns the instrument or system it acts on (2.11, Release): those answers must come from the person or the owner. A question that depends on another one still open waits for a later round. Facts are yours to find (look them up, or send a sub-agent without blocking the round); decisions are the person's. The form's sections are the checklist of what must be covered, not an order: the demand (1.1 to 1.4) usually settles first because the rest depends on it; otherwise follow what the answers unblock. Keep rounds short; the interview is done when the frontier is empty or the rest is deferred.
 
 Habits that make the answers usable:
 
@@ -86,6 +86,7 @@ Before saying the document is ready, run the handover check and show its result:
 3. Every quote or figure taken from a sub-agent's report, checked against the source by you (a grep per quote is enough); say which you could not check.
 4. The three lists the builder needs first: the unknowns, the interfaces outside our control, and the risks.
 5. Whether the build may start, and on which assumptions; the questions that block it, with who answers. The decisions the build will need go into a decision record (the playbook's "what we decided" moment).
+6. The questions for a person who was not in the interview (the instrument's owner, a facility manager, an administrator), as a short text ready to send, with Matt Pocock's `to-questionnaire` where installed; their answers come back as `[answered]` with the name.
 
 ## Rules
 
