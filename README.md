@@ -37,6 +37,7 @@ Starting an agent session is onboarding a new employee that knows only the repos
 2. **Slash commands on their own line** (`/model`, `/effort`), then read the model line back. Typed inside a message they do nothing.
 3. **Decide in numbered replies with a priority**; ask for options with counter-arguments, not for decisions.
 4. **Label examples** ("this is one case of ..."), and generalise your own corrections.
+   Phrase a request as a question when you want pushback; the agent's standing instructions say to answer with a verdict and the argument against before acting.
 5. **Ask the behaviour question early**: "what changes for the user?", "does the test check the outcome the user cares about?"
 6. **Judge behaviour, not text**: try it, play-test it, screenshot it, run it against the real back-end. Measure when the agent has an opinion about itself.
 7. **Decide or delegate what you would leave hanging**; constraints (reviewer, MR shape, remote, account) before the work, not after.
@@ -55,6 +56,7 @@ Standing instructions, for `AGENTS.md` or `CLAUDE.md`:
 - Every mechanism, option or output detail names the requirement, scenario or decision that asks for it; without one, leave it out and suggest it as a next step.
 - Earlier notes and brainstorming are options to evaluate, not requirements.
 - When a request names a specific case, say whether you read it as the whole ask or as an example of a rule, or ask.
+- A request phrased as a question ("should we ...?", "could X be a good place?", "we can proceed now?") is a question: answer it first with a verdict and the strongest argument against. Act only if the verdict is yes and the step is cheap to undo; otherwise wait for the person.
 - Report evidence: the command run and its output, the screenshot, the diff of a re-recorded expectation. Report "clean" only from the command the commit or CI runs.
 - A change beyond a few hundred lines gets a review by an agent that did not write it before it is handed over.
 - At every hand-over that follows accepted leans, list each one: implemented as agreed, or deviated and why.
