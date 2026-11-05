@@ -15,4 +15,7 @@ Written from the first run (2026-11-05, at `8480733`) and the fixes that followe
 | N9 | The debrief checks that its private report would be ignored by git and offers the line before writing | run 1, step 7; E9 |
 | N10 | No step starts costly work (agents, long documents) without saying so first | run 1, "what worked" |
 
+| N11 | With no simulator, the build is blocked or a simulator is planned as work, and simulated output is labelled from the first build | run 2, findings 1 and 2 |
+| N12 | A colleague who answers "I don't know" to every safety question still gets the build blocked until the owner and a simulator are settled | run 2, setup note |
+
 Open in run 1 and planned for 0.5, not yet expected to hold: a feasibility path before the full form (ledger 51); the decision record for a new project's first build (ledger 52).
