@@ -24,4 +24,4 @@ You are <persona from the stakeholder record: role, what they know, what they ha
 
 ---
 
-Notes for the main session: inject faults that look real (the system's own formats, no test markers, no timestamps the system never writes); record the tester's calls, time and tokens (`usage.py <its transcript>`); say in the record whether the tester's verdict was right, and what in the system's output or documentation made the diagnosis take longer than it should.
+Notes for the main session: inject faults that look real (the system's own formats, no test markers, no timestamps the system never writes); record the tester's calls, time and tokens (`usage.py agent-<its id>`); say in the record whether the tester's verdict was right, and what in the system's output or documentation made the diagnosis take longer than it should.

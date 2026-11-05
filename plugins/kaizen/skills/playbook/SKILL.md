@@ -13,7 +13,7 @@ All shared documents live in the project's `design/` directory. "The ledger" is 
 
 1. Look for the documents in the table below. For each one that is missing and that this session's work would need, say so and offer the skill that writes it; do not write it unasked.
 2. Choose the path by size (below) and say which.
-3. Check which complementary tools are present, and follow the sections below: OpenSpec (an `openspec/` directory, or `openspec --version`); Matt Pocock's skills (`grill-me`, `domain-modeling` or `ask-matt` among the available skills, or their documents: `GLOSSARY.md` at the root, `docs/adr/`, `docs/agents/`).
+3. Check which complementary tools are present, and follow the sections below: OpenSpec (an `openspec/` directory, or `openspec --version`); Matt Pocock's skills (`claude plugin list` shows `mattpocock-skills`, or copies under `.claude/skills/` or `~/.claude/skills/`; most of his skills are invoked by name only and do not appear in the list of skills an agent sees; his documents are a further sign: `GLOSSARY.md` at the root, `docs/adr/`, `docs/agents/`).
 4. If the request names a case or a solution, ask whether it is the whole need or an example, and whether a persona on record is the one asking.
 5. If the session will hand something over (a document, a change, a merge request), plan the hallway test and the debrief as part of the work, not after it.
 
@@ -64,7 +64,7 @@ The plugin covers what comes before a specification (stakeholders, requirements,
 
 ## Alongside Matt Pocock's skills
 
-Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills) are a complete lifecycle of their own, with a router (`ask-matt`), a specification path (`to-spec`, `to-tickets`), review and retrospective. They complement the plugin and the plugin does not depend on them. Their Claude Code plugin installs all of them at once, and eleven of them start on their own (among them `grilling`, `domain-modeling`, `tdd`, `prototype` and `code-review`, which shares its name with Claude Code's built-in command); [skills.sh](https://skills.sh/mattpocock/skills) copies single skills instead. When they are not present and a moment below would benefit, mention them once with that information; do not install them unasked.
+Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills) are a complete lifecycle of their own, with a router (`ask-matt`), a specification path (`to-spec`, `to-tickets`), review and retrospective. They complement the plugin and the plugin does not depend on them. Their Claude Code plugin installs all of them at once (27 skills in version 1.3.2, checked 2026-11-05), and eleven of them start on their own (among them `grilling`, `domain-modeling`, `tdd`, `prototype` and `code-review`, which shares its name with Claude Code's built-in command); [skills.sh](https://skills.sh/mattpocock/skills) copies single skills instead. When they are not present and a moment below would benefit, mention them once with that information; do not install them unasked.
 
 | Moment | Kaizen | Theirs, when present |
 |---|---|---|
@@ -72,11 +72,11 @@ Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills) are a complete 
 | Vocabulary | none | `domain-modeling` keeps `GLOSSARY.md` at the repository root; kaizen documents use its terms and do not redefine them |
 | Questions for a real stakeholder | the walk-through lists them | `to-questionnaire` turns them into a document to send or fill in together |
 | What we decided | the decision record in `design/changes/` | an ADR in `docs/adr/` only for a decision that is hard to reverse, surprising without context and the result of a real trade-off (their criteria); it links to the decision record |
-| Specification | OpenSpec, or the decision record | `to-spec` and `to-tickets` as another option; the same rule applies: specs and tickets cite the example IDs |
+| Specification | OpenSpec, or the decision record | `to-spec` and `to-tickets` as another option (they need his `setup-matt-pocock-skills` run once for the issue tracker); the same rule applies: specs and tickets cite the example IDs |
 | Retrospective | `debrief`: the collaboration, coaching for the person, the history across debriefs | `retro`: the agent's environment (checks, navigation, steering files), run in the session before it is cleared; the two complement each other |
 | Before logging off | the debrief's notes, the hand-over | `handoff` writes the state for the next session |
 
-When `ask-matt` routes the work, place the kaizen moments in its flow: stakeholders and the requirements interview after the grilling, walk-throughs and `design/examples.md` before `to-spec`, the hallway test before the pull request, the debrief on its schedule. Their documents stay where their skills put them (`GLOSSARY.md`, `docs/adr/`, `docs/agents/`, `.scratch/`); the kaizen documents stay in `design/`.
+When `ask-matt` routes the work, place the kaizen moments in its flow: stakeholders and the requirements interview after the grilling, walk-throughs and `design/examples.md` before `to-spec`, the hallway test before the pull request, the debrief on its schedule. `to-spec` synthesises the conversation without an interview, and ask-matt keeps grilling, spec and tickets in one context window: the kaizen steps in between fill that window, so tell `to-spec` to read `design/requirements.md`, `design/examples.md` and the decision record, or compact at that boundary as ask-matt advises. Their documents stay where their skills put them (`GLOSSARY.md`, `docs/adr/`, `docs/agents/`, `.scratch/`); the kaizen documents stay in `design/`.
 
 ## Which skill would have supported this
 

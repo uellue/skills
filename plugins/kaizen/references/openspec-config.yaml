@@ -1,5 +1,5 @@
 # Rules for a project's openspec/config.yaml when the kaizen plugin is used alongside OpenSpec.
-# Merge into the project's file (the one `openspec init` generates is empty); adapt the context to the project.
+# Merge into the project's file (the one `openspec init` generates holds comments only); adapt the context to the project.
 # Why: OpenSpec structures the change and validates its form; these rules carry the kaizen documents
 # (stakeholders, requirements, walk-throughs, acceptance examples) into it and keep the hallway test after it.
 
