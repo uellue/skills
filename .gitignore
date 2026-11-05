@@ -1,0 +1,4 @@
+# Private debrief reports and exported session transcripts (see plugins/kaizen/skills/debrief/SKILL.md)
+/.claude/debriefs/
+/.claude/transcripts/
+__pycache__/
