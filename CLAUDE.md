@@ -1,6 +1,6 @@
 # skills
 
-Marketplace of one plugin, `plugins/kaizen/`: skills in `skills/*/SKILL.md`, templates and briefs in `references/`, scripts in `scripts/`. What the plugin must do and for whom: `design/` (stakeholders, requirements, examples with IDs, testing plan, the kaizen ledger). Rerunnable comparison: `benchmarks/`.
+Marketplace of one plugin, `plugins/kaizen/`: skills in `skills/*/SKILL.md`, templates and briefs in `references/`, scripts in `scripts/`. What the plugin must do and for whom: `design/` (stakeholders, requirements, examples with IDs, testing plan, the kaizen ledger). Rerunnable checks of the skills' behaviour: `benchmarks/` (`newcomer-sem/` is the quick self-test of the whole path, run it after changing a skill; `notes-tags/` compares processes).
 
 - Check: `./check.sh` (script tests on synthetic transcripts, lint of the skill texts; the pre-commit hook and CI run the same). Say "ready" only with its output; a change to a script gets a test in `tests/`.
 - Try your edits: the marketplace is this checkout and lists the plugin by a relative path, so it loads in place; `/reload-plugins` (or a new session) picks up changed skills, no version bump needed (code.claude.com/docs/en/plugins/loading.md, checked 2026-11-05). After editing a skill, run `python3 plugins/kaizen/scripts/version.py --stamp`: each skill carries a text id that tells a session it runs an older text, and the check fails while one is stale.
