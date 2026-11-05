@@ -1,11 +1,11 @@
 ---
 name: requirements
-description: Interview the person who needs a solution and write a demand and requirements specification in the structure of ER-C's form (demand, users, use scenarios, uncertainties, interfaces, operating conditions, reliability, performance, installation, portability, jurisdictions, lifetime, risks, standards). Use it at the start of a project or a larger change, whenever the user wants to specify, clarify or write down requirements, says "requirements", "Lastenheft", "Pflichtenheft", "demand specification", "what do we actually need", or asks to fill in the requirements form; to check an existing requirements document for what it skips; to reconstruct ("retcon") the requirements of something that grew from playing around, from its history, code and conversations; and on one topic whenever an open question or a vague idea needs fleshing out. Where OpenSpec is also installed, use this skill rather than /opsx:explore to clarify a need.
+description: Interview the person who needs a solution and write a demand and requirements specification along a demand and requirements form written at ER-C (demand, users, use scenarios, uncertainties, interfaces, operating conditions, reliability, performance, installation, portability, jurisdictions, lifetime, risks, standards). Use it at the start of a project or a larger change, whenever the user wants to specify, clarify or write down requirements, says "requirements", "Lastenheft", "Pflichtenheft", "demand specification", "what do we actually need", or asks to fill in the requirements form; to check an existing requirements document for what it skips; to reconstruct ("retcon") the requirements of something that grew from playing around, from its history, code and conversations; and on one topic whenever an open question or a vague idea needs fleshing out. Where OpenSpec is also installed, use this skill rather than /opsx:explore to clarify a need.
 ---
 
 # Requirements interview
 
-The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of ER-C's demand and requirements form, writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
+The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of a demand and requirements form written at ER-C (a checklist; no institute requires it), writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
 
 This skill tightens an idea that exists, however loosely. To get from nothing to an idea, a free discovery interview serves better, for example `grill-me` from Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills); its result is the record this interview starts from.
 
@@ -73,7 +73,7 @@ Decides: <...>. Builds: <...>. Pays: <...>. Signs off: <...>.
 - <question>, for <person>, resolves <section>, deferred to <stage>
 ```
 
-Mark each item, not only each section: a section marked "answered" with assumed lines inside misleads the next builder. If the person wants the institute's Word form filled, produce it from this Markdown with the document tools available, section by section under the same numbers; the Markdown stays the working copy.
+Mark each item, not only each section: a section marked "answered" with assumed lines inside misleads the next builder. If the person wants the form's Word version filled, produce it from this Markdown with the document tools available, section by section under the same numbers; the Markdown stays the working copy.
 
 ## Handover
 

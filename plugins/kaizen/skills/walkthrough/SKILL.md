@@ -23,7 +23,7 @@ When the user invokes this skill together with `requirements`, do the demand sec
 
 ## Before the walk: the questionnaire
 
-Read `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`, a requirements questionnaire adapted from ER-C's demand and requirements form. Check which of its questions the project's record already answers and note the ones it skips; the skipped ones often decide the walk (who operates this after the project? what happens when it is wrong and nobody notices?). The walk-through itself produces the questionnaire's section 2.1, the use scenarios; the rest is filled from the conversation with the real stakeholder, and a question without an answer is a finding.
+Read `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`, a requirements questionnaire adapted from a demand and requirements form written at ER-C. Check which of its questions the project's record already answers and note the ones it skips; the skipped ones often decide the walk (who operates this after the project? what happens when it is wrong and nobody notices?). The walk-through itself produces the questionnaire's section 2.1, the use scenarios; the rest is filled from the conversation with the real stakeholder, and a question without an answer is a finding.
 
 ## The walk
 
