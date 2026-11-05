@@ -60,9 +60,10 @@ class TestSkills(unittest.TestCase):
         spec.loader.exec_module(version)
         for p in SKILLS:
             with self.subTest(p.parent.name):
-                m = re.search(r"Text id `([0-9a-f]*)`", p.read_text())
-                self.assertIsNotNone(m, "the skill has no text id line")
-                self.assertEqual(m.group(1), version.text_id(p), "stale text id: run python3 plugins/kaizen/scripts/version.py --stamp")
+                found = version.STAMP.findall(p.read_text())
+                self.assertEqual(len(found), 1, "exactly one line starting with 'Text id `...`'")
+                self.assertRegex(body(p), r"\A\s*# [^\n]+\n\s*Text id `", "the text id line comes right after the title")
+                self.assertEqual(found[0], version.text_id(p), "stale text id: run python3 plugins/kaizen/scripts/version.py --stamp")
                 self.assertIn(f"scripts/version.py {p.parent.name}`", p.read_text())
 
     def test_dates_only_as_checked_facts(self):

@@ -5,7 +5,7 @@ description: Put on the shoes of a stakeholder and walk through a process step b
 
 # Stakeholder walk-through
 
-Text id `a9b46476`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough` and give its line to the person; if its text id differs from this one, this session runs an older text of the skill: say so and suggest `/reload-plugins`.
+Text id `e24c422b`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough` and give its line to the person (if the script fails, say so and carry on); if its text id differs from this one, this session runs an older text of the skill: say so and suggest `/reload-plugins`.
 
 Requirements that nobody wrote down surface when someone who is not the author tries to do the thing: the operator installing the service, the scientist searching for their data, the colleague setting up a repository, the maintainer reading a log at three in the morning. A walk-through does that on paper, with a named persona and a concrete process, before the change is specified. Its output is not a design: it is questions for the owner, gaps, and acceptance examples that the specs and tests can use.
 
@@ -92,4 +92,4 @@ What exists: <documents, code, commands read; the running system used>.
 - Concrete over general. "The operator runs `modama-crawler crawl` and sees nothing for two hours" is a finding; "feedback could be improved" is not.
 - Questions, gaps and examples are the deliverable. Do not design the fix here; the owner decides what becomes a requirement, and the decisions go into the decision record (the playbook's "what we decided" moment).
 - A number in the walk has a source (the owner, a measurement, a document); the agent's own estimate is marked as one.
-- At the end, one line into the project's `design/kaizen.md`: what in this skill did not fit. If the file does not exist yet, say first where it will go and that it is meant to be committed.
+- At the end, one line into the project's `design/kaizen.md`: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).

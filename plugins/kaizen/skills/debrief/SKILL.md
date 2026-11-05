@@ -5,7 +5,7 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `8382af4c`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief` and give its line to the person; if its text id differs from this one, this session runs an older text of the skill: say so and suggest `/reload-plugins`.
+Text id `beda3005`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief` and give its line to the person (if the script fails, say so and carry on); if its text id differs from this one, this session runs an older text of the skill: say so and suggest `/reload-plugins`.
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into three kinds of output: lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better), and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report.
 
@@ -13,7 +13,7 @@ Structure and rules adapted from two MIT-licensed skills, with thanks: `debrief`
 
 ## When
 
-Ends do not announce themselves (a compaction, a reboot, a refused turn), so the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Three cheap habits feed it between runs; if the project has no ledger yet, the first capture says where it will go (`design/kaizen.md`, meant to be committed) before writing it:
+Ends do not announce themselves (a compaction, a reboot, a refused turn), so the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Three cheap habits feed it between runs; the first capture into a new ledger first says where it goes:
 
 - **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Sorting is the debrief's job; capture must cost nothing.
 - **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation.

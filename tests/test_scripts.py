@@ -176,25 +176,72 @@ class TestLocate(Fixture):
 
 
 class TestVersion(unittest.TestCase):
-    def test_one_line_with_version_and_text_id(self):  # E16
-        r = subprocess.run([sys.executable, SCRIPTS / "version.py", "kaizen:debrief"], capture_output=True, text=True)
-        self.assertRegex(r.stdout.strip(), r"^kaizen \d+\.\d+\.\d+(, commit \w+( with uncommitted changes)?)?; debrief text id [0-9a-f]{8} \(.*current text\)$")
+    """version.py in throwaway copies of the plugin: a checkout that tracks it, and an installed copy."""
 
-    def test_stamp_refuses_outside_a_checkout(self):
+    def setUp(self):
         import shutil
         import tempfile
 
-        with tempfile.TemporaryDirectory() as d:
-            copy = Path(d) / "kaizen"
-            shutil.copytree(SCRIPTS.parent, copy, ignore=shutil.ignore_patterns("__pycache__"))
-            before = {p: p.read_text() for p in copy.glob("skills/*/SKILL.md")}
-            r = subprocess.run([sys.executable, copy / "scripts" / "version.py", "--stamp"], capture_output=True, text=True, cwd=d)
-            self.assertNotEqual(r.returncode, 0)
-            self.assertIn("not a git checkout", r.stderr)
-            self.assertEqual(before, {p: p.read_text() for p in copy.glob("skills/*/SKILL.md")})
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self.tmp.name)
+        self.copy = self.root / "kaizen"
+        shutil.copytree(SCRIPTS.parent, self.copy, ignore=shutil.ignore_patterns("__pycache__"))
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def run_version(self, *args):
+        return subprocess.run([sys.executable, self.copy / "scripts" / "version.py", *args], capture_output=True, text=True, cwd=self.root)
+
+    def git(self, *args):
+        env = {**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t", "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t"}
+        subprocess.run(["git", "-C", str(self.root), *args], env=env, capture_output=True, check=True)
+
+    def skills(self):
+        return {p: p.read_text() for p in self.copy.glob("skills/*/SKILL.md")}
+
+    def test_one_line_with_version_and_the_written_id(self):  # E16
+        r = self.run_version("kaizen:debrief")
+        written = re.search(r"^Text id `([0-9a-f]{8})`", (self.copy / "skills/debrief/SKILL.md").read_text(), re.M).group(1)
+        self.assertEqual(r.stdout.strip(), f"kaizen {json.loads((self.copy / '.claude-plugin/plugin.json').read_text())['version']}; debrief text id {written} (compare with the id at the top of the skill)")
+
+    def test_edit_without_stamp_is_named_not_disguised(self):  # E16
+        f = self.copy / "skills/debrief/SKILL.md"
+        f.write_text(f.read_text() + "\nedited\n")
+        out = self.run_version("debrief").stdout
+        self.assertIn("edited after its last --stamp", out)
+
+    def test_stamp_refuses_an_installed_copy_even_inside_a_repository(self):
+        self.git("init", "-q")
+        (self.root / "dotfile").write_text("x")
+        self.git("add", "dotfile")
+        self.git("commit", "-q", "-m", "an enclosing repository that does not track the plugin")
+        before = self.skills()
+        r = self.run_version("--stamp")
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("not tracked by a git checkout", r.stderr)
+        self.assertEqual(before, self.skills())
+        self.assertNotIn("commit", self.run_version("debrief").stdout)
+
+    def test_stamp_in_a_checkout_ignores_quotes_and_rejects_malformed_lines(self):
+        self.git("init", "-q")
+        self.git("add", ".")
+        self.git("commit", "-q", "-m", "checkout")
+        play = self.copy / "skills/playbook/SKILL.md"
+        play.write_text(play.read_text().replace("description: ", "description: Text id `` quoted. ", 1) + "\nedited\n")
+        self.assertEqual(self.run_version("--stamp").returncode, 0)
+        self.assertIn("Text id `` quoted.", play.read_text())
+        self.assertNotIn("edited after", self.run_version("playbook").stdout)
+        walk = self.copy / "skills/walkthrough/SKILL.md"
+        walk.write_text(re.sub(r"^Text id `[0-9a-f]*`", "Text id `XYZ`", walk.read_text(), flags=re.M))
+        before = self.skills()
+        r = self.run_version("--stamp")
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("walkthrough", r.stderr)
+        self.assertEqual(before, self.skills(), "nothing is written when one file is malformed")
 
     def test_unknown_skill_names_the_known_ones(self):
-        r = subprocess.run([sys.executable, SCRIPTS / "version.py", "nosuch"], capture_output=True, text=True)
+        r = self.run_version("nosuch")
         self.assertNotEqual(r.returncode, 0)
         self.assertIn("debrief", r.stderr)
 
