@@ -1,6 +1,6 @@
 ---
 name: playbook
-description: Which kaizen skill fits now, and what the shared documents are. The lifecycle from a first idea to stakeholders, requirements, walk-throughs, the decision record, the build, the hallway test and the debrief, with the moment each skill fires, the documents they share, a small-change path, working without a person, and how to work alongside OpenSpec. Use it at the start of a project or a larger change, when the user asks how to approach product or feature development with agents, "what should we do next", "which skill applies", or when a session is about to specify, build or hand over something and no stakeholder record or requirements exist yet.
+description: Which kaizen skill fits now, and what the shared documents are. The lifecycle from a first idea to stakeholders, requirements, walk-throughs, the decision record, the build, the hallway test and the debrief, with the moment each skill fires, the documents they share, a small-change path, working without a person, and how to work alongside OpenSpec and Matt Pocock's skills. Use it at the start of a project or a larger change, when the user asks how to approach product or feature development with agents, "what should we do next", "which skill applies", when routing work with ask-matt or another skill router (to place the kaizen moments in that flow), or when a session is about to specify, build or hand over something and no stakeholder record or requirements exist yet.
 ---
 
 # Playbook
@@ -13,7 +13,7 @@ All shared documents live in the project's `design/` directory. "The ledger" is 
 
 1. Look for the documents in the table below. For each one that is missing and that this session's work would need, say so and offer the skill that writes it; do not write it unasked.
 2. Choose the path by size (below) and say which.
-3. Check whether OpenSpec is in use (an `openspec/` directory) or installed (`openspec --version`), and follow "Alongside OpenSpec" below.
+3. Check which complementary tools are present, and follow the sections below: OpenSpec (an `openspec/` directory, or `openspec --version`); Matt Pocock's skills (`grill-me`, `domain-modeling` or `ask-matt` among the available skills, or their documents: `GLOSSARY.md` at the root, `docs/adr/`, `docs/agents/`).
 4. If the request names a case or a solution, ask whether it is the whole need or an example, and whether a persona on record is the one asking.
 5. If the session will hand something over (a document, a change, a merge request), plan the hallway test and the debrief as part of the work, not after it.
 
@@ -21,7 +21,7 @@ All shared documents live in the project's `design/` directory. "The ledger" is 
 
 | Moment | Skill | Writes | Fires when |
 |---|---|---|---|
-| From nothing to an idea | optional: a discovery interview such as `grill-me` (Matt Pocock's MIT-licensed skills, github.com/mattpocock/skills; invoked by name only) | notes the requirements interview starts from | there is no idea yet of what is needed |
+| From nothing to an idea | optional: `grill-me` or `grill-with-docs` from Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills); invoked by name only | notes the requirements interview starts from; with `grill-with-docs`, the glossary and ADRs | there is no idea yet of what is needed |
 | Who is this for | `requirements` (section 1.4) | `design/stakeholders.md`: one entry per persona (role, goal, knowledge, environment, what they never read, interviewed or simulated) | a project or change starts; a new kind of user appears; a walk-through or test needs a persona not on record |
 | What is needed | `requirements` | `design/requirements.md` (form sections as a checklist, markers per item, open questions with owner and stage) | a loose idea needs tightening; a project or larger change starts; a tool that grew from playing around needs its record reconstructed; an existing document to check; one open question or vague idea needs fleshing out |
 | How it would go | `walkthrough` | `design/walkthroughs/<persona>-<process>.md`; acceptance examples appended to `design/examples.md` | before a change is specified; requirements 2.1; before a hallway test, to decide what to test |
@@ -61,6 +61,22 @@ The plugin covers what comes before a specification (stakeholders, requirements,
 - **After apply, before archive:** the hallway test, with the scenarios as part of its coverage and at least half its effort outside them.
 - **Deferrals:** a question that changes the approach blocks the proposal; one that does not is deferred in the requirements with stage and owner and named in the proposal.
 - **Exploring:** where both are installed, clarify a need with `requirements` and `walkthrough`, not `/opsx:explore`, which writes into `specs/`.
+
+## Alongside Matt Pocock's skills
+
+Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills) are a complete lifecycle of their own, with a router (`ask-matt`), a specification path (`to-spec`, `to-tickets`), review and retrospective. They complement the plugin and the plugin does not depend on them. Their Claude Code plugin installs all of them at once, and eleven of them start on their own (among them `grilling`, `domain-modeling`, `tdd`, `prototype` and `code-review`, which shares its name with Claude Code's built-in command); [skills.sh](https://skills.sh/mattpocock/skills) copies single skills instead. When they are not present and a moment below would benefit, mention them once with that information; do not install them unasked.
+
+| Moment | Kaizen | Theirs, when present |
+|---|---|---|
+| From nothing to an idea | none | `grill-me`, or `grill-with-docs` in a repository; its result is the record `requirements` starts from |
+| Vocabulary | none | `domain-modeling` keeps `GLOSSARY.md` at the repository root; kaizen documents use its terms and do not redefine them |
+| Questions for a real stakeholder | the walk-through lists them | `to-questionnaire` turns them into a document to send or fill in together |
+| What we decided | the decision record in `design/changes/` | an ADR in `docs/adr/` only for a decision that is hard to reverse, surprising without context and the result of a real trade-off (their criteria); it links to the decision record |
+| Specification | OpenSpec, or the decision record | `to-spec` and `to-tickets` as another option; the same rule applies: specs and tickets cite the example IDs |
+| Retrospective | `debrief`: the collaboration, coaching for the person, the history across debriefs | `retro`: the agent's environment (checks, navigation, steering files), run in the session before it is cleared; the two complement each other |
+| Before logging off | the debrief's notes, the hand-over | `handoff` writes the state for the next session |
+
+When `ask-matt` routes the work, place the kaizen moments in its flow: stakeholders and the requirements interview after the grilling, walk-throughs and `design/examples.md` before `to-spec`, the hallway test before the pull request, the debrief on its schedule. Their documents stay where their skills put them (`GLOSSARY.md`, `docs/adr/`, `docs/agents/`, `.scratch/`); the kaizen documents stay in `design/`.
 
 ## Which skill would have supported this
 

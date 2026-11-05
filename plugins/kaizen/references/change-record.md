@@ -26,4 +26,6 @@ Size budget: <for example "notes.py stays under 120 lines; no new dependency">.
 The questions that must be answered before the build starts, with who answers. If the build starts anyway, on which assumptions, and what changes if they turn out wrong.
 ```
 
+Where the project keeps ADRs (`docs/adr/`, for example from Matt Pocock's `domain-modeling` skill), a decision that is hard to reverse, surprising without context and the result of a real trade-off also gets an ADR that links back here; all other decisions stay in this record only.
+
 Hand-over of the built change: each must-example has a test that cites its ID; each accepted lean is listed as implemented as agreed or deviated and why; the hallway test record is linked.

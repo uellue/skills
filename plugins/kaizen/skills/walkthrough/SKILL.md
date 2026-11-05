@@ -79,7 +79,7 @@ What exists: <documents, code, commands read; the running system used>.
 
 ## After the walk
 
-- **Put the questions to a real stakeholder when one is available.** If a person in that role is in the room or reachable, list the open questions for them before anything else is relayed; their answers go into "Answers from the owner" and the confidence line changes from simulated to answered. A question the owner defers is recorded with the stage it is deferred to and who owns it, in the walk and in the requirements' open questions; a deferred question that lives only in chat is lost.
+- **Put the questions to a real stakeholder when one is available.** If a person in that role is in the room or reachable, list the open questions for them before anything else is relayed; their answers go into "Answers from the owner" and the confidence line changes from simulated to answered. A question the owner defers is recorded with the stage it is deferred to and who owns it, in the walk and in the requirements' open questions; a deferred question that lives only in chat is lost. If the stakeholder is not in the room, offer to turn the questions into a document to send (Matt Pocock's `to-questionnaire` skill does this, where it is installed).
 - **Update the stakeholder record** with what the walk taught about the persona.
 - **Hand the steps and the acceptance examples to the hallway test** as its coverage list when the thing exists or is built; after that test, add a line per step: imagined versus observed.
 

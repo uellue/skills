@@ -54,6 +54,8 @@ Independent review of the branch (2026-11-05, one Opus agent that did not write 
 |---|---|---|---|---|
 | 31 | A ledger in a public repository carries no details of other projects (transferred to their backlogs) and no security findings or secrets, not even as to-dos (review finding 17: two entries named internal details of other projects) | plugin (debrief) | small | done in 0.4 |
 | 32 | Discovery before the interview: an optional free interview such as `grill-me` (Matt Pocock) leads into `requirements`; the interview asks in rounds of unblocked questions with recommended answers (adapted from `grilling`); the form's section order is a checklist, not an order | plugin (playbook, requirements) | small | done in 0.4 |
+| 33 | Matt Pocock's skills as a complement like OpenSpec: the playbook checks for them, maps their steps onto its lifecycle (discovery, glossary, questionnaire, ADRs, spec path, retro, handoff), names the trade-off of installing the whole plugin; requirements, walkthrough, debrief and the decision record point to the matching skill; the README carries the paste-in line for projects that route with ask-matt | plugin; README | small | done in 0.4 |
+| 34 | A hook in the plugin that adds the kaizen moments to the context when `/ask-matt` is typed; only if the paste-in line and the playbook's trigger description prove insufficient; plugin hooks to be verified first | plugin (hook) | small | parked |
 
 ## Earlier recommendations
 
