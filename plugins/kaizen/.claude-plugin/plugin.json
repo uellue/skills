@@ -1,7 +1,7 @@
 {
   "name": "kaizen",
-  "version": "0.3.0",
-  "description": "Continuous improvement of the collaboration with agents (kaizen): a requirements interview in the structure of ER-C's demand form, a stakeholder walk-through, a hallway test by a fresh sub-agent (by behaviour and by eye), and a debrief with cited moments and coaching for the person.",
+  "version": "0.4.0",
+  "description": "Continuous improvement of the collaboration with agents (kaizen): a playbook for the life of a project, a requirements interview in the structure of ER-C's demand form, a stakeholder walk-through, a hallway test by a fresh sub-agent (by behaviour, by eye, as a diagnosis, on documents and instruction files), and a debrief with cited moments, coaching for the person, a kaizen ledger and transcript tools.",
   "author": {
     "name": "Dieter Weber"
   },
@@ -9,6 +9,8 @@
   "license": "MIT",
   "keywords": [
     "kaizen",
+    "playbook",
+    "stakeholders",
     "requirements",
     "walkthrough",
     "usability",

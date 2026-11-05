@@ -8,7 +8,7 @@
     {
       "name": "kaizen",
       "source": "./plugins/kaizen",
-      "description": "Continuous improvement of the collaboration with agents: a debrief with cited moments, coaching for the person and proposals with a destination; more to come"
+      "description": "Continuous improvement of the collaboration with agents: playbook, requirements interview, stakeholder walk-through, hallway test, and a debrief with cited moments, coaching for the person and a kaizen ledger"
     }
   ]
 }
