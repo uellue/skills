@@ -10,7 +10,8 @@ and its own home; projects also keep copies inside the checkout (.claude/transcr
 A session or sub-agent can be named by its id, a unique prefix of it, or a path to its .jsonl file.
 
 Rendering: every event carries the JSONL line number (L<n>) and a timestamp, so a finding can cite the
-moment. Labels: USER (typed by the person, including messages queued while a turn ran), ASSISTANT, TOOL,
+moment. Headers start at column zero and every body line is indented by two spaces, so text inside a
+message or a tool result (a rendered transcript, a pasted log) can never pass for a header. Labels: USER (typed by the person, including messages queued while a turn ran), ASSISTANT, TOOL,
 RESULT, and HARNESS for everything the harness put in the user's place (skill texts, sub-agent reports,
 task notifications, slash-command output, reminders, interrupt markers).
 
@@ -171,6 +172,11 @@ def trunc(s, n: int) -> str:
     return s if len(s) <= n else s[:n] + f" …[+{len(s) - n} chars]"
 
 
+def body(s: str) -> str:
+    """Indent every line by two spaces: a line at column zero in a rendering is always a header."""
+    return "\n".join("  " + line for line in s.split("\n"))
+
+
 def render(path: Path, lim: dict, out=sys.stdout):
     def p(*a):
         print(*a, file=out)
@@ -184,7 +190,7 @@ def render(path: Path, lim: dict, out=sys.stdout):
         if isinstance(att, dict) and att.get("type") == "queued_command":
             text = as_text(att.get("prompt"))
             label = "HARNESS (queued)" if is_harness(text) else "USER (queued mid-turn)"
-            p(f"\n=== L{n} {ts} {label}\n{trunc(text, lim['text'])}")
+            p(f"\n=== L{n} {ts} {label}\n{body(trunc(text, lim['text']))}")
             continue
         content = (o.get("message") or {}).get("content")
         if t == "user":
@@ -195,19 +201,19 @@ def render(path: Path, lim: dict, out=sys.stdout):
                     label = "HARNESS" if (o.get("isMeta") or is_harness(text)) else ("USER (command)" if text.lstrip().startswith("<command-") else "USER")
                     if label.startswith("USER") and "subagents" in path.parts:
                         label = "PARENT"
-                    p(f"\n=== L{n} {ts} {label}\n{trunc(text, lim['text'])}")
+                    p(f"\n=== L{n} {ts} {label}\n{body(trunc(text, lim['text']))}")
                 elif isinstance(c, dict) and c.get("type") == "tool_result":
                     flag = " ERROR" if c.get("is_error") else ""
-                    p(f"\n--- L{n} {ts} RESULT{flag}\n{trunc(as_text(c.get('content')) or str(c.get('content') or ''), lim['results'])}")
+                    p(f"\n--- L{n} {ts} RESULT{flag}\n{body(trunc(as_text(c.get('content')) or str(c.get('content') or ''), lim['results']))}")
         elif t == "assistant":
             model = ((o.get("message") or {}).get("model") or "?").replace("claude-", "")
             for c in content or []:
                 if not isinstance(c, dict):
                     continue
                 if c.get("type") == "text":
-                    p(f"\n=== L{n} {ts} ASSISTANT ({model})\n{trunc(c.get('text', ''), lim['text'])}")
+                    p(f"\n=== L{n} {ts} ASSISTANT ({model})\n{body(trunc(c.get('text', ''), lim['text']))}")
                 elif c.get("type") == "tool_use":
-                    p(f"\n--- L{n} {ts} TOOL {c.get('name')}\n{trunc(c.get('input'), lim['tools'])}")
+                    p(f"\n--- L{n} {ts} TOOL {c.get('name')}\n{body(trunc(c.get('input'), lim['tools']))}")
         elif t == "summary":
             p(f"\n##### L{n} SUMMARY: {trunc(o.get('summary', ''), 300)}")
 
