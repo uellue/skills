@@ -103,6 +103,7 @@ The 2026-11-03 debrief (data-management-system) made seven proposals and five co
 
 - 2026-11-05, requirements (round on the walk-throughs' open questions): two recommendations used terms the principal did not know ("checkout or installed version", "behaviour fixture") and cost a round each; the skill asks for the person's words in the answers but has no rule to put the questions in the person's words, with an example of what a term means.
 - 2026-11-05, hallway-test (dry run for a new colleague who wants an agent to operate a scanning electron microscope; made-up answers, nothing launched): with nothing built and no requirements, the skill only says "say so" and does not hand over to the playbook, so a newcomer pointed at it starts at the wrong moment; "what must not be touched" covers a read-only mount but not hardware: an instrument needs "simulator or dry run only unless the owner says otherwise" and a check that the simulator enforces the instrument's limits.
+- 2026-11-05, hallway-test (second dry run, same colleague, through the whole lifecycle): the session ran the skill text from before `cf6f9c6`, because edits reach a running session only with `/reload-plugins`, and nothing showed which version ran (E16 observed live; fixed in 0.4: each skill carries a text id kept current by the check and starts by comparing it with `version.py`); a simulator-backed test should say that simulator output is labelled as such and never presented as a real measurement. (In the hallway-test skill since 0.4.)
 
 ## Notes for the next debrief
 

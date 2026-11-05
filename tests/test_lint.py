@@ -52,6 +52,19 @@ class TestSkills(unittest.TestCase):
             with self.subTest(p.parent.name):
                 self.assertLessEqual(len(body(p).split()), BODY_MAX_WORDS, "body over budget")
 
+    def test_text_ids_current(self):  # E16
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("version", PLUGIN / "scripts" / "version.py")
+        version = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(version)
+        for p in SKILLS:
+            with self.subTest(p.parent.name):
+                m = re.search(r"Text id `([0-9a-f]*)`", p.read_text())
+                self.assertIsNotNone(m, "the skill has no text id line")
+                self.assertEqual(m.group(1), version.text_id(p), "stale text id: run python3 plugins/kaizen/scripts/version.py --stamp")
+                self.assertIn(f"scripts/version.py {p.parent.name}`", p.read_text())
+
     def test_dates_only_as_checked_facts(self):
         # A date in a skill body is a dated fact ("checked 2026-11-05"), never an anecdote.
         for p in SKILLS:

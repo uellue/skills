@@ -5,6 +5,8 @@ description: Which kaizen skill fits now, and what the shared documents are. The
 
 # Playbook
 
+Text id `d0daf3c2`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook` and give its line to the person; if its text id differs from this one, this session runs an older text of the skill: say so and suggest `/reload-plugins`.
+
 The other skills in this plugin are moments in one process. This skill says which moment a session is in, what document that moment reads and writes, and what to do when the document is missing. It proposes; the person decides which moment the session is in and which path to take.
 
 All shared documents live in the project's `design/` directory. "The ledger" is always the project's own `design/kaizen.md`.

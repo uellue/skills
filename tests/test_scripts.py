@@ -175,6 +175,17 @@ class TestLocate(Fixture):
         self.assertEqual(gist(text), "/kaizen:debrief the week")
 
 
+class TestVersion(unittest.TestCase):
+    def test_one_line_with_version_and_text_id(self):  # E16
+        r = subprocess.run([sys.executable, SCRIPTS / "version.py", "kaizen:debrief"], capture_output=True, text=True)
+        self.assertRegex(r.stdout.strip(), r"^kaizen \d+\.\d+\.\d+(, commit \w+( with uncommitted changes)?)?; debrief text id [0-9a-f]{8}$")
+
+    def test_unknown_skill_names_the_known_ones(self):
+        r = subprocess.run([sys.executable, SCRIPTS / "version.py", "nosuch"], capture_output=True, text=True)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("debrief", r.stderr)
+
+
 class TestPythonVersion(unittest.TestCase):
     def test_old_python_gets_one_line(self):  # E11
         for name in ("transcript.py", "usage.py"):
