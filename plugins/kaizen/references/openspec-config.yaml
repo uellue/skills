@@ -1,0 +1,31 @@
+# Rules for a project's openspec/config.yaml when the kaizen plugin is used alongside OpenSpec.
+# Merge into the project's file (the one `openspec init` generates is empty); adapt the context to the project.
+# Why: OpenSpec structures the change and validates its form; these rules carry the kaizen documents
+# (stakeholders, requirements, walk-throughs, acceptance examples) into it and keep the hallway test after it.
+
+context: |
+  The rationale lives in design/: stakeholders.md (personas), requirements.md (demand and requirements,
+  markers per item), walkthroughs/ (personas walking processes), examples.md (acceptance examples with
+  IDs E1, E2, ...), hallway/ (records of fresh-user tests), kaizen.md (process ledger).
+  Specs here are the behaviour contract; design/ is the why. Cite example IDs and requirement numbers
+  instead of restating them. New requirements go to design/requirements.md, not into specs.
+  Fix unwanted outcomes when there is a concrete example; do not specify details nobody has asked for.
+  Security and safety are thought through before building.
+
+rules:
+  proposal:
+    - Name the persona from design/stakeholders.md whose need this serves
+    - Say what the request named and whether that is the whole need or one solution to it
+    - List the premises nobody has confirmed (items marked assumed in design/requirements.md)
+    - State which behaviour towards the user changes, or that none does
+    - List the must-examples from design/examples.md this change satisfies, and any without a scenario
+  specs:
+    - One requirement per observable behaviour
+    - Each scenario cites the example ID it comes from, or is marked "(assumed)"
+    - When a change modifies behaviour that has no spec yet, specify the current behaviour first
+  design:
+    - Record each decision an implementer would otherwise make alone, with who decided and whether it is reversible
+    - State the blocking questions and on which assumptions the build may start
+  tasks:
+    - Every task names how it is verified; tests cite example IDs
+    - The last task group is a hallway test (kaizen hallway-test) with the scenarios as part of its coverage, before archive
