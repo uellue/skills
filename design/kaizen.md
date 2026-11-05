@@ -36,6 +36,8 @@ Destination "plugin" means this repository; "other repos" means the projects' ow
 
 The 2026-11-03 debrief (data-management-system) made seven proposals and five coaching points; their status after the week, as seen in the seven sessions: proposals 1, 3, 5, 6 acted on; 2 and 4 recurring in four sessions each (escalated, proposals 14 and 15 above); 7 done but its table row never closed. Coaching 1, 3, 5 acted on; 2 and 4 partly. Details in that repository's debrief history.
 
+| 30 | A request phrased as a question is a question: verdict and strongest counter-argument first, act only if yes and cheap to undo (principal, 2026-11-05: questions were taken as instructions three times in this session: the README section, the standing instruction, the OpenSpec recommendation) | README standing instructions; projects' `AGENTS.md` | small | done in 0.4; to transfer |
+
 ## Skill friction
 
 - 2026-11-03, hallway-test (devvm): the by-eye tester refused to write `REPORT.md` under a harness rule; screenshots were dropped when the main session rebuilt the report. Fixed in 0.4 (report as final message).
