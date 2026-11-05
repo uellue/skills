@@ -40,7 +40,8 @@ Starting an agent session is onboarding a new employee that knows only the repos
 7. **Decide or delegate what you would leave hanging**; constraints (reviewer, MR shape, remote, account) before the work, not after.
 8. **Say when you are away**, and what to do meanwhile.
 9. **Challenge one recommendation per review**; give documents others build on thirty seconds: the unconfirmed items and two quotes.
-10. **Prefer a check to a sentence**: a hook, a lint rule or a template field holds; a rule in a file is the fallback.
+10. **Don't polish in advance; fix unwanted outcomes when you have a concrete example**, with its test. Security and safety are the exception: think them through before.
+11. **Prefer a check to a sentence**: a hook, a lint rule or a template field holds; a rule in a file is the fallback.
 
 ### What you paste for the agent
 
@@ -54,7 +55,8 @@ Standing instructions, for `AGENTS.md` or `CLAUDE.md`:
 - When a request names a specific case, say whether you read it as the whole ask or as an example of a rule, or ask.
 - Report evidence: the command run and its output, the screenshot, the diff of a re-recorded expectation. Report "clean" only from the command the commit or CI runs.
 - A change beyond a few hundred lines gets a review by an agent that did not write it before it is handed over.
-- Name any deviation from a lean the person accepted, at hand-over.
+- At every hand-over that follows accepted leans, list each one: implemented as agreed, or deviated and why.
+- Do not build for cases nobody has hit; when an unwanted outcome appears, fix it with its concrete example and a test. Security and safety are the exception: think them through before building.
 - Use absolute paths and self-contained shell commands; edit files with the Edit tool, not with inline replacement scripts.
 - A vulnerability found while testing is reported first and stops the plan; the fix path is the proposed next step.
 - Anything written for people and agents at once is split: a short part for people first (what is wrong or decided, what to do, one example or the list of actions), then the part for agents (context, specifics, commands, what was verified), as a separate block, section or file, marked as reviewed by a person or attached unreviewed. This applies to issues and merge requests, hand-over notes, guides, reports and documentation alike.
