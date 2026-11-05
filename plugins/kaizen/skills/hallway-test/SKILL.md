@@ -25,7 +25,7 @@ Settle these with the user; they become the tester's brief:
 1. **The persona**, from the stakeholder record; offer to add one if the first user of this thing is not in it.
 2. **What the tester may read.** Only what a first user would have: the requirements, the user documentation, the command's help. Name the files or directories; forbid the rest explicitly (source, tests, specs, design notes, git history). The point of the test is the fresh view; every extra document weakens it. If no requirements document exists, say so to the user before the test; a tester that has to invent the requirement tests its own invention.
 3. **The tool and how to run it.** The command line or entry point, where test inputs may be created (a scratch directory, never the repository), what may be installed, what must not be touched (a read-only data mount is read-only).
-4. **The coverage to insist on.** The walk-through's steps and acceptance examples, the requirements' scenarios, the last test's gaps, plus "add experiments of your own". Each mandatory case names the scenario or acceptance example it serves, so that the tester asserts the outcome the user cares about and not the mechanism the author expects. For by-eye tests: the scenarios, the terminal size, the keys to press.
+4. **The coverage to insist on.** The acceptance examples by ID from `design/examples.md`, the walk-through's steps, the requirements' scenarios, the last test's gaps, plus "add experiments of your own". Each mandatory case names the example ID it serves, so that the tester asserts the outcome the user cares about and not the mechanism the author expects. Tell the tester to spend at least half its effort outside the list: the worst defects of the 2026-11-05 trials lay outside every scenario. For by-eye tests: the scenarios, the terminal size, the keys to press.
 5. **Who answers questions.** The tester asks the main session when the requirements do not say what should happen; the main session answers from the design and records what it could not answer confidently as TODO items for the owner.
 6. **Where the record goes** and the summary length.
 
@@ -52,6 +52,7 @@ Answer the tester's questions from the design, with the reasoning, and tell it w
 4. When the owner has decided the leans, the hand-over lists each accepted lean as implemented as agreed or deviated and why, as at every hand-over (the standing instruction in this repository's README).
 5. Keep the experiment reproducible: the brief, the answer key or expectations, the answers given, the usage, and a small script that re-runs any experiment, saved together next to the record or in a named directory, with relative paths. This applies to every measurement, not only to hallway tests; an instruction-file eval whose prompts were not saved cannot be repeated.
 6. If a walk-through preceded the test, add the comparison to it: per step, imagined versus observed.
+7. With OpenSpec: run the test after apply and before archive; `validate` and `verify` check form and conformance, not whether a user can do the thing.
 
 ## Rules
 
@@ -60,4 +61,4 @@ Answer the tester's questions from the design, with the reasoning, and tell it w
 - A finding is a moment: the exact command, what was expected, what was observed, the relevant stderr lines or the screenshot file name.
 - Do not fix during the test what the tester reported as a question; decide first whether it is a bug or a design choice, then fix with its test.
 - A finding that is a vulnerability (data readable by the wrong user, a credential exposed, an unsafe default) is reported to the user first and the plan stops there; the fix path is the proposed next step, not an item further down the list.
-- At the end, say what in this skill did not fit the situation, in one line, so the plugin can be improved (the `kaizen` ledger in `design/`, see the `debrief` skill).
+- At the end, say what in this skill did not fit the situation, in one line, into the project's ledger, `design/kaizen.md`, so the plugin can be improved (see the `debrief` skill).

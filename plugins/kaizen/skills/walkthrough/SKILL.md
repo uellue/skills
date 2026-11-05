@@ -1,6 +1,6 @@
 ---
 name: walkthrough
-description: Put on the shoes of a stakeholder and walk through a process step by step to find the requirements, questions and acceptance examples nobody has written down. Use it during requirements gathering or design, before a change is specified, whenever the user says "walk through", "from the perspective of", "what would an operator / scientist / new colleague do", "how would X use this", or asks how a new repository, deployment, onboarding or workflow would go for someone; also before a play test, to decide what to test, and after one, to compare what was imagined with what happened.
+description: Put on the shoes of a stakeholder and walk through a process step by step to find the requirements, questions and acceptance examples nobody has written down. Use it during requirements gathering or design, before a change is specified, whenever the user says "walk through", "from the perspective of", "what would an operator / scientist / new colleague do", "how would X use this", or asks how a new repository, deployment, onboarding or workflow would go for someone; also before a play test, to decide what to test, and after one, to compare what was imagined with what happened. Where OpenSpec is also installed, use this skill rather than /opsx:explore before a proposal.
 ---
 
 # Stakeholder walk-through
@@ -15,7 +15,7 @@ Two borrowed habits, with thanks: interview from two hats, the product hat (user
 
 Settle these with the user before walking, and write them at the top of the output. The first one blocks: do not walk in a persona the user has not confirmed.
 
-1. **The persona.** Read the project's stakeholder record first (`design/stakeholders.md`, or `docs/stakeholders.md`; the `requirements` skill writes it from section 1.4). Show the personas it has, ask which one to take, and offer to add a new one or to correct an existing one: this is the moment to learn from the people who know the project. If no record exists, ask who the stakeholders are and create the record with what the user says, one entry per persona: who they are, what they want from this process, what they know and do not know, what they have on their machine, what they would never read, and whether the entry comes from an interview or is simulated. Prefer a real person's role at the institute over an archetype; prefer a real person's answers over your guesses when you can ask.
+1. **The persona.** Read the project's stakeholder record first (`design/stakeholders.md`; the `requirements` skill writes it from section 1.4). Without a person to confirm (an agent-only run), the persona is written to the record as simulated and the walk is marked as resting on it. Show the personas it has, ask which one to take, and offer to add a new one or to correct an existing one: this is the moment to learn from the people who know the project. If no record exists, ask who the stakeholders are and create the record with what the user says, one entry per persona: who they are, what they want from this process, what they know and do not know, what they have on their machine, what they would never read, and whether the entry comes from an interview or is simulated. Prefer a real person's role at the institute over an archetype; prefer a real person's answers over your guesses when you can ask.
 2. **The process.** The thing they are trying to do, from their first step to the moment they consider it done. Examples: install the crawler on a server; find last week's measurement in the index; add a new file format as an external collection; start a new repository for development with agents; read the crawl log after a night run; diagnose a search result that looks wrong.
 3. **What exists.** The documents, code, commands and pages the persona would meet, so that the walk tests reality and not a plan; read them as the persona would, in the order they would find them, skipping what they would skip. Where the system runs (a test deployment, a VM, a stack that can be started), walk against the running system and do what the persona would do, instead of reading about it: the live step finds what the document hides.
 
@@ -44,7 +44,7 @@ Go up a level when a step reveals something general (five whys): a confusing mes
 
 ## Output
 
-Write the walk-through to the project's design notes if it has them (for example `design/walkthroughs/<persona>-<process>.md`), otherwise `docs/walkthroughs/`, and give a short summary in the reply. Template:
+Write the walk-through to `design/walkthroughs/<persona>-<process>.md` and give a short summary in the reply. Its acceptance examples go to `design/examples.md` with the next free IDs, a priority and the step they came from; the walk lists only the IDs. A small change gets a step table of at most about 300 words. Template:
 
 ```markdown
 # Walk-through: <persona> <does process>
@@ -71,7 +71,7 @@ What exists: <documents, code, commands read; the running system used>.
 - <requirement, behaviour or document that does not exist; the step that needs it>
 
 ## Acceptance examples
-- When <concrete situation>, then <observable outcome>.   (ready for a spec scenario or a hallway-test case)
+- E<n> (added to design/examples.md): when <concrete situation>, then <observable outcome>. From step <k>.
 
 ## Questionnaire
 <the sections of the requirements questionnaire the record does not answer, each with the question in one line>
@@ -88,6 +88,6 @@ What exists: <documents, code, commands read; the running system used>.
 - Say which parts are simulated. A walk-through by an agent finds the gaps a careful colleague would find; it does not know what the real persona values.
 - Stay in the shoes. If you know how the system works, the persona does not; write what they see, not what you know.
 - Concrete over general. "The operator runs `modama-crawler crawl` and sees nothing for two hours" is a finding; "feedback could be improved" is not.
-- Questions, gaps and examples are the deliverable. Do not design the fix here; the owner decides what becomes a requirement.
+- Questions, gaps and examples are the deliverable. Do not design the fix here; the owner decides what becomes a requirement, and the decisions go into the decision record (the playbook's "what we decided" moment).
 - A number in the walk has a source (the owner, a measurement, a document); the agent's own estimate is marked as one.
-- At the end, say what in this skill did not fit the situation, in one line, so the plugin can be improved (the `kaizen` ledger in `design/`, see the `debrief` skill).
+- At the end, say what in this skill did not fit the situation, in one line, into the project's ledger, `design/kaizen.md`, so the plugin can be improved (see the `debrief` skill).
