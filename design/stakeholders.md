@@ -17,8 +17,8 @@ Who: an ER-C research software engineer or scientist who begins to use Claude Co
 Wants: to know what to write down and where (instruction file, decision log, backlog), how to lead an agent, what not to delegate, what it costs.
 Knows: their science and their code; not the agent's conventions, memory locations or plugin mechanics.
 Has: a fresh checkout; possibly a different tool (Codex reads `AGENTS.md`, not skills).
-Never reads: the plugin's source; a ledger of someone else's project.
-Confidence: simulated, from the guide's "Goal 2" and remarks relayed by the manager (a colleague found that the walk-through assumed personas without asking, 2026-11-05).
+Never reads: the plugin's source; a ledger of someone else's project; a README beyond the headings and the commands to copy. Works by skimming for a command that looks right, running it, and then following the program's output; is annoyed when the chain of hints breaks and the README has to be read after all (a colleague's account of trying devvm, 2026-11-05).
+Confidence: simulated, from the guide's "Goal 2" and remarks relayed by the manager (a colleague found that the walk-through assumed personas without asking; another described the skim-and-follow-the-hints way of working, 2026-11-05).
 
 ## The coding agent
 
