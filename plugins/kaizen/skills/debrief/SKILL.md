@@ -1,53 +1,77 @@
 ---
 name: debrief
-description: Debrief a Claude Code session or a stretch of work on how the collaboration went, not on what it produced. Use it whenever the user asks for a debrief, retrospective, post-mortem, lessons learned, "what did we learn", "how can I work better with you", or wraps up a piece of work; also at the end of a long session before it is compacted. Produces a report with cited moments, coaching for the person writing the prompts, process proposals with a destination, and a usage check, and keeps a history so recurring issues are visible.
+description: Debrief a Claude Code session, a stretch of work or several sessions at once on how the collaboration went, not on what it produced. Use it whenever the user asks for a debrief, retrospective, post-mortem, lessons learned, "what did we learn", "how can I work better with you", "kaizen", or wraps up a piece of work; on a schedule, at the end of a working day or a stretch; after a skill of this plugin was used for the first time; and whenever the user says "note for the debrief" (then the note goes to the ledger at once). Produces a private report with cited moments, coaching for the person writing the prompts, process proposals with a destination, and a usage check, and keeps a ledger in the repository so recurring issues and skill friction are visible.
 ---
 
 # Debrief
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into three kinds of output: lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better), and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report.
 
-Structure and rules adapted from two MIT-licensed skills, with thanks: `debrief` by Wavez (the four check groups, "every finding cites a moment", nothing applied without approval) and `retrospective` by florianbuetow (reports kept as history, earlier recommendations checked and recurring issues escalated, root cause and suggestion per finding). The coaching section, the five-whys habit and the usage script are this skill's own.
+Structure and rules adapted from two MIT-licensed skills, with thanks: `debrief` by Wavez (the four check groups, "every finding cites a moment", nothing applied without approval) and `retrospective` by florianbuetow (reports kept as history, earlier recommendations checked and recurring issues escalated, root cause and suggestion per finding). The coaching section, the five-whys habit, the usage script and the ledger are this skill's own.
+
+## When
+
+Ends do not announce themselves: compactions arrive without a turn, sessions end with a reboot or a refused turn. So the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Two cheap habits feed it between runs:
+
+- **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Sorting is the debrief's job; capture must cost nothing.
+- **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation.
 
 ## Inputs
 
-1. **The conversation.** The primary source: tool calls, questions and when they were asked, corrections and confirmations by the user, sub-agent reports, errors and retries. If the session was compacted, say so in the report and treat the summary as lower-confidence evidence; do not invent moments for the part you cannot see.
-2. **The numbers.** Run the bundled script for the session's usage: turns, tool calls by name, sub-agents and workflows with their tokens, models used, output tokens per model, duration span, compactions. It reads the session transcript under `~/.claude/projects/<project-slug>/` and the `subagents/` directory beside it. The user may ask about another session; then pass its id.
+1. **The transcripts.** The primary source: tool calls, questions and when they were asked, corrections and confirmations by the user, sub-agent reports, errors and retries. Find them with the bundled script; they are not always under `~/.claude/projects/`: a worktree or a VM has its own slug, and projects keep copies in the checkout.
+
+   ```bash
+   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/transcript.py locate            # every session of this project, with span and size
+   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/transcript.py render <id>       # readable text with L<n> markers, for reading in slices
+   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/transcript.py export <id>       # copy a session into <repo>/.claude/transcripts/<id>/, for a debrief elsewhere
+   ```
+
+   Read the rendering, not the raw JSONL: grepping one's own transcript for patterns has ended sessions. If the session was compacted, say so in the report and treat the summary as lower-confidence evidence; do not invent moments for the part you cannot see. Messages the person queued while a turn ran appear as "USER (queued mid-turn)"; they are easy to miss in the raw file and often carry decisions.
+2. **The numbers.** The usage script: user messages, API messages, tool calls by name, output and input tokens per model counted once per API message, sub-agents with their tokens, span, compactions.
 
    ```bash
    python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py            # the current session (newest transcript of this project)
-   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py <session-id>
+   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py <id>
+   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py <sub-agent transcript>
    ```
-
-3. **The project's record.** The instruction files (`CLAUDE.md`, `AGENTS.md`), the backlog and decision log if the project keeps them, and the agent's feedback memories for this project (`~/.claude/projects/<project-slug>/memory/`), so that a repeated mistake is recognised as a repeat.
-4. **Earlier debriefs.** The last three reports in the report directory (below). For each recommendation they made, note whether it was acted on, is recurring, or is unknown; a recurring issue is escalated in severity.
+3. **The project's record.** The instruction files (`CLAUDE.md`, `AGENTS.md`), the backlog and decision log if the project keeps them, the stakeholder and requirements records in `design/`, and the agent's feedback memories for this project (`~/.claude/projects/<slug>/memory/`), so that a repeated mistake is recognised as a repeat. Memory is per checkout path: say in the report which memory the session actually had, because a worktree or a VM often had none.
+4. **The ledger and earlier reports.** `design/kaizen.md` (below) and the last three reports in `.claude/debriefs/`. For each earlier proposal, note whether it was acted on, is recurring, or is unknown; a recurring issue is escalated in severity. Adoption is not habit: a proposal marked done last time can still recur, and the finding then is that the destination was a sentence where a check (a hook, a lint rule, a template field) was possible.
 
 Match the effort to the stretch: a short, clean session gets a quick pass; a multi-week session gets the full treatment, and the five whys on the bigger patterns.
+
+**Several sessions at once.** When the debrief covers more than one session (a week, three repositories, the first uses of a skill), render each session and give one reader agent per session the brief in `${CLAUDE_PLUGIN_ROOT}/references/reader-brief.md`, with the session's paths and numbers filled in; the readers report with cited moments, and the main session synthesises. Verify yourself any claim a reader makes about an instrument (a script, a count, a skill's text) before it goes into the report; a reader's claim is a lead, not a finding. Seven sessions of a week cost about 1.5 M tokens of readers.
 
 ## What to look at
 
 Work through these four groups. For each finding, cite the moment (what was said or done, roughly when), say why it mattered, and ask "why" past the instance until you reach a process cause or a principle, or until the answer leaves the project's control. Keep observations and prescriptions apart: an observation can be right while the proposed fix is wrong.
 
-1. **Efficiency.** Redundant or repeated tool calls, hand-written logic that a script or skill should have carried, extra build or test cycles, work that could have been batched, sub-agents that were missed or that paid off, rework after compaction, background work that died with the session.
-2. **Collaboration.** Questions asked too early, too late or not at all; standing instructions not followed; examples taken literally where a rule was meant; verbosity; whether the agent said which reading of an ambiguous request it took; whether blocking questions actually blocked.
-3. **Correctness and discipline.** Claims made without evidence; constraints discovered late; destructive or irreversible actions without confirmation; project conventions overlooked; the "which scenario asks for this" and "what would have caught this" questions skipped.
-4. **Carry forward.** Preferences and decisions worth saving as memory or project docs; proposals that are a skill, a workflow, a hook, a standing rule or a backlog item; tools that would have made the stretch easier; steps that could be automated next time. Two hand-written repetitions signal a missing reusable asset.
+1. **Efficiency.** Redundant or repeated tool calls, hand-written logic that a script or skill should have carried, extra build or test cycles, work that could have been batched, sub-agents that were missed or that paid off, rework after compaction, background work that died with the session, questions that blocked while the person was away.
+2. **Collaboration.** Questions asked too early, too late or not at all; standing instructions not followed; examples taken literally where a rule was meant; verbosity; whether the agent said which reading of an ambiguous request it took; whether blocking questions actually blocked; decisions the person withheld and what they cost; constraints that arrived after the work; a real stakeholder present and unused.
+3. **Correctness and discipline.** Claims made without evidence; constraints discovered late; destructive or irreversible actions without confirmation; project conventions overlooked; "clean" reported from a different command than the commit or CI runs; changes beyond a few hundred lines merged without an independent reader; documents handed over with stale markers or unverified quotes; a vulnerability found and not put first; the "which scenario asks for this" and "what would have caught this" questions skipped.
+4. **Carry forward.** Preferences and decisions worth saving as memory or project docs; proposals that are a skill, a workflow, a hook, a standing rule or a backlog item; tools that would have made the stretch easier; steps that could be automated next time; instruments built by hand (an eval, a brief, a probe) that should be kept. Two hand-written repetitions signal a missing reusable asset.
 
 Then the two parts that make this skill personal:
 
-- **Coaching for the person.** How could the person writing the prompts have been more effective? Which of their moves helped the most (name them, so they are repeated) and which cost (vague scope, a missing label on an example, a decision withheld that the agent needed, a review skipped)? Write it to the person directly, the way a peer in a supervision group would: specific, evidence-based, without flattery and without softening.
-- **Models and effort.** From the numbers: was the model and effort level proportionate to the work? Where did tokens go (main loop, sub-agents, workflows), and would a cheaper model or a lower effort have done for parts of it? Where did a high effort pay off?
+- **Coaching for the person.** How could the person writing the prompts have been more effective? Which of their moves helped the most (name them, so they are repeated) and which cost (vague scope, a missing label on an example, a decision withheld that the agent needed, a review skipped, a slash command typed inside a message that never ran)? Write it to the person directly, the way a peer in a supervision group would: specific, evidence-based, without flattery and without softening.
+- **Models and effort.** From the numbers: was the model and effort level proportionate to the work? Where did tokens go (main loop, sub-agents, workflows, context), and would a cheaper model or a lower effort have done for parts of it? Where did a high effort pay off? Check that the model the person asked for is the one in the transcript.
 
-## Report
+And, for this plugin's own improvement (kaizen on kaizen): which of its skills were used, how they ran, where one would have helped and was not used, and what no skill covers. Those findings become proposals with the destination "kaizen plugin", and with the person's say, issues or merge requests on the plugin's repository.
 
-Write the report to the report directory and show a short summary in the reply. The directory is `docs/debriefs/` in the current repository when the repository has a `docs/` directory, otherwise `~/.claude/debriefs/<project-slug>/`; the user can name another. File name `YYYY-MM-DD.md`, with a `-2` suffix if one exists.
+## Output
 
-Short and dense: the reader is the person who lived the session, so the report reminds rather than narrates. The nuance lives in the evidence and the cause, not in prose around them. Use this template:
+Two documents, in the repository that was debriefed:
+
+- **The report**, private: `.claude/debriefs/YYYY-MM-DD.md` (with a `-2` suffix if one exists). It is a subjective snapshot with the coaching in it, so it stays out of version control; check that `.claude/` or that directory is ignored, and say so if it is not. The user can name another place.
+- **The ledger**, in the repository: `design/kaizen.md` (`docs/kaizen.md` if the project keeps no `design/`). Only what is actionable leaves the session: the proposals table with their destinations and decisions, the status of earlier recommendations, the skill-friction lines, and the unsorted notes for the next debrief. Create it on the first debrief with the sections below; on later ones, append the proposals under the date and update the statuses.
+
+Show a short summary in the reply: the five lines and the proposals that are not small.
+
+The report is short and dense: the reader is the person who lived the session, so it reminds rather than narrates. The nuance lives in the evidence and the cause, not in prose around them. Template:
 
 ```markdown
 # Debrief <date>: <what the stretch was about>
 
-Coverage: <what the debrief could see; compaction noted>. Earlier debriefs: <dates or none>.
+Coverage: <sessions read, how; compaction noted; what the renderer or readers could not see>. Earlier debriefs: <dates or none>.
 
 ## In five lines
 - <what the stretch achieved>
@@ -57,7 +81,7 @@ Coverage: <what the debrief could see; compaction noted>. Earlier debriefs: <dat
 - <how many proposals, and the one that is not small>
 
 ## Numbers
-<one paragraph from the script: span, turns, tool calls with the top few, output tokens by model, sub-agents, compactions>
+<one paragraph from the script: span, messages, tool calls with the top few, output tokens by model counted once per message, sub-agents, compactions>
 
 ## What went well
 - **<two-word label>.** <the moment> → <what it bought>.
@@ -65,6 +89,12 @@ Coverage: <what the debrief could see; compaction noted>. Earlier debriefs: <dat
 ## What cost
 - 🔴 / 🟡 / 🟢 **<label>.** <the moment, one line>.
   Cause: <the process cause after asking why>. <Fixed, or what remains.>
+
+## The plugin's skills
+<used, done by hand, missed, gaps; one table or a few lines>
+
+## The process-improvement process
+<where the lessons of this stretch went, and which earlier ones were applied or violated>
 
 ## Coaching for <the person>
 Keep doing: <the moves that helped, as a list in one line>.
@@ -76,20 +106,39 @@ Keep doing: <the moves that helped, as a list in one line>.
 ## Proposals
 | # | Proposal | Destination | Effort | Decision |
 |---|---|---|---|---|
-Destinations: AGENTS.md or CLAUDE.md rule, memory, skill, workflow, hook, backlog, the shared guide, a tool to adopt.
+Destinations: AGENTS.md or CLAUDE.md rule, a hook or lint check, memory, skill, workflow, backlog, the shared guide, a tool to adopt, the kaizen plugin (as an issue or merge request on its repository).
 
 ## Earlier recommendations
 | From | Recommendation | Status (acted on / recurring / unknown) |
 ```
 
-Severity: 🔴 cost real work or risked damage; 🟡 cost time or attention; 🟢 a small habit.
+Ledger template (`design/kaizen.md`):
+
+```markdown
+# Kaizen ledger
+
+What leaves a debrief: proposals with decisions, the fate of earlier ones, what did not fit in the plugin's skills, and notes for the next debrief. The full reports are private, in `.claude/debriefs/`.
+
+## Proposals
+### <date>
+| # | Proposal | Destination | Effort | Decision / status |
+
+## Skill friction
+- <date, skill>: <what did not fit, one line>
+
+## Notes for the next debrief
+- <date>: <the note, with the moment>
+```
+
+Severity: 🔴 cost real work or risked damage; 🟡 cost time or attention; 🟢 a small habit. A recurring finding goes up one level.
 
 ## Rules
 
-- A report only. Nothing is written to instruction files, memory or the backlog until the user approves a proposal; then apply exactly that one.
+- A report and a ledger entry only. Nothing is written to instruction files, memory, hooks or the backlog until the user approves a proposal; then apply exactly that one and record the decision in the ledger.
 - Every finding cites a moment. If you cannot point to one, drop the finding.
 - Do not inflate: three real findings beat ten padded ones, and "this stretch went well" is a valid result.
-- The coaching is for the person's benefit, so it must be candid; it is also private by default, so keep it out of anything the person did not ask to share.
-- Plain, actionable language: write every item so that a person or an agent who was not in the session could act on it. Name a practice as a behaviour (what someone does and what it achieves: "specify the outcome, not the solution"), never by a nickname the session coined ("the withheld solution", "skeptics", "by eye"); if the shorthand helps recognition, put it after the full form in parentheses. The test: could a colleague copy the line into their own guide and follow it?
+- The coaching is for the person's benefit, so it must be candid; it is also private by default, so keep it out of anything the person did not ask to share, and never put it in the ledger.
+- Plain, actionable language: write every item so that a person or an agent who was not in the session could act on it. Name a practice as a behaviour (what someone does and what it achieves: "specify the outcome, not the solution"), never by a nickname the session coined; if the shorthand helps recognition, put it after the full form in parentheses. The test: could a colleague copy the line into their own guide and follow it?
 - Brevity: a label in bold, then one line of evidence, then the cause. If a finding needs a paragraph, it is two findings or it is not understood yet. Aim for one screen per section.
 - Lessons versus friction: a lesson is something you would tell another agent on another project; what applies only to this session is friction and goes into the findings, not into proposals for standing rules.
+- Prefer a check to a sentence: when a proposal can be a hook, a lint rule, a template field or a script, that is its destination; a rule in an instruction file is the fallback.
