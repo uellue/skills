@@ -61,6 +61,8 @@ Then the two parts that make this skill personal:
 - **Coaching for the person.** How could the person writing the prompts have been more effective? Which of their moves helped the most (name them, so they are repeated) and which cost (vague scope, a missing label on an example, a decision withheld that the agent needed, a review skipped, a slash command typed inside a message that never ran)? Write it to the person directly, the way a peer in a supervision group would: specific, evidence-based, without flattery and without softening.
 - **Models and effort.** From the numbers: was the model and effort level proportionate to the work? Where did tokens go (main loop, sub-agents, workflows, context), and would a cheaper model or a lower effort have done for parts of it? Where did a high effort pay off? Check that the model the person asked for is the one in the transcript.
 
+Where Matt Pocock's `retro` skill is used too, it covers the agent's environment (checks, navigation, steering files) inside the session; the debrief does not repeat its findings, it cites them and adds the collaboration, the coaching and the history.
+
 And, for this plugin's own improvement (kaizen on kaizen): which of its skills were used, how they ran, where one would have helped and was not used, and what no skill covers. Those findings become proposals with the destination "kaizen plugin", and with the person's say, issues or merge requests on the plugin's repository.
 
 ## Output
