@@ -128,6 +128,23 @@ Fixed while grading: `usage.py` and `transcript.py` run from a subdirectory of t
 
 Fifth independent review (2026-11-05, the commits after `d30ceac`, about 420 lines, one Opus agent with the diff and the design record): ready after fixes, no high findings; all addressed the same hour. The self-test's tester read the maintainer's checkout, where the version line always prints a status, so N2 could never hold: `brief.py` now gives it an untracked copy of the README and the plugin (also keeping it out of the repository), with a test that the copy is silent. The start-up command's `<this text id>` failed as a shell redirection when copied literally, so the warning vanished: `--stamp` now writes the real id into the command, and the lint requires both to match. The hardware rule was written out in five places: the decision record's hardware row owns it, the others point there. The hallway test's growing list of questions is settled in one message with a recommendation each. Smaller: the self-test's results stand in for the hallway record; one debrief for several first uses moved to where the debrief fires; the debrief mention in the hallway test has a condition (no debrief in the ledger yet); the tester template has a slot for a scenario; `/reload-skills` cited from the Claude Code documentation; `brief.py` and `version.py` refuse bad arguments with one line.
 
+### 2026-11-05 (self-test reruns at `ba2fbd8`: `results/2026-11-05-sem-instrument-3.md`, `results/2026-11-05-existing-tool-2.md`)
+
+Not applied: waiting for the principal. Leans in the last column.
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 70 | The real instrument only after the owner's recorded `[answered]` agreement; a principal who is not the owner cannot accept it as an assumption (decision record's hardware row) | plugin (change-record) | small | proposed; lean: yes, safety |
+| 71 | A simulator's limits come from the owner or the vendor's documentation; its "enforces the limits" example stays blocked until they are on record | plugin (change-record) | small | proposed; lean: yes, safety |
+| 72 | Playbook step 6 becomes step 1: ask the person (not "name"); an unknown owner or simulator is recorded as an open question that blocks real-instrument work, and the session goes on | plugin (playbook) | small | proposed; lean: yes |
+| 73 | The owner's questions can go out at once, in parallel with the interview, not only at the requirements handover | plugin (requirements) | small | proposed; lean: yes |
+| 74 | The measured walk-through with neither simulator nor dry run: a walk on paper, marked as such | plugin (walkthrough) | small | proposed; lean: yes |
+| 75 | A measured cost for a behaviour tester (the runs so far: about 10 k to 15 k output tokens and two to three minutes for a short self-test; a real hallway test of a CLI about 46 k tokens and 14 minutes), or "say it is a guess" | plugin (hallway-test) | small | proposed; lean: yes, with the figures and their source |
+| 76 | The tester template's fixed text reads "the requirements or, without them, the documentation" in all four places; the diagnostic option is conditional | plugin (tester-brief) | small | proposed; lean: yes |
+| 77 | The hallway test quotes the playbook's existing-tool path instead of sending the person through the playbook and back; the playbook chooses its path before offering missing documents | plugin (hallway-test, playbook) | small | proposed; lean: yes |
+| 78 | Settling the brief in one message: questions that need answers first, then the items one "yes" accepts; sample data the user would have may be read, read-only | plugin (hallway-test) | small | proposed; lean: yes |
+| 79 | Before creating `design/` for a tiny tool, ask, and offer a lighter home (one file, or `.claude/`) | plugin (playbook, hallway-test) | small | proposed; lean: ask, default `design/` |
+
 ## Earlier recommendations
 
 The 2026-11-03 debrief (data-management-system) made seven proposals and five coaching points; their status after the week, as seen in the seven sessions: proposals 1, 3, 5, 6 acted on; 2 and 4 recurring in four sessions each (escalated, proposals 14 and 15 above); 7 done but its table row never closed. Coaching 1, 3, 5 acted on; 2 and 4 partly. Details in that repository's debrief history.
