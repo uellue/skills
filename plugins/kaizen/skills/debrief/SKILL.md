@@ -23,23 +23,23 @@ Ends do not announce themselves: compactions arrive without a turn, sessions end
    ```bash
    python3 ${CLAUDE_PLUGIN_ROOT}/scripts/transcript.py locate            # every session of this project, with span and size
    python3 ${CLAUDE_PLUGIN_ROOT}/scripts/transcript.py render <id>       # readable text with L<n> markers, for reading in slices
-   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/transcript.py export <id>       # copy a session into <repo>/.claude/transcripts/<id>/, for a debrief elsewhere
+   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/transcript.py export <id>       # copy a session into <repo>/.claude/transcripts/<id>/ (refused unless git ignores it)
    ```
 
-   Read the rendering, not the raw JSONL: grepping one's own transcript for patterns has ended sessions. If the session was compacted, say so in the report and treat the summary as lower-confidence evidence; do not invent moments for the part you cannot see. Messages the person queued while a turn ran appear as "USER (queued mid-turn)"; they are easy to miss in the raw file and often carry decisions.
+   Read the rendering, not the raw JSONL: grepping one's own transcript for patterns has ended sessions. If the session was compacted, say so in the report and treat the summary as lower-confidence evidence; do not invent moments for the part you cannot see. Messages the person queued while a turn ran appear as "USER (queued mid-turn)"; they are easy to miss in the raw file and often carry decisions. Text the harness put in the person's place (skill texts, sub-agent reports, notifications, command output) is labelled HARNESS: it is not the person's, and never evidence for coaching.
 2. **The numbers.** The usage script: user messages, API messages, tool calls by name, output and input tokens per model counted once per API message, sub-agents with their tokens, span, compactions.
 
    ```bash
    python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py            # the current session (newest transcript of this project)
    python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py <id>
-   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py <sub-agent transcript>
+   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py agent-<id>    # a sub-agent
    ```
 3. **The project's record.** The instruction files (`CLAUDE.md`, `AGENTS.md`), the backlog and decision log if the project keeps them, the stakeholder and requirements records in `design/`, and the agent's feedback memories for this project (`~/.claude/projects/<slug>/memory/`), so that a repeated mistake is recognised as a repeat. Memory is per checkout path: say in the report which memory the session actually had, because a worktree or a VM often had none.
 4. **The ledger and earlier reports.** `design/kaizen.md` (below) and the last three reports in `.claude/debriefs/`. For each earlier proposal, note whether it was acted on, is recurring, or is unknown; a recurring issue is escalated in severity. Adoption is not habit: a proposal marked done last time can still recur, and the finding then is that the destination was a sentence where a check (a hook, a lint rule, a template field) was possible.
 
 Match the effort to the stretch: a short, clean session gets a quick pass; a multi-week session gets the full treatment, and the five whys on the bigger patterns.
 
-**Several sessions at once.** When the debrief covers more than one session (a week, three repositories, the first uses of a skill), render each session and give one reader agent per session the brief in `${CLAUDE_PLUGIN_ROOT}/references/reader-brief.md`, with the session's paths and numbers filled in; the readers report with cited moments, and the main session synthesises. Verify yourself any claim a reader makes about an instrument (a script, a count, a skill's text) before it goes into the report; a reader's claim is a lead, not a finding. Seven sessions of a week cost about 1.5 M tokens of readers.
+**Several sessions at once.** When the debrief covers more than one session (a week, three repositories, the first uses of a skill), render each session and give one reader agent per session the brief in `${CLAUDE_PLUGIN_ROOT}/references/reader-brief.md`, with the session's paths and numbers filled in; the readers report with cited moments, and the main session synthesises. Verify yourself any claim a reader makes about an instrument (a script, a count, a skill's text) before it goes into the report; a reader's claim is a lead, not a finding. Budget about 200 k tokens per reader for a day-long session.
 
 ## What to look at
 
@@ -47,7 +47,13 @@ Work through these four groups. For each finding, cite the moment (what was said
 
 1. **Efficiency.** Redundant or repeated tool calls, hand-written logic that a script or skill should have carried, extra build or test cycles, work that could have been batched, sub-agents that were missed or that paid off, rework after compaction, background work that died with the session, questions that blocked while the person was away.
 2. **Collaboration.** Questions asked too early, too late or not at all; standing instructions not followed; examples taken literally where a rule was meant; verbosity; whether the agent said which reading of an ambiguous request it took; whether blocking questions actually blocked; decisions the person withheld and what they cost; constraints that arrived after the work; a real stakeholder present and unused.
-3. **Correctness and discipline.** Claims made without evidence; constraints discovered late; destructive or irreversible actions without confirmation; project conventions overlooked; "clean" reported from a different command than the commit or CI runs; changes beyond a few hundred lines merged without an independent reader; documents handed over with stale markers or unverified quotes; a vulnerability found and not put first; the "which scenario asks for this" and "what would have caught this" questions skipped; a change archived or merged without a hallway test; scenarios or tests that cite no example ID; decisions an implementer had to invent because no decision record existed.
+3. **Correctness and discipline.**
+   - Claims without evidence; constraints discovered late; destructive or irreversible actions without confirmation; project conventions overlooked.
+   - "Clean" reported from a different command than the commit or CI runs; a change beyond a few hundred lines without an independent reader.
+   - A vulnerability found and not put first.
+   - Documents handed over with stale markers or unverified quotes.
+   - A change merged or archived without a hallway test; tests and scenarios that cite no example ID; decisions an implementer invented because no decision record existed.
+   - The questions "which scenario asks for this" and "what would have caught this" skipped.
 4. **Carry forward.** Preferences and decisions worth saving as memory or project docs; proposals that are a skill, a workflow, a hook, a standing rule or a backlog item; tools that would have made the stretch easier; steps that could be automated next time; instruments built by hand (an eval, a brief, a probe) that should be kept. Two hand-written repetitions signal a missing reusable asset.
 
 Then the two parts that make this skill personal:
@@ -62,7 +68,7 @@ And, for this plugin's own improvement (kaizen on kaizen): which of its skills w
 Two documents, in the repository that was debriefed:
 
 - **The report**, private: `.claude/debriefs/YYYY-MM-DD.md` (with a `-2` suffix if one exists). It is a subjective snapshot with the coaching in it, so it stays out of version control; check that `.claude/` or that directory is ignored, and say so if it is not. The user can name another place.
-- **The ledger**, in the repository: `design/kaizen.md` (create `design/` if the project has none). Only what is actionable leaves the session: the proposals table with their destinations and decisions, the status of earlier recommendations, the skill-friction lines, and the unsorted notes for the next debrief. Create it on the first debrief with the sections below; on later ones, append the proposals under the date and update the statuses.
+- **The ledger**, in the repository: `design/kaizen.md` (create `design/` if the project has none). If the repository is public or may become so, the ledger carries no details of other projects (those go to their own backlogs; the ledger says "transferred") and no security findings, secrets or credentials, not even as to-dos. Only what is actionable leaves the session: the proposals table with their destinations and decisions, the status of earlier recommendations, the skill-friction lines, and the unsorted notes for the next debrief. Create it on the first debrief with the sections below; on later ones, append the proposals under the date and update the statuses.
 
 Show a short summary in the reply: the five lines and the proposals that are not small.
 

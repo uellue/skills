@@ -16,7 +16,7 @@ rules:
   proposal:
     - Name the persona from design/stakeholders.md whose need this serves
     - Say what the request named and whether that is the whole need or one solution to it
-    - List the premises nobody has confirmed (items marked assumed in design/requirements.md)
+    - List the premises nobody has confirmed (items marked assumed or record in design/requirements.md)
     - State which behaviour towards the user changes, or that none does
     - List the must-examples from design/examples.md this change satisfies, and any without a scenario
   specs:

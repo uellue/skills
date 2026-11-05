@@ -2,7 +2,3 @@
 /.claude/debriefs/
 /.claude/transcripts/
 __pycache__/
-# Temporary local OpenSpec install for trials
-/node_modules/
-/package.json
-/package-lock.json

@@ -15,7 +15,7 @@ You are one of <N> readers. Each reads ONE Claude Code session transcript fully 
 - Use they/them for the person unless their pronouns are stated.
 
 ## What to read
-1. The rendered transcript (the main source): read it ALL, in slices with Read offset/limit. Markers: `=== L<n> <time> USER`, `=== L<n> <time> USER (queued mid-turn)`, `=== L<n> ASSISTANT (<model>)`, `--- TOOL`, `--- RESULT` (truncated), `##### COMPACTION SUMMARY`. The original `.jsonl` and the `subagents/` directory beside it are available; render a sub-agent transcript with `python3 -I <transcript.py> render <file.jsonl>` if you need the detail of a delegated task (keep it selective).
+1. The rendered transcript (the main source): read it ALL, in slices with Read offset/limit. Markers: `=== L<n> <time> USER` (typed by the person, also `USER (queued mid-turn)`), `=== L<n> <time> HARNESS` (skill texts, sub-agent reports, notifications, command output: never the person's words), `=== L<n> ASSISTANT (<model>)`, `--- TOOL`, `--- RESULT` (truncated), `##### COMPACTION SUMMARY`. The original `.jsonl` and the `subagents/` directory beside it are available; render a sub-agent transcript with `python3 -I <transcript.py> render agent-<id>` if you need the detail of a delegated task (keep it selective).
 2. Context, briefly: the plugin's skill files under `<plugin root>/skills/*/SKILL.md`; the earlier debrief ledger and reports named below; the person's own notes on working with agents; the repository's instruction files; the agent memory index for the project (standing lessons the agent is supposed to apply).
 
 ## Report structure (≤ 1800 words; dense; bullets; cite moments)
@@ -26,7 +26,7 @@ You are one of <N> readers. Each reads ONE Claude Code session transcript fully 
 5. **Coaching evidence.** The person's moves that helped most (quote them) and that cost. Candid, specific, no flattery.
 6. **Models and effort.** From the numbers given and what you see: proportionate or not; where tokens went; where high effort paid off; where a cheaper model would have done.
 
-Write the report to the output path given below, and return the same text as your final message.
+Return the report as your final message; the orchestrator writes the file. Do not write report files yourself (a harness rule may refuse it).
 
 ---
 
@@ -36,4 +36,3 @@ Write the report to the output path given below, and return the same text as you
 - Original: <path>, sub-agents in <dir> (<n> files)
 - Numbers from `usage.py` (deduplicated): <span, messages, tool calls, output tokens by model, sub-agents>
 - Skills invoked: <from the `Skill` tool calls and `<command-name>` markers>
-- Output path: <...>
