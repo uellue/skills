@@ -79,7 +79,7 @@ Mark each item, not only each section: a section marked "answered" with assumed 
 
 Before saying the document is ready, run the handover check and show its result:
 
-1. Every item still marked `[record]`, `[assumed]`, `[unknown]` or `[deferred]`, as one list, so the person can confirm or strike them in minutes even when they do not want to review the text; a `[record]` item that is never read back counts as confirmed downstream, which it is not.
+1. Every item still marked `[record]`, `[assumed]`, `[unknown]` or `[deferred]`, as one numbered list quoted in full in the message itself, grouped by section (a number or a file reference alone tells the person nothing), so the person can confirm or strike them in minutes even when they do not want to review the text; a `[record]` item that is never read back counts as confirmed downstream, which it is not.
 2. Section headers whose marker is stale (a section says "pending" while its items are answered, or the reverse).
 3. Every quote or figure taken from a sub-agent's report, checked against the source by you (a grep per quote is enough); say which you could not check.
 4. The three lists the builder needs first: the unknowns, the interfaces outside our control, and the risks.
