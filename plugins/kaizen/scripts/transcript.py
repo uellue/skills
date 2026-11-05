@@ -11,7 +11,8 @@ A session or sub-agent can be named by its id, a unique prefix of it, or a path 
 
 Rendering: every event carries the JSONL line number (L<n>) and a timestamp, so a finding can cite the
 moment. Headers start at column zero and every body line is indented by two spaces, so text inside a
-message or a tool result (a rendered transcript, a pasted log) can never pass for a header. Labels: USER (typed by the person, including messages queued while a turn ran), ASSISTANT, TOOL,
+message or a tool result (a rendered transcript, a pasted log) can never pass for a header.
+Labels: USER (typed by the person, including messages queued while a turn ran), ASSISTANT, TOOL,
 RESULT, and HARNESS for everything the harness put in the user's place (skill texts, sub-agent reports,
 task notifications, slash-command output, reminders, interrupt markers).
 
@@ -33,7 +34,7 @@ from pathlib import Path
 if sys.version_info < (3, 10):
     sys.exit(f"{Path(sys.argv[0]).name} needs Python 3.10 or newer; this is {sys.version.split()[0]}")
 
-LIMITS ={"results": 400, "tools": 600, "text": 6000}
+LIMITS = {"results": 400, "tools": 600, "text": 6000}
 
 # Text the harness writes in the user's place; never counted or labelled as the person's.
 HARNESS_PREFIXES = (

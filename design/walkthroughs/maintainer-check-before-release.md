@@ -39,7 +39,7 @@ The maintainer wanted a fast yes or no before releasing, and a slower signal of 
 - Is the next benchmark run a new baseline (blind grader, current commit) rather than a comparison with `baseline.md`? (Step 6.)
 
 ## Answers from the owner
-None: no person was available during this run. All questions are open.
+None during the walk: no person was available. The principal answered this walk's questions in the requirements round of 2026-11-05; the answers are in `design/requirements.md` (1.4, 2.1 S5, 2.2, 2.7, 2.8, 2.9). How to run the checkout's version is now in the repository's `CLAUDE.md`.
 
 ## Gaps
 - No documented way to run the checkout's skills in a session (step 2).
@@ -50,7 +50,7 @@ None: no person was available during this run. All questions are open.
 - No channel from other projects' ledgers to the maintainer (step 8).
 
 ## Acceptance examples
-E12, E13, E14, E15, E16 (added to `design/examples.md`, unconfirmed).
+E12, E13, E14, E15, E16 (added to `design/examples.md`; E13, E15, E16 confirmed by the principal 2026-11-05, E12 and E14 not asked).
 
 ## What `design/testing.md` can take from this walk
 - The check (`./check.sh`): structural and deterministic; tells the maintainer the scripts and the texts are intact (E12, E13); cannot tell whether a skill still works.

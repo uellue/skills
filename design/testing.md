@@ -1,6 +1,6 @@
 # Testing the skills
 
-Status 2026-11-05: `./check.sh` runs the script tests on synthetic transcripts (E2, E4, E5) and a lint of the skill texts, from the pre-commit hook and CI; one benchmark exists (below). The skills' behaviour is not yet tested automatically. The question from the principal was whether skills can have unit tests at all. They can be tested the way the first week tested everything else: a fresh agent, a pre-written key, a blind grader, and a measurement.
+Status 2026-11-05: `./check.sh` runs the script tests on synthetic transcripts, the pre-push hook's tests and a lint of the skill texts, and reports which examples no test covers, from the pre-commit hook and CI; one benchmark exists (below). The skills' behaviour is not yet tested automatically. The question from the principal was whether skills can have unit tests at all. They can be tested the way the first week tested everything else: a fresh agent, a pre-written key, a blind grader, and a measurement.
 
 ## What a test of a skill looks like
 

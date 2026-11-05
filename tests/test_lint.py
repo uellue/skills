@@ -115,6 +115,25 @@ class TestTables(unittest.TestCase):
                         self.assertEqual(cells, width, "row has a different number of cells than its header")
 
 
+class TestCoverageReport(unittest.TestCase):  # E13
+    def test_lists_examples_no_test_cites(self):
+        import sys
+        import tempfile
+
+        sys.path.insert(0, str(REPO / "tests"))
+        from coverage import uncovered
+
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "design").mkdir()
+            # IDs built at run time, so that this file does not count as citing them
+            a, b, c, d100 = (f"E{n}" for n in (1, 2, 10, 100))
+            (root / "design" / "examples.md").write_text(f"- **{a}** (must; x): a\n- **{b}** (should; y): b\n- **{c}** (must; z): c\n")
+            (root / "tests").mkdir()
+            (root / "tests" / "test_x.py").write_text(f"def test_a():  # {a}\n    pass  # {d100} is another example\n")
+            self.assertEqual(uncovered(root), (3, [f"{b} (should)", f"{c} (must)"]))
+
+
 class TestManifests(unittest.TestCase):
     def test_versions_and_names(self):
         plugin = json.loads((PLUGIN / ".claude-plugin" / "plugin.json").read_text())

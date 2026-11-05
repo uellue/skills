@@ -11,7 +11,7 @@ Structure and rules adapted from two MIT-licensed skills, with thanks: `debrief`
 
 ## When
 
-Ends do not announce themselves: compactions arrive without a turn, sessions end with a reboot or a refused turn. So the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Two cheap habits feed it between runs:
+Ends do not announce themselves: compactions arrive without a turn, sessions end with a reboot or a refused turn. So the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Three cheap habits feed it between runs; if the project has no ledger yet, the first capture says where it will go (`design/kaizen.md`, meant to be committed) before writing it:
 
 - **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Sorting is the debrief's job; capture must cost nothing.
 - **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation.
@@ -27,14 +27,17 @@ Ends do not announce themselves: compactions arrive without a turn, sessions end
    python3 ${CLAUDE_PLUGIN_ROOT}/scripts/transcript.py export <id>       # copy a session into <repo>/.claude/transcripts/<id>/ (refused unless git ignores it)
    ```
 
-   **Which sessions.** When the person names none, never take the session you run in (usually the newest; its first message is this debrief's own invocation). Propose the sessions since the last debrief in the ledger, each with its date, size and first message, say which you will take, and wait for a yes. Before reading more than one session, state the sessions, their sizes, the readers' model and an estimate of the tokens (about 200 k per day-long session), and wait; for one session, state its size and go on.
+   **Which sessions.** When the person names none:
+   - In a fresh session (the newest session's first message is this debrief's own invocation), never take that session. Propose the sessions since the last debrief in the ledger (no ledger yet: those of the last seven days), each with its date, size and first message; say which you will take and wait for a yes.
+   - In the session that did the work (wrapping up, or after a skill's first use), the stretch is this session so far; say so, and offer a fresh session for a less anchored read.
+
+   Before reading more than one session, state the sessions, their sizes, the readers' model and the token estimate (see "Several sessions at once"), and wait; for one session, state its size and go on.
 
    Read the rendering, not the raw JSONL: grepping one's own transcript for patterns has ended sessions. If the session was compacted, say so in the report and treat the summary as lower-confidence evidence; do not invent moments for the part you cannot see. Messages the person queued while a turn ran appear as "USER (queued mid-turn)"; they are easy to miss in the raw file and often carry decisions. Text the harness put in the person's place (skill texts, sub-agent reports, notifications, command output) is labelled HARNESS: it is not the person's, and never evidence for coaching.
 2. **The numbers.** The usage script: user messages, API messages, tool calls by name, output and input tokens per model counted once per API message, sub-agents with their tokens, span, compactions.
 
    ```bash
-   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py            # the current session (newest transcript of this project)
-   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py <id>
+   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py <id>       # each chosen session; without an id, the newest (often the one you run in)
    python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py agent-<id>    # a sub-agent
    ```
 3. **The project's record.** The instruction files (`CLAUDE.md`, `AGENTS.md`), the backlog and decision log if the project keeps them, the stakeholder and requirements records in `design/`, and the agent's feedback memories for this project (`~/.claude/projects/<slug>/memory/`), so that a repeated mistake is recognised as a repeat. Memory is per checkout path: say in the report which memory the session actually had, because a worktree or a VM often had none.
@@ -42,7 +45,7 @@ Ends do not announce themselves: compactions arrive without a turn, sessions end
 
 Match the effort to the stretch: a short, clean session gets a quick pass; a multi-week session gets the full treatment, and the five whys on the bigger patterns.
 
-**Several sessions at once.** When the debrief covers more than one session (a week, three repositories, the first uses of a skill), render each session and give one reader agent per session the brief in `${CLAUDE_PLUGIN_ROOT}/references/reader-brief.md`, with the session's paths and numbers filled in; the readers report with cited moments, and the main session synthesises. Verify yourself any claim a reader makes about an instrument (a script, a count, a skill's text) before it goes into the report; a reader's claim is a lead, not a finding. Budget about 200 k tokens per reader for a day-long session, and set each reader's model explicitly: sub-agents otherwise inherit the main loop's model, and seven readers on the top model can exhaust a usage limit. Opus is enough for reading and citing; use the top model only when the person asks for it.
+**Several sessions at once.** When the debrief covers more than one session (a week, three repositories, the first uses of a skill), render each session and give one reader agent per session the brief in `${CLAUDE_PLUGIN_ROOT}/references/reader-brief.md`, with the session's paths and numbers filled in; the readers report with cited moments, and the main session synthesises. Verify yourself any claim a reader makes about an instrument (a script, a count, a skill's text) before it goes into the report; a reader's claim is a lead, not a finding. Budget about 200 k tokens per reader for a day-long session, and set each reader's model explicitly, because sub-agents otherwise inherit the main loop's model: a model below the top one is enough for reading and citing (Opus, as of the model line-up checked 2026-11-05); use the top model only when the person asks for it.
 
 ## What to look at
 
@@ -64,16 +67,16 @@ Then the two parts that make this skill personal:
 - **Coaching for the person.** How could the person writing the prompts have been more effective? Which of their moves helped the most (name them, so they are repeated) and which cost (vague scope, a missing label on an example, a decision withheld that the agent needed, a review skipped, a slash command typed inside a message that never ran)? Write it to the person directly, the way a peer in a supervision group would: specific, evidence-based, without flattery and without softening.
 - **Models and effort.** From the numbers: was the model and effort level proportionate to the work? Where did tokens go (main loop, sub-agents, workflows, context), and would a cheaper model or a lower effort have done for parts of it? Where did a high effort pay off? Check that the model the person asked for is the one in the transcript.
 
-Where Matt Pocock's `retro` skill is used too, it covers the agent's environment (checks, navigation, automated checks, steering files, tool economy); the debrief cites its findings rather than repeating them and adds the collaboration, the coaching and the history. `retro` is invoked by the person only (an agent cannot call it, and a slash command inside another command's arguments never runs): either the person types `/mattpocock-skills:retro <session>` as a message of its own, or the debrief gives retro's `SKILL.md` and the rendered transcript to an independent sub-agent that has not seen the debrief's findings. Compare the two reads: where they agree, the finding is stronger; say what each missed. Never write a prompt for the person with one slash command inside another.
+Matt Pocock's `retro` covers the agent's environment (checks, navigation, steering files, tool economy); cite its findings, and add the collaboration, the coaching and the history. Only the person can invoke it, as a message of its own (a slash command inside another command's arguments never runs); otherwise give its `SKILL.md` and the rendered transcript to an independent sub-agent that has not seen your findings. Compare the two reads: agreement strengthens a finding; say what each missed.
 
-And, for this plugin's own improvement (kaizen on kaizen): which of its skills were used, how they ran, where one would have helped and was not used, and what no skill covers. Those findings become proposals with the destination "kaizen plugin", and with the person's say, issues or merge requests on the plugin's repository.
+And, for this plugin's own improvement (kaizen on kaizen): which of its skills were used, how they ran, where one would have helped and was not used, and what no skill covers. Those findings become proposals with the destination "kaizen plugin". In the plugin's own repository they become issues or merge requests with the maintainer's say. In anyone else's project nothing is sent on their behalf, since their ledger may be private: suggest politely that, if they would like to help improve the plugin, they open an issue at github.com/uellue/skills with a text you draft for them to copy, or send it to the maintainer privately.
 
 ## Output
 
 Two documents, in the repository that was debriefed:
 
-- **The report**, private: `.claude/debriefs/YYYY-MM-DD.md` (with a `-2` suffix if one exists). It is a subjective snapshot with the coaching in it, so it stays out of version control: before writing anything, run `git check-ignore -q .claude/debriefs/x.md`; if git would track it, offer the line `/.claude/debriefs/` for `.gitignore` (or `.git/info/exclude`, which is not shared) and write nothing until the person agrees. The user can name another place.
-- **The ledger**, in the repository: `design/kaizen.md` (create `design/` if the project has none, after telling the person where the ledger goes and that it is committed). If the repository is public or may become so, the ledger carries no details of other projects (those go to their own backlogs; the ledger says "transferred") and no security findings, secrets or credentials, not even as to-dos. Generalising an entry later does not remove it from git history: if one slipped in, say so before the branch is pushed, so the person can decide whether to rewrite the unpushed history. Only what is actionable leaves the session: the proposals table with their destinations and decisions, the status of earlier recommendations, the skill-friction lines, and the unsorted notes for the next debrief. Create it on the first debrief with the sections below; on later ones, append the proposals under the date and update the statuses.
+- **The report**, private: `.claude/debriefs/YYYY-MM-DD.md` (with a `-2` suffix if one exists). It is a subjective snapshot with the coaching in it, so it stays out of version control: before writing anything, run `git -C "$(git rev-parse --show-toplevel)" check-ignore -q .claude/debriefs/x.md` (exit 0: ignored; outside a git repository, ask where to write); if git would track it, offer the line `/.claude/debriefs/` for `.gitignore` (or `.git/info/exclude`, which is not shared) and write nothing until the person agrees. The user can name another place.
+- **The ledger**, in the repository: `design/kaizen.md` (create `design/` if the project has none, after telling the person where the ledger goes and that it is meant to be committed). If the repository is public or may become so, the ledger carries no details of other projects (those go to their own backlogs; the ledger says "transferred") and no security findings, secrets or credentials, not even as to-dos. Generalising an entry later does not remove it from git history: if one slipped in, say so before the branch is pushed, so the person can decide whether to rewrite the unpushed history. Only what is actionable leaves the session: the proposals table with their destinations and decisions, the status of earlier recommendations, the skill-friction lines, and the unsorted notes for the next debrief. Create it on the first debrief with the sections below; on later ones, append the proposals under the date and update the statuses.
 
 Show a short summary in the reply: the five lines and the proposals that are not small.
 
@@ -117,7 +120,7 @@ Keep doing: <the moves that helped, as a list in one line>.
 ## Proposals
 | # | Proposal | Destination | Effort | Decision |
 |---|---|---|---|---|
-Destinations: AGENTS.md or CLAUDE.md rule, a hook or lint check, memory, skill, workflow, backlog, the shared guide, a tool to adopt, the kaizen plugin (as an issue or merge request on its repository).
+Destinations: AGENTS.md or CLAUDE.md rule, a hook or lint check, memory, skill, workflow, backlog, the shared guide, a tool to adopt, the kaizen plugin (as above: an issue the person opens, or a private message to the maintainer).
 
 ## Earlier recommendations
 | From | Recommendation | Status (acted on / recurring / unknown) |

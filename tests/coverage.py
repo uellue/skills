@@ -11,16 +11,21 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 
 
-def main():
-    examples = re.findall(r"^- \*\*(E\d+)\*\* \(([a-z]+)", (REPO / "design" / "examples.md").read_text(), re.M)
+def uncovered(root: Path) -> tuple[int, list[str]]:
+    """(number of examples, the uncovered ones with their priority)."""
+    examples = re.findall(r"^- \*\*(E\d+)\*\* \(([a-z]+)", (root / "design" / "examples.md").read_text(), re.M)
     cited = set()
     for d in ("tests", "benchmarks", "design/hallway"):
-        for f in (REPO / d).rglob("*"):
+        for f in (root / d).rglob("*"):
             if f.is_file() and f.resolve() != Path(__file__).resolve() and f.suffix in (".py", ".md", ".sh", ".txt", ".yaml"):
                 cited |= set(re.findall(r"\bE\d+\b", f.read_text(errors="replace")))
-    missing = [f"{e} ({prio})" for e, prio in examples if e not in cited]
-    covered = len(examples) - len(missing)
-    print(f"examples covered by a test or fixture: {covered} of {len(examples)}")
+    return len(examples), [f"{e} ({prio})" for e, prio in examples if e not in cited]
+
+
+def main():
+    total, missing = uncovered(REPO)
+    covered = total - len(missing)
+    print(f"examples covered by a test or fixture: {covered} of {total}")
     if missing:
         print("not covered: " + ", ".join(missing))
 
