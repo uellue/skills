@@ -5,7 +5,7 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `beda3005`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief` and give its line to the person (if the script fails, say so and carry on); if its text id differs from this one, this session runs an older text of the skill: say so and suggest `/reload-plugins`.
+Text id `0c9ba22b`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into three kinds of output: lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better), and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report.
 

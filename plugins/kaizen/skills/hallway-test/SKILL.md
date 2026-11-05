@@ -5,7 +5,7 @@ description: Run a hallway usability test of a tool, document, instruction file 
 
 # Hallway test
 
-Text id `77cd07cb`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test` and give its line to the person (if the script fails, say so and carry on); if its text id differs from this one, this session runs an older text of the skill: say so and suggest `/reload-plugins`.
+Text id `f860f02e`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The name comes from grabbing a person in the hallway and watching them use the product. Here the person is a sub-agent that has not seen the implementation, the specs or the conversation that produced the code, so it cannot un-know what the author knows. It reads the requirements and the user-facing documentation, decides what should happen, tries it, and reports where reality differs. It regularly finds defects that the test suite has enshrined and that every scenario missed.
 

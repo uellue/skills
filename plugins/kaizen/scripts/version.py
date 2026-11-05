@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Which version of the kaizen plugin, and of one skill's text, is on disk.
 
-    version.py SKILL      one line: plugin version, commit when the plugin is tracked by a checkout, the skill's text id
+    version.py SKILL ID   what a skill runs at its start, with the text id it was given: prints nothing when
+                          that text is current in an installed copy; one line when the session runs an older
+                          text, and a short status line in the maintainer's checkout
+    version.py SKILL      the full line: plugin version, commit in a checkout, the skill's text id
     version.py --stamp    write the current text id into every SKILL.md (maintainer's checkout only)
 
 Each SKILL.md carries one line "Text id `<id>`" at the top of its body, a hash of its own text. A session
@@ -64,8 +67,18 @@ def stamp(skills: list[Path]):
     print(f"stamped {len(skills)} skills")
 
 
+def verdict(p: Path, loaded: str, version: str):
+    """Silent unless it matters: an older text in the session, or the maintainer's checkout."""
+    name, on_disk = p.parent.name, written_id(p)
+    if loaded != on_disk:
+        print(f"kaizen: this session runs an older text of {name} (loaded {loaded}, on disk {on_disk}): run /reload-plugins")
+    elif tracked():
+        edited = "; edited after its last --stamp: run version.py --stamp" if on_disk != text_id(p) else ""
+        print(f"kaizen {version}{commit()}: {name} current{edited}")
+
+
 def main():
-    if len(sys.argv) != 2 or sys.argv[1] in ("-h", "--help"):
+    if len(sys.argv) not in (2, 3) or sys.argv[1] in ("-h", "--help"):
         print(__doc__)
         return
     skills = sorted(PLUGIN.glob("skills/*/SKILL.md"))
@@ -75,6 +88,8 @@ def main():
     if not p.is_file():
         sys.exit(f"no skill {sys.argv[1]}; skills: {', '.join(s.parent.name for s in skills)}")
     version = json.loads((PLUGIN / ".claude-plugin" / "plugin.json").read_text())["version"]
+    if len(sys.argv) == 3:
+        return verdict(p, sys.argv[2].strip("`"), version)
     line = f"kaizen {version}{commit()}; {p.parent.name} text id {written_id(p)} (compare with the id at the top of the skill)"
     if written_id(p) != text_id(p):
         line += "; the file on disk was edited after its last --stamp, so the comparison cannot tell (run --stamp in the checkout)"

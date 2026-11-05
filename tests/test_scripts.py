@@ -240,6 +240,24 @@ class TestVersion(unittest.TestCase):
         self.assertIn("walkthrough", r.stderr)
         self.assertEqual(before, self.skills(), "nothing is written when one file is malformed")
 
+    def written(self, skill="debrief"):
+        return re.search(r"^Text id `([0-9a-f]{8})`", (self.copy / f"skills/{skill}/SKILL.md").read_text(), re.M).group(1)
+
+    def test_installed_and_current_is_silent(self):  # E16, principal 2026-11-05: only where relevant
+        r = self.run_version("debrief", self.written())
+        self.assertEqual((r.returncode, r.stdout), (0, ""))
+
+    def test_older_text_in_the_session_says_reload(self):  # E16
+        out = self.run_version("debrief", "0000aaaa").stdout
+        self.assertIn("older text of debrief", out)
+        self.assertIn("/reload-plugins", out)
+
+    def test_checkout_gets_a_short_status(self):
+        self.git("init", "-q")
+        self.git("add", ".")
+        self.git("commit", "-q", "-m", "checkout")
+        self.assertRegex(self.run_version("debrief", self.written()).stdout.strip(), r"^kaizen \S+, commit \w+: debrief current$")
+
     def test_unknown_skill_names_the_known_ones(self):
         r = self.run_version("nosuch")
         self.assertNotEqual(r.returncode, 0)

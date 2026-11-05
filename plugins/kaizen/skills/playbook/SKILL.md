@@ -5,7 +5,7 @@ description: Which kaizen skill fits now, and what the shared documents are. The
 
 # Playbook
 
-Text id `a465dda2`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook` and give its line to the person (if the script fails, say so and carry on); if its text id differs from this one, this session runs an older text of the skill: say so and suggest `/reload-plugins`.
+Text id `449171db`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The other skills in this plugin are moments in one process. This skill says which moment a session is in, what document that moment reads and writes, and what to do when the document is missing. It proposes; the person decides which moment the session is in and which path to take.
 

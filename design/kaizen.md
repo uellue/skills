@@ -104,8 +104,10 @@ Not applied: waiting for the principal. Leans in the last column.
 | 57 | A shared ledger template in `references/`, named by every skill's ledger line | plugin | small | proposed; lean: yes |
 | 58 | One session-start line in the playbook: work that acts on hardware names the owner and whether a simulator exists before planning | plugin (playbook) | small | proposed; lean: yes |
 | 59 | A cost note for the full path, and a feasibility spike between requirements and the decision record (with ledger 51) | plugin backlog (0.5) | small | proposed; lean: 0.5 |
-| 60 | `version.py <skill> <expected id>` prints "current" or "older text: run /reload-plugins", so the person reads a verdict, not two ids | plugin | small | proposed; lean: yes, with the question of whether the line is shown at every run |
+| 60 | `version.py <skill> <expected id>` prints "current" or "older text: run /reload-plugins", so the person reads a verdict, not two ids | plugin | small | done in 0.4: the script gives the verdict and is silent unless it matters (principal, 2026-11-05: only where it could be relevant) |
 | 61 | Smaller: one debrief per session for several first uses; the exact invocation of `grill-me`; the requirements handover lists questions for an absent owner as a deliverable to send | plugin | small | proposed; lean: yes |
+
+Open for the principal: the hallway test's hand-over deviation (stop only when nothing is built) is argued, not measured; neither self-test run reached that branch. Proposal: key item N13, a run on an existing small tool with a README and no requirements, before deciding.
 
 ## Earlier recommendations
 
