@@ -77,6 +77,19 @@ Third independent review (2026-11-05, the commits after `99eeff3`, about 725 lin
 
 Status changes from this debrief: 15 and 17 recurred in this repository too (escalated, 37, 38, 44); 30 held for the rest of the session after adoption; 2 and 3 used for real and held, gaps in 40–42.
 
+### 2026-11-05 (hallway test of the plugin from the README: a new colleague with an SEM project, `design/hallway/2026-11-05.md`)
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 46 | Hardware safety from the start: questionnaire 2.11 names the instrument and who authorises moves, 2.3 asks for a simulator that enforces the limits, Release names the instrument's owner; the playbook's build step, the measured walk and the decision record point to the hallway test's hardware rule | plugin (0.4) | small | done in 0.4 |
+| 47 | One test for discovery versus the requirements interview (can the person name who needs it and what they would do differently?), in the playbook; `grill-me` wraps `grilling` | plugin (0.4) | small | done in 0.4 |
+| 48 | Every skill's ledger line announces the ledger the first time | plugin (0.4) | small | done in 0.4 |
+| 49 | `version.py --stamp` refuses outside a git checkout; the version line says what to compare | plugin (0.4) | small | done in 0.4, with a test |
+| 50 | A persona "described by <who>"; README: the debrief comes after a stretch of work | plugin (0.4) | small | done in 0.4 |
+| 51 | A feasibility path: "can an agent do this at all?" as a five-line need note and a throwaway prototype against a simulator, before the full form | plugin backlog (0.5) | small | proposed |
+| 52 | The decision record says that a new project's first build counts as a change | plugin backlog (0.5) | small | proposed |
+| 53 | Keep this test as a rerunnable self-test of the plugin (`benchmarks/newcomer-sem/`), with a brief that forbids the tester from volunteering the risk under test | plugin | small | done in 0.4 (principal, 2026-11-05) |
+
 ## Earlier recommendations
 
 The 2026-11-03 debrief (data-management-system) made seven proposals and five coaching points; their status after the week, as seen in the seven sessions: proposals 1, 3, 5, 6 acted on; 2 and 4 recurring in four sessions each (escalated, proposals 14 and 15 above); 7 done but its table row never closed. Coaching 1, 3, 5 acted on; 2 and 4 partly. Details in that repository's debrief history.
