@@ -6,7 +6,7 @@ One entry per persona. The `requirements` skill writes this record (section 1.4)
 
 Who: a research software engineer or scientist at ER-C who leads one or more coding agents on a project, writes the prompts, decides, reviews. The plugin's principal (Dieter Weber, interviewed 2026-11-03 to 11-05).
 Wants: to be effective with agents; to specify outcomes rather than solutions; to judge behaviour instead of reading generated text; a record of decisions that survives sessions; to improve their own prompting from evidence.
-Knows: the project, the institute's requirements form, product-management habits; the agent's tooling well enough to read transcripts.
+Knows: the project, the demand and requirements form they wrote, product-management habits; the agent's tooling well enough to read transcripts.
 Has: Claude Code in a VM, a devcontainer or on the host; several checkouts and worktrees; the repositories' design records.
 Never reads: long generated text when a behaviour can be tried instead; a report that narrates instead of reminding.
 Confidence: interviewed.

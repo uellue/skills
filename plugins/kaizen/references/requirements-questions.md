@@ -1,6 +1,6 @@
 # Requirements questionnaire
 
-Adapted for software from ER-C's "Demand and Requirements Specification" form (version 1.1, 2026), written by Dieter Weber to clarify requirements between the person who needs a solution and the person who builds it. The original is an institute document for all kinds of projects, instruments included; the questions below keep its structure and translate the physical ones. Use it in two ways: before a walk-through, to see which questions the project's record already answers and which it skips; after a walk-through, to turn the steps into section 2.1 and to fill the rest from the conversation with the real stakeholder. A question that has no answer is a finding, not an omission to hide.
+Adapted for software from the "Demand and Requirements Specification" form (version 1.1, 2026) that Dieter Weber wrote at ER-C to clarify requirements between the person who needs a solution and the person who builds it. It is not an institute requirement; the plugin uses it as a checklist for work with agents. The original covers all kinds of projects, instruments included; the questions below keep its structure and translate the physical ones. Use it in two ways: before a walk-through, to see which questions the project's record already answers and which it skips; after a walk-through, to turn the steps into section 2.1 and to fill the rest from the conversation with the real stakeholder. A question that has no answer is a finding, not an omission to hide.
 
 ## 1. Demand
 

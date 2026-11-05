@@ -8,6 +8,7 @@ Markers per item: [answered] said or confirmed by the principal; [record] taken 
 ### 1.1 Problem and context
 - [answered] Working with coding agents is onboarding a new employee every session: it knows only the repository and its instructions. What keeps a human organisation coherent (decisions written down, a backlog, conventions, a reviewer who did not write the code, a retrospective) works for agents for the same reasons, and had to be done by hand on every project. (Guide, "The picture".)
 - [answered] The standing meta-goal is a process that improves our processes; the debrief is its instrument, and the plugin is where practices that happened by hand more than once are kept as documented, invokable procedures. (Guide, "Regular debrief"; principal 2026-11-05: "We should always do kaizen on kaizen".)
+- [answered] The demand and requirements form behind the requirements skill was written by the principal at ER-C; it is not an institute requirement. Agents give it a second life, because the tools and processes that keep large organisations on track also keep agents on track. (Principal, 2026-11-05.)
 - [answered] Lessons otherwise land in chat, in a per-checkout memory that a worktree or a VM does not see, or nowhere; in the first week, a dozen lessons were lost that way (debrief 2026-11-05).
 - [answered] What happens if nothing is done: agents are a vast power we are only starting to explore. They can create gigantic messes and dig holes to fall into, or create and improve things of exceptional power, utility and quality orders of magnitude cheaper than before, in a short week what took years and a large team. Driving agents effectively is a very different skill from developing oneself: the issues that appeared with one's own work over months and years now hit after a one-hour session. High-level management skills (work on the process, not the problem; leadership and communication; clarity of thought and intent; clear documentation and project structure) are the key, and must now be mastered on day one, as a junior in any job, where before they were skills of senior managers that few people in an organisation had to master. Without the plugin, those skills stay in one person's head and guide, colleagues learn them the expensive way, and the agent's lessons keep dying with sessions. (Principal, 2026-11-05.)
 
@@ -53,7 +54,7 @@ Acceptance examples: E1 to E6 in `examples.md`.
 
 ### 2.3 Interfaces with existing systems
 - [answered] Claude Code's plugin and skill format (`SKILL.md` with frontmatter, `${CLAUDE_PLUGIN_ROOT}`), its transcript JSONL (one line per content block, usage repeated per line; queued mid-turn messages as attachments), its sub-agent and SendMessage mechanics, its rules on what a sub-agent may write.
-- [answered] ER-C's demand and requirements form (version 1.1, 2026), whose sections serve as a checklist; the order is not binding.
+- [answered] The demand and requirements form (version 1.1, 2026) the principal wrote at ER-C, whose sections serve as a checklist; the order is not binding. ER-C does not require it.
 - [answered] OpenSpec on the projects that use it; `AGENTS.md`/`CLAUDE.md` conventions; the projects' `design/` directories.
 - [answered] Output that leaves a project (issues, merge requests, upstream comments): a short part for humans and details for agents, marked as endorsed by a human or attached without endorsement.
 
@@ -86,7 +87,7 @@ Acceptance examples: E1 to E6 in `examples.md`.
 - [answered] Working principle: do not obsess about details in advance; fix unwanted outcomes when there are concrete examples, so the skills and their outputs change in response to evidence. This does not hold for security and safety, where care comes before the example. Decisions such as where the accepted-lean check lives are taken provisionally and changed later. (Principal, 2026-11-05.)
 
 ### 2.12 Applicable standards
-- [answered] ER-C's demand and requirements form; the five-whys habit (Toyota); the organisation's rule against invented references.
+- [answered] None binding. Followed by choice: the principal's demand and requirements form; the five-whys habit (Toyota); the organisation's rule against invented references.
 
 ## Release
 Decides: the principal. Builds: the principal with Claude. Pays: ER-C (tokens). Signs off: the principal, per release.
