@@ -160,6 +160,34 @@ class TestRender(Fixture):
         self.assertNotIn("Traceback", p.stderr)
 
 
+class TestLocate(Fixture):
+    def test_sessions_recognisable_by_first_message(self):  # E8
+        out = self.run_script(SCRIPTS / "transcript.py", "locate").stdout
+        self.assertIn("first message: Please look at the notes tool.", out)
+        self.assertIn("first message: A newer session.", out)
+        self.assertLess(out.index(OLD), out.index(NEW), "oldest first")
+
+    def test_a_slash_command_shows_as_typed(self):
+        sys.path.insert(0, str(SCRIPTS))
+        from transcript import gist
+
+        text = "<command-message>kaizen:debrief</command-message>\n<command-name>/kaizen:debrief</command-name>\n<command-args>the  week</command-args>"
+        self.assertEqual(gist(text), "/kaizen:debrief the week")
+
+
+class TestPythonVersion(unittest.TestCase):
+    def test_old_python_gets_one_line(self):  # E11
+        for name in ("transcript.py", "usage.py"):
+            code = (
+                "import runpy, sys; sys.version_info = (3, 9, 0, 'final', 0); "
+                f"sys.argv = [{str(SCRIPTS / name)!r}, '--help']; runpy.run_path(sys.argv[0], run_name='__main__')"
+            )
+            r = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True)
+            with self.subTest(name):
+                self.assertNotEqual(r.returncode, 0)
+                self.assertEqual(r.stderr.strip().splitlines(), [f"{name} needs Python 3.10 or newer; this is {sys.version.split()[0]}"])
+
+
 class TestExport(Fixture):
     def test_refuses_a_tracked_destination_and_writes_nothing(self):  # E4
         dest = self.project / "visible"
@@ -189,6 +217,13 @@ class TestExport(Fixture):
 
 
 class TestSkim(unittest.TestCase):
+    def test_readme_skim_names_the_first_command_after_install(self):  # E7
+        readme = Path(__file__).resolve().parents[1] / "README.md"
+        out = subprocess.run([sys.executable, SCRIPTS / "skim.py", readme], capture_output=True, text=True).stdout
+        after = out[out.index("claude plugin install"):]
+        self.assertIn("/kaizen:debrief", after[:800])
+        self.assertIn("/kaizen:playbook", after[:800])
+
     def test_headings_and_code_only(self):
         with tempfile.TemporaryDirectory() as d:
             readme = Path(d) / "README.md"

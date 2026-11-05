@@ -30,7 +30,10 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-LIMITS = {"results": 400, "tools": 600, "text": 6000}
+if sys.version_info < (3, 10):
+    sys.exit(f"{Path(sys.argv[0]).name} needs Python 3.10 or newer; this is {sys.version.split()[0]}")
+
+LIMITS ={"results": 400, "tools": 600, "text": 6000}
 
 # Text the harness writes in the user's place; never counted or labelled as the person's.
 HARNESS_PREFIXES = (
@@ -136,18 +139,31 @@ def has_text(o: dict) -> bool:
     return bool(person_texts(o))
 
 
+def gist(text: str, n: int = 70) -> str:
+    """One line a person recognises: a slash command as typed, whitespace collapsed, shortened."""
+    m = re.search(r"<command-name>\s*(\S+)\s*</command-name>", text)
+    if m:
+        args = re.search(r"<command-args>(.*?)</command-args>", text, re.S)
+        text = m.group(1) + (" " + args.group(1) if args and args.group(1).strip() else "")
+    text = " ".join(text.split())
+    return text if len(text) <= n else text[: n - 1] + "…"
+
+
 def summary(path: Path) -> dict:
-    first = last = None
+    first = last = opening = None
     users, ids = 0, set()
     for _, o in read(path):
         ts = o.get("timestamp")
         if ts:
             first = first or ts
             last = ts
-        users += len(person_texts(o))
+        texts = person_texts(o)
+        if texts and opening is None:
+            opening = gist(texts[0])
+        users += len(texts)
         if o.get("type") == "assistant":
             ids.add((o.get("message") or {}).get("id"))
-    return {"first": first, "last": last, "users": users, "messages": len(ids)}
+    return {"first": first, "last": last, "users": users, "messages": len(ids), "opening": opening}
 
 
 def locate(project: Path):
@@ -162,7 +178,8 @@ def locate(project: Path):
         span = f"{(s['first'] or '?')[:16]} to {(s['last'] or '?')[:16]}"
         print(
             f"{f.stem}  {span}  {f.stat().st_size / 1e6:.1f} MB  user messages {s['users']}, "
-            f"API messages {s['messages']}, sub-agents {len(subagent_files(f))}  [{origin}] {f}"
+            f"API messages {s['messages']}, sub-agents {len(subagent_files(f))}  [{origin}] {f}\n"
+            f"    first message: {s['opening'] or '(none typed)'}"
         )
 
 
