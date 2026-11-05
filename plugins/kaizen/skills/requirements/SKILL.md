@@ -5,6 +5,8 @@ description: Interview the person who needs a solution and write a demand and re
 
 # Requirements interview
 
+Text id `4337fba1`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements` and give its line to the person; if its text id differs from this one, this session runs an older text of the skill: say so and suggest `/reload-plugins`.
+
 The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of a demand and requirements form written at ER-C (a checklist; no institute requires it), writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
 
 This skill tightens an idea that exists, however loosely. To get from nothing to an idea, a free discovery interview serves better, for example `grill-me` or `grill-with-docs` from Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills); its result is the record this interview starts from. Where the project keeps a `GLOSSARY.md` (their `domain-modeling` skill), write the requirements in its terms, and raise a term that the interview finds missing or contradictory instead of defining it here.

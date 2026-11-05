@@ -5,13 +5,15 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
+Text id `8382af4c`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief` and give its line to the person; if its text id differs from this one, this session runs an older text of the skill: say so and suggest `/reload-plugins`.
+
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into three kinds of output: lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better), and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report.
 
 Structure and rules adapted from two MIT-licensed skills, with thanks: `debrief` by Wavez (the four check groups, "every finding cites a moment", nothing applied without approval) and `retrospective` by florianbuetow (reports kept as history, earlier recommendations checked and recurring issues escalated, root cause and suggestion per finding). The coaching section, the five-whys habit, the usage script and the ledger are this skill's own.
 
 ## When
 
-Ends do not announce themselves: compactions arrive without a turn, sessions end with a reboot or a refused turn. So the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Three cheap habits feed it between runs; if the project has no ledger yet, the first capture says where it will go (`design/kaizen.md`, meant to be committed) before writing it:
+Ends do not announce themselves (a compaction, a reboot, a refused turn), so the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Three cheap habits feed it between runs; if the project has no ledger yet, the first capture says where it will go (`design/kaizen.md`, meant to be committed) before writing it:
 
 - **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Sorting is the debrief's job; capture must cost nothing.
 - **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation.
@@ -19,7 +21,7 @@ Ends do not announce themselves: compactions arrive without a turn, sessions end
 
 ## Inputs
 
-1. **The transcripts.** The primary source: tool calls, questions and when they were asked, corrections and confirmations by the user, sub-agent reports, errors and retries. Find them with the bundled script; they are not always under `~/.claude/projects/`: a worktree or a VM has its own slug, and projects keep copies in the checkout.
+1. **The transcripts.** The primary source. Find them with the bundled script, which also looks where worktrees, VMs and checkouts keep them.
 
    ```bash
    python3 ${CLAUDE_PLUGIN_ROOT}/scripts/transcript.py locate            # every session of this project: span, size, first message
