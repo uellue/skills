@@ -16,7 +16,7 @@ The commands, options, inputs and outputs as a user meets them; data and file fo
 ## 3. Decisions
 | # | Question | Options | Choice | Decided by | Reversible? |
 |---|---|---|---|---|---|
-Each row a question an implementer would otherwise answer alone: names, semantics (substring or word, exact or fuzzy), constants (timeouts, limits), compatibility with old data and old clients. "Decided by": the person (answered) or the author (assumed). Security and safety decisions are never left to "assumed" without saying so at hand-over.
+Each row a question an implementer would otherwise answer alone: names, semantics (substring or word, exact or fuzzy), constants (timeouts, limits), compatibility with old data and old clients. "Decided by": the person (answered) or the author (assumed). Security and safety decisions are never left to "assumed" without saying so at hand-over. When the change acts on hardware, one row per safety stop: what the software refuses or does on its own (a move outside the envelope, a lost connection), and who agreed.
 
 ## 4. Scope
 Must: <example IDs from design/examples.md>. Should: <IDs>. Won't (this change): <IDs or items>.

@@ -5,11 +5,11 @@ description: Interview the person who needs a solution and write a demand and re
 
 # Requirements interview
 
-Text id `4337fba1`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements` and give its line to the person; if its text id differs from this one, this session runs an older text of the skill: say so and suggest `/reload-plugins`.
+Text id `67f5b248`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements` and give its line to the person; if its text id differs from this one, this session runs an older text of the skill: say so and suggest `/reload-plugins`.
 
 The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of a demand and requirements form written at ER-C (a checklist; no institute requires it), writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
 
-This skill tightens an idea that exists, however loosely. To get from nothing to an idea, a free discovery interview serves better, for example `grill-me` or `grill-with-docs` from Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills); its result is the record this interview starts from. Where the project keeps a `GLOSSARY.md` (their `domain-modeling` skill), write the requirements in its terms, and raise a term that the interview finds missing or contradictory instead of defining it here.
+This skill tightens an idea that exists, however loosely (the playbook's test: the person can name who needs it and what they would do differently). To get from nothing to an idea, a free discovery interview serves better, for example `grill-me` or `grill-with-docs` from Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills); its result is the record this interview starts from. Where the project keeps a `GLOSSARY.md` (their `domain-modeling` skill), write the requirements in its terms, and raise a term that the interview finds missing or contradictory instead of defining it here.
 
 ## Who answers
 
@@ -33,7 +33,7 @@ Habits that make the answers usable:
 - **Two hats.** After the demand sections, read the answers back with the product hat (what does "done" look like for this person, what would they complain about) and with the developer hat (what is infeasible, insecure, slow at the stated scale, fragile at the interfaces), and ask the questions those raise; this pass is where the real risk tends to surface ("the first jump is the risk, not the regular upgrade").
 - **Play back and confirm.** At the end of each round, summarise the answers in a few sentences in the person's words and ask whether that is right, before the next round. Items taken from the record are read back too: `[record]` becomes `[answered]` only when the principal confirms it.
 - **Prior art before "nothing exists".** For current solutions (1.2), search for upstream projects, libraries or services that address the problem before writing that none does; name what was found and what it lacks.
-- **The stakeholders are a document.** Section 1.4 writes or updates the project's stakeholder record (`design/stakeholders.md`): one entry per persona with who they are, what they want, what they know, what they have, what they would never read, and whether the entry is from an interview or simulated. The `walkthrough` and `hallway-test` skills take their personas from it; their desired experiences are requirements.
+- **The stakeholders are a document.** Section 1.4 writes or updates the project's stakeholder record (`design/stakeholders.md`): one entry per persona with who they are, what they want, what they know, what they have, what they would never read, and whether the entry is from an interview, described by someone else (named), or simulated. The `walkthrough` and `hallway-test` skills take their personas from it; their desired experiences are requirements.
 - **Walk the main scenarios.** For section 2.1, the `walkthrough` skill is the method: when the two skills are invoked together, the walks become the scenarios, and each walk's questionnaire footer lists the questions the record does not answer yet, for the next rounds.
 
 Match the depth to the project: a two-week tool gets the demand sections and the use scenarios in full and one line each for the rest; an instrument-facing service gets every section. Never skip a section silently; a one-line "not asked, because <reason>" is a legitimate entry.
@@ -69,7 +69,7 @@ Markers per item: [answered] said or confirmed by the principal; [record] taken 
 ### 2.12 Applicable standards
 
 ## Release
-Decides: <...>. Builds: <...>. Pays: <...>. Signs off: <...>.
+Decides: <...>. Builds: <...>. Pays: <...>. Signs off: <...>. Owns the instrument or shared system it acts on: <... | none>.
 
 ## Open questions
 - <question>, for <person>, resolves <section>, deferred to <stage>
@@ -94,4 +94,4 @@ Before saying the document is ready, run the handover check and show its result:
 - A requirement that cannot be checked is not finished: for each main scenario, add one acceptance example ("when <situation>, then <observable outcome>") to `design/examples.md`, with the next free ID, a priority and the scenario it comes from, and cite the ID in 2.1. The examples live only there.
 - Keep names of people in the project's own record; keep them out of anything published.
 - Hand the document over with the handover check above, not with "ready for review" alone.
-- At the end, one line into the project's `design/kaizen.md`: what in this skill did not fit.
+- At the end, one line into the project's `design/kaizen.md`: what in this skill did not fit. If the file does not exist yet, say first where it will go and that it is meant to be committed.

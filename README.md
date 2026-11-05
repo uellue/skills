@@ -18,7 +18,7 @@ In a Claude Code session in your project:
 
 ```text
 /kaizen:playbook    which step of the work this is, and which skill fits now
-/kaizen:debrief     how the work since the last debrief went (it lists the sessions and asks before reading)
+/kaizen:debrief     after a stretch of work: how it went (it lists the sessions and asks before reading)
 ```
 
 ## Plugins

@@ -42,6 +42,8 @@ def main():
         return
     skills = sorted(PLUGIN.glob("skills/*/SKILL.md"))
     if sys.argv[1] == "--stamp":
+        if not commit():
+            sys.exit(f"{PLUGIN} is not a git checkout: --stamp is for the maintainer's checkout, never an installed copy")
         for p in skills:
             t = p.read_text()
             if not STAMP.search(t):
@@ -53,7 +55,7 @@ def main():
     if not p.is_file():
         sys.exit(f"no skill {sys.argv[1]}; skills: {', '.join(s.parent.name for s in skills)}")
     version = json.loads((PLUGIN / ".claude-plugin" / "plugin.json").read_text())["version"]
-    print(f"kaizen {version}{commit()}; {p.parent.name} text id {text_id(p)}")
+    print(f"kaizen {version}{commit()}; {p.parent.name} text id {text_id(p)} (the same id as at the top of the skill: current text)")
 
 
 if __name__ == "__main__":

@@ -178,7 +178,20 @@ class TestLocate(Fixture):
 class TestVersion(unittest.TestCase):
     def test_one_line_with_version_and_text_id(self):  # E16
         r = subprocess.run([sys.executable, SCRIPTS / "version.py", "kaizen:debrief"], capture_output=True, text=True)
-        self.assertRegex(r.stdout.strip(), r"^kaizen \d+\.\d+\.\d+(, commit \w+( with uncommitted changes)?)?; debrief text id [0-9a-f]{8}$")
+        self.assertRegex(r.stdout.strip(), r"^kaizen \d+\.\d+\.\d+(, commit \w+( with uncommitted changes)?)?; debrief text id [0-9a-f]{8} \(.*current text\)$")
+
+    def test_stamp_refuses_outside_a_checkout(self):
+        import shutil
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as d:
+            copy = Path(d) / "kaizen"
+            shutil.copytree(SCRIPTS.parent, copy, ignore=shutil.ignore_patterns("__pycache__"))
+            before = {p: p.read_text() for p in copy.glob("skills/*/SKILL.md")}
+            r = subprocess.run([sys.executable, copy / "scripts" / "version.py", "--stamp"], capture_output=True, text=True, cwd=d)
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn("not a git checkout", r.stderr)
+            self.assertEqual(before, {p: p.read_text() for p in copy.glob("skills/*/SKILL.md")})
 
     def test_unknown_skill_names_the_known_ones(self):
         r = subprocess.run([sys.executable, SCRIPTS / "version.py", "nosuch"], capture_output=True, text=True)
