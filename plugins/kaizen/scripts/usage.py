@@ -107,7 +107,8 @@ def main():
     s = summarise(path)
     print(f"Session `{path.stem}`: {span(s['first'], s['last'])}, compactions: {s['compactions']}\n")
     print("| Measure | Value |\n|---|---|")
-    print(f"| User messages (typed by the person) | {s['users']} |")
+    who = "Messages from the parent agent" if "subagents" in path.parts else "User messages (typed by the person)"
+    print(f"| {who} | {s['users']} |")
     print(f"| API messages | {s['messages']} |")
     print(f"| Tool calls | {sum(s['tools'].values())} |")
     for name, n in s["tools"].most_common():
@@ -134,4 +135,7 @@ def main():
 
 
 if __name__ == "__main__":
+    import signal
+
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
     main()

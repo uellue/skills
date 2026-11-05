@@ -33,7 +33,6 @@ LIMITS = {"results": 400, "tools": 600, "text": 6000}
 
 # Text the harness writes in the user's place; never counted or labelled as the person's.
 HARNESS_PREFIXES = (
-    "<command-",
     "<local-command",
     "<task-notification",
     "<agent-message",
@@ -76,13 +75,13 @@ def candidates(project: Path) -> list[tuple[str, Path]]:
     for origin, d in dirs:
         if not d.is_dir():
             continue
-        for f in d.rglob("*.jsonl"):
+        for f in sorted(d.rglob("*.jsonl")):
             if "subagents" in f.parts or f.name == "history.jsonl":
                 continue
-            key = f.resolve()
-            if key not in seen:
-                seen.add(key)
-                out.append((origin, f))
+            if f.stem in seen:  # one copy per session: the harness's own first, then the first checkout copy
+                continue
+            seen.add(f.stem)
+            out.append((origin, f))
     return sorted(out, key=lambda t: t[1].stat().st_mtime)
 
 
@@ -151,12 +150,12 @@ def summary(path: Path) -> dict:
 
 
 def locate(project: Path):
+    if repo_root(project) is None:
+        print(f"{project.resolve()} is not inside a git checkout: only the harness's own directory is searched")
     rows = candidates(project)
     if not rows:
-        print(f"no transcripts found for {project} (slugs {', '.join(slugs(project))})")
+        print(f"no transcripts found for {project.resolve()} (slugs {', '.join(slugs(project))})")
         return
-    if repo_root(project) is None:
-        print(f"{project} is not inside a git checkout: only the harness's own directory was searched")
     for origin, f in rows:
         s = summary(f)
         span = f"{(s['first'] or '?')[:16]} to {(s['last'] or '?')[:16]}"
@@ -193,7 +192,9 @@ def render(path: Path, lim: dict, out=sys.stdout):
             for c in blocks:
                 if isinstance(c, str) or (isinstance(c, dict) and c.get("type") == "text"):
                     text = c if isinstance(c, str) else c.get("text", "")
-                    label = "HARNESS" if (o.get("isMeta") or is_harness(text)) else "USER"
+                    label = "HARNESS" if (o.get("isMeta") or is_harness(text)) else ("USER (command)" if text.lstrip().startswith("<command-") else "USER")
+                    if label.startswith("USER") and "subagents" in path.parts:
+                        label = "PARENT"
                     p(f"\n=== L{n} {ts} {label}\n{trunc(text, lim['text'])}")
                 elif isinstance(c, dict) and c.get("type") == "tool_result":
                     flag = " ERROR" if c.get("is_error") else ""
@@ -226,22 +227,25 @@ def resolve(arg: str | None, project: Path) -> Path:
     files = [f for _, f in rows]
     files += [s for f in files for s in subagent_files(f)]
     key = arg.removeprefix("agent-")
-    matches = [f for f in files if f.stem.removeprefix("agent-").startswith(key)]
+    matches = list({f.stem: f for f in reversed(files) if f.stem.removeprefix("agent-").startswith(key)}.values())
     if not matches:
         sys.exit(f"no transcript {arg} for {project}; try: transcript.py locate")
     if len(matches) > 1:
-        sys.exit(f"{arg} is ambiguous: " + ", ".join(f.stem for f in matches))
+        sys.exit(f"{arg} is ambiguous: " + ", ".join(str(f) for f in matches))
     return matches[0]
 
 
-def tracked_by_git(dest: Path) -> bool:
-    """True when files written to dest would be visible to `git add` (inside a checkout and not ignored)."""
-    probe = dest / "probe.jsonl"
+def tracked_by_git(dest: Path, names: list[str]) -> list[str]:
+    """The names under dest that `git add` would see (inside a checkout and not ignored). dest need not exist."""
     root = repo_root(dest)
     if root is None:
-        return False
-    r = subprocess.run(["git", "-C", str(root), "check-ignore", "-q", str(probe)], capture_output=True)
-    return r.returncode != 0
+        return []
+    seen = []
+    for n in names:
+        r = subprocess.run(["git", "-C", str(root), "check-ignore", "-q", str(dest.resolve() / n)], capture_output=True)
+        if r.returncode != 0:
+            seen.append(n)
+    return seen
 
 
 def export(src: Path, to: Path | None, allow_tracked: bool):
@@ -250,13 +254,19 @@ def export(src: Path, to: Path | None, allow_tracked: bool):
         if root is None:
             sys.exit("not inside a git checkout; name a destination with --to")
         to = root / ".claude" / "transcripts" / src.stem
-    to.mkdir(parents=True, exist_ok=True)
-    if tracked_by_git(to) and not allow_tracked:
+    subs = subagent_files(src)
+    metas = [m for s in subs for m in [s.with_suffix(".meta.json")] if m.is_file()]
+    targets = [(src, to / src.name)] + [(s, to / "subagents" / s.name) for s in subs + metas]
+    names = [b.relative_to(to).as_posix() for _, b in targets] + [f"{src.stem}.txt"]
+    visible = tracked_by_git(to, names)
+    if visible and not allow_tracked:
         sys.exit(
-            f"{to} is inside a git checkout and not ignored: a transcript may hold credentials. "
-            "Add the directory to .gitignore (or .git/info/exclude), or pass --allow-tracked."
+            f"{to} is inside a git checkout and git would see {visible[0]}"
+            + (f" and {len(visible) - 1} more" if len(visible) > 1 else "")
+            + ": a transcript may hold credentials. Ignore the directory in .gitignore or .git/info/exclude, "
+            "or pass --allow-tracked. Nothing was written."
         )
-    targets = [(src, to / src.name)] + [(s, to / "subagents" / s.name) for s in subagent_files(src)]
+    to.mkdir(parents=True, exist_ok=True)
     for a, b in targets:
         b.parent.mkdir(parents=True, exist_ok=True)
         if b.exists() and b.resolve() == a.resolve():
@@ -268,7 +278,7 @@ def export(src: Path, to: Path | None, allow_tracked: bool):
     with os.fdopen(fd, "w") as f:
         render(src, LIMITS, out=f)
     os.chmod(txt, 0o600)
-    print(f"exported {src.name} and {len(targets) - 1} sub-agent transcripts to {to} (owner-only permissions)")
+    print(f"exported {src.name} and {len(subs)} sub-agent transcripts to {to} (owner-only permissions)")
     print(f"rendered text: {txt}")
     print(f"exported {datetime.now().isoformat(timespec='seconds')}")
 
@@ -297,4 +307,7 @@ def main():
 
 
 if __name__ == "__main__":
+    import signal
+
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)  # `render ... | head` ends quietly
     main()
