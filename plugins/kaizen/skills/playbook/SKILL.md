@@ -5,7 +5,7 @@ description: Which kaizen skill fits now, and what the shared documents are. The
 
 # Playbook
 
-Text id `449171db`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `9772252a`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The other skills in this plugin are moments in one process. This skill says which moment a session is in, what document that moment reads and writes, and what to do when the document is missing. It proposes; the person decides which moment the session is in and which path to take.
 
@@ -18,17 +18,18 @@ All shared documents live in the project's `design/` directory. "The ledger" is 
 3. Check which complementary tools are present, and follow the sections below: OpenSpec (an `openspec/` directory, or `openspec --version`); Matt Pocock's skills (`claude plugin list` shows `mattpocock-skills`, or copies under `.claude/skills/` or `~/.claude/skills/`; most of his skills are invoked by name only and do not appear in the list of skills an agent sees; his documents are a further sign: `GLOSSARY.md` at the root, `docs/adr/`, `docs/agents/`).
 4. If the request names a case or a solution, ask whether it is the whole need or an example, and whether a persona on record is the one asking.
 5. If the session will hand something over (a document, a change, a merge request), plan the hallway test and the debrief as part of the work, not after it.
+6. If the work will act on hardware (an instrument, a stage, a robot), name its owner and whether a simulator or dry-run mode exists before planning anything else.
 
 ## The lifecycle
 
 | Moment | Skill | Writes | Fires when |
 |---|---|---|---|
-| From nothing to an idea | optional: `grill-me` or `grill-with-docs` from Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills); invoked by name only | notes the requirements interview starts from; with `grill-with-docs`, the glossary and ADRs | the person cannot yet name who needs it and what they would do differently; otherwise go to `requirements` (`grill-me` wraps the `grilling` skill) |
+| From nothing to an idea | optional: `grill-me` or `grill-with-docs` from Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills); invoked by name only: type `/mattpocock-skills:grill-me` (plugin) or `/grill-me` (copied skill) | notes the requirements interview starts from; with `grill-with-docs`, the glossary and ADRs | the person cannot yet name who needs it and what they would do differently; otherwise go to `requirements` (`grill-me` wraps the `grilling` skill) |
 | Who is this for | `requirements` (section 1.4) | `design/stakeholders.md`: one entry per persona (role, goal, knowledge, environment, what they never read; interviewed, described by <who>, or simulated) | a project or change starts; a new kind of user appears; a walk-through or test needs a persona not on record |
 | What is needed | `requirements` | `design/requirements.md` (form sections as a checklist, markers per item, open questions with owner and stage) | a loose idea needs tightening; a project or larger change starts; a tool that grew from playing around needs its record reconstructed; an existing document to check; one open question or vague idea needs fleshing out |
 | How it would go | `walkthrough` | `design/walkthroughs/<persona>-<process>.md`; acceptance examples appended to `design/examples.md` | before a change is specified; requirements 2.1; before a hallway test, to decide what to test |
 | What we decided | the agent, with the person, from `${CLAUDE_PLUGIN_ROOT}/references/change-record.md` | `design/changes/<name>.md`: need, interface, decisions with who decided and whether reversible, must / should / won't with a size budget, blocking questions | after the walk-throughs, before the build; whenever an implementer would otherwise invent decisions. The agent drafts it and asks the person for each decision it cannot take from the record; it is done when every must-example is cited and every blocking question is answered or named as an assumption the person accepted |
-| Build | the project's own instructions | code, tests citing example IDs, docs | every sub-agent brief names the example IDs each assertion serves; hardware is driven through a simulator or dry run until its owner agrees (hallway test, step 3) |
+| Build | the project's own instructions | code, tests citing example IDs, docs | every sub-agent brief names the example IDs each assertion serves; hardware is driven through a simulator or dry run until its owner agrees, and simulated output is labelled as such (hallway test, step 3) |
 | Does it hold up | `hallway-test` | `design/hallway/<date>.md`; imagined versus observed added to the walk-through | something exists that a first user could try; before a merge request |
 | How did we work | `debrief` | `.claude/debriefs/<date>.md` (private); `design/kaizen.md` (ledger) | on a schedule (end of a day or a stretch); after a skill's first use; at least once per release: wind the working session down, debrief in a fresh session, apply what belongs in the release, then push; "note for the debrief" goes to the ledger at once |
 
@@ -39,6 +40,7 @@ All shared documents live in the project's `design/` directory. "The ledger" is 
 Records can easily outweigh the change they describe. Choose the path:
 
 - **Small change** (one command, one behaviour, a few hours): a need note of five lines at the top of the decision record (whose need, what the request names, what the need behind it is); one walk-through as a step table of at most about 300 words, against the running system; the examples; the decision record; the hallway test. No full requirements form, no OpenSpec specs or tasks.
+- **An existing tool before its first hand-over** (it works for its author; others start using it soon): the hallway test now, with the person as the source of the persona; a reconstruction of the requirements afterwards, from its findings.
 - **Larger change or a new project:** the full table.
 - **A single open question or idea:** the requirements interview or a walk-through on that topic only, its answer into the existing documents.
 
@@ -87,4 +89,4 @@ At every point where the session finds a defect, a misunderstanding, a gap in a 
 ## Rules
 
 - A missing document is a finding, not a reason to assume its content.
-- At the end, one line into the project's `design/kaizen.md`: what in this skill did not fit. If the file does not exist yet, say first where it will go and that it is meant to be committed.
+- At the end, one line into the project's `design/kaizen.md`: what in this skill did not fit. If the file does not exist yet, say first where it will go and that it is meant to be committed, and start it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`.

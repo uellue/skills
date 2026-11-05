@@ -18,7 +18,7 @@ Adapted for software from the "Demand and Requirements Specification" form (vers
 
 2.2 **Demand uncertainties.** What is uncertain now? Which future events could change the demand or the requirements: a new instrument, a new file format, a policy, a funding decision, a user base that grows?
 
-2.3 **Interfaces with existing systems.** Which existing or planned systems does it talk to, in which direction, in which format, with which identity? Which of those are outside our control, and what do we know about their quirks? For an instrument or other hardware: is there a simulator or a dry-run mode, and does it enforce the same limits as the real thing?
+2.3 **Interfaces with existing systems.** Which existing or planned systems does it talk to, in which direction, in which format, with which identity? Which of those are outside our control, and what do we know about their quirks? For an instrument or other hardware: is there a simulator or a dry-run mode, does it enforce the same limits as the real thing, and how is its output marked as simulated wherever it is kept?
 
 2.4 **Operating conditions.** Where does it run: a container on a server, a lab PC next to an instrument, a laptop in the field, a cloud account, a CI runner? With which network, which mounts, which permissions, which user?
 

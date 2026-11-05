@@ -17,8 +17,9 @@ To follow updates, turn on auto-update for the `uellue` marketplace under `/plug
 In a Claude Code session in your project:
 
 ```text
-/kaizen:playbook    which step of the work this is, and which skill fits now
-/kaizen:debrief     after a stretch of work: how it went (it lists the sessions and asks before reading)
+/kaizen:playbook      which step of the work this is, and which skill fits now
+/kaizen:hallway-test  a tool that already works, before others use it: a fresh first user tries it
+/kaizen:debrief       after a stretch of work: how it went (it lists the sessions and asks before reading)
 ```
 
 ## Plugins

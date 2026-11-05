@@ -9,6 +9,8 @@ disable-model-invocation: true
 
 The subject is always the kaizen plugin in this checkout. The scenario (`benchmarks/plugin-newcomer/scenarios/<name>.md`, with an optional project folder of the same name) is only the input the newcomer brings; when the run reaches one of the plugin's skills, including `kaizen:hallway-test`, that is a step to observe, never a test of the scenario's project. Do not invoke `kaizen:hallway-test` for this; this procedure is the hallway test of the plugin.
 
+Run every command from the repository root (`cd "$(git rev-parse --show-toplevel)"`).
+
 1. **Scenario and model.** Take them from the arguments; without a scenario, list `benchmarks/plugin-newcomer/scenarios/*.md` with their first line and ask. Model: the argument, else Opus. Name the commit under test and say whether the plugin has uncommitted changes.
 2. **Prepare.** `python3 benchmarks/plugin-newcomer/brief.py <scenario>` creates the scratch project and prints the filled brief; the scratch directory is in its first line.
 3. **Run.** Start one fresh general-purpose agent in the background, on the chosen model, with the printed brief (without the header line) as its whole prompt. Tell the maintainer the cost to expect: about 15 k output tokens and three minutes per run so far. Answer its questions, if any, from the plugin's documents; what you cannot answer goes to the maintainer.

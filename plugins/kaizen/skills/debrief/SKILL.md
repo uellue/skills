@@ -5,7 +5,7 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `0c9ba22b`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `d3f06890`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief <this text id>` and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into three kinds of output: lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better), and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report.
 
@@ -16,7 +16,7 @@ Structure and rules adapted from two MIT-licensed skills, with thanks: `debrief`
 Ends do not announce themselves (a compaction, a reboot, a refused turn), so the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Three cheap habits feed it between runs; the first capture into a new ledger first says where it goes:
 
 - **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Sorting is the debrief's job; capture must cost nothing.
-- **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation.
+- **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation. Several first uses in one session make one debrief, not one each.
 - **Offered, not decided.** When the agent offers steps and the person neither picks nor drops them, the open offer goes into the ledger's notes before the topic changes; the debrief asks whether it was dropped on purpose.
 
 ## Inputs
@@ -128,23 +128,7 @@ Destinations: AGENTS.md or CLAUDE.md rule, a hook or lint check, memory, skill, 
 | From | Recommendation | Status (acted on / recurring / unknown) |
 ```
 
-Ledger template (`design/kaizen.md`):
-
-```markdown
-# Kaizen ledger
-
-What leaves a debrief: proposals with decisions, the fate of earlier ones, what did not fit in the plugin's skills, and notes for the next debrief. The full reports are private, in `.claude/debriefs/`.
-
-## Proposals
-### <date>
-| # | Proposal | Destination | Effort | Decision / status |
-
-## Skill friction
-- <date, skill>: <what did not fit, one line>
-
-## Notes for the next debrief
-- <date>: <the note, with the moment>
-```
+Ledger template: `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`.
 
 Severity: 🔴 cost real work or risked damage; 🟡 cost time or attention; 🟢 a small habit. A recurring finding goes up one level.
 
