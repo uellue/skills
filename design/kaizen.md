@@ -102,6 +102,7 @@ The 2026-11-03 debrief (data-management-system) made seven proposals and five co
 - 2026-11-05, requirements (handover check, by hand): confirm-items mixed with open questions in one message; the questions were answered, the items were not.
 
 - 2026-11-05, requirements (round on the walk-throughs' open questions): two recommendations used terms the principal did not know ("checkout or installed version", "behaviour fixture") and cost a round each; the skill asks for the person's words in the answers but has no rule to put the questions in the person's words, with an example of what a term means.
+- 2026-11-05, hallway-test (dry run for a new colleague who wants an agent to operate a scanning electron microscope; made-up answers, nothing launched): with nothing built and no requirements, the skill only says "say so" and does not hand over to the playbook, so a newcomer pointed at it starts at the wrong moment; "what must not be touched" covers a read-only mount but not hardware: an instrument needs "simulator or dry run only unless the owner says otherwise" and a check that the simulator enforces the instrument's limits.
 
 ## Notes for the next debrief
 
