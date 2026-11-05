@@ -29,6 +29,7 @@ Markers per item: [answered] said or confirmed by the principal; [record] taken 
 ### 1.4 Users
 See `stakeholders.md`: the manager, the colleague starting with agents, the coding agent, the fresh tester or reader agent, the plugin maintainer, the recipient of agent output outside the project.
 - [answered] Audience, in order: the principal; their close colleagues; ER-C and other collaborators where it is the principal's job to lead the way, with adaptations for their needs; everyone else is invited to learn, benefit and contribute feedback and improvements, but the plugin is not developed to cater to them at this point. Colleagues use Claude Code or Codex (Codex reads `AGENTS.md` only; the skills are Claude Code's). (Principal, 2026-11-05.)
+- [answered] First user: the principal; colleagues next. Release 0.4 may assume a person who has seen a debrief before; a colleague's first debrief without help is the target for 0.5. There is no real second user yet. (Principal, 2026-11-05, on the walk `walkthroughs/colleague-first-debrief.md`.)
 
 ## 2. Requirements
 
@@ -40,6 +41,7 @@ The lifecycle in the `playbook` skill: stakeholders → requirements → walk-th
 - [answered] S3, walk-through: a persona from the stakeholder record, confirmed with the user (never assumed), walks a process; against the running system where it exists; questions go to a real stakeholder when one is present; the walk feeds requirements 2.1 and the hallway test's coverage.
 - [answered] S4, hallway test: a fresh sub-agent with only the requirements and user documentation; expectations in a file before the first run; report as its final message; the record goes to `design/hallway/` and its commit is proposed; "what would have caught it" per defect. [answered] The check of accepted leans against what shipped belongs to every hand-over (a standing instruction), not only to the hallway test (principal, 2026-11-05). Variants: by eye in a real terminal; diagnosis under injected faults; a README from a clean checkout; an instruction file as an eval with a pre-written key and a blind grader.
 - [answered] S5, debrief: on a schedule, over one or several sessions, from transcripts wherever they are; a private report in `.claude/debriefs/`, a ledger in `design/` with only what is actionable; kaizen on the plugin itself becomes issues or merge requests on this repository.
+- [answered] S5 details (principal, 2026-11-05): without a named stretch, a debrief never takes the session it runs in; it lists the sessions since the ledger's last debrief with date, size and the person's first message, says which it will take and waits (E8). When it reads more than one session, it first states the sessions, their sizes, the readers' model and an estimated token cost, and waits; for one session it states the size and goes on (E10). At least one debrief per release: a stretch that ends in a release winds down, is debriefed in a fresh session, what belongs in the release is applied, then it is pushed.
 - [answered] S6, "note for the debrief": a one-line capture into the ledger at the moment, sorted later.
 - [answered] Frequency: the debrief and the "note for the debrief" daily or weekly; a requirements interview and walk-throughs once per project or larger change, and also on a specific topic whenever the need arises (open questions identified, an idea so far only general to be fleshed out), so the playbook has to judge what to do and what not to do at a given point; a hallway test per change a user would notice; a reconstruction once per tool that grew. (Principal, 2026-11-05.)
 - [answered] S7, playbook: at the start of a project or change, say which moment this is, which documents are missing, and which skill writes them; propose, do not write unasked.
@@ -52,6 +54,7 @@ Acceptance examples: E1 to E6 in `examples.md`.
 | [unknown] Whether OpenSpec's scenarios improve the build | count review findings that cite a scenario; hallway-test coverage from scenarios (playbook) |
 | [deferred] Whether walk-through stays a skill of its own or becomes the method inside `requirements`; kept separate for now with the pipeline stated | principal, after the next uses |
 | [unknown] How lessons travel between checkouts, worktrees and VMs (memory is per path) | a seeding step in provisioning, or lessons kept in the repository; devvm's `setup-dev` |
+| [unknown] Whether a script (`skim.py`: headings and command blocks) or a separate agent producing the skimmed view simulates a skimming reader better; the principal expects the agent to be better, and the skim is the part of the hint-following mode to refine (principal, 2026-11-05) | both views of the same README in the first real use on devvm, compared against what the colleague who described the habit actually skipped |
 
 ### 2.3 Interfaces with existing systems
 - [answered] Claude Code's plugin and skill format (`SKILL.md` with frontmatter, `${CLAUDE_PLUGIN_ROOT}`), its transcript JSONL (one line per content block, usage repeated per line; queued mid-turn messages as attachments), its sub-agent and SendMessage mechanics, its rules on what a sub-agent may write.
@@ -72,12 +75,19 @@ Acceptance examples: E1 to E6 in `examples.md`.
 ### 2.7 Testing, installation and service
 - [answered] Installed from the marketplace `uellue/skills` at user scope; devvm's `setup-dev` installs it in the VM. The maintainer is the principal.
 - [deferred] Tests of the skills themselves: see `testing.md`; owner the maintainer, stage: before the next release after 0.4.
+- [answered] A release: `./check.sh` green; an independent review has covered every line since the last review; the ledger's statuses updated; at least one debrief (S5); then the version goes up and the principal pushes. Nothing else is a gate; real use is judged afterwards, through debriefs. (Principal, 2026-11-05.)
+- [answered] The maintainer's sessions in this checkout run the skills as edited: the marketplace is the checkout folder and lists the plugin by a relative path, so it loads in place at each session start whatever its version says, and `/reload-plugins` refreshes a running session (Claude Code documentation, checked 2026-11-05); the maintainer can see which version ran (E16). Behaviour fixtures are built in the order: debrief, scripted principal, toy CLI (`testing.md`). (Principal, 2026-11-05.)
+- [answered] `./check.sh` reports the examples in `examples.md` that no test or fixture cites, as information, not a failure (E13). The next benchmark run is a new baseline: blind grader, current commit, the result naming commit, models and output tokens (E15); it runs when a skill's procedure changes. (Principal, 2026-11-05.)
+- [answered] Feedback from other people's projects: their ledgers and friction lines may be private, so nothing is sent on their behalf. When a debrief in someone else's project has a proposal for the plugin, it suggests politely that they open an issue at github.com/uellue/skills (the agent drafts the text to copy and paste) or send it to the maintainer privately, if they would like to help improve the plugin. (Principal, 2026-11-05.)
 
 ### 2.8 Portability and distribution
 - [answered] Skills are Claude Code's; the briefs and templates are plain text and can be used by hand or by other tools; what must reach Codex users goes to `AGENTS.md` and the guide, not the plugin.
+- [answered] Python 3.10 or newer for the scripts; on an older Python a script stops with one line naming the version (E11). Codex is not supported in 0.4 beyond the README's paste blocks; an institute network without GitHub access is not supported for now. (Principal, 2026-11-05.)
+- [deferred] Making the plugin work in Codex: when a colleague needs it, let Codex look at the plugin itself; it cannot be tested here. Owner: the principal; stage: the first colleague on Codex.
 
 ### 2.9 Jurisdictions
 - [answered] Transcripts contain everything pasted into the chat, including credentials and personal data; exports stay out of version control. The coaching is private to the person debriefed and never enters the ledger. Names of people stay in the project's own record and out of anything published. Borrowed pieces are MIT-licensed and attributed.
+- [answered] The debrief writes nothing into a person's repository before it has checked with git that the private report would be ignored; if it would be tracked, it offers the line for `.gitignore` (or `.git/info/exclude`) and waits. The ledger is created only after the person has seen where it goes (E9). (Principal, 2026-11-05.)
 
 ### 2.10 Lifetime and decommissioning
 - [answered] As long as the institute works with coding agents; the skills change with the harness, so each release is checked against the current Claude Code behaviour (sub-agent write rules, transcript format).
@@ -97,3 +107,4 @@ Decides: the principal. Builds: the principal with Claude. Pays: ER-C (tokens). 
 - How to test a skill before shipping it, for the maintainer, resolves 2.7; deferred to the next release.
 - Whether walk-through and requirements merge, for the principal, resolves 2.1; deferred until the next two uses.
 - Where lessons live so that every checkout's agent sees them, for the principal, resolves 2.2; deferred to the devvm provisioning work.
+- Public repositories with records of using the plugin (design documents, commit history), offered by the principal as evidence of real use; resolves 2.1 and the benchmark's "real use is authoritative"; round 2 of 2026-11-05.
