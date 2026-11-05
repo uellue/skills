@@ -1,3 +1,4 @@
 #!/bin/sh
 # Enabled with: git config core.hooksPath .githooks
+# It checks the working tree, not the staged index: commit everything you changed, or the check may pass on unstaged edits.
 ./check.sh -q || { echo "pre-commit: ./check.sh failed; commit refused" >&2; exit 1; }

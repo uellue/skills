@@ -38,7 +38,7 @@ They wanted "am I using this well, and what should I do differently", cheaply, p
 - Should the README's skim view carry the first command to run after install? (Step 3.)
 
 ## Answers from the owner
-None: no person was available during this run. All questions are open; confidence stays simulated.
+None during the walk: no person was available. The principal answered this walk's questions in the requirements round of 2026-11-05; the answers are in `design/requirements.md` (1.4, 2.1 S5, 2.2, 2.7, 2.8, 2.9). The persona is confirmed as it stands and stays simulated until a colleague runs a debrief.
 
 ## Gaps
 - No README entry point for the skimming user: the command after install is not in a heading or a code block (step 3).
@@ -51,7 +51,7 @@ None: no person was available during this run. All questions are open; confidenc
 - No stated Python floor or Claude Code-only note at install (steps 2, 4).
 
 ## Acceptance examples
-E7, E8, E9, E10, E11 (added to `design/examples.md`, unconfirmed).
+E7, E8, E9, E10, E11 (added to `design/examples.md`; confirmed by the principal 2026-11-05).
 
 ## Questionnaire
 - 1.3 Benefits: what does a debrief buy a colleague who is not the author, in time per week? (Already listed as unknown in the record.)
