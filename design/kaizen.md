@@ -109,6 +109,23 @@ Not applied: waiting for the principal. Leans in the last column.
 
 Open for the principal: the hallway test's hand-over deviation (stop only when nothing is built) is argued, not measured; neither self-test run reached that branch. Proposal: key item N13, a run on an existing small tool with a README and no requirements, before deciding.
 
+### 2026-11-05 (self-test, scenario existing-tool, `benchmarks/plugin-newcomer/results/2026-11-05-existing-tool.md`)
+
+The run supports keeping the hallway test's current hand-over (stop only when nothing is built): with something built and no requirements, the newcomer was told and could go ahead; the wording first accepted would have looped back to the playbook. Decision: the principal's. Not applied below: waiting for the principal; leans in the last column.
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 62 | hallway-test, before launching: state the model, the expected cost and the duration, and wait | plugin (hallway-test) | small | proposed; lean: yes (the same rule as the debrief's E10) |
+| 63 | No stakeholder record: one question ("who uses it first, what do they already know?"), marked "not on record" in the brief; the tester template loses its default persona | plugin (hallway-test, tester-brief) | small | proposed; lean: yes |
+| 64 | The tester template gets an optional sentence: "no requirements exist; your expectations are your own, mark them as such" | plugin (tester-brief) | small | proposed; lean: yes |
+| 65 | A playbook path "existing tool, before its first hand-over": the hallway test now, a requirements retcon afterwards from its findings; the README's first steps name the hallway test for a working tool | plugin (playbook, README) | small | proposed; lean: yes |
+| 66 | No loop: the hallway test offers the playbook only if it has not run in this session | plugin (hallway-test) | small | proposed; lean: yes |
+| 67 | Questions during a run: with no design, the owner answers; ask whether they stay available or collect the questions for afterwards | plugin (hallway-test) | small | proposed; lean: yes |
+| 68 | The mode is chosen with the person (behaviour, impatient user, by eye, ...), with a recommendation | plugin (hallway-test) | small | proposed; lean: yes |
+| 69 | A short walk-through offered when the person cannot name the coverage; the debrief offered at the end of a first use | plugin (hallway-test) | small | proposed; lean: yes for the walk-through, the debrief only as one line |
+
+Fixed while grading: `usage.py` and `transcript.py` run from a subdirectory of the checkout found no sessions; they now also look under the checkout's root (test added).
+
 ## Earlier recommendations
 
 The 2026-11-03 debrief (data-management-system) made seven proposals and five coaching points; their status after the week, as seen in the seven sessions: proposals 1, 3, 5, 6 acted on; 2 and 4 recurring in four sessions each (escalated, proposals 14 and 15 above); 7 done but its table row never closed. Coaching 1, 3, 5 acted on; 2 and 4 partly. Details in that repository's debrief history.

@@ -111,6 +111,14 @@ class TestUsage(Fixture):
         self.assertIn("| User messages (typed by the person) | 3 |", out)
         self.assertIn(f"{AGENT}.jsonl | 7 output tokens", out)
 
+    def test_found_from_a_subdirectory_of_the_checkout(self):
+        sub = self.project / "plugins" / "kaizen"
+        sub.mkdir(parents=True)
+        env = {**os.environ, "HOME": str(self.home)}
+        r = subprocess.run([sys.executable, SCRIPTS / "usage.py", OLD], cwd=sub, env=env, capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("| API messages | 2 |", r.stdout)
+
     def test_subagent_by_id_counts_the_parent(self):
         out = self.run_script(SCRIPTS / "usage.py", AGENT).stdout
         self.assertIn("| Messages from the parent agent | 1 |", out)
