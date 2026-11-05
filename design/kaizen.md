@@ -74,6 +74,7 @@ The 2026-11-03 debrief (data-management-system) made seven proposals and five co
 - 2026-11-05, walkthrough (relayed from a colleague): personas were assumed without asking. Fixed in 0.4 (blocking step, stakeholder record).
 - 2026-11-05, debrief (this plugin): transcripts were not under `~/.claude/projects`; `usage.py` over-counted 2 to 5 times; no renderer; the renderer written ad hoc dropped queued mid-turn messages; no multi-session mode. Fixed in 0.4.
 - 2026-11-05, debrief (this plugin): the report was first written into the debriefed project's `docs/debriefs/`, which the principal found awkward (a subjective snapshot in the repository) and in the wrong repository (the debrief was about this plugin). Fixed in 0.4 (private report, ledger, repository that was debriefed).
+- 2026-11-05, requirements (this plugin's own handover check): the unconfirmed items were first asked for by number only ("items 1 to 8"); the principal could not review them until they were quoted in full. Fixed in 0.4 (quote every item in the message).
 
 ## Notes for the next debrief
 
