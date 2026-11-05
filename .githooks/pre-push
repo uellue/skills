@@ -1,0 +1,21 @@
+#!/bin/sh
+# Refuses a push whose new commits contain a line matching the local denylist .git/info/denylist
+# (one extended regular expression per line, # for comments). The denylist is never committed:
+# it names what must not become public (other projects' internals, security findings).
+list="$(git rev-parse --git-path info/denylist)"
+patterns=$(grep -v -e '^#' -e '^[[:space:]]*$' "$list" 2>/dev/null) || exit 0
+zero=0000000000000000000000000000000000000000
+status=0
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$local_sha" = "$zero" ] && continue
+  if [ "$remote_sha" = "$zero" ]; then range="$local_sha --not --remotes"; else range="$remote_sha..$local_sha"; fi
+  # shellcheck disable=SC2086
+  hits=$(git log -p --format='commit %h %s' $range | grep -n -E -e "$(printf '%s' "$patterns" | paste -sd '|')" | head -5)
+  if [ -n "$hits" ]; then
+    echo "pre-push: $local_ref contains denylisted text (from $list):" >&2
+    echo "$hits" >&2
+    status=1
+  fi
+done
+[ $status -eq 0 ] || echo "pre-push: reword it, decide whether to rewrite the unpushed history, or push with --no-verify after deciding it may go public." >&2
+exit $status
