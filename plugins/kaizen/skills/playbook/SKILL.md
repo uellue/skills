@@ -5,7 +5,7 @@ description: Which kaizen skill fits now, and what the shared documents are. The
 
 # Playbook
 
-Text id `cbb156ba`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook cbb156ba` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `a80934d0`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook a80934d0` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The other skills in this plugin are moments in one process. This skill says which moment a session is in, what document that moment reads and writes, and what to do when the document is missing. It proposes; the person decides which moment the session is in and which path to take.
 
@@ -19,6 +19,7 @@ All shared documents live in the project's `design/` directory. "The ledger" is 
 4. Check which complementary tools are present, and follow the sections below: OpenSpec (an `openspec/` directory, or `openspec --version`); Matt Pocock's skills (`claude plugin list` shows `mattpocock-skills`, or copies under `.claude/skills/` or `~/.claude/skills/`; most of his skills are invoked by name only and do not appear in the list of skills an agent sees; his documents are a further sign: `GLOSSARY.md` at the root, `docs/adr/`, `docs/agents/`).
 5. If the request names a case or a solution, ask whether it is the whole need or an example, and whether a persona on record is the one asking.
 6. If the session will hand something over (a document, a change, a merge request), plan the hallway test and the debrief as part of the work, not after it.
+7. Whenever a word carries two meanings or a request reads two ways, now or later in the session, say which reading you take, in the project's glossary terms if it has one ("I read X as …"), and offer to settle the word with the person: with Matt Pocock's `domain-modeling` where installed (it keeps `GLOSSARY.md`), otherwise by recording the agreed term where the project keeps its vocabulary. Muddy words make muddy concepts and winding paths.
 
 ## The lifecycle
 

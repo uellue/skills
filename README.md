@@ -80,6 +80,7 @@ Starting an agent session is onboarding a new employee that knows only the repos
 10. **Don't polish in advance; fix unwanted outcomes when you have a concrete example**, with its test. Security and safety are the exception: think them through before.
 11. **Prefer a check to a sentence**: a hook, a lint rule or a template field holds; a rule in a file is the fallback.
 12. **Debrief at least once per release, in a fresh session**: wind the working session down, start a new one for the debrief (the session that did the work would mostly confirm itself), apply what belongs in this release, then push.
+13. **Be clear and deliberate with words.** Muddy words in the prompt make muddy concepts, winding paths and muddy outcomes. When a term turns out to carry two meanings, settle it once in a glossary (`/mattpocock-skills:domain-modeling` does it with you, and fits well into a debrief); the agent then reads your words in the glossary's sense and says so when it is unsure.
 
 ### What you paste for the agent
 
@@ -92,6 +93,7 @@ Standing instructions, for `AGENTS.md` or `CLAUDE.md`. Merge, don't append: read
 - Every mechanism, option or output detail names its source: a requirement, scenario, decision, or the person's request (record a request where the project keeps its requirements). Without any source, leave it out and suggest it as a next step.
 - Earlier notes and brainstorming are options to evaluate, not requirements.
 - When a request names a specific case, say whether you read it as the whole ask or as an example of a rule, or ask.
+- When a word in a request is ambiguous or differs from the project's glossary, push back softly: say which reading you take, in the glossary's terms ("I read X as …"), and offer a glossary entry where none fits.
 - A request phrased as a question ("should we ...?", "could X be a good place?", "we can proceed now?") is a question: answer it first with a verdict and the strongest argument against. Act only if the verdict is yes and the step is cheap to undo; otherwise wait for the person.
 - Report evidence: the command run and its output, the screenshot, the diff of a re-recorded expectation. Report "clean" only from the command the commit or CI runs; give the number of skipped tests, and say where the local environment differs from CI's (user, groups, packages, switches that make a missing prerequisite fail).
 - A change beyond a few hundred lines gets a review by an agent that did not write it before it is handed over.
