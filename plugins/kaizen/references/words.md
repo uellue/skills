@@ -6,11 +6,12 @@ The kaizen skills use a few words of their own. When an agent uses one with you 
 - **Principal**: you, as the person who decides for the project and reviews the work.
 - **Owner**: whoever may authorise work on something real (an instrument, a live site, irreplaceable data) and sets its limits; often not the principal.
 - **Persona**: a described user (who they are, what they want, what they know), whose shoes a walk-through or a hallway test steps into.
+- **Stakeholder**: anyone with a stake in the tool: its users, whoever maintains it, whoever owns what it touches, whoever reads what it produces.
 - **Stakeholder record**: the file listing the personas (`design/stakeholders.md`), and whether each was described by the people it describes or imagined.
 - **Acceptance example**: one concrete situation and what should then be observable, with an ID such as E7, so that tests can cite it; a must-example is one that has to hold.
 - **Decision record**: a short file per change with what was decided, by whom, what is in and out, and what still blocks the build. Its safety row says what may touch something real, and on whose agreement.
 - **Walk-through**: going through a task step by step in a persona's shoes, to find the questions nobody has answered yet.
-- **Hallway test**: a fresh agent that has seen only what a first user would see tries your tool and reports what broke or surprised it. That agent is the tester, a sub-agent the session starts; its brief is the instruction it gets; it works in a scratch directory, a throwaway folder outside your project. Its modes: behaviour (does it do what it should), by eye (how the output looks), diagnosis (can someone find what is wrong), hint-following (a user who only skims and follows the program's messages).
+- **Hallway test**: a fresh agent that has seen only what a first user would see tries your tool and reports what broke or surprised it. That agent is the tester, a sub-agent the session starts; its brief is the instruction it gets; it works in a scratch directory, a throwaway folder outside your project. Its modes: behaviour (does it do what it should), by eye (how the output looks), diagnosis (can someone find what is wrong), hint-following (a user who only skims and follows the program's messages), and a documents mode for a README or an instruction file.
 - **Output tokens**: the unit in which the agent's work is counted against your plan or budget; the hallway test states an estimate before it starts a tester.
 - **Stand-in**: what is used instead of something real that could be damaged: a simulator, a copy of the data, a local preview, a dry run.
 - **Hand-over**: the moment work passes to someone else: a merge request, a release, a tool given to colleagues.
