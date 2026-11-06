@@ -43,6 +43,15 @@ Statuses as last recorded. Rows 10 to 30 are lessons for other repositories, to 
 | 184 | Watched: "lean" explained only through `words.md` (three scenarios: the skills could gloss it once in their first message); N25 awaits the lint (123); the self-test cannot observe a real agent's wording, only what a tester composes in the agent's role | plugin; benchmarks | — | watched |
 | 192 | Watched: no cost for the full path or the plugin's own dialogue (59, every round); "lean" and "persona" reach the person unexplained in two of four runs although the rule and `words.md` exist; "Release" with two meanings (149); the debrief's label never reported (N1 partly in every run: the scenarios do not reach it) | plugin | — | watched |
 
+### 2026-11-06 (self-test round 6 at `9cd534e`: `results/2026-11-06-*-8.md`, `-9.md`)
+
+Independent grade. N27 (one numbering per message) and N28 (about fifteen lines) held in all four scenarios: the three-message settling (188) brought the hallway test's messages from 17 and 21 lines to 13 and 14. N24 (the agent's own words) held in sem-instrument, partly elsewhere. Applied as leaned for round 7 (principal, away: "go with your leans"):
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 193 | From the run: data in git count as a copy only with a remote; an only copy is copied first, outside the project, announced with its path, and nothing runs on the data until it exists (182); the standing-instructions file, where kept uncommitted, is listed in `.git/info/exclude`; the first question asks what the tool "or the tool to be" changes; what the agent notices in the code stays out of the tester's brief; the person looks at a page in the local preview with the examples as a checklist; on the small path the tester's "requirements" are the examples and the need note; "(item 9)" named as the skill's own item; the numbering rule says "from 1" | plugin (hallway-test, playbook, all five skills' plain-words sentence) | small | done in `757c8a0` |
+| 194 | Watched: cost in a unit a newcomer knows, and no cost for the path (59); "lean" and "behaviour" still reach the person unexplained in two or three runs; the vocabulary question asked by both the playbook and the interview; N25 waits for the lint (123); the standing-instructions offer never reaches a newcomer who enters through the hallway test (6, by design) | plugin | — | watched |
+
 ## Skill friction
 
 Unresolved lines only; the resolved ones are in the archive with what fixed them.
