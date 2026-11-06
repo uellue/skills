@@ -10,6 +10,10 @@ The vocabulary of the kaizen plugin and of its development in this repository, w
 The person who decides for a project and reviews its work; often also the agents' manager.
 _Avoid_: user, boss, owner
 
+**Stakeholder**:
+Anyone with a stake in the tool: its users, its maintainer, the owner of what it touches, the readers of what it produces.
+_Avoid_: user (for the whole set), party
+
 **Persona**:
 A described stakeholder whose position a walk-through or a hallway test takes, with how much of the description was confirmed by the people it describes.
 _Avoid_: user story, role
@@ -103,7 +107,7 @@ The prepared input of a skill test: a transcript with planted moments, a tool wi
 _Avoid_: behaviour fixture, test data
 
 **Behaviour mode**:
-The hallway test's mode in which the tester builds inputs, writes its expectation for each, runs the subject and compares; the other modes are by eye, diagnosis and hint-following.
+The hallway test's mode in which the tester builds inputs, writes its expectation for each, runs the subject and compares; the other modes are by eye, diagnosis, hint-following and documents.
 _Avoid_: behaviour test (unqualified)
 
 **Independent review**:
