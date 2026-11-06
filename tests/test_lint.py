@@ -16,7 +16,7 @@ SKILLS = sorted(PLUGIN.glob("skills/*/SKILL.md"))
 
 # Budgets: descriptions load into every session; bodies load on every run. Raise only with a reason in the commit.
 DESCRIPTION_MAX_CHARS = 800
-BODY_MAX_WORDS = 2700
+BODY_MAX_WORDS = 2500
 
 # Strings that once meant something and now contradict the skills.
 STALE = {

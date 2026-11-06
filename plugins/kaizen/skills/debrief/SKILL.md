@@ -5,17 +5,15 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `871c3f02`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 871c3f02` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `82e5ab9d`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 82e5ab9d` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
-A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into three kinds of output: lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better), and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report.
+A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better) and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report. (Structure adapted, with thanks, from two MIT-licensed skills, `debrief` by Wavez and `retrospective` by florianbuetow; the coaching, the five whys, the usage script and the ledger are this skill's own.)
 
 Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number a message's items from 1 in one sequence that never restarts within it, so the person can answer by number.
 
-Structure and rules adapted, with thanks, from two MIT-licensed skills: `debrief` by Wavez (the check groups, "every finding cites a moment", nothing applied unapproved) and `retrospective` by florianbuetow (reports kept, earlier recommendations checked, recurring issues escalated). The coaching, the five whys, the usage script and the ledger are this skill's own.
-
 ## When
 
-Ends do not announce themselves (a compaction, a reboot, a refused turn), so the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Several first uses in one session make one debrief, not one each. Three cheap habits feed it between runs; the first capture into a new ledger first says where it goes:
+Ends do not announce themselves (a compaction, a reboot, a refused turn), so the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Several first uses in one session make one debrief. Three cheap habits feed it between runs; the first capture into a new ledger first says where it goes:
 
 - **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Sorting is the debrief's job; capture must cost nothing.
 - **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation.
@@ -37,7 +35,7 @@ Ends do not announce themselves (a compaction, a reboot, a refused turn), so the
 
    Before reading more than one session, state the sessions, their sizes, the readers' model and the token estimate (see "Several sessions at once"), and wait; for one session, state its size and go on.
 
-   Read the rendering, not the raw JSONL: grepping one's own transcript for patterns has ended sessions. If the session was compacted, say so; the rendering usually still shows the earlier part, so read it there, and use the summary as lower-confidence evidence only where that part is missing; never invent moments. Messages the person queued while a turn ran appear as "USER (queued mid-turn)"; they are easy to miss in the raw file and often carry decisions. Text the harness put in the person's place (skill texts, sub-agent reports, notifications, command output) is labelled HARNESS: it is not the person's, and never evidence for coaching.
+   Read the rendering, not the raw JSONL: grepping one's own transcript for patterns has ended sessions. If the session was compacted, say so; the rendering usually still shows the earlier part, so read it there, and use the summary as lower-confidence evidence only where that part is missing; never invent moments. Messages the person queued while a turn ran appear as "USER (queued mid-turn)" and often carry decisions. Text the harness put in the person's place (skill texts, sub-agent reports, notifications, command output) is labelled HARNESS: it is not the person's, and never evidence for coaching.
 2. **The numbers.** The usage script: user messages, API messages, tool calls by name, output and input tokens per model counted once per API message, sub-agents with their tokens, span, compactions.
 
    ```bash
@@ -81,60 +79,10 @@ And, for this plugin's own improvement (kaizen on kaizen): which of its skills w
 
 Two documents, in the repository that was debriefed:
 
-- **The report**, private: `.claude/debriefs/YYYY-MM-DD.md` (with a `-2` suffix if one exists). It is a subjective snapshot with the coaching in it, so it stays out of version control: before writing anything, run `git -C "$(git rev-parse --show-toplevel)" check-ignore -q .claude/debriefs/x.md` (exit 0: ignored; outside a git repository, ask where to write); if git would track it, offer the line `/.claude/debriefs/` for `.gitignore` (or `.git/info/exclude`, which is not shared) and write nothing until the person agrees. The user can name another place.
+- **The report**, private: `.claude/debriefs/YYYY-MM-DD.md` (with a `-2` suffix if one exists), from the template in `${CLAUDE_PLUGIN_ROOT}/references/debrief-report.md`, read before writing. It is a subjective snapshot with the coaching in it, so it stays out of version control: before writing anything, run `git -C "$(git rev-parse --show-toplevel)" check-ignore -q .claude/debriefs/x.md` (exit 0: ignored; outside a git repository, ask where to write); if git would track it, offer the line `/.claude/debriefs/` for `.gitignore` (or `.git/info/exclude`, which is not shared) and write nothing until the person agrees. The user can name another place.
 - **The ledger**: `design/kaizen.md`, or where the playbook's step 3 placed `design/`; say where and whether it is committed before creating it. If the repository is public or may become so, the ledger carries no details of other projects (they go to their own backlogs; the ledger says "transferred") and no security findings, secrets or credentials, not even as to-dos. Generalising an entry later does not remove it from git history: if one slipped in, say so before the push, so the person can decide whether to rewrite the unpushed history. Only what is actionable leaves the session. Start it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`; later, append the proposals under the date and update the statuses.
 
 Show a short summary in the reply: the five lines and the proposals that are not small.
-
-The report is short and dense: the reader is the person who lived the session, so it reminds rather than narrates. The nuance lives in the evidence and the cause, not in prose around them. Template:
-
-```markdown
-# Debrief <date>: <what the stretch was about>
-
-Coverage: <sessions read, how; compaction noted; what the renderer or readers could not see>. Earlier debriefs: <dates or none>.
-
-## In five lines
-- <what the stretch achieved>
-- <what made it work>
-- <what cost>
-- <the coaching in one line>
-- <how many proposals, and the one that is not small>
-
-## Numbers
-<one paragraph from the script: span, messages, tool calls with the top few, output tokens by model counted once per message, sub-agents, compactions>
-
-## What went well
-- **<two-word label>.** <the moment> → <what it bought>.
-
-## What cost
-- 🔴 / 🟡 / 🟢 **<label>.** <the moment, one line>.
-  Cause: <the process cause after asking why>. <Fixed, or what remains.>
-
-## The plugin's skills
-<used, done by hand, missed, gaps; one table or a few lines>
-
-## The process-improvement process
-<where the lessons of this stretch went, and which earlier ones were applied or violated>
-
-## Coaching for <the person>
-Keep doing: <the moves that helped, as a list in one line>.
-1. **<habit>.** <evidence> and <what to do instead>, one or two sentences.
-
-## Models and effort
-<one paragraph: proportionate or not, and the numbers that say so>
-
-## Proposals
-| # | Proposal | Destination | Effort | Decision |
-|---|---|---|---|---|
-Destinations: an AGENTS.md or CLAUDE.md rule, a hook or lint check, memory, skill, workflow, backlog, the shared guide, a tool to adopt, the kaizen plugin (as above).
-
-## Earlier proposals
-| From | Proposal | Status (acted on / recurring / unknown) |
-```
-
-Ledger template: `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`.
-
-Severity: 🔴 cost real work or risked damage; 🟡 cost time or attention; 🟢 a small habit. A recurring finding goes up one level.
 
 ## Rules
 
