@@ -39,7 +39,7 @@ The two flows, in short (details and the full mapping: `/kaizen:playbook`):
 kaizen alone
   idea ─► /kaizen:requirements, /kaizen:walkthrough, design/examples.md (IDs)
        ─► decision record (design/changes/) ─► build
-       ─► /kaizen:hallway-test ─► /kaizen:debrief
+       ─► /kaizen:hallway-test ─► pull request ─► merge ─► /kaizen:debrief
 
 with OpenSpec and/or Matt Pocock's skills (each optional, never installed unasked)
   idea ─► grill-me or grill-with-docs (discovery, when there is no idea yet)
@@ -47,10 +47,12 @@ with OpenSpec and/or Matt Pocock's skills (each optional, never installed unaske
        ─► specification: OpenSpec /opsx:propose (the decision record goes into its design.md,
           each must-example becomes a scenario citing its ID), or to-spec and to-tickets
        ─► build (with OpenSpec /opsx:apply)
-       ─► /kaizen:hallway-test
-       ─► with OpenSpec: /opsx:archive
-       ─► /kaizen:debrief, beside retro
+       ─► /kaizen:hallway-test ─► pull request and its review
+       ─► with OpenSpec: /opsx:archive on the branch, as the last commit before the merge
+       ─► merge ─► /kaizen:debrief, beside retro
 ```
+
+Where to archive is our recommendation; OpenSpec says only "archive when done". Archiving on the branch after the review lets the code and the updated specs reach the main branch in one merge, and changes asked for in the review still go into the open change, not into the archive.
 
 The plugin's own stakeholders, requirements, testing plan and kaizen ledger are in `design/`.
 
