@@ -34,7 +34,7 @@ Adapted for software from the "Demand and Requirements Specification" form (vers
 
 2.10 **Lifetime and decommissioning.** How long must it live? What happens to its data, its identifiers and its users when it is retired, and who decides?
 
-2.11 **Safety and risks.** What can it damage: data loss or corruption, leaked credentials or personal data, a flood of records that drowns a search, an instrument PC it shares, a service it overloads, the instrument itself (a collision, damage to the sample or the beam source, a chamber vented at the wrong moment)? Who may authorise what it does to the instrument, the original data or the live service? What could impair it? Which risks must be mitigated, and whom to consult (IT security, data protection, the owners of the instrument or the data)?
+2.11 **Safety and risks.** What can it damage: data loss or corruption, leaked credentials or personal data, a flood of records that drowns a search, an instrument PC it shares, a service it overloads, the instrument itself (a collision, damage to the sample or the beam source, a chamber vented at the wrong moment)? Who may authorise what it does to the instrument, the original data or the live service? When an agent operates it: are the safety stops enforced in code outside the agent (an interlock, a wrapper that refuses), not by the model's judgement, and which actions need a person's confirmation rather than run unattended? What could impair it? Which risks must be mitigated, and whom to consult (IT security, data protection, the owners of the instrument or the data)?
 
 2.12 **Applicable standards.** Which standards, protocols, formats or regulations apply: OAI-PMH, Dublin Core, NeXus, FAIR principles, institute IT rules, a funder's data policy?
 
