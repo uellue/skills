@@ -87,16 +87,24 @@ A hallway test whose subject is the kaizen plugin itself, with a self-test scena
 _Avoid_: hallway test of the plugin, quick tests, smoke test
 
 **Key**:
-The list of key items a self-test is graded against, written before the runs it grades.
+The list of key items a skill test is graded against, written before the runs it grades.
 _Avoid_: rubric, expectations
 
 **Pre-commit check**:
 What runs without an agent before every commit and in CI: unit tests of the scripts and the git hooks, lint of the skill texts, references and manifests, and a report of the acceptance examples no test cites.
 _Avoid_: check (unqualified), quick tests, CI, unit tests
 
-**Behaviour fixture**:
-A prepared input with planted moments or defects, on which a fresh agent runs a skill and a grader counts what it found.
-_Avoid_: eval, benchmark, test data
+**Skill test**:
+A run of a skill by a fresh agent on a fixture, graded against a key written before the run; it shows whether a change to the skill made it better or worse. A self-test is a skill test of the whole plugin.
+_Avoid_: behaviour test (that is the hallway test's behaviour mode), eval, benchmark
+
+**Fixture**:
+The prepared input of a skill test: a transcript with planted moments, a tool with planted defects, a scripted principal with withheld facts, a self-test scenario.
+_Avoid_: behaviour fixture, test data
+
+**Behaviour mode**:
+The hallway test's mode in which the tester builds inputs, writes its expectation for each, runs the subject and compares; the other modes are by eye, diagnosis and hint-following.
+_Avoid_: behaviour test (unqualified)
 
 **Independent review**:
 A review by an agent that wrote none of the change, briefed with the diff and the record, ending in a verdict.
