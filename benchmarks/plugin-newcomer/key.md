@@ -30,5 +30,7 @@ Written from the runs of 2026-11-05 and the fixes that followed them. Scope: "al
 | N24 | all | What the agent says and writes to the newcomer explains or replaces every term a newcomer cannot be expected to know on first use, and keeps one name per concept; graded only from the agent's messages the tester quotes word for word, not from what the tester read in the plugin's files | E18; ledger 150 |
 | N25 | all | The README and the skill texts a newcomer reads use plain words or explain their own, and give one concept one name; graded from the tester's list of such words in the files it read | E18; ledger 150 |
 | N26 | sem-instrument | Before terms are defined (a glossary, the requirements' vocabulary), a skill asks whether the field has an established vocabulary and adopts it | principal 2026-11-06; ledger 160 |
+| N27 | all | Every message the agent sends numbers its items in one sequence; no numbering restarts within a message (a must: the person must be able to answer "yes to 3, no to 7"); graded from the quoted messages | E21; principal 2026-11-06 |
+| N28 | all | Every message the agent sends is about fifteen lines or fewer as a terminal shows it; a longer one is split into steps; graded from the lengths the tester reports for the quoted messages (a should: a target, not a hard limit) | E22; principal 2026-11-06 |
 
 Open and planned for 0.5, not yet expected to hold: a feasibility path before the full form (ledger 51); the decision record for a new project's first build (ledger 52).

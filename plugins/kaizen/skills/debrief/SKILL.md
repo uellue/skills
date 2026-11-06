@@ -5,13 +5,13 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `d855ab22`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief d855ab22` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `369b2075`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 369b2075` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into three kinds of output: lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better), and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report.
 
-Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does.
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number a message's items in one sequence that never restarts within it, so the person can answer by number.
 
-Structure and rules adapted from two MIT-licensed skills, with thanks: `debrief` by Wavez (the four check groups, "every finding cites a moment", nothing applied without approval) and `retrospective` by florianbuetow (reports kept as history, earlier recommendations checked and recurring issues escalated, root cause and suggestion per finding). The coaching section, the five-whys habit, the usage script and the ledger are this skill's own.
+Structure and rules adapted, with thanks, from two MIT-licensed skills: `debrief` by Wavez (the check groups, "every finding cites a moment", nothing applied unapproved) and `retrospective` by florianbuetow (reports kept, earlier recommendations checked, recurring issues escalated). The coaching, the five whys, the usage script and the ledger are this skill's own.
 
 ## When
 
@@ -50,7 +50,7 @@ Ends do not announce themselves (a compaction, a reboot, a refused turn), so the
 
 Match the effort to the stretch: a quick pass for a short, clean session; the full treatment and the five whys for a long one.
 
-**Several sessions at once.** When the debrief covers more than one session (a week, three repositories, the first uses of a skill), render each session and give one reader agent per session the brief in `${CLAUDE_PLUGIN_ROOT}/references/reader-brief.md`, with the session's paths and numbers filled in; the readers report with cited moments, and the main session synthesises. Verify yourself any claim a reader makes about an instrument (a script, a count, a skill's text) before it goes into the report; a reader's claim is a lead, not a finding. Budget about 200 k tokens per reader for a day-long session, and set each reader's model explicitly (sub-agents inherit the main loop's): a model below the top one is enough for reading and citing (Opus, as of the line-up checked 2026-11-05).
+**Several sessions at once.** When the debrief covers more than one session (a week, three repositories, the first uses of a skill), render each session and give one reader agent per session the brief in `${CLAUDE_PLUGIN_ROOT}/references/reader-brief.md`, with the session's paths and numbers filled in; the readers report with cited moments, and the main session synthesises. Verify yourself any claim a reader makes about an instrument (a script, a count, a skill's text) before it goes into the report; a reader's claim is a lead, not a finding. Budget about 200 k tokens per reader for a day-long session and set each reader's model explicitly (sub-agents inherit the main loop's); a model below the top one is enough (Opus, checked 2026-11-05).
 
 ## What to look at
 
@@ -126,7 +126,7 @@ Keep doing: <the moves that helped, as a list in one line>.
 ## Proposals
 | # | Proposal | Destination | Effort | Decision |
 |---|---|---|---|---|
-Destinations: AGENTS.md or CLAUDE.md rule, a hook or lint check, memory, skill, workflow, backlog, the shared guide, a tool to adopt, the kaizen plugin (as above: an issue the person opens, or a private message to the maintainer).
+Destinations: an AGENTS.md or CLAUDE.md rule, a hook or lint check, memory, skill, workflow, backlog, the shared guide, a tool to adopt, the kaizen plugin (as above).
 
 ## Earlier proposals
 | From | Proposal | Status (acted on / recurring / unknown) |

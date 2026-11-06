@@ -333,6 +333,13 @@ Independent grade, no changes made from it (principal: "one self-test without ma
 
 Version: this branch is kaizen 0.5.0 (bumped 2026-11-06 after round 4 and 177). The items earlier marked "planned for 0.5" and not built (59, 83, 93, 110: the cost notes and the debrief's fixture) move to 0.6.
 
+### 2026-11-06 (from the principal's real use of 0.5: messages too long, list numbering restarting; up to three self-test rounds, leans)
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 185 | Self-test checks: N27 (must) one numbering per message, N28 (should) about fifteen lines per message; the brief has testers quote every message with its length in lines and whether its numbering restarts; examples E21, E22 | benchmarks; design/examples.md | small | done (principal 2026-11-06) |
+| 186 | The rule in every skill's plain-words sentence (one sentence, a lint keeps the five identical): about fifteen lines a message, one step or question at a time, one numbering per message. The hallway test settles the brief in two short numbered messages (questions, then leans; the stakeholder-record offer among the leans, 180); the playbook sends each asking step as its own message; interview rounds and walk-through inputs likewise | plugin (all five skills); lint | small | done (principal 2026-11-06: "go with your leans") |
+
 
 ## Earlier proposals
 
