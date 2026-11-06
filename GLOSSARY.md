@@ -72,6 +72,14 @@ _Avoid_: scenario (unqualified), spec scenario
 The short record of what was decided for a change: interface, decisions with who decided, must / should / won't with a size budget, blocking questions.
 _Avoid_: change record, spec, design doc, ADR
 
+**Need note**:
+The first five lines of a decision record: whose need, what the request names, the need behind it; on the small path it is written first and the record grows around it.
+_Avoid_: problem statement, intro
+
+**Small path**:
+The process sized for a small change: the need note, one or two personas, one walk-through as a step table, the examples, the decision record, the hallway test; no full requirements form.
+_Avoid_: small-change path, lite mode, fast track
+
 ### Testing and review
 
 **Hallway test**:

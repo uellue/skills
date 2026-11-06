@@ -17,6 +17,7 @@ SKILLS = sorted(PLUGIN.glob("skills/*/SKILL.md"))
 # Budgets: descriptions load into every session; bodies load on every run. Raise only with a reason in the commit.
 DESCRIPTION_MAX_CHARS = 800
 BODY_MAX_WORDS = 2500
+REFERENCE_MAX_WORDS = 1000  # a reference a skill names loads on demand; the questionnaire (962) is the largest
 
 # Strings that once meant something and now contradict the skills.
 STALE = {
@@ -58,6 +59,11 @@ class TestSkills(unittest.TestCase):
         for p in SKILLS:
             with self.subTest(p.parent.name):
                 self.assertLessEqual(len(body(p).split()), BODY_MAX_WORDS, "body over budget")
+
+    def test_reference_budget(self):
+        for p in sorted(PLUGIN.glob("references/*.md")):
+            with self.subTest(p.name):
+                self.assertLessEqual(len(p.read_text().split()), REFERENCE_MAX_WORDS, "reference over budget")
 
     def test_text_ids_current(self):  # E16
         import importlib.util
