@@ -340,6 +340,19 @@ Version: this branch is kaizen 0.5.0 (bumped 2026-11-06 after round 4 and 177). 
 | 185 | Self-test checks: N27 (must) one numbering per message, N28 (should) about fifteen lines per message; the brief has testers quote every message with its length in lines and whether its numbering restarts; examples E21, E22 | benchmarks; design/examples.md | small | done (principal 2026-11-06) |
 | 186 | The rule in every skill's plain-words sentence (one sentence, a lint keeps the five identical): about fifteen lines a message, one step or question at a time, one numbering per message. The hallway test settles the brief in two short numbered messages (questions, then leans; the stakeholder-record offer among the leans, 180); the playbook sends each asking step as its own message; interview rounds and walk-through inputs likewise | plugin (all five skills); lint | small | done (principal 2026-11-06: "go with your leans") |
 
+### 2026-11-06 (self-test round 5 at `0eb1fed`, the first with N27 and N28: `results/2026-11-06-*-7.md`, `-8.md`)
+
+Independent grade. N27 held in all four; N28 held in two, partly in analysis-script (16 lines), not held in existing-tool (17 and 21: the hallway test's required content did not fit). Everything else as before. Applied as leaned for the next round (principal, away: "go with your leans"):
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 187 | The discovery-versus-interview test stood only in the lifecycle table; playbook step 2 now asks it (N6 not held in sem-instrument) | plugin (playbook step 2) | small | done |
+| 188 | The hallway test's settling in three short messages: the person-only questions, the leans, then the cost with the request to start; the reading of "test" carries the one-line explanation of the test; the questions include which cases matter most; the stakeholder-record offer among the leans | plugin (hallway-test) | small | done |
+| 189 | Playbook step 1 asks, for a site or service, whether the person already publishes there on their own authority (then they are its owner for this, as the decision record says: the playbook had blocked a push the decision record allows); "the build on the real thing" becomes "the step that reaches the real thing (the push, the deploy, the command to the instrument)" | plugin (playbook step 1) | small | done, safety |
+| 190 | The standing-instructions offer: as an uncommitted file where committed files become public (178); the sibling-repository pointer is always listed in `.git/info/exclude`; "where is it pushed" asked once the repository is chosen, not in the same message | plugin (playbook step 3) | small | done |
+| 191 | A one-file tool is both the command and its source: the tester gets a copy to run and is told not to open it (99); a tool that only reads needs none of item 3's safety rules; the ledger template named directly from the hallway test; the publicity question not repeated after the playbook (107) | plugin (hallway-test, tester-brief) | small | done |
+| 192 | Watched: no cost for the full path or the plugin's own dialogue (59, every round); "lean" and "persona" reach the person unexplained in two of four runs although the rule and `words.md` exist; "Release" with two meanings (149); the debrief's label never reported (N1 partly in every run: the scenarios do not reach it) | plugin | — | watched; 59 in 0.6 |
+
 
 ## Earlier proposals
 

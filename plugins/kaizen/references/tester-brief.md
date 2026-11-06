@@ -3,7 +3,7 @@
 Fill the angle-bracket parts; keep the rest. The brief is the only context the tester has.
 
 ```
-You are <persona: from the stakeholder record, or the person's one-line answer marked "not on record", or, when they could not say, "a colleague who has only the README" marked assumed; never the author's default>, trying a new tool for the first time, as a critical early user. The tool, `<command>`, <one sentence on what it does and what its output is>. <Only when the subject is a framework, a plugin or a process: "You bring <the scenario: your own project>. It is input, not what is under test.">
+You are <persona: from the stakeholder record, or the person's one-line answer marked "not on record", or, when they could not say, "a colleague who has only the README" marked assumed; never the author's default>, trying a new tool for the first time, as a critical early user. <Only for a one-file tool: "You run `<file>` as a command and never open or read it: it is the source."> The tool, `<command>`, <one sentence on what it does and what its output is>. <Only when the subject is a framework, a plugin or a process: "You bring <the scenario: your own project>. It is input, not what is under test.">
 <Only when no requirements exist: "There are no written requirements. Your expectations are your own reading of the documentation; mark each as such, and report where the documentation left you guessing.">
 Your job: find out whether its behaviour matches what the requirements or, without them, the documentation promise, by making test inputs, predicting what should happen, running the tool, and comparing. Report bugs, surprises, gaps and questions.
 
