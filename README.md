@@ -47,7 +47,7 @@ with OpenSpec and/or Matt Pocock's skills (each optional, never installed unaske
        ─► /kaizen:requirements, /kaizen:walkthrough, design/examples.md (IDs)
        ─► specification, one of:
             OpenSpec /opsx:propose (the decision record goes into its design.md,
-              each must-example becomes a scenario citing its ID)
+              each must-example becomes an OpenSpec scenario citing its ID)
             /mattpocock-skills:to-spec, then /mattpocock-skills:to-tickets
        ─► build (with OpenSpec: /opsx:apply)
        ─► /kaizen:hallway-test ─► pull request and its review
@@ -76,7 +76,7 @@ Starting an agent session is onboarding a new employee that knows only the repos
 6. **Judge behaviour, not text**: try it, play-test it, screenshot it, run it against the real back-end. Measure when the agent has an opinion about itself.
 7. **Decide or delegate what you would leave hanging**; constraints (reviewer, MR shape, remote, account) before the work, not after.
 8. **Say when you are away**, and what to do meanwhile.
-9. **Challenge one recommendation per review**; give documents others build on thirty seconds: the unconfirmed items and two quotes.
+9. **Challenge one lean per review**; give documents others build on thirty seconds: the unconfirmed items and two quotes.
 10. **Don't polish in advance; fix unwanted outcomes when you have a concrete example**, with its test. Security and safety are the exception: think them through before.
 11. **Prefer a check to a sentence**: a hook, a lint rule or a template field holds; a rule in a file is the fallback.
 12. **Debrief at least once per release, in a fresh session**: wind the working session down, start a new one for the debrief (the session that did the work would mostly confirm itself), apply what belongs in this release, then push.
@@ -118,7 +118,7 @@ Go with your leans on all of these; most important is <the priority>. Details we
 Before stepping away:
 
 ```text
-I am away for about <time>. Take the recommended option where you have one, keep going, and list every decision you took and every question you could not answer when I am back.
+I am away for about <time>. Take your lean where you have one, keep going, and list every decision you took and every question you could not answer when I am back.
 ```
 
 Before ending a session:

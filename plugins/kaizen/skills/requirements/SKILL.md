@@ -5,7 +5,7 @@ description: Interview the person who needs a solution and write a demand and re
 
 # Requirements interview
 
-Text id `62d96061`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements 62d96061` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `5de0b765`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements 5de0b765` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of a demand and requirements form written at ER-C (a checklist; no institute requires it), writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
 
@@ -22,7 +22,7 @@ This skill tightens an idea that exists, however loosely (the playbook's test de
 
 Before asking, check what is already known (the instruction files, design notes, the stakeholder record, an earlier walk-through or play test, the record above), draft the sections from it and ask the person to correct rather than repeat.
 
-Then work in rounds (adapted, with thanks, from the `grilling` skill in Matt Pocock's MIT-licensed collection). Each round asks the **frontier**: every open question whose prerequisites are already settled, numbered, each with your recommended answer, worded so that "yes" accepts it. Give no recommendation for safety limits, who may authorise what the software does, or who owns the instrument or system it acts on (2.11, Release): those answers must come from the person or the owner. A question that depends on another one still open waits for a later round. Facts are yours to find (look them up, or send a sub-agent without blocking the round); decisions are the person's. The form's sections are the checklist of what must be covered, not an order: the demand (1.1 to 1.4) usually settles first because the rest depends on it; otherwise follow what the answers unblock. Keep rounds short; the interview is done when the frontier is empty or the rest is deferred.
+Then work in rounds (adapted, with thanks, from the `grilling` skill in Matt Pocock's MIT-licensed collection). Each round asks the **frontier**: every open question whose prerequisites are already settled, numbered, each with your lean, worded so that "yes" accepts it. Give no lean for safety limits, who may authorise what the software does, or who owns the instrument or system it acts on (2.11, Release): those answers must come from the person or the owner. A question that depends on another one still open waits for a later round. Facts are yours to find (look them up, or send a sub-agent without blocking the round); decisions are the person's. The form's sections are the checklist of what must be covered, not an order: the demand (1.1 to 1.4) usually settles first because the rest depends on it; otherwise follow what the answers unblock. Keep rounds short; the interview is done when the frontier is empty or the rest is deferred.
 
 Habits that make the answers usable:
 

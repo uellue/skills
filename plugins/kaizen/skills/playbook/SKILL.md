@@ -5,7 +5,7 @@ description: Which kaizen skill fits now, and what the shared documents are. The
 
 # Playbook
 
-Text id `9a868860`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook 9a868860` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `cbb156ba`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook cbb156ba` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The other skills in this plugin are moments in one process. This skill says which moment a session is in, what document that moment reads and writes, and what to do when the document is missing. It proposes; the person decides which moment the session is in and which path to take.
 
@@ -61,8 +61,8 @@ The plugin covers what comes before a specification (stakeholders, requirements,
 - **Not in use and not installed:** for a change larger than small, mention it once as an option with what the person needs to decide (checked 2026-11-05: a third-party Node.js package with one maintainer on the npm registry; its README says telemetry is on unless `OPENSPEC_TELEMETRY=0` is set). Do not install it unasked; without it, the decision record in `design/changes/` does its job.
 - **In use:** offer the rules in `${CLAUDE_PLUGIN_ROOT}/references/openspec-config.yaml` for the project's `openspec/config.yaml` (merge with what is there; `openspec init` writes one with comments only).
 - **Before `/opsx:propose`:** the stakeholder record, the walk-throughs and `design/examples.md` exist for the change, or the proposal says why not. The proposal names the persona, says whether the requested solution is the whole need, and lists the premises nobody confirmed.
-- **Into the change:** the decision record's content goes into OpenSpec's `design.md` instead of `design/changes/`; each must-example becomes a scenario that cites its ID. Requirements stay in `design/requirements.md`; OpenSpec's specs are the behaviour contract, not the place for new requirements.
-- **After apply, before archive:** the hallway test, with the scenarios as part of its coverage and at least half its effort outside them.
+- **Into the change:** the decision record's content goes into OpenSpec's `design.md` instead of `design/changes/`; each must-example becomes an OpenSpec scenario that cites its ID. Requirements stay in `design/requirements.md`; OpenSpec's specs are the behaviour contract, not the place for new requirements.
+- **After apply, before archive:** the hallway test, with the OpenSpec scenarios as part of its coverage and at least half its effort outside them.
 - **Deferrals:** a question that changes the approach blocks the proposal; one that does not is deferred in the requirements with stage and owner and named in the proposal.
 - **Exploring:** where both are installed, clarify a need with `requirements` and `walkthrough`, not `/opsx:explore`, which writes into `specs/`.
 

@@ -217,8 +217,9 @@ For 0.5. Status changes: 15 and 30 held all session; the scope list (earlier coa
 | 120 | Closed rows of a released version move under `## Closed, <version>` | plugin (ledger template) | small | done in the template (principal 2026-11-06); this ledger's 0.4 rows move at the next debrief |
 | 121 | The review brief is kept, not rewritten each time (written by hand six times) | plugin repository (`CODING_STANDARDS.md`, `CLAUDE.md`) | small | done (principal 2026-11-06), with a deviation: the brief is kept in `CODING_STANDARDS.md`, and `/mattpocock-skills:code-review` is named as a second read only, because it reads the diff and runs nothing, while the six reviews found their script bugs by running them |
 | 122 | The debrief asks the person before writing findings: what went well, where the friction was, where the agent seemed to lose track; the agent is often blind to its own confusion (principal 2026-11-06: this debrief understated the agent's struggle to keep the levels apart when the plugin tested itself) | plugin (debrief, Inputs 5) | small | done (principal 2026-11-06) |
+| 123 | `GLOSSARY.md` sets the words of this repository and of what the skills and README say to users (principal 2026-11-06: principal versus manager, "lean" over "recommendation", "scenario" qualified by its namespace); next, a lint rule in `./check.sh` that flags the words the glossary lists under _Avoid_ in skill texts and the README | plugin repository (`GLOSSARY.md`, `CLAUDE.md`); lint | small | glossary and pointer done, skills and README aligned (principal 2026-11-06); lint proposed, after the principal's edit of the glossary |
 
-## Earlier recommendations
+## Earlier proposals
 
 The 2026-11-03 debrief (data-management-system) made seven proposals and five coaching points; their status after the week, as seen in the seven sessions: proposals 1, 3, 5, 6 acted on; 2 and 4 recurring in four sessions each (escalated, proposals 14 and 15 above); 7 done but its table row never closed. Coaching 1, 3, 5 acted on; 2 and 4 partly. Details in that repository's debrief history.
 
