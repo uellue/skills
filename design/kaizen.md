@@ -176,6 +176,30 @@ Decided by the principal on 2026-11-06: 84 to 92 as leaned, 86 as "planned" (a b
 
 Sixth independent review (2026-11-06, the plugin diff after `28f7a18`, ledger 70 to 92, one Opus agent with the diff, the requirements and the coding standards): 70 to 92 carried out as recorded; eleven findings, none high, all fixed. The "is it public?" question now also before the hallway test and the walk-through create `design/`; playbook step 1 asks what the tool writes and how changes take effect before the owner question, so a harmless project gets no owner question; one list of what counts, in the safety row, quoted only by the playbook; copies for the tester resolve links and leave no absolute paths to the original; the walk-through points to the safety row and allows the real thing with the owner's recorded agreement; "website" means live, public or in use; 2.3's labelling applies to imitations only; the requirements offer the text for the person to send; key item N8 widened.
 
+### 2026-11-06 (self-test, all four scenarios at `1b09667`: `results/2026-11-06-sem-instrument.md`, `-existing-tool.md`, `-analysis-script-2.md`, `-small-website-2.md`)
+
+No key item regressed; N11, N12, N19, N20 moved to held. Not applied: waiting for the principal. Leans in the last column.
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 95 | When an agent operates the real thing: are the safety stops enforced below the agent (an interlock, a wrapper that refuses) rather than by the model's judgement, and which actions need a person's confirmation versus run unattended | plugin (questionnaire 2.11, safety row) | small | proposed; lean: yes, safety |
+| 96 | The blocking question from playbook step 1 is recorded somewhere before `design/` exists: in the requirements' open questions once they exist, and said back in chat until then | plugin (playbook) | small | proposed; lean: yes |
+| 97 | The hallway test's After section offers the requirements reconstruction (`/kaizen:requirements` from the record) when none existed, as item 2 promises | plugin (hallway-test) | small | proposed; lean: yes |
+| 98 | "I don't know" to the persona question: the persona is the author's own reading, named so in the brief | plugin (hallway-test item 1) | small | proposed; lean: yes |
+| 99 | A one-file tool is its own source: copy it into scratch with the data and forbid reading it by name | plugin (hallway-test item 3, tester-brief) | small | proposed; lean: yes |
+| 100 | Before a tool's first hand-over, ask where it writes on its users' own data and whether that is acceptable; a tool that writes into the directory of its inputs is an explicit trigger in playbook step 1 | plugin (playbook step 1, hallway-test item 4) | small | proposed; lean: yes, safety |
+| 101 | For a tool that computes results, also ask which inputs are hard for it (overlapping, noisy, edge cases), so the tester's known-value inputs are not only easy ones | plugin (hallway-test item 4) | small | proposed; lean: yes |
+| 102 | "Read-only for the tester" names its mechanism: the copy is the only data the tester gets; a permission deny rule for the original's path where the harness has one | plugin (hallway-test item 3) | small | proposed; lean: yes, the first half; the deny rule only after checking the harness's documentation |
+| 103 | When the whole repository is served or public, offer concrete places for the records with a lean: excluded from deployment, a separate branch or repository, or kept uncommitted | plugin (playbook step 3) | small | proposed; lean: yes |
+| 104 | A local preview of files the real server serves unchanged needs no owner's agreement; the owner's agreement is for the step that takes effect (the push) | plugin (safety row) | small | proposed; lean: yes |
+| 105 | When the step that takes effect is a push, that push is the "real thing" held back until the blocking questions are answered; say so | plugin (playbook step 1) | small | proposed; lean: yes, one clause |
+| 106 | Personas named but not chosen are listed as deferred, not dropped | plugin (walkthrough) | small | proposed; lean: yes |
+| 107 | The publicity question is asked once per session: "unless already answered" | plugin (hallway-test item 6, walkthrough) | small | proposed; lean: yes |
+| 108 | The README says that the skills write friction lines into the project's committed `design/kaizen.md`, and why | README | small | proposed; lean: yes |
+| 109 | A page or reader variant of the tester brief (the template is shaped for a CLI) | plugin | medium | proposed; lean: with the planned browser view, after 0.4 |
+| 110 | No cost for the full path or the follow-ups (reconstruction, walk-through) | plugin | small | proposed; lean: with 59 and 93 in 0.5 |
+| 111 | The self-test's tester sees the host's own `~/.claude/skills`; the brief says to report the presence check as "described" | benchmarks | small | proposed; lean: yes |
+
 ## Earlier recommendations
 
 The 2026-11-03 debrief (data-management-system) made seven proposals and five coaching points; their status after the week, as seen in the seven sessions: proposals 1, 3, 5, 6 acted on; 2 and 4 recurring in four sessions each (escalated, proposals 14 and 15 above); 7 done but its table row never closed. Coaching 1, 3, 5 acted on; 2 and 4 partly. Details in that repository's debrief history.
