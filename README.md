@@ -31,7 +31,7 @@ In a Claude Code session in your project:
   - `/kaizen:hallway-test`: a fresh sub-agent that sees only the requirements and the user documentation builds test cases, writes its expectations to a file before running, asks questions and reports bugs, surprises and gaps; by eye too, through a bundled xterm screenshot driver (needs xvfb, xterm, xdotool, imagemagick); as a diagnosis under injected faults; as an impatient user who only skims the README for commands and then follows the program's hints, where every break of that chain is a finding; on a README or an agent instruction file as an evaluation with a pre-written key and a blind grader. The CLI usability checklist is adapted from the MIT-licensed cli-ux-tester skill by Alister Lewis-Bowen.
   - `/kaizen:debrief`: debrief a session, a stretch of work or several sessions at once on how the collaboration went, not on what it produced: cited moments, coaching for the person writing the prompts, proposals with a destination, a usage check with tokens counted once per API message, and the plugin's own skills checked for where they were used and where they would have helped. The report is private (`.claude/debriefs/`); only what is actionable goes into the repository's ledger (`design/kaizen.md`). Scripts: `transcript.py` (locate, render, export sessions wherever the harness or a checkout keeps them) and `usage.py`. Structure adapted, with thanks, from the MIT-licensed `debrief` skill by Wavez and the `retrospective` plugin by florianbuetow.
 
-**Works alongside other skills.** [Matt Pocock's skills](https://github.com/mattpocock/skills) (MIT) are a complete lifecycle of their own; several complement this plugin: `grill-me` (or `grill-with-docs` in a repository) for discovery from nothing, leading into `/kaizen:requirements`; `domain-modeling` for a glossary; `to-questionnaire` for questions to a stakeholder who is not in the room; `retro` for the agent's environment beside `/kaizen:debrief`; `handoff` before logging off. The playbook keeps the full mapping. [OpenSpec](https://github.com/Fission-AI/OpenSpec) (MIT) fits the specification step between the kaizen skills before and after it. The playbook checks which of them are present, maps their steps onto its lifecycle and says what to know before installing them; the plugin works without either.
+**Works alongside other skills.** [Matt Pocock's skills](https://github.com/mattpocock/skills) (MIT) are a complete lifecycle of their own; several complement this plugin: `/mattpocock-skills:grill-me` (or `/mattpocock-skills:grill-with-docs` in a repository) for discovery from nothing, leading into `/kaizen:requirements`; `/mattpocock-skills:domain-modeling` for a glossary; `/mattpocock-skills:to-questionnaire` for questions to a stakeholder who is not in the room; `/mattpocock-skills:retro` for the agent's environment beside `/kaizen:debrief`; `/mattpocock-skills:handoff` before logging off. These are the names when installed as their Claude Code plugin; skills copied into `.claude/skills/` drop the prefix (`/grill-me`). The playbook keeps the full mapping. [OpenSpec](https://github.com/Fission-AI/OpenSpec) (MIT) fits the specification step between the kaizen skills before and after it. The playbook checks which of them are present, maps their steps onto its lifecycle and says what to know before installing them; the plugin works without either.
 
 The two flows, in short (details and the full mapping: `/kaizen:playbook`):
 
@@ -42,14 +42,17 @@ kaizen alone
        ─► /kaizen:hallway-test ─► pull request ─► merge ─► /kaizen:debrief
 
 with OpenSpec and/or Matt Pocock's skills (each optional, never installed unasked)
-  idea ─► grill-me or grill-with-docs (discovery, when there is no idea yet)
+  idea ─► /mattpocock-skills:grill-me or /mattpocock-skills:grill-with-docs
+          (discovery, when there is no idea yet)
        ─► /kaizen:requirements, /kaizen:walkthrough, design/examples.md (IDs)
-       ─► specification: OpenSpec /opsx:propose (the decision record goes into its design.md,
-          each must-example becomes a scenario citing its ID), or to-spec and to-tickets
-       ─► build (with OpenSpec /opsx:apply)
+       ─► specification, one of:
+            OpenSpec /opsx:propose (the decision record goes into its design.md,
+              each must-example becomes a scenario citing its ID)
+            /mattpocock-skills:to-spec, then /mattpocock-skills:to-tickets
+       ─► build (with OpenSpec: /opsx:apply)
        ─► /kaizen:hallway-test ─► pull request and its review
        ─► with OpenSpec: /opsx:archive on the branch, as the last commit before the merge
-       ─► merge ─► /kaizen:debrief, beside retro
+       ─► merge ─► /kaizen:debrief, beside /mattpocock-skills:retro
 ```
 
 Where to archive is our recommendation; OpenSpec says only "archive when done". Archiving on the branch after the review lets the code and the updated specs reach the main branch in one merge, and changes asked for in the review still go into the open change, not into the archive.
@@ -102,7 +105,7 @@ Standing instructions, for `AGENTS.md` or `CLAUDE.md`:
 When a project also uses Matt Pocock's skills, for `AGENTS.md` or `CLAUDE.md`:
 
 ```text
-- When routing work with ask-matt, also place the kaizen moments in its flow: the stakeholder record and /kaizen:requirements after the grilling, /kaizen:walkthrough and design/examples.md before to-spec, /kaizen:hallway-test before the pull request, /kaizen:debrief on its schedule. See /kaizen:playbook.
+- When routing work with /mattpocock-skills:ask-matt, also place the kaizen moments in its flow: the stakeholder record and /kaizen:requirements after the grilling, /kaizen:walkthrough and design/examples.md before /mattpocock-skills:to-spec, /kaizen:hallway-test before the pull request, /kaizen:debrief on its schedule. See /kaizen:playbook.
 ```
 
 Unblocking a round of questions:
