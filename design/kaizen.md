@@ -174,6 +174,8 @@ Decided by the principal on 2026-11-06: 84 to 92 as leaned, 86 as "planned" (a b
 | 93 | A walk-through offered as coverage states no cost | plugin | small | planned for 0.5, with 59 (principal 2026-11-06) |
 | 94 | The shortest path still writes `design/`, a stakeholder record, a hallway record and a ledger for a 40-line script | plugin | — | no change (principal 2026-11-06); watch in real use |
 
+Sixth independent review (2026-11-06, the plugin diff after `28f7a18`, ledger 70 to 92, one Opus agent with the diff, the requirements and the coding standards): 70 to 92 carried out as recorded; eleven findings, none high, all fixed. The "is it public?" question now also before the hallway test and the walk-through create `design/`; playbook step 1 asks what the tool writes and how changes take effect before the owner question, so a harmless project gets no owner question; one list of what counts, in the safety row, quoted only by the playbook; copies for the tester resolve links and leave no absolute paths to the original; the walk-through points to the safety row and allows the real thing with the owner's recorded agreement; "website" means live, public or in use; 2.3's labelling applies to imitations only; the requirements offer the text for the person to send; key item N8 widened.
+
 ## Earlier recommendations
 
 The 2026-11-03 debrief (data-management-system) made seven proposals and five coaching points; their status after the week, as seen in the seven sessions: proposals 1, 3, 5, 6 acted on; 2 and 4 recurring in four sessions each (escalated, proposals 14 and 15 above); 7 done but its table row never closed. Coaching 1, 3, 5 acted on; 2 and 4 partly. Details in that repository's debrief history.
