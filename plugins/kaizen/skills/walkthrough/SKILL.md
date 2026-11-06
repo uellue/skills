@@ -5,7 +5,7 @@ description: Put on the shoes of a stakeholder and walk through a process step b
 
 # Stakeholder walk-through
 
-Text id `5994a741`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 5994a741` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `bd344395`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough bd344395` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 Requirements that nobody wrote down surface when someone who is not the author tries to do the thing: the operator installing the service, the scientist searching for their data, the colleague setting up a repository, the maintainer reading a log at three in the morning. A walk-through does that on paper, with a named persona and a concrete process, before the change is specified. Its output is not a design: it is questions for the owner, gaps, and acceptance examples that the specs and tests can use.
 
@@ -13,7 +13,7 @@ Use plain words with the person: explain a term of this plugin the first time yo
 
 The walk-through is one of three moments for the same persona and process: the walk-through imagines it before anything exists and produces the use scenarios (section 2.1 of the requirements) and the acceptance examples; the `hallway-test` skill executes it with fresh eyes once something exists; comparing the two, what was expected to go wrong against what did, validates the specification and the implementation. The `playbook` skill in this plugin says when each fires.
 
-Two borrowed habits, with thanks: interview from two hats, the product hat (user value, goals, success) and the developer hat (feasibility, security, edge cases), as the MIT-licensed Feature Forge skill by jeffallan does; and mark what a simulated stakeholder "said" as lower confidence than what a real one said, as melodic-software's requirements-elicitation skills do.
+Two borrowed habits, with thanks: the two hats, product (user value, goals, success) and developer (feasibility, security, edge cases), from jeffallan's MIT-licensed Feature Forge skill; and a simulated stakeholder's words ranked below a real one's, from melodic-software's requirements-elicitation skills.
 
 ## Inputs
 
@@ -27,7 +27,7 @@ When the user invokes this skill together with `requirements`, do the demand sec
 
 ## Before the walk: the questionnaire
 
-Read `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`, a requirements questionnaire adapted from a demand and requirements form written at ER-C. Check which of its questions the project's record already answers and note the ones it skips; the skipped ones often decide the walk (who operates this after the project? what happens when it is wrong and nobody notices?). The walk-through itself produces the questionnaire's section 2.1, the use scenarios; the rest is filled from the conversation with the real stakeholder, and a question without an answer is a finding.
+On the playbook's small path, skip this section: the walk is the step table with its examples and one line of open questions. Otherwise read `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`, a requirements questionnaire adapted from a demand and requirements form written at ER-C. Check which of its questions the project's record already answers and note the ones it skips; the skipped ones often decide the walk (who operates this after the project? what happens when it is wrong and nobody notices?). The walk-through itself produces the questionnaire's section 2.1, the use scenarios; the rest is filled from the conversation with the real stakeholder, and a question without an answer is a finding.
 
 ## The walk
 
@@ -48,7 +48,7 @@ Go up a level when a step reveals something general (five whys): a confusing mes
 
 ## Output
 
-Write the walk-through to `design/walkthroughs/<persona>-<process>.md` and give a short summary in the reply. Its acceptance examples go to `design/examples.md` with the next free IDs, a priority and the step they came from; the walk lists only the IDs. A small change gets a step table of at most about 300 words. Template:
+Write the walk-through to `design/walkthroughs/<persona>-<process>.md` and give a short summary in the reply. Its acceptance examples go to `design/examples.md` with the next free IDs, a priority and the step they came from; the walk lists only the IDs. A small change gets the Steps table of at most about 300 words, the examples and one line of questions, nothing else of the template. Template:
 
 ```markdown
 # Walk-through: <persona> <does process>
