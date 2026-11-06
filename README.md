@@ -46,8 +46,9 @@ with OpenSpec and/or Matt Pocock's skills (each optional, never installed unaske
        ─► /kaizen:requirements, /kaizen:walkthrough, design/examples.md (IDs)
        ─► specification: OpenSpec /opsx:propose (the decision record goes into its design.md,
           each must-example becomes a scenario citing its ID), or to-spec and to-tickets
-       ─► build (with OpenSpec: its apply step)
-       ─► /kaizen:hallway-test (before archive, before the pull request)
+       ─► build (with OpenSpec /opsx:apply)
+       ─► /kaizen:hallway-test
+       ─► with OpenSpec: /opsx:archive
        ─► /kaizen:debrief, beside retro
 ```
 
