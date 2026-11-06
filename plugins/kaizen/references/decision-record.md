@@ -1,6 +1,6 @@
 # Decision record for a change (template)
 
-What the walk-throughs and the requirements leave open and an implementer would otherwise invent. One file per change, `design/changes/<name>.md`, named after the need, not the solution. With OpenSpec, the same content goes into the change's `design.md` (sections 2 to 5) and its scenarios (section 4); this file is then not written.
+What the walk-throughs and the requirements leave open and an implementer would otherwise invent. One file per change, `design/changes/<name>.md`, named after the need, not the solution; once built and tested, it moves to `design/archive/changes/`. With OpenSpec, the same content goes into the change's `design.md` (sections 2 to 5) and its scenarios (section 4); this file is then not written.
 
 ```markdown
 # Change: <the need, in a few words>
