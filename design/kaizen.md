@@ -331,6 +331,8 @@ Independent grade, no changes made from it (principal: "one self-test without ma
 | 183 | The walk-through's "Before the walk: the questionnaire" step gets the small path's exception; `design/` explained in `words.md`; the README gets a line for a tool that already works beyond the hallway-test entry, and its Plugins detail moved below First steps (small-website, analysis-script, existing-tool) | plugin (walkthrough, words.md); README | small | proposed; lean: next round |
 | 184 | Watched: no cost before the full path (59, every round); "lean" explained only through `words.md` (three scenarios: the skills could gloss it once in their first message); N25 awaits the lint (123); the self-test cannot observe a real agent's wording, only what a tester composes in the agent's role | plugin; benchmarks | — | watched |
 
+Version: this branch is kaizen 0.5.0 (bumped 2026-11-06 after round 4 and 177). The items earlier marked "planned for 0.5" and not built (59, 83, 93, 110: the cost notes and the debrief's fixture) move to 0.6.
+
 
 ## Earlier proposals
 
