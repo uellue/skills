@@ -15,7 +15,7 @@ def uncovered(root: Path) -> tuple[int, list[str]]:
     """(number of examples, the uncovered ones with their priority)."""
     examples = re.findall(r"^- \*\*(E\d+)\*\* \(([a-z]+)", (root / "design" / "examples.md").read_text(), re.M)
     cited = set()
-    for d in ("tests", "benchmarks", "design/hallway"):
+    for d in ("tests", "benchmarks", "design/hallway", "design/archive/hallway"):
         for f in (root / d).rglob("*"):
             if f.is_file() and f.resolve() != Path(__file__).resolve() and f.suffix in (".py", ".md", ".sh", ".txt", ".yaml"):
                 cited |= set(re.findall(r"\bE\d+\b", f.read_text(errors="replace")))
