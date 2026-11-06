@@ -156,6 +156,24 @@ Reading: the hardware rules were conditional throughout; the bias was in the sel
 | 82 | The debrief's kaizen-on-kaizen pass also looks for missed skills from OpenSpec and Matt Pocock's skills, installed or not, only where one would have changed a cited moment | plugin (debrief) | small | done, principal's question 2026-11-06 |
 | 83 | The debrief behaviour fixture (a synthetic transcript with planted moments) checks that the debrief is offered at the right moments and names the planted missed skills from all three sources | benchmarks | medium | planned for 0.5, with the fixture already planned |
 
+### 2026-11-06 (self-test, new scenarios at `b0469ff`: `results/2026-11-06-small-website.md`, `results/2026-11-06-analysis-script.md`)
+
+Not applied: waiting for the principal. Leans in the last column.
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 84 | Committed records go public when the repository is itself published (a site deployed from a branch, a public repository): before creating `design/`, ask whether committed files are served or public, and offer a place outside the published tree | plugin (playbook step 3) | small | proposed; lean: yes |
+| 85 | Playbook step 1 asks two things the agent now only infers: what the tool writes or changes (next to its inputs, on a server), and what makes a change take effect (a push, a deploy, a restart) | plugin (playbook) | small | proposed; lean: yes, as one sentence |
+| 86 | No way to look at a rendered page: say plainly that pages are judged as source and as text; a headless-browser screenshot option would be a new dependency, added when a real website project needs it | plugin (hallway-test) | small | proposed; lean: say it now, the browser option later |
+| 87 | The stand-in rules fit an imitation (a simulator, a preview of a service), not an exact copy of data: results on an exact copy are real and need no "simulated" label; a preview's limits are what the real deploy does differently (base path, files served) | plugin (change-record) | small | proposed; lean: yes |
+| 88 | The small-change path names a stakeholder record of one or two entries, since the walk-through blocks without a confirmed persona | plugin (playbook) | small | proposed; lean: yes |
+| 89 | For a tool that computes results, the hallway test asks how a wrong result would be noticed and for an input with a known answer before the tester starts; without one, the tester builds inputs with known values | plugin (hallway-test item 4) | small | proposed; lean: yes |
+| 90 | The tester template gets a field, not a sentence: the main session copies the data the tester needs into scratch, the tester runs from scratch and is not given the original's path | plugin (tester-brief, hallway-test item 3) | small | proposed; lean: yes |
+| 91 | When the only copy of valuable data turns up, propose a backup before anything else | plugin (change-record safety row) | small | proposed; lean: yes |
+| 92 | The walk-through's "walk against the running system" carries the stand-in caveat where it is said, not only under "a measured walk" | plugin (walkthrough) | small | proposed; lean: yes |
+| 93 | A walk-through offered as coverage states no cost | plugin | small | proposed; lean: with ledger 59 (cost notes) in 0.5 |
+| 94 | The shortest path still writes `design/`, a stakeholder record, a hallway record and a ledger for a 40-line script | plugin | — | proposed; lean: no change now; 79 already asks before `design/`; watch in real use |
+
 ## Earlier recommendations
 
 The 2026-11-03 debrief (data-management-system) made seven proposals and five coaching points; their status after the week, as seen in the seven sessions: proposals 1, 3, 5, 6 acted on; 2 and 4 recurring in four sessions each (escalated, proposals 14 and 15 above); 7 done but its table row never closed. Coaching 1, 3, 5 acted on; 2 and 4 partly. Details in that repository's debrief history.
