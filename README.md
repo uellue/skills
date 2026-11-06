@@ -33,6 +33,24 @@ In a Claude Code session in your project:
 
 **Works alongside other skills.** [Matt Pocock's skills](https://github.com/mattpocock/skills) (MIT) are a complete lifecycle of their own; several complement this plugin: `grill-me` (or `grill-with-docs` in a repository) for discovery from nothing, leading into `/kaizen:requirements`; `domain-modeling` for a glossary; `to-questionnaire` for questions to a stakeholder who is not in the room; `retro` for the agent's environment beside `/kaizen:debrief`; `handoff` before logging off. The playbook keeps the full mapping. [OpenSpec](https://github.com/Fission-AI/OpenSpec) (MIT) fits the specification step between the kaizen skills before and after it. The playbook checks which of them are present, maps their steps onto its lifecycle and says what to know before installing them; the plugin works without either.
 
+The two flows, in short (details and the full mapping: `/kaizen:playbook`):
+
+```text
+kaizen alone
+  idea ─► /kaizen:requirements, /kaizen:walkthrough, design/examples.md (IDs)
+       ─► decision record (design/changes/) ─► build
+       ─► /kaizen:hallway-test ─► /kaizen:debrief
+
+with OpenSpec and/or Matt Pocock's skills (each optional, never installed unasked)
+  idea ─► grill-me or grill-with-docs (discovery, when there is no idea yet)
+       ─► /kaizen:requirements, /kaizen:walkthrough, design/examples.md (IDs)
+       ─► specification: OpenSpec /opsx:propose (the decision record goes into its design.md,
+          each must-example becomes a scenario citing its ID), or to-spec and to-tickets
+       ─► build (with OpenSpec: its apply step)
+       ─► /kaizen:hallway-test (before archive, before the pull request)
+       ─► /kaizen:debrief, beside retro
+```
+
 The plugin's own stakeholders, requirements, testing plan and kaizen ledger are in `design/`.
 
 ## Working with agents: lessons learned
