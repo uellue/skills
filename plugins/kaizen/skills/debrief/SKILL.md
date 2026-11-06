@@ -5,7 +5,7 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `8a004cb0`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 8a004cb0` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `1f10c921`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 1f10c921` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into three kinds of output: lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better), and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report.
 
@@ -71,7 +71,7 @@ Then the two parts that make this skill personal:
 
 Matt Pocock's `retro` covers the agent's environment (checks, navigation, steering files, tool economy); cite its findings, and add the collaboration, the coaching and the history. Only the person can invoke it, as a message of its own (a slash command inside another command's arguments never runs); otherwise give its `SKILL.md` and the rendered transcript to an independent sub-agent that has not seen your findings. Compare the two reads: agreement strengthens a finding; say what each missed.
 
-And, for this plugin's own improvement (kaizen on kaizen): which of its skills were used, how they ran, where one would have helped and was not used, and what no skill covers. Those findings become proposals with the destination "kaizen plugin". In the plugin's own repository they become issues or merge requests with the maintainer's say. In anyone else's project nothing is sent on their behalf, since their ledger may be private: suggest politely that, if they would like to help improve the plugin, they open an issue at github.com/uellue/skills with a text you draft for them to copy, or send it to the maintainer privately.
+And, for this plugin's own improvement (kaizen on kaizen): which of its skills were used, how they ran, where one would have helped and was not used, and what no skill covers. Look for missed skills from the tools the playbook pairs with it too (OpenSpec, Matt Pocock's skills), installed or not: name one only where it would have changed a cited moment, and say what installing it would take. Those findings become proposals with the destination "kaizen plugin". In the plugin's own repository they become issues or merge requests with the maintainer's say. In anyone else's project nothing is sent on their behalf, since their ledger may be private: suggest politely that, if they would like to help improve the plugin, they open an issue at github.com/uellue/skills with a text you draft for them to copy, or send it to the maintainer privately.
 
 ## Output
 
