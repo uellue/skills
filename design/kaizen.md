@@ -223,6 +223,25 @@ For 0.5. Status changes: 15 and 30 held all session; the scope list (earlier coa
 | 126 | Lesson for the manager: be clear and deliberate with words; muddy words make muddy concepts, winding paths and muddy outcomes | README (What you do, 13) | small | done (principal 2026-11-06) |
 | 127 | Standing rule: push back softly on ambiguous words ("I read X as …", in the glossary's terms) | README standing instructions, `~/.claude/CLAUDE.md` | small | done (principal 2026-11-06) |
 
+### 2026-11-06 (self-test, all four scenarios at `a430f93`, with the language requirement: `results/2026-11-06-*-2.md`, `-3.md`)
+
+First independent grade (a separate Sonnet agent). N24 (terms explained, one name per concept) not held in any scenario; N23 (the planted "test") partly, from the agent's habit. Several items fell from held to partly in unchanged text: the stricter grader, not a regression. All claims below checked against the text by the main session.
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 128 | The plugin's words explained where a newcomer meets them: a short "words you will see" block in the README (lean, persona, stakeholder record, ledger, decision record, acceptance example, hallway test, stand-in, hand-over), and the skills explain a term on first use to the person (N24 not held in four of four; E18) | README; skills | small | proposed; lean: yes; a user-facing glossary shipped in the plugin only if the block is not enough |
+| 129 | One name for the decision record: the template file `change-record.md` becomes `decision-record.md` (three scenarios met both names) | plugin (references, every pointer) | small | proposed; lean: yes |
+| 130 | The hallway test says which reading of the request it takes before acting (E17), since the most likely path never reaches playbook step 7; its description gains the README's "before others use it" (N23 partly) | plugin (hallway-test) | small | proposed; lean: yes |
+| 131 | Playbook step 1 names "the decision record's safety row" before any decision record exists; say the list inline and point to the row only for the details | plugin (playbook) | small | proposed; lean: yes |
+| 132 | The ledger and all of `design/` go where the publicity question placed them; with a site published from `main`, a committed ledger would go live (bug, small-website); with 103 (concrete places, with a lean) | plugin (ledger template, playbook step 3, every skill's ledger line) | small | proposed; lean: yes, privacy |
+| 133 | When the build waits for an owner, say so at step 1, and name the safe work meanwhile: building the stand-in, read-only exploration (sem-instrument, small-website) | plugin (playbook step 1) | small | proposed; lean: yes |
+| 134 | Before the agent runs a tool on data at all, not only before a tester: "are these the originals, is there another copy?" (analysis-script) | plugin (playbook step 1) | small | proposed; lean: yes, safety |
+| 135 | The tester template gets a line for questions the owner collects for afterwards (it says "wait for the answer") | plugin (tester-brief) | small | proposed; lean: yes |
+| 136 | The small path names who writes its stakeholder record (the walk-through's first input) | plugin (playbook) | small | proposed; lean: yes |
+| 137 | README: "not sure? start with `/kaizen:playbook`"; "Five skills" while first steps show three; `grill-me` for "no idea yet", not "from nothing" | README | small | proposed; lean: yes |
+| 138 | Self-test setup: scenario projects are committed git repositories (a push to `main` has meaning); the brief asks testers to report announcements (N7 "not reported" in three runs) | benchmarks | small | proposed; lean: yes |
+| 139 | Recurring, already planned: no cost outside the hallway test (59, 93, 110); the reconstruction after a hallway test never offered (97, now seen in a run) | plugin | — | escalated: 97 recurring; cost notes stay in 0.5 |
+
 ## Earlier proposals
 
 The 2026-11-03 debrief (data-management-system) made seven proposals and five coaching points; their status after the week, as seen in the seven sessions: proposals 1, 3, 5, 6 acted on; 2 and 4 recurring in four sessions each (escalated, proposals 14 and 15 above); 7 done but its table row never closed. Coaching 1, 3, 5 acted on; 2 and 4 partly. Details in that repository's debrief history.
