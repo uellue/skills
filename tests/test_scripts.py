@@ -357,6 +357,17 @@ class TestSkim(unittest.TestCase):
         self.assertIn("/kaizen:debrief", after[:800])
         self.assertIn("/kaizen:playbook", after[:800])
 
+    def test_list_item_with_inline_command_is_kept(self):
+        # The one README skim measured against a person (2026-11-06): their first command was inline code in a
+        # Prerequisites bullet, which the view dropped. Bullets with inline code stay; plain bullets go.
+        with tempfile.TemporaryDirectory() as d:
+            readme = Path(d) / "README.md"
+            readme.write_text("## Prerequisites\n\n- Debian 13 with `apt install qemu-system-x86 virtinst`\n- a user in the libvirt group\n\n1. then run `tool setup`\n")
+            out = subprocess.run([sys.executable, SCRIPTS / "skim.py", readme], capture_output=True, text=True).stdout
+            self.assertIn("`apt install qemu-system-x86 virtinst`", out)
+            self.assertIn("`tool setup`", out)
+            self.assertNotIn("libvirt group", out)
+
     def test_headings_and_code_only(self):
         with tempfile.TemporaryDirectory() as d:
             readme = Path(d) / "README.md"
