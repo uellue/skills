@@ -5,7 +5,7 @@ description: Put on the shoes of a stakeholder and walk through a process step b
 
 # Stakeholder walk-through
 
-Text id `756efe90`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 756efe90` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `6ac54c30`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 6ac54c30` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 Requirements that nobody wrote down surface when someone who is not the author tries to do the thing: the operator installing the service, the scientist searching for their data, the colleague setting up a repository, the maintainer reading a log at three in the morning. A walk-through does that on paper, with a named persona and a concrete process, before the change is specified. Its output is not a design: it is questions for the owner, gaps, and acceptance examples that the specs and tests can use.
 
@@ -83,7 +83,7 @@ What exists: <documents, code, commands read; the running system used>.
 
 ## After the walk
 
-- **Put the questions to a real stakeholder when one is available.** If a person in that role is in the room or reachable, list the open questions for them before anything else is relayed; their answers go into "Answers from the owner" and the confidence line changes from simulated to answered. A question the owner defers is recorded with the stage it is deferred to and who owns it, in the walk and in the requirements' open questions; a deferred question that lives only in chat is lost. If the stakeholder is not in the room, offer to turn the questions into a document to send (Matt Pocock's `to-questionnaire` skill does this, where it is installed).
+- **Put the questions to a real stakeholder when one is available.** If a person in that role is in the room or reachable, list the open questions for them before anything else is relayed; their answers go into "Answers from the principal" and the confidence line changes from simulated to answered. A question the principal defers is recorded with the stage it is deferred to and who owns it, in the walk and in the requirements' open questions; a deferred question that lives only in chat is lost. If the stakeholder is not in the room, offer to turn the questions into a document to send (Matt Pocock's `to-questionnaire` skill does this, where it is installed).
 - **Update the stakeholder record** with what the walk taught about the persona.
 - **Hand the steps and the acceptance examples to the hallway test** as its coverage list when the thing exists or is built; after that test, add a line per step: imagined versus observed.
 
