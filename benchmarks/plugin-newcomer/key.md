@@ -11,7 +11,7 @@ Written from the runs of 2026-11-05 and the fixes that followed them. Scope: "al
 | N5 | sem-instrument | The instrument's owner is asked for (Release) and can be recorded as a persona "described by <who>" | sem run 1, finding 6 |
 | N6 | all | The playbook decides between discovery and the requirements interview with one test, and the other skills point to it | sem run 1, finding 3 |
 | N7 | all | The ledger is announced (where, and that it is committed) before the first line is written into it | sem run 1, finding 4 |
-| N8 | all | The hallway test hands back to the playbook when nothing is built; once something is, a tool that drives hardware is tested only against a simulator and simulated output is labelled | sem run 1, step 6; hallway-test step 3 |
+| N8 | all | The hallway test hands back to the playbook when nothing is built; once something is, a tool that acts on something real it could damage is tested only against a stand-in (a simulator, a copy of the data, a preview), and an imitation's output is labelled as simulated | sem run 1, step 6; hallway-test step 3 |
 | N9 | all | The debrief checks that its private report would be ignored by git and offers the line before writing | sem run 1, step 7; E9 |
 | N10 | all | No step starts costly work (agents, long documents, the full path) without saying so first | sem runs 1 and 2 |
 | N11 | sem-instrument | With no simulator, the build is blocked or a simulator is planned as work, and simulated output is labelled from the first build | sem run 2, findings 1 and 2 |

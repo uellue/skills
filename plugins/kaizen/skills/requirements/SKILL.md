@@ -5,7 +5,7 @@ description: Interview the person who needs a solution and write a demand and re
 
 # Requirements interview
 
-Text id `f90b1e22`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements f90b1e22` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `62d96061`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements 62d96061` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of a demand and requirements form written at ER-C (a checklist; no institute requires it), writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
 
@@ -86,7 +86,7 @@ Before saying the document is ready, run the handover check and show its result:
 3. Every quote or figure taken from a sub-agent's report, checked against the source by you (a grep per quote is enough); say which you could not check.
 4. The three lists the builder needs first: the unknowns, the interfaces outside our control, and the risks.
 5. Whether the build may start, and on which assumptions; the questions that block it, with who answers. The decisions the build will need go into a decision record (the playbook's "what we decided" moment).
-6. The questions for a person who was not in the interview (the instrument's owner, a facility manager, an administrator), as a short text ready to send, with Matt Pocock's `to-questionnaire` where installed; offer to send them as soon as they arise, while the interview goes on; their answers come back as `[answered]` with the name.
+6. The questions for a person who was not in the interview (the instrument's owner, a facility manager, an administrator), as a short text ready to send, with Matt Pocock's `to-questionnaire` where installed; offer the text as soon as they arise, so the person can send it while the interview goes on; their answers come back as `[answered]` with the name.
 
 ## Rules
 
