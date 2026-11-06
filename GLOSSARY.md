@@ -90,9 +90,9 @@ _Avoid_: hallway test of the plugin, quick tests, smoke test
 The list of key items a self-test is graded against, written before the runs it grades.
 _Avoid_: rubric, expectations
 
-**Check**:
-The repository's automatic tests of its scripts and lint of its skill texts, run before every commit and in CI.
-_Avoid_: quick tests, CI, unit tests
+**Pre-commit check**:
+What runs without an agent before every commit and in CI: unit tests of the scripts and the git hooks, lint of the skill texts, references and manifests, and a report of the acceptance examples no test cites.
+_Avoid_: check (unqualified), quick tests, CI, unit tests
 
 **Behaviour fixture**:
 A prepared input with planted moments or defects, on which a fresh agent runs a skill and a grader counts what it found.
