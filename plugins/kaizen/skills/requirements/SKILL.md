@@ -5,9 +5,11 @@ description: Interview the person who needs a solution and write a demand and re
 
 # Requirements interview
 
-Text id `5de0b765`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements 5de0b765` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `ef24e436`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements ef24e436` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of a demand and requirements form written at ER-C (a checklist; no institute requires it), writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
+
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does.
 
 This skill tightens an idea that exists, however loosely (the playbook's test decides). To get from nothing to an idea, a free discovery interview serves better, for example `grill-me` or `grill-with-docs` from Matt Pocock's MIT-licensed skills (github.com/mattpocock/skills); its result is the record this interview starts from. Where the project keeps a `GLOSSARY.md` (their `domain-modeling` skill), write the requirements in its terms, and raise a term that the interview finds missing or contradictory instead of defining it here.
 
@@ -95,4 +97,4 @@ Before saying the document is ready, run the handover check and show its result:
 - A requirement that cannot be checked is not finished: for each main scenario, add one acceptance example ("when <situation>, then <observable outcome>") to `design/examples.md`, with the next free ID, a priority and the scenario it comes from, and cite the ID in 2.1. The examples live only there.
 - Keep names of people in the project's own record; keep them out of anything published.
 - Hand the document over with the handover check above, not with "ready for review" alone.
-- At the end, one line into the project's `design/kaizen.md`: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).
+- At the end, one line into the project's ledger: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).

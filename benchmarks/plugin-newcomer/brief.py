@@ -4,7 +4,7 @@
     brief.py SCENARIO [--scratch DIR]   scenarios: the names of scenarios/*.md
 
 Creates DIR (default: a new directory under the system's temp directory) with `project/`, a git
-repository holding the scenario's files (scenarios/<name>/, if any), and `kaizen/`, an untracked copy of
+repository on `main` with the scenario's files (scenarios/<name>/, if any) committed, and `kaizen/`, an untracked copy of
 the README and the plugin as a user would install them (so the version line behaves as in an installed
 copy, and the tester cannot touch this repository); writes the filled brief to DIR/brief.txt and prints
 it, with a header naming the commit under test. The subject under test is
@@ -47,7 +47,12 @@ def main():
         shutil.copytree(fixture, project, ignore=shutil.ignore_patterns("__pycache__"))
     else:
         project.mkdir()
-    subprocess.run(["git", "init", "-q", str(project)], check=True)
+    subprocess.run(["git", "init", "-q", "-b", "main", str(project)], check=True)
+    if any(p.name != ".git" for p in project.iterdir()):
+        # Committed, as the newcomer's own project would be: "a push to main publishes" then means something.
+        ident = ["-c", "user.name=newcomer", "-c", "user.email=newcomer@example.invalid"]
+        subprocess.run(["git", "-C", str(project), "add", "-A"], check=True)
+        subprocess.run(["git", *ident, "-C", str(project), "commit", "-q", "-m", "The project as it is"], check=True)
     commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
     dirty = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain", "--", "plugins", "README.md"], capture_output=True, text=True).stdout.strip()
     text = (
