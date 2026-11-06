@@ -326,6 +326,10 @@ class TestSelftestBrief(unittest.TestCase):
             self.assertIn("tally", brief)
             self.assertTrue((run / "project" / "tally.py").is_file())
             self.assertTrue((run / "project" / ".git").is_dir())
+            git = lambda *a: subprocess.run(["git", "-C", run / "project", *a], capture_output=True, text=True).stdout.strip()
+            self.assertEqual(git("rev-parse", "--abbrev-ref", "HEAD"), "main", "the scenario's files are committed on main")
+            self.assertIn("tally.py", git("ls-files"))
+            self.assertEqual(git("status", "--porcelain"), "")
             copy = run / "kaizen"
             self.assertIn(str(copy), brief)
             self.assertNotIn(str(repo) + "/", brief, "the tester reads the copy, never this repository")

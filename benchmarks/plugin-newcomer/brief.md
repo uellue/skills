@@ -16,12 +16,12 @@ Whenever following the plugin would descend into real domain work (writing actua
 
 STRICT READING RULES: start with <REPO>/README.md, read as a newcomer would. From there you may read ONLY what the README or a skill you have reached tells you to read: the skill files under <REPO>/plugins/kaizen/skills/<name>/SKILL.md (reading one is how you simulate the agent invoking `/kaizen:<name>`; ${CLAUDE_PLUGIN_ROOT} is <REPO>/plugins/kaizen), the files under plugins/kaizen/references/ that a skill names, the `--help` or output of scripts a skill tells you to run, and the scenario project's own files. Do NOT read anything else under <REPO> (no design/, tests/, benchmarks/, CLAUDE.md, CODING_STANDARDS.md, git history) and no transcript content (no `transcript.py render` or `export`). Do NOT install anything, do NOT run `claude plugin ...` commands (describe them instead), do NOT modify <REPO> or anything outside <SCRATCH>.
 
-The newcomer's project is at <SCRATCH>/project/ (a git repository; empty unless the scenario brings files). Anything the plugin would have the agent write goes there, short.
+The newcomer's project is at <SCRATCH>/project/ (a git repository on `main`, the scenario's files committed; empty unless the scenario brings files). Anything the plugin would have the agent write goes there, short.
 
 Method:
 1. Before your first command, write <SCRATCH>/expectations.md: what you, as the newcomer, expect from the README (which command first, what the plugin will do for the project, where it will stop and ask). Note the time.
 2. Follow the README, then each skill, step by step. At each step write: what the instruction said, what you did, what happened, whether it matched your expectation.
-3. Note in particular what the scenario lists under "note in particular", each skill's start-up version line (it should be silent unless something is wrong), where the newcomer must decide and whether it is clear what is asked, and anything confusing, contradictory, missing, or costly without warning. Spend at least half your attention on things nobody listed.
+3. Note in particular what the scenario lists under "note in particular", every announcement the agent makes before it writes a file (where, and whether it will be committed), each skill's start-up version line (it should be silent unless something is wrong), where the newcomer must decide and whether it is clear what is asked, and anything confusing, contradictory, missing, or costly without warning. Spend at least half your attention on things nobody listed.
 4. If the plugin's documents contradict each other so that you cannot proceed, ask your caller with SendMessage in one sentence; otherwise decide yourself and note it.
 
 Final message (your caller writes the record from it; do not write report files in the repository), under ~900 words:

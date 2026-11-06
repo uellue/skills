@@ -5,9 +5,11 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `6fc82978`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 6fc82978` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `d37bba2b`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief d37bba2b` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into three kinds of output: lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better), and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report.
+
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does.
 
 Structure and rules adapted from two MIT-licensed skills, with thanks: `debrief` by Wavez (the four check groups, "every finding cites a moment", nothing applied without approval) and `retrospective` by florianbuetow (reports kept as history, earlier recommendations checked and recurring issues escalated, root cause and suggestion per finding). The coaching section, the five-whys habit, the usage script and the ledger are this skill's own.
 
@@ -80,7 +82,7 @@ And, for this plugin's own improvement (kaizen on kaizen): which of its skills w
 Two documents, in the repository that was debriefed:
 
 - **The report**, private: `.claude/debriefs/YYYY-MM-DD.md` (with a `-2` suffix if one exists). It is a subjective snapshot with the coaching in it, so it stays out of version control: before writing anything, run `git -C "$(git rev-parse --show-toplevel)" check-ignore -q .claude/debriefs/x.md` (exit 0: ignored; outside a git repository, ask where to write); if git would track it, offer the line `/.claude/debriefs/` for `.gitignore` (or `.git/info/exclude`, which is not shared) and write nothing until the person agrees. The user can name another place.
-- **The ledger**, in the repository: `design/kaizen.md` (create `design/` if the project has none, after telling the person where the ledger goes and that it is meant to be committed). If the repository is public or may become so, the ledger carries no details of other projects (those go to their own backlogs; the ledger says "transferred") and no security findings, secrets or credentials, not even as to-dos. Generalising an entry later does not remove it from git history: if one slipped in, say so before the branch is pushed, so the person can decide whether to rewrite the unpushed history. Only what is actionable leaves the session, in the template's sections. Create it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md` if no skill has yet; on later ones, append the proposals under the date and update the statuses.
+- **The ledger**: `design/kaizen.md`, or where the playbook's step 3 placed `design/`; say where and whether it is committed before creating it. If the repository is public or may become so, the ledger carries no details of other projects (they go to their own backlogs; the ledger says "transferred") and no security findings, secrets or credentials, not even as to-dos. Generalising an entry later does not remove it from git history: if one slipped in, say so before the push, so the person can decide whether to rewrite the unpushed history. Only what is actionable leaves the session. Start it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`; later, append the proposals under the date and update the statuses.
 
 Show a short summary in the reply: the five lines and the proposals that are not small.
 
