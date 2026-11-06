@@ -87,7 +87,8 @@ Standing instructions, for `AGENTS.md` or `CLAUDE.md`:
 
 ```text
 - Keep changes tight: no speculative generality, no abstraction without a second concrete user.
-- Follow established formats, patterns and tools; before writing a mechanism a library implements, search for the library; flag every new dependency.
+- Follow established formats, patterns and tools; before writing a mechanism a library implements, search for the library; flag every new dependency, with its current release looked up, not recalled.
+- A pull request or release description starts from the branch's log and diff, grouped by area, so that nothing is left out; the size of a change is not its importance, and the agent can rarely judge which changes matter to which readers: ask the person, or leave the summary on top to them.
 - Every mechanism, option or output detail names the requirement, scenario or decision that asks for it; without one, leave it out and suggest it as a next step.
 - Earlier notes and brainstorming are options to evaluate, not requirements.
 - When a request names a specific case, say whether you read it as the whole ask or as an example of a rule, or ask.

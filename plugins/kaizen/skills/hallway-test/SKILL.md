@@ -5,7 +5,7 @@ description: Run a hallway usability test of a tool, document, instruction file 
 
 # Hallway test
 
-Text id `270d15f9`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 270d15f9` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `825286f3`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 825286f3` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The name comes from grabbing a person in the hallway and watching them use the product. Here the person is a sub-agent that has not seen the implementation, the specs or the conversation that produced the code, so it cannot un-know what the author knows. It reads the requirements and the user-facing documentation, decides what should happen, tries it, and reports where reality differs. It regularly finds defects that the test suite has enshrined and that every scenario missed.
 
@@ -32,7 +32,7 @@ Settle these with the user in one message: first the questions only the person c
 5. **Who answers questions.** The tester asks the main session when the requirements do not say what should happen; the main session answers from the design and records what it could not answer confidently as TODO items for the owner. With no design, the owner answers: ask whether they stay available during the run, or collect the questions for afterwards.
 6. **Where the record goes** and the summary length. With no `design/` yet, ask before creating it and whether committed files become public, as in the playbook's step 3.
 7. **The mode** (above), with your recommendation: behaviour for "does it do what it should", hint-following for "will people who don't read get there", by eye for output meant for people.
-8. **The model, the expected cost and the duration**, stated before launching; wait for a yes. Measured so far: about 10 k to 15 k output tokens and two to three minutes for a short tester run reading a README and a few files (Opus); about 46 k output tokens and 14 minutes for a behaviour test of a small CLI (Sonnet). Anything else is a guess and is called one.
+8. **The model, the expected cost and the duration**, stated before launching; wait for an explicit yes (a repeated or empty command is not one). Measured so far: about 10 k to 15 k output tokens and two to three minutes for a short tester run reading a README and a few files (Opus); about 46 k output tokens and 14 minutes for a behaviour test of a small CLI (Sonnet). Anything else is a guess and is called one.
 
 ## The brief
 
