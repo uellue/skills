@@ -45,6 +45,7 @@ The lifecycle in the `playbook` skill: stakeholders → requirements → walk-th
 - [answered] S6, "note for the debrief": a one-line capture into the ledger at the moment, sorted later.
 - [answered] Frequency: the debrief and the "note for the debrief" daily or weekly; a requirements interview and walk-throughs once per project or larger change, and also on a specific topic whenever the need arises (open questions identified, an idea so far only general to be fleshed out), so the playbook has to judge what to do and what not to do at a given point; a hallway test per change a user would notice; a reconstruction once per tool that grew. (Principal, 2026-11-05.)
 - [answered] S7, playbook: at the start of a project or change, say which moment this is, which documents are missing, and which skill writes them; propose, do not write unasked.
+- [answered] Language, across every scenario (principal, 2026-11-06): what the skills make the agent say and write, in replies and in documents, is clear, unambiguous and easy to understand. Muddy words in the input make muddy concepts and winding paths, so the agent says which reading of an ambiguous word it takes and offers to settle it, with the project's glossary where there is one (Matt Pocock's `domain-modeling` keeps one); every debrief reviews the language and asks the person what went well, where the friction was and where the agent seemed to lose track. Checkable through E17 to E20.
 Acceptance examples: E1 to E6 in `examples.md`.
 
 ### 2.2 Demand uncertainties
