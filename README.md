@@ -83,24 +83,24 @@ Starting an agent session is onboarding a new employee that knows only the repos
 
 ### What you paste for the agent
 
-Standing instructions, for `AGENTS.md` or `CLAUDE.md`:
+Standing instructions, for `AGENTS.md` or `CLAUDE.md`. Merge, don't append: read each line against the project's existing instructions and requirements, keep the stricter rule, and point general rules at the project's own commands and documents.
 
 ```text
 - Keep changes tight: no speculative generality, no abstraction without a second concrete user.
-- Follow established formats, patterns and tools; before writing a mechanism a library implements, search for the library; flag every new dependency, with its current release looked up, not recalled.
+- Follow established formats, patterns and tools; before writing a mechanism a library implements, search for the library; ask before adding a new dependency, with its current release looked up, not recalled, and flag it in the hand-over.
 - A pull request or release description starts from the branch's log and diff, grouped by area, so that nothing is left out; the size of a change is not its importance, and the agent can rarely judge which changes matter to which readers: ask the person, or leave the summary on top to them.
-- Every mechanism, option or output detail names the requirement, scenario or decision that asks for it; without one, leave it out and suggest it as a next step.
+- Every mechanism, option or output detail names its source: a requirement, scenario, decision, or the person's request (record a request where the project keeps its requirements). Without any source, leave it out and suggest it as a next step.
 - Earlier notes and brainstorming are options to evaluate, not requirements.
 - When a request names a specific case, say whether you read it as the whole ask or as an example of a rule, or ask.
 - A request phrased as a question ("should we ...?", "could X be a good place?", "we can proceed now?") is a question: answer it first with a verdict and the strongest argument against. Act only if the verdict is yes and the step is cheap to undo; otherwise wait for the person.
-- Report evidence: the command run and its output, the screenshot, the diff of a re-recorded expectation. Report "clean" only from the command the commit or CI runs.
+- Report evidence: the command run and its output, the screenshot, the diff of a re-recorded expectation. Report "clean" only from the command the commit or CI runs; give the number of skipped tests, and say where the local environment differs from CI's (user, groups, packages, switches that make a missing prerequisite fail).
 - A change beyond a few hundred lines gets a review by an agent that did not write it before it is handed over.
 - At every hand-over that follows accepted leans, list each one: implemented as agreed, or deviated and why.
 - Do not build for cases nobody has hit; when an unwanted outcome appears, fix it with its concrete example and a test. Security and safety are the exception: think them through before building.
 - Use absolute paths and self-contained shell commands; edit files with the Edit tool, not with inline replacement scripts.
-- Never delete through a shell variable that could be empty or unset; quote variables, and prefer not creating what you would have to delete.
+- Never delete through a shell variable that could be empty or unset; quote variables, and prefer not creating what you would have to delete. This applies to the commands you run and to the code you write (`"${var:?}"`); fix existing code when you touch it, not in passing.
 - A vulnerability found while testing is reported first and stops the plan; the fix path is the proposed next step.
-- Anything written for people and agents at once is split: a short part for people first (what is wrong or decided, what to do, one example or the list of actions), then the part for agents (context, specifics, commands, what was verified), as a separate block, section or file, marked as reviewed by a person or attached unreviewed. This applies to issues and merge requests, hand-over notes, guides, reports and documentation alike.
+- Anything written for people and agents at once is split: a short part for people first (what is wrong or decided, what to do, one example or the list of actions), then the part for agents (context, specifics, commands, what was verified), as a separate block, section or file, marked as reviewed by a person or attached unreviewed. This applies to issues and merge requests, hand-over notes, guides, reports and documentation alike, when they are written or a section is rewritten; existing documents are not restructured unasked.
 ```
 
 When a project also uses Matt Pocock's skills, for `AGENTS.md` or `CLAUDE.md`:
