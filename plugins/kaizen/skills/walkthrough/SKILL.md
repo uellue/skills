@@ -5,11 +5,11 @@ description: Put on the shoes of a stakeholder and walk through a process step b
 
 # Stakeholder walk-through
 
-Text id `183ec1aa`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 183ec1aa` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `06f56c15`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 06f56c15` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 Requirements that nobody wrote down surface when someone who is not the author tries to do the thing: the operator installing the service, the scientist searching for their data, the colleague setting up a repository, the maintainer reading a log at three in the morning. A walk-through does that on paper, with a named persona and a concrete process, before the change is specified. Its output is not a design: it is questions for the owner, gaps, and acceptance examples that the specs and tests can use.
 
-Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does.
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number a message's items in one sequence that never restarts within it, so the person can answer by number.
 
 The walk-through is one of three moments for the same persona and process: the walk-through imagines it before anything exists and produces the use scenarios (section 2.1 of the requirements) and the acceptance examples; the `hallway-test` skill executes it with fresh eyes once something exists; comparing the two, what was expected to go wrong against what did, validates the specification and the implementation. The `playbook` skill in this plugin says when each fires.
 
@@ -17,7 +17,7 @@ Two borrowed habits, with thanks: interview from two hats, the product hat (user
 
 ## Inputs
 
-Settle these with the user before walking, and write them at the top of the output.
+Settle these with the user before walking, one message per item that needs an answer, and write them at the top of the output.
 
 1. **The persona. This blocks: do not walk in a persona nobody confirmed.** Read the project's stakeholder record (`design/stakeholders.md`). Show the personas it has, ask which one to take, and offer to add a new one or correct an existing one: this is the moment to learn from the people who know the project. If no record exists, ask who the stakeholders are and create it with what the user says (with no `design/` yet, ask first as in the playbook's step 3), one entry per persona: who they are, what they want from this process, what they know and do not know, what they have on their machine, what they would never read, and whether the entry comes from an interview or is simulated. Prefer a real person's role at the institute over an archetype. With no person available, follow the playbook's "Working without a person": the persona is recorded as simulated and the walk is marked as resting on it.
 2. **The process.** The thing they are trying to do, from their first step to the moment they consider it done. Examples: install the crawler on a server; find last week's measurement in the index; add a new file format as an external collection; start a new repository for development with agents; read the crawl log after a night run; diagnose a search result that looks wrong.

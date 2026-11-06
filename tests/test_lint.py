@@ -36,6 +36,13 @@ def body(path: Path) -> str:
 
 
 class TestSkills(unittest.TestCase):
+    def test_plain_words_rule_identical_in_every_skill(self):
+        # One sentence in five skills (how the agent talks to the person); it must not drift between them.
+        lines = {p.parent.name: next((l for l in p.read_text().splitlines() if l.startswith("Use plain words with the person:")), None)
+                 for p in SKILLS}
+        self.assertTrue(all(lines.values()), f"skills without the rule: {[k for k, v in lines.items() if not v]}")
+        self.assertEqual(len(set(lines.values())), 1, "the plain-words rule differs between skills")
+
     def test_there_are_skills(self):
         self.assertGreaterEqual(len(SKILLS), 5)
 
