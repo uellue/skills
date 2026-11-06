@@ -19,6 +19,12 @@ Written from the runs of 2026-11-05 and the fixes that followed them. Scope: "al
 | N13 | existing-tool | A newcomer with a working tool and "get a critical first user to try it" reaches the hallway test, through the playbook or directly | the hand-over question of 2026-11-05 |
 | N14 | existing-tool | With something built but no requirements, the plugin says so, offers the playbook, and goes ahead only if the newcomer wants; the brief then says that the tester's requirement is its own | hallway-test step 2 (the deviation named in the ledger) |
 | N15 | existing-tool | The tester's persona comes from a stakeholder record, or the newcomer is asked for one and offered to start the record; none is assumed | walkthrough and hallway-test step 1 |
-| N16 | existing-tool | The cost of the tester run is stated before it starts | hallway-test, model and cost |
+| N16 | existing-tool, analysis-script, small-website | The cost of the tester run is stated before it starts | hallway-test, model and cost |
+| N17 | analysis-script, small-website | Before a tester or an agent acts on something real it could damage (the original data, the live site), a skill asks who owns it and whether a stand-in exists (a copy, a local preview) | the safety row widened beyond hardware, principal 2026-11-06 |
+| N18 | analysis-script, small-website | The path fits the size: an existing tool or a small change, not the full form | playbook, size the process |
+| N19 | analysis-script | A skill asks how a wrong result would be noticed, or for data with a known answer, before the hand-over | requirements 2.5; generality check 2026-11-06 |
+| N20 | analysis-script | The tester runs the script on a copy of the data, never on the original directory | hallway-test step 3; N17 |
+| N21 | small-website | Nothing is pushed to `main` (which publishes) before a local preview or staging copy is settled | N17 |
+| N22 | small-website | The plan for the hallway test names how the rendered page is judged, or says that the plugin has no way to look at it | generality check 2026-11-06 (by-eye mode drives a terminal only) |
 
 Open and planned for 0.5, not yet expected to hold: a feasibility path before the full form (ledger 51); the decision record for a new project's first build (ledger 52).

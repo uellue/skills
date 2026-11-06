@@ -18,7 +18,7 @@ Adapted for software from the "Demand and Requirements Specification" form (vers
 
 2.2 **Demand uncertainties.** What is uncertain now? Which future events could change the demand or the requirements: a new instrument, a new file format, a policy, a funding decision, a user base that grows?
 
-2.3 **Interfaces with existing systems.** Which existing or planned systems does it talk to, in which direction, in which format, with which identity? Which of those are outside our control, and what do we know about their quirks? For an instrument or other hardware: is there a simulator or a dry-run mode, does it enforce the same limits as the real thing, and how is its output marked as simulated wherever it is kept?
+2.3 **Interfaces with existing systems.** Which existing or planned systems does it talk to, in which direction, in which format, with which identity? Which of those are outside our control, and what do we know about their quirks? For anything real it could damage (an instrument, production or irreplaceable data, a live service): is there a stand-in (a simulator, a copy, a staging service, a dry-run mode), does it enforce the same limits as the real thing, and how is its output marked as simulated wherever it is kept?
 
 2.4 **Operating conditions.** Where does it run: a container on a server, a lab PC next to an instrument, a laptop in the field, a cloud account, a CI runner? With which network, which mounts, which permissions, which user?
 
@@ -34,7 +34,7 @@ Adapted for software from the "Demand and Requirements Specification" form (vers
 
 2.10 **Lifetime and decommissioning.** How long must it live? What happens to its data, its identifiers and its users when it is retired, and who decides?
 
-2.11 **Safety and risks.** What can it damage: data loss or corruption, leaked credentials or personal data, a flood of records that drowns a search, an instrument PC it shares, a service it overloads, the instrument itself (a collision, damage to the sample or the beam source, a chamber vented at the wrong moment)? Who may authorise what it does to the instrument? What could impair it? Which risks must be mitigated, and whom to consult (IT security, data protection, the instrument's owners)?
+2.11 **Safety and risks.** What can it damage: data loss or corruption, leaked credentials or personal data, a flood of records that drowns a search, an instrument PC it shares, a service it overloads, the instrument itself (a collision, damage to the sample or the beam source, a chamber vented at the wrong moment)? Who may authorise what it does to the instrument, the original data or the live service? What could impair it? Which risks must be mitigated, and whom to consult (IT security, data protection, the owners of the instrument or the data)?
 
 2.12 **Applicable standards.** Which standards, protocols, formats or regulations apply: OAI-PMH, Dublin Core, NeXus, FAIR principles, institute IT rules, a funder's data policy?
 
