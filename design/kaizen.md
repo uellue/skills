@@ -4,7 +4,7 @@ What leaves a debrief: proposals with decisions, the fate of earlier ones, what 
 
 ## Open proposals
 
-Statuses as last recorded. Rows 10 to 30 are lessons for other repositories, to be carried over by the principal; 12, 34, 51, 52, 59, 83, 93, 109, 110 are planned or parked; 96 to 112 and 179 to 183 are leans waiting for a round or a decision; 149, 159, 172, 184, 192 are watched.
+Statuses as last recorded. Rows 10 to 30 are lessons for other repositories, to be carried over by the principal; 12, 34, 51, 52, 59, 83, 93, 109, 110 are planned or parked; 96 to 112 and 179 to 183 are leans waiting for a round or a decision; 149, 159, 172, 184, 192, 194, 196 are watched.
 
 | # | Proposal | Destination | Effort | Decision / status |
 |---|---|---|---|---|
@@ -51,6 +51,15 @@ Independent grade. N27 (one numbering per message) and N28 (about fifteen lines)
 |---|---|---|---|---|
 | 193 | From the run: data in git count as a copy only with a remote; an only copy is copied first, outside the project, announced with its path, and nothing runs on the data until it exists (182); the standing-instructions file, where kept uncommitted, is listed in `.git/info/exclude`; the first question asks what the tool "or the tool to be" changes; what the agent notices in the code stays out of the tester's brief; the person looks at a page in the local preview with the examples as a checklist; on the small path the tester's "requirements" are the examples and the need note; "(item 9)" named as the skill's own item; the numbering rule says "from 1" | plugin (hallway-test, playbook, all five skills' plain-words sentence) | small | done in `757c8a0` |
 | 194 | Watched: cost in a unit a newcomer knows, and no cost for the path (59); "lean" and "behaviour" still reach the person unexplained in two or three runs; the vocabulary question asked by both the playbook and the interview; N25 waits for the lint (123); the standing-instructions offer never reaches a newcomer who enters through the hallway test (6, by design) | plugin | — | watched |
+
+### 2026-11-06 (self-test round 7 at `757c8a0`: `results/2026-11-06-*-9.md`, `-10.md`)
+
+Independent grade. N27 held in all four scenarios; N28 held in analysis-script (longest 11 lines) and small-website (12), partly in existing-tool (the leans message, 17 lines) and sem-instrument (the path with the documents' questions, 17; the first interview round, 16). The safety items improved in sem-instrument (N4, N5, N11 held). Applied as leaned (principal away: "go with your leans"), together with the size reduction:
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 195 | From the run: the first question also asks where a change appears (small-website 5); the owner rule is applied to the person's answer, and whoever they name as responsible is the owner (small-website 4); the discovery question is asked in step 2 (sem-instrument 2); the interview skips the vocabulary question the playbook settled (sem-instrument 4); the walk-through's questionnaire step is skipped on the small path (183, small-website 6); the hallway test names the stakeholder entry's fields and asks the public question itself (existing-tool 2, 5); leans that would run past fifteen lines move the record and ledger items to the cost message (existing-tool 4); a slot for the CLI checklist in the tester's brief (existing-tool 3); `words.md` explains small path, need note and safety row; the README says what the tester reads without requirements (existing-tool 9) | plugin | small | done with the size reduction |
+| 196 | Watched: no cost for the path or the planning dialogue (59, 192, 194; every scenario); "lean", "principal" and the model names reach the person unexplained in two runs; the newcomer's own next run on the only copy after the agent made one (analysis-script 3: the mandatory case "where it writes on its users' data" covers the record, not the newcomer's habit); the ledger line's "end" for a session that flows into the next skill (sem-instrument 7, existing-tool 7); N25 waits for the lint (123) | plugin | — | watched |
 
 ## Skill friction
 
