@@ -5,7 +5,7 @@ description: Put on the shoes of a stakeholder and walk through a process step b
 
 # Stakeholder walk-through
 
-Text id `9753805f`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 9753805f` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `756efe90`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 756efe90` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 Requirements that nobody wrote down surface when someone who is not the author tries to do the thing: the operator installing the service, the scientist searching for their data, the colleague setting up a repository, the maintainer reading a log at three in the morning. A walk-through does that on paper, with a named persona and a concrete process, before the change is specified. Its output is not a design: it is questions for the owner, gaps, and acceptance examples that the specs and tests can use.
 
@@ -36,7 +36,7 @@ Take the process one step at a time, in the persona's shoes. For every step, wri
 - **What they do**, concretely: the command typed, the page opened, the file read, the person asked.
 - **What they need to know** at that moment, and whether what exists tells them.
 - **What goes wrong** here in practice: the silent failure, the misleading message, the choice with no default, the step that needs rights they do not have, the wait with no feedback.
-- **The question they would ask** the owner if they could, in their words.
+- **The question they would ask** the principal if they could, in their words.
 
 Then switch hats twice over the whole walk: with the product hat, ask what the persona wanted and whether the process delivers it, what "done" looks like for them, what they would complain about; with the developer hat, ask what is infeasible, insecure, slow at scale, or fragile in the order of steps.
 
@@ -65,10 +65,10 @@ What exists: <documents, code, commands read; the running system used>.
 ## Developer hat
 <infeasible, insecure, slow, fragile>
 
-## Questions for the owner
+## Questions for the principal
 - <question, in the persona's words, with the step it came from>
 
-## Answers from the owner (<who>, <date>)
+## Answers from the principal (<who>, <date>)
 <each question with its answer, or "deferred to <stage>, owner <who>">
 
 ## Gaps
@@ -92,6 +92,6 @@ What exists: <documents, code, commands read; the running system used>.
 - Say which parts are simulated. A walk-through by an agent finds the gaps a careful colleague would find; it does not know what the real persona values.
 - Stay in the shoes. If you know how the system works, the persona does not; write what they see, not what you know.
 - Concrete over general. "The operator runs `modama-crawler crawl` and sees nothing for two hours" is a finding; "feedback could be improved" is not.
-- Questions, gaps and examples are the deliverable. Do not design the fix here; the owner decides what becomes a requirement, and the decisions go into the decision record (the playbook's "what we decided" moment).
-- A number in the walk has a source (the owner, a measurement, a document); the agent's own estimate is marked as one.
+- Questions, gaps and examples are the deliverable. Do not design the fix here; the principal decides what becomes a requirement, and the decisions go into the decision record (the playbook's "what we decided" moment).
+- A number in the walk has a source (the principal, a measurement, a document); the agent's own estimate is marked as one.
 - At the end, one line into the project's ledger: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).

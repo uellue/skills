@@ -5,7 +5,7 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `d37bba2b`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief d37bba2b` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `d855ab22`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief d855ab22` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into three kinds of output: lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better), and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report.
 
@@ -66,7 +66,7 @@ Work through these five groups. For each finding, cite the moment (what was said
    - A change merged or archived without a hallway test; tests and OpenSpec scenarios that cite no example ID; decisions an implementer invented because no decision record existed.
    - The questions "which scenario asks for this" and "what would have caught this" skipped.
 4. **Carry forward.** Preferences and decisions worth saving as memory or project docs; proposals that are a skill, a workflow, a hook, a standing rule or a backlog item; tools that would have made the stretch easier; steps that could be automated next time; instruments built by hand (an eval, a brief, a probe) that should be kept. Two hand-written repetitions signal a missing reusable asset.
-5. **Language**, always, in the chat and in the work: a term used in two senses, a request read two ways and whether the agent said which reading it took, a word the project's glossary avoids, one concept named differently in code and documents. Muddy words make muddy concepts and winding paths. Settle each with the person, with Matt Pocock's `domain-modeling` where installed (it keeps `GLOSSARY.md`; the agent can start it), otherwise by agreeing the term and recording it where the project keeps its vocabulary.
+5. **Language**, always, in the chat and in the work: a term used in two senses, a request read two ways and whether the agent said which reading it took, a word the project's glossary avoids, one concept named differently in code and documents. Muddy words make muddy concepts and winding paths. Settle each with the person, with Matt Pocock's `domain-modeling` where installed (it keeps `GLOSSARY.md`), otherwise by agreeing the term and recording it where the project keeps its vocabulary.
 
 Then the two parts that make this skill personal:
 

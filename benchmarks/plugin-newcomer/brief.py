@@ -50,9 +50,10 @@ def main():
     subprocess.run(["git", "init", "-q", "-b", "main", str(project)], check=True)
     if any(p.name != ".git" for p in project.iterdir()):
         # Committed, as the newcomer's own project would be: "a push to main publishes" then means something.
-        ident = ["-c", "user.name=newcomer", "-c", "user.email=newcomer@example.invalid"]
+        # The maintainer's own signing key and hooks have no business in a throwaway project.
+        cfg = ["-c", "user.name=newcomer", "-c", "user.email=newcomer@example.invalid", "-c", "commit.gpgsign=false"]
         subprocess.run(["git", "-C", str(project), "add", "-A"], check=True)
-        subprocess.run(["git", *ident, "-C", str(project), "commit", "-q", "-m", "The project as it is"], check=True)
+        subprocess.run(["git", *cfg, "-C", str(project), "commit", "-q", "--no-verify", "-m", "The project as it is"], check=True)
     commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
     dirty = subprocess.run(["git", "-C", str(REPO), "status", "--porcelain", "--", "plugins", "README.md"], capture_output=True, text=True).stdout.strip()
     text = (
