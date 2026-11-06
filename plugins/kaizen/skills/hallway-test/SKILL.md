@@ -5,7 +5,7 @@ description: Run a hallway test of a tool, document, instruction file or diagnos
 
 # Hallway test
 
-Text id `621259b5`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 621259b5` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `00dcb5c5`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 00dcb5c5` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does.
 
@@ -62,6 +62,7 @@ Answer the tester's questions from the design, with the reasoning, and tell it w
 5. Keep the experiment reproducible: the brief, the answer key or expectations, the answers given, the usage, and a small script that re-runs any experiment, saved together next to the record or in a named directory, with relative paths. This applies to every measurement, not only to hallway tests; an instruction-file eval whose prompts were not saved cannot be repeated.
 6. If a walk-through preceded the test, add the comparison to it: per step, imagined versus observed.
 7. With OpenSpec, the test runs after apply and before archive (the playbook's hand-off).
+8. If no requirements existed, offer to reconstruct them now from this record and the tool (`/kaizen:requirements`, from the record), as the playbook's path for an existing tool promises.
 
 ## Rules
 

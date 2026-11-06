@@ -28,7 +28,8 @@ Final message (your caller writes the record from it; do not write report files 
 - What you read (list of files), and the expectations file's time versus your first command's time.
 - The path: numbered steps, one line each, with the skill and the made-up answers; mark "not asked" where you expected a question.
 - Findings about the plugin, ranked: each with the moment (file and the instruction's wording, or the command and its output), expected vs observed, classified as bug / gap / surprising but defensible / question, and a suggested fix.
-- Words the newcomer did not understand: every term in what the agent said or wrote to the newcomer that a newcomer could not be expected to know and that was not explained on first use, with where it appeared; and any concept that went by two names. "None" is a valid answer.
+- The agent's messages to the newcomer, quoted word for word (the questions and the summaries, not your notes about them).
+- Words the newcomer did not understand, in two lists: (a) in the agent's quoted messages, every term a newcomer could not be expected to know that was not explained on first use; (b) in the plugin's files you read (README, skills, references), the same. Add any concept that went by two names, and say in which list. "None" is a valid answer for either.
 - What worked well for a newcomer.
 - One line: what in this test's setup did not fit.
 ```

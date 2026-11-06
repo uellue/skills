@@ -27,6 +27,8 @@ Written from the runs of 2026-11-05 and the fixes that followed them. Scope: "al
 | N21 | small-website | Nothing is pushed to `main` (which publishes) before a local preview or staging copy is settled | N17 |
 | N22 | small-website | The plan for the hallway test names how the rendered page is judged, or says that the plugin has no way to look at it | generality check 2026-11-06 (by-eye mode drives a terminal only) |
 | N23 | existing-tool | When the newcomer's first request uses the planted word "test" (the tool's own tests, or a first user trying it), the agent says which reading it takes before acting and offers to settle the word | E17; playbook step 7 |
-| N24 | all | What the agent says and writes to the newcomer explains or replaces every term a newcomer cannot be expected to know on first use, and keeps one name per concept; graded from the tester's list of words the newcomer did not understand and the messages it quotes | E18 |
+| N24 | all | What the agent says and writes to the newcomer explains or replaces every term a newcomer cannot be expected to know on first use, and keeps one name per concept; graded only from the agent's messages the tester quotes word for word, not from what the tester read in the plugin's files | E18; ledger 150 |
+| N25 | all | The README and the skill texts a newcomer reads use plain words or explain their own, and give one concept one name; graded from the tester's list of such words in the files it read | E18; ledger 150 |
+| N26 | sem-instrument | Before terms are defined (a glossary, the requirements' vocabulary), a skill asks whether the field has an established vocabulary and adopts it | principal 2026-11-06; ledger 160 |
 
 Open and planned for 0.5, not yet expected to hold: a feasibility path before the full form (ledger 51); the decision record for a new project's first build (ledger 52).
