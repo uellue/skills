@@ -4,7 +4,7 @@ What leaves a debrief: proposals with decisions, the fate of earlier ones, what 
 
 ## Open proposals
 
-Statuses as last recorded. Rows 10 to 30 are lessons for other repositories, to be carried over by the principal; 12, 34, 51, 52, 59, 83, 93, 109, 110 are planned or parked; 96 to 112 and 179 to 183 are leans waiting for a round or a decision; 149, 159, 172, 184, 192, 194, 196 are watched.
+Statuses as last recorded. Rows 10 to 30 are lessons for other repositories, to be carried over by the principal; 12, 34, 51, 52, 59, 83, 93, 109, 110 are planned or parked; 96 to 112 and 179 to 183 are leans waiting for a round or a decision; 149, 159, 172, 184, 192, 194, 196, 198 are watched.
 
 | # | Proposal | Destination | Effort | Decision / status |
 |---|---|---|---|---|
@@ -60,6 +60,15 @@ Independent grade. N27 held in all four scenarios; N28 held in analysis-script (
 |---|---|---|---|---|
 | 195 | From the run: the first question also asks where a change appears (small-website 5); the owner rule is applied to the person's answer, and whoever they name as responsible is the owner (small-website 4); the discovery question is asked in step 2 (sem-instrument 2); the interview skips the vocabulary question the playbook settled (sem-instrument 4); the walk-through's questionnaire step is skipped on the small path (183, small-website 6); the hallway test names the stakeholder entry's fields and asks the public question itself (existing-tool 2, 5); leans that would run past fifteen lines move the record and ledger items to the cost message (existing-tool 4); a slot for the CLI checklist in the tester's brief (existing-tool 3); `words.md` explains small path, need note and safety row; the README says what the tester reads without requirements (existing-tool 9) | plugin | small | done with the size reduction |
 | 196 | Watched: no cost for the path or the planning dialogue (59, 192, 194; every scenario); "lean", "principal" and the model names reach the person unexplained in two runs; the newcomer's own next run on the only copy after the agent made one (analysis-script 3: the mandatory case "where it writes on its users' data" covers the record, not the newcomer's habit); the ledger line's "end" for a session that flows into the next skill (sem-instrument 7, existing-tool 7); N25 waits for the lint (123) | plugin | — | watched |
+
+### 2026-11-06 (self-test round 8 at `14512e6`, size reduction round 1: `results/2026-11-06-*-10.md`, `-11.md`)
+
+Independent grade. N27 and N28 held in all four scenarios (longest message 15 lines, existing-tool's leans; the others 10 or fewer). The reduction lost one rule, restored below; the grader found no other behaviour of round 7 missing. Skill bodies 11,877 → 10,494 words (−12%); `companions.md` (765 words) and `debrief-report.md` (316) are read on demand.
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 197 | From the run: "a tool that writes into the directory it reads from … gets the second round" restored (dropped in the rewrite; analysis-script N17 partly); the playbook's first question and the discovery question accept the request as an answer (sem-instrument 4, small-website 7); the originals question binds tools that write, in both skills, and joins the hallway test's first-message list for the direct route (existing-tool 5, analysis-script 1); step 3 does not ask again whether files become public when step 1 said so (small-website 4); the stand-in bullet asks whether a simulator enforces the limits and labels its output (181, sem-instrument 2); the vocabulary question is asked open, the example named only when the person has none (sem-instrument 3; N26 kept); steps 5 and 7 may share a message (sem-instrument 5); the standing-instructions offer carries one line on what it asks (sem-instrument 6); the walk-through asks once per kind of stakeholder when the answer is vague (small-website 2); the need note is written first on the small path (small-website 6); the reading of "test" is required only when the request uses the word (small-website 8); "each message numbered from 1" (existing-tool 3) | plugin (playbook, hallway-test, walkthrough) | small | done in reduction round 2 |
+| 198 | Watched: the behaviour tester's measured cost is for Sonnet while the lean is the session's model (existing-tool 1, twice: needs a measured Opus run); a web page judged as source only while the description says "page" (small-website 1; planned); the sub-agent a round may send for facts has no cost announcement (sem-instrument 7); the path's cost (59) | plugin | — | watched |
 
 ## Skill friction
 
