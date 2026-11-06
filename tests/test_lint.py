@@ -78,9 +78,9 @@ class TestSkills(unittest.TestCase):
 class TestReferences(unittest.TestCase):
     def test_standing_instructions_match_the_readme(self):
         # One text in two places: the README's paste block and the plugin's reference (the playbook offers it).
-        def block(text):
-            start = text.index("```text\n", text.index("standing instructions") if "standing instructions" in text else 0)
-            return text[start + len("```text\n") : text.index("```", start + 8)]
+        def block(text):  # the first ```text fence in the text given
+            start = text.index("```text\n") + len("```text\n")
+            return text[start : text.index("```", start)]
         readme = (REPO / "README.md").read_text()
         ref = (PLUGIN / "references" / "standing-instructions.md").read_text()
         readme_block = block(readme[readme.index("### What you paste for the agent"):])

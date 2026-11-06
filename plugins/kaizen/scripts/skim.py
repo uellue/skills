@@ -5,7 +5,7 @@
 
 Prints every heading (with its level), every fenced code block under the heading it belongs to, and
 every list item that carries inline code (a command in a bullet catches a skimming eye like a block
-does). Prose, tables, other list items and links are dropped. The hallway test's hint-following mode
+does; such a bullet is kept whole). Prose, tables and other list items are dropped. The hallway test's hint-following mode
 gives the tester only this view, so that its laziness is enforced by what it can see, not by role-play.
 """
 
