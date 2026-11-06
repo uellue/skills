@@ -134,16 +134,16 @@ Not applied: waiting for the principal. Leans in the last column.
 
 | # | Proposal | Destination | Effort | Decision / status |
 |---|---|---|---|---|
-| 70 | The real instrument only after the owner's recorded `[answered]` agreement; a principal who is not the owner cannot accept it as an assumption (decision record's hardware row) | plugin (change-record) | small | proposed; lean: yes, safety |
-| 71 | A simulator's limits come from the owner or the vendor's documentation; its "enforces the limits" example stays blocked until they are on record | plugin (change-record) | small | proposed; lean: yes, safety |
-| 72 | Playbook step 6 becomes step 1: ask the person (not "name"); an unknown owner or simulator is recorded as an open question that blocks real-instrument work, and the session goes on | plugin (playbook) | small | proposed; lean: yes |
-| 73 | The owner's questions can go out at once, in parallel with the interview, not only at the requirements handover | plugin (requirements) | small | proposed; lean: yes |
-| 74 | The measured walk-through with neither simulator nor dry run: a walk on paper, marked as such | plugin (walkthrough) | small | proposed; lean: yes |
-| 75 | A measured cost for a behaviour tester (the runs so far: about 10 k to 15 k output tokens and two to three minutes for a short self-test; a real hallway test of a CLI about 46 k tokens and 14 minutes), or "say it is a guess" | plugin (hallway-test) | small | proposed; lean: yes, with the figures and their source |
-| 76 | The tester template's fixed text reads "the requirements or, without them, the documentation" in all four places; the diagnostic option is conditional | plugin (tester-brief) | small | proposed; lean: yes |
-| 77 | The hallway test quotes the playbook's existing-tool path instead of sending the person through the playbook and back; the playbook chooses its path before offering missing documents | plugin (hallway-test, playbook) | small | proposed; lean: yes |
-| 78 | Settling the brief in one message: questions that need answers first, then the items one "yes" accepts; sample data the user would have may be read, read-only | plugin (hallway-test) | small | proposed; lean: yes |
-| 79 | Before creating `design/` for a tiny tool, ask, and offer a lighter home (one file, or `.claude/`) | plugin (playbook, hallway-test) | small | proposed; lean: ask, default `design/` |
+| 70 | The real instrument only after the owner's recorded `[answered]` agreement; a principal who is not the owner cannot accept it as an assumption (decision record's hardware row) | plugin (change-record) | small | done (accepted 2026-11-06) |
+| 71 | A simulator's limits come from the owner or the vendor's documentation; its "enforces the limits" example stays blocked until they are on record | plugin (change-record) | small | done (accepted 2026-11-06) |
+| 72 | Playbook step 6 becomes step 1: ask the person (not "name"); an unknown owner or simulator is recorded as an open question that blocks real-instrument work, and the session goes on | plugin (playbook) | small | done (accepted 2026-11-06) |
+| 73 | The owner's questions can go out at once, in parallel with the interview, not only at the requirements handover | plugin (requirements) | small | done (accepted 2026-11-06) |
+| 74 | The measured walk-through with neither simulator nor dry run: a walk on paper, marked as such | plugin (walkthrough) | small | done (accepted 2026-11-06) |
+| 75 | A measured cost for a behaviour tester (the runs so far: about 10 k to 15 k output tokens and two to three minutes for a short self-test; a real hallway test of a CLI about 46 k tokens and 14 minutes), or "say it is a guess" | plugin (hallway-test) | small | done (accepted 2026-11-06) |
+| 76 | The tester template's fixed text reads "the requirements or, without them, the documentation" in all four places; the diagnostic option is conditional | plugin (tester-brief) | small | done (accepted 2026-11-06) |
+| 77 | The hallway test quotes the playbook's existing-tool path instead of sending the person through the playbook and back; the playbook chooses its path before offering missing documents | plugin (hallway-test, playbook) | small | done (accepted 2026-11-06) |
+| 78 | Settling the brief in one message: questions that need answers first, then the items one "yes" accepts; sample data the user would have may be read, read-only | plugin (hallway-test) | small | done (accepted 2026-11-06) |
+| 79 | Before creating `design/` for a tiny tool, ask, and offer a lighter home (one file, or `.claude/`) | plugin (playbook, hallway-test) | small | done (accepted 2026-11-06) |
 
 ## Earlier recommendations
 

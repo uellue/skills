@@ -5,7 +5,7 @@ description: Put on the shoes of a stakeholder and walk through a process step b
 
 # Stakeholder walk-through
 
-Text id `bcf2ae34`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough bcf2ae34` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `258cbb00`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 258cbb00` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 Requirements that nobody wrote down surface when someone who is not the author tries to do the thing: the operator installing the service, the scientist searching for their data, the colleague setting up a repository, the maintainer reading a log at three in the morning. A walk-through does that on paper, with a named persona and a concrete process, before the change is specified. Its output is not a design: it is questions for the owner, gaps, and acceptance examples that the specs and tests can use.
 
@@ -42,7 +42,7 @@ Where the walk reaches a point the documents do not cover, do not invent the ans
 
 Go up a level when a step reveals something general (five whys): a confusing message is one step; "the tool never says what it will do before doing it" is a requirement.
 
-**A measured walk.** When the process can be carried out by an agent (a diagnosis, a setup, a search), run it instead of imagining it, against a simulator or in a dry run when it drives hardware: give a fresh sub-agent only the persona, the process and the user-facing documents, with the template `${CLAUDE_PLUGIN_ROOT}/references/diagnosis-brief.md` when the process is finding out what is wrong, and inject the faults the walk is about. Record what it did, the calls, the time and the tokens (`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py agent-<its id>`), and put the result in the walk as a measurement, not an assumption. An injected fault must look like a real one: an artefact the system never produces (a timestamp with microseconds, a file name with a test marker) is a tell that invalidates the measurement.
+**A measured walk.** When the process can be carried out by an agent (a diagnosis, a setup, a search), run it instead of imagining it, against a simulator or in a dry run when it drives hardware (with neither, walk it on paper and mark it so): give a fresh sub-agent only the persona, the process and the user-facing documents, with the template `${CLAUDE_PLUGIN_ROOT}/references/diagnosis-brief.md` when the process is finding out what is wrong, and inject the faults the walk is about. Record what it did, the calls, the time and the tokens (`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py agent-<its id>`), and put the result in the walk as a measurement, not an assumption. An injected fault must look like a real one: an artefact the system never produces (a timestamp with microseconds, a file name with a test marker) is a tell that invalidates the measurement.
 
 ## Output
 

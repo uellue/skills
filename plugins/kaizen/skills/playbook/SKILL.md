@@ -5,7 +5,7 @@ description: Which kaizen skill fits now, and what the shared documents are. The
 
 # Playbook
 
-Text id `72a93fd5`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook 72a93fd5` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `02cbf731`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook 02cbf731` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The other skills in this plugin are moments in one process. This skill says which moment a session is in, what document that moment reads and writes, and what to do when the document is missing. It proposes; the person decides which moment the session is in and which path to take.
 
@@ -13,12 +13,12 @@ All shared documents live in the project's `design/` directory. "The ledger" is 
 
 ## When a session starts
 
-1. Look for the documents in the table below. For each one that is missing and that this session's work would need, say so and offer the skill that writes it; do not write it unasked.
+1. If the work may act on hardware (an instrument, a stage, a robot), ask first who owns it and whether a simulator or dry-run mode exists. An unknown answer is an open question that blocks work on the real instrument; the session goes on.
 2. Choose the path by size (below) and say which.
-3. Check which complementary tools are present, and follow the sections below: OpenSpec (an `openspec/` directory, or `openspec --version`); Matt Pocock's skills (`claude plugin list` shows `mattpocock-skills`, or copies under `.claude/skills/` or `~/.claude/skills/`; most of his skills are invoked by name only and do not appear in the list of skills an agent sees; his documents are a further sign: `GLOSSARY.md` at the root, `docs/adr/`, `docs/agents/`).
-4. If the request names a case or a solution, ask whether it is the whole need or an example, and whether a persona on record is the one asking.
-5. If the session will hand something over (a document, a change, a merge request), plan the hallway test and the debrief as part of the work, not after it.
-6. If the work will act on hardware (an instrument, a stage, a robot), name its owner and whether a simulator or dry-run mode exists before planning anything else.
+3. Look for the documents in the table below. For each one that is missing and that the chosen path needs, say so and offer the skill that writes it; do not write it unasked. Before creating `design/` in a project that has none, ask; the person may name another place.
+4. Check which complementary tools are present, and follow the sections below: OpenSpec (an `openspec/` directory, or `openspec --version`); Matt Pocock's skills (`claude plugin list` shows `mattpocock-skills`, or copies under `.claude/skills/` or `~/.claude/skills/`; most of his skills are invoked by name only and do not appear in the list of skills an agent sees; his documents are a further sign: `GLOSSARY.md` at the root, `docs/adr/`, `docs/agents/`).
+5. If the request names a case or a solution, ask whether it is the whole need or an example, and whether a persona on record is the one asking.
+6. If the session will hand something over (a document, a change, a merge request), plan the hallway test and the debrief as part of the work, not after it.
 
 ## The lifecycle
 
