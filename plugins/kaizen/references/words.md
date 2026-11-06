@@ -11,7 +11,7 @@ The kaizen skills use a few words of their own. When an agent uses one with you 
 - **Decision record**: a short file per change with what was decided, by whom, what is in and out, and what still blocks the build. Its safety row says what may touch something real, and on whose agreement.
 - **Walk-through**: going through a task step by step in a persona's shoes, to find the questions nobody has answered yet.
 - **Hallway test**: a fresh agent that has seen only what a first user would see tries your tool and reports what broke or surprised it. That agent is the tester, a sub-agent the session starts; its brief is the instruction it gets; it works in a scratch directory, a throwaway folder outside your project. Its modes: behaviour (does it do what it should), by eye (how the output looks), hint-following (a user who only skims and follows the program's messages).
-- **Output tokens**: the unit in which the agent's work is counted against your plan or budget; the skills state an estimate before costly steps.
+- **Output tokens**: the unit in which the agent's work is counted against your plan or budget; the hallway test states an estimate before it starts a tester.
 - **Stand-in**: what is used instead of something real that could be damaged: a simulator, a copy of the data, a local preview, a dry run.
 - **Hand-over**: the moment work passes to someone else: a merge request, a release, a tool given to colleagues.
 - **Ledger**: a short file of proposals for improving how the work is done, with their decisions, kept beside the other records (`kaizen.md`). Each skill adds one line to it about what did not fit, so that rough edges surface at your next debrief; you can tell the agent not to.
