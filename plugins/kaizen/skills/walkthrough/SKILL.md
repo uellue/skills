@@ -1,11 +1,11 @@
 ---
 name: walkthrough
-description: Put on the shoes of a stakeholder and walk through a process step by step to find the requirements, questions and acceptance examples nobody has written down. Use it during requirements gathering or design, before a change is specified, whenever the user says "walk through", "from the perspective of", "what would an operator / scientist / new colleague do", "how would X use this", or asks how a new repository, deployment, onboarding or workflow would go for someone; also before a play test, to decide what to test, and after one, to compare what was imagined with what happened. Where OpenSpec is also installed, use this skill rather than /opsx:explore before a proposal.
+description: Put on the shoes of a stakeholder and walk through a process step by step to find the requirements, questions and acceptance examples nobody has written down. Use it during requirements gathering or design, before a change is specified, whenever the user says "walk through", "from the perspective of", "what would an operator / scientist / new colleague do", "how would X use this", or asks how a new repository, deployment, onboarding or workflow would go for someone; also before a hallway test, to decide what to test, and after one, to compare what was imagined with what happened. Where OpenSpec is also installed, use this skill rather than /opsx:explore before a proposal.
 ---
 
 # Stakeholder walk-through
 
-Text id `726c6aa3`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 726c6aa3` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `9753805f`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 9753805f` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 Requirements that nobody wrote down surface when someone who is not the author tries to do the thing: the operator installing the service, the scientist searching for their data, the colleague setting up a repository, the maintainer reading a log at three in the morning. A walk-through does that on paper, with a named persona and a concrete process, before the change is specified. Its output is not a design: it is questions for the owner, gaps, and acceptance examples that the specs and tests can use.
 

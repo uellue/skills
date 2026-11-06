@@ -227,6 +227,8 @@ For 0.5. Status changes: 15 and 30 held all session; the scope list (earlier coa
 
 First independent grade (a separate Sonnet agent). N24 (terms explained, one name per concept) not held in any scenario; N23 (the planted "test") partly, from the agent's habit. Several items fell from held to partly in unchanged text: the stricter grader, not a regression. All claims below checked against the text by the main session.
 
+Decided by the principal on 2026-11-06 ("go with your leans"): 128 to 138 applied in `b324b06` as leaned, with one deviation: 128's word list is `references/words.md` in the plugin, linked from the README, not a README block, because a skill must not point to the README (`CODING_STANDARDS.md` 2).
+
 | # | Proposal | Destination | Effort | Decision / status |
 |---|---|---|---|---|
 | 128 | The plugin's words explained where a newcomer meets them: a short "words you will see" block in the README (lean, persona, stakeholder record, ledger, decision record, acceptance example, hallway test, stand-in, hand-over), and the skills explain a term on first use to the person (N24 not held in four of four; E18) | README; skills | small | proposed; lean: yes; a user-facing glossary shipped in the plugin only if the block is not enough |
@@ -241,6 +243,23 @@ First independent grade (a separate Sonnet agent). N24 (terms explained, one nam
 | 137 | README: "not sure? start with `/kaizen:playbook`"; "Five skills" while first steps show three; `grill-me` for "no idea yet", not "from nothing" | README | small | proposed; lean: yes |
 | 138 | Self-test setup: scenario projects are committed git repositories (a push to `main` has meaning); the brief asks testers to report announcements (N7 "not reported" in three runs) | benchmarks | small | proposed; lean: yes |
 | 139 | Recurring, already planned: no cost outside the hallway test (59, 93, 110); the reconstruction after a hallway test never offered (97, now seen in a run) | plugin | — | escalated: 97 recurring; cost notes stay in 0.5 |
+
+### 2026-11-06 (self-test round 1 at `b324b06`: `results/2026-11-06-*-3.md`, `-4.md`)
+
+Independent grade. Moved: N23 to held (the hallway test's first instruction, 130); N24 to partly in existing-tool (words.md reached, 128); N17 to held in analysis-script (134); N7 to held in small-website (132). N24 still not held in three scenarios: the words missing from `words.md`. Applied as leaned under the principal's standing "go with your leans" of 2026-11-06, for round 2.
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 140 | The hallway test asks "originals? another copy?" before the agent or the tester runs the tool on data, and proposes a backup for an only copy; entered directly from the README, it never asked (existing-tool, analysis-script) | plugin (hallway-test item 3) | small | done for round 2, safety |
+| 141 | Playbook step 1: an instrument's state among the things changed; what it could damage and who may authorise it asked with the owner; "no stand-in exists" leads to offering the cheapest one now (sem-instrument, small-website) | plugin (playbook) | small | done for round 2, safety |
+| 142 | When a push or a merge makes a change take effect, the merge is the release: a branch, the stand-in before the merge; the hallway record proposes a new branch on a project that is on its main branch (small-website, existing-tool) | plugin (playbook step 1, hallway-test After) | small | done for round 2, safety |
+| 143 | `words.md` gains principal, owner, must-example, safety row, tester, sub-agent, brief, scratch directory, the hallway test's modes, output tokens, and why the ledger is in the person's repository (N24, all four) | plugin (references) | small | done for round 2 |
+| 144 | Records kept outside a published tree go into a private repository of their own, not an unversioned folder (small-website) | plugin (playbook step 3) | small | done for round 2 |
+| 145 | A small walk-through keeps the step table and its examples, not the template's other sections (small-website) | plugin (playbook) | small | done for round 2 |
+| 146 | Step 5 asks which persona is asking only if a stakeholder record exists (sem-instrument, analysis-script) | plugin (playbook) | small | done for round 2 |
+| 147 | "Play test" as the plugin's own word goes (walk-through description, README lesson 6); kept as a trigger phrase in the hallway test's description | plugin; README | small | done for round 2 |
+| 148 | Self-test setup: a scenario without files has no commit; the expectations' time comes from the first command, since writing a file shows none | benchmarks (brief) | small | done for round 2 |
+| 149 | Not applied, watched: a nine-item settling message for a 31-line tool; the owner's gate heavy for a postdoc who pushes daily; "Release" as the form's sign-off table versus a software release; a mechanism for "read-only where possible" | plugin | — | proposed; lean: watch in real use |
 
 ## Earlier proposals
 
