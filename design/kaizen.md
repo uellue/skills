@@ -178,16 +178,16 @@ Sixth independent review (2026-11-06, the plugin diff after `28f7a18`, ledger 70
 
 ### 2026-11-06 (self-test, all four scenarios at `1b09667`: `results/2026-11-06-sem-instrument.md`, `-existing-tool.md`, `-analysis-script-2.md`, `-small-website-2.md`)
 
-No key item regressed; N11, N12, N19, N20 moved to held. Not applied: waiting for the principal. Leans in the last column.
+No key item regressed; N11, N12, N19, N20 moved to held. 95 and 100 accepted by the principal on 2026-11-06 and applied for 0.4; the rest wait for the principal, leans in the last column.
 
 | # | Proposal | Destination | Effort | Decision / status |
 |---|---|---|---|---|
-| 95 | When an agent operates the real thing: are the safety stops enforced below the agent (an interlock, a wrapper that refuses) rather than by the model's judgement, and which actions need a person's confirmation versus run unattended | plugin (questionnaire 2.11, safety row) | small | proposed; lean: yes, safety |
+| 95 | When an agent operates the real thing: are the safety stops enforced below the agent (an interlock, a wrapper that refuses) rather than by the model's judgement, and which actions need a person's confirmation versus run unattended | plugin (questionnaire 2.11, safety row) | small | done (accepted 2026-11-06) |
 | 96 | The blocking question from playbook step 1 is recorded somewhere before `design/` exists: in the requirements' open questions once they exist, and said back in chat until then | plugin (playbook) | small | proposed; lean: yes |
 | 97 | The hallway test's After section offers the requirements reconstruction (`/kaizen:requirements` from the record) when none existed, as item 2 promises | plugin (hallway-test) | small | proposed; lean: yes |
 | 98 | "I don't know" to the persona question: the persona is the author's own reading, named so in the brief | plugin (hallway-test item 1) | small | proposed; lean: yes |
 | 99 | A one-file tool is its own source: copy it into scratch with the data and forbid reading it by name | plugin (hallway-test item 3, tester-brief) | small | proposed; lean: yes |
-| 100 | Before a tool's first hand-over, ask where it writes on its users' own data and whether that is acceptable; a tool that writes into the directory of its inputs is an explicit trigger in playbook step 1 | plugin (playbook step 1, hallway-test item 4) | small | proposed; lean: yes, safety |
+| 100 | Before a tool's first hand-over, ask where it writes on its users' own data and whether that is acceptable; a tool that writes into the directory of its inputs is an explicit trigger in playbook step 1 | plugin (playbook step 1, hallway-test item 4) | small | done (accepted 2026-11-06) |
 | 101 | For a tool that computes results, also ask which inputs are hard for it (overlapping, noisy, edge cases), so the tester's known-value inputs are not only easy ones | plugin (hallway-test item 4) | small | proposed; lean: yes |
 | 102 | "Read-only for the tester" names its mechanism: the copy is the only data the tester gets; a permission deny rule for the original's path where the harness has one | plugin (hallway-test item 3) | small | proposed; lean: yes, the first half; the deny rule only after checking the harness's documentation |
 | 103 | When the whole repository is served or public, offer concrete places for the records with a lean: excluded from deployment, a separate branch or repository, or kept uncommitted | plugin (playbook step 3) | small | proposed; lean: yes |

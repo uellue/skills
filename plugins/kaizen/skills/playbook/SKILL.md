@@ -5,7 +5,7 @@ description: Which kaizen skill fits now, and what the shared documents are. The
 
 # Playbook
 
-Text id `61e349fa`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook 61e349fa` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `b5298646`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook b5298646` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The other skills in this plugin are moments in one process. This skill says which moment a session is in, what document that moment reads and writes, and what to do when the document is missing. It proposes; the person decides which moment the session is in and which path to take.
 
@@ -13,7 +13,7 @@ All shared documents live in the project's `design/` directory. "The ledger" is 
 
 ## When a session starts
 
-1. Unless the repository already answers it, ask what the tool writes or changes (next to its inputs, on a server) and what makes a change take effect (a push, a deploy, a restart). If that reaches something real it could damage or that could cause harm (an instrument or other hardware; production, valuable or irreplaceable data; a service or website that is live, public or in use; messages to real people: the decision record's safety row), ask who owns it and whether a stand-in exists (a simulator, a copy, a staging service, a dry-run mode). An unknown answer is an open question that blocks work on the real thing; the session goes on.
+1. Unless the repository already answers it, ask what the tool writes or changes (next to its inputs, on a server) and what makes a change take effect (a push, a deploy, a restart). A tool that writes into its inputs' directories always gets the next question, for the data it will meet in its users' hands too. If that reaches something real it could damage or that could cause harm (an instrument or other hardware; production, valuable or irreplaceable data; a service or website that is live, public or in use; messages to real people: the decision record's safety row), ask who owns it and whether a stand-in exists (a simulator, a copy, a staging service, a dry-run mode). An unknown answer is an open question that blocks work on the real thing; the session goes on.
 2. Choose the path by size (below) and say which.
 3. Look for the documents in the table below. For each one that is missing and that the chosen path needs, say so and offer the skill that writes it; do not write it unasked. Before creating `design/` in a project that has none, ask, and ask whether committed files become public (a public repository, a site deployed from a branch); the person may name another place, outside the published tree.
 4. Check which complementary tools are present, and follow the sections below: OpenSpec (an `openspec/` directory, or `openspec --version`); Matt Pocock's skills (`claude plugin list` shows `mattpocock-skills`, or copies under `.claude/skills/` or `~/.claude/skills/`; most of his skills are invoked by name only and do not appear in the list of skills an agent sees; his documents are a further sign: `GLOSSARY.md` at the root, `docs/adr/`, `docs/agents/`).
