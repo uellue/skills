@@ -5,7 +5,7 @@ description: Which kaizen skill fits now, and what the shared documents are. The
 
 # Playbook
 
-Text id `02cbf731`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook 02cbf731` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `739ebbdf`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook 739ebbdf` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The other skills in this plugin are moments in one process. This skill says which moment a session is in, what document that moment reads and writes, and what to do when the document is missing. It proposes; the person decides which moment the session is in and which path to take.
 
@@ -13,7 +13,7 @@ All shared documents live in the project's `design/` directory. "The ledger" is 
 
 ## When a session starts
 
-1. If the work may act on hardware (an instrument, a stage, a robot), ask first who owns it and whether a simulator or dry-run mode exists. An unknown answer is an open question that blocks work on the real instrument; the session goes on.
+1. If the work may act on something real it could damage or that could cause harm (an instrument, production or irreplaceable data, a live service, messages to real people), ask first who owns it and whether a stand-in exists (a simulator, a copy, a staging service, a dry-run mode). An unknown answer is an open question that blocks work on the real thing; the session goes on.
 2. Choose the path by size (below) and say which.
 3. Look for the documents in the table below. For each one that is missing and that the chosen path needs, say so and offer the skill that writes it; do not write it unasked. Before creating `design/` in a project that has none, ask; the person may name another place.
 4. Check which complementary tools are present, and follow the sections below: OpenSpec (an `openspec/` directory, or `openspec --version`); Matt Pocock's skills (`claude plugin list` shows `mattpocock-skills`, or copies under `.claude/skills/` or `~/.claude/skills/`; most of his skills are invoked by name only and do not appear in the list of skills an agent sees; his documents are a further sign: `GLOSSARY.md` at the root, `docs/adr/`, `docs/agents/`).
@@ -29,7 +29,7 @@ All shared documents live in the project's `design/` directory. "The ledger" is 
 | What is needed | `requirements` | `design/requirements.md` (form sections as a checklist, markers per item, open questions with owner and stage) | a loose idea needs tightening; a project or larger change starts; a tool that grew from playing around needs its record reconstructed; an existing document to check; one open question or vague idea needs fleshing out |
 | How it would go | `walkthrough` | `design/walkthroughs/<persona>-<process>.md`; acceptance examples appended to `design/examples.md` | before a change is specified; requirements 2.1; before a hallway test, to decide what to test |
 | What we decided | the agent, with the person, from `${CLAUDE_PLUGIN_ROOT}/references/change-record.md` | `design/changes/<name>.md`: need, interface, decisions with who decided and whether reversible, must / should / won't with a size budget, blocking questions | after the walk-throughs, before the build; whenever an implementer would otherwise invent decisions. The agent drafts it and asks the person for each decision it cannot take from the record; it is done when every must-example is cited and every blocking question is answered or named as an assumption the person accepted |
-| Build | the project's own instructions | code, tests citing example IDs, docs | every sub-agent brief names the example IDs each assertion serves; hardware as the decision record's hardware row says (`${CLAUDE_PLUGIN_ROOT}/references/change-record.md`) |
+| Build | the project's own instructions | code, tests citing example IDs, docs | every sub-agent brief names the example IDs each assertion serves; anything it could damage as the decision record's safety row says (`${CLAUDE_PLUGIN_ROOT}/references/change-record.md`) |
 | Does it hold up | `hallway-test` | `design/hallway/<date>.md`; imagined versus observed added to the walk-through | something exists that a first user could try; before a merge request |
 | How did we work | `debrief` | `.claude/debriefs/<date>.md` (private); `design/kaizen.md` (ledger) | on a schedule (end of a day or a stretch); after a skill's first use; at least once per release: wind the working session down, debrief in a fresh session, apply what belongs in the release, then push; "note for the debrief" goes to the ledger at once |
 
