@@ -342,6 +342,11 @@ class TestSelftestBrief(unittest.TestCase):
             self.assertNotIn("Traceback", bad.stderr)
             again = subprocess.run([sys.executable, repo / "benchmarks/plugin-newcomer/brief.py", "existing-tool", "--scratch", run], capture_output=True, text=True)
             self.assertNotEqual(again.returncode, 0, "a used scratch directory is refused")
+            cfg = Path(d) / "gitconfig"
+            cfg.write_text("[commit]\n\tgpgsign = true\n[core]\n\thooksPath = /nonexistent\n")
+            signed = subprocess.run([sys.executable, repo / "benchmarks/plugin-newcomer/brief.py", "existing-tool", "--scratch", Path(d) / "run2"],
+                                    capture_output=True, text=True, env={**os.environ, "GIT_CONFIG_GLOBAL": str(cfg)})
+            self.assertEqual(signed.returncode, 0, "a maintainer who signs commits can prepare a run: " + signed.stderr[-200:])
 
 
 class TestSkim(unittest.TestCase):
