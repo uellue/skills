@@ -303,6 +303,17 @@ Independent grade, the first with the split key. Held: N26 (the playbook asked f
 | 171 | With no stand-in for an instrument, say that the first buildable item is the simulator, with its limits as blocked placeholders; the playbook offers the README's standing-instruction block for a new repository | plugin (playbook, decision-record) | small | proposed; lean: yes |
 | 172 | Watched: N7 varies run to run on unchanged text (the announcement as a habit, not a check); the sem-instrument scenario's "never volunteer" list no longer bites; N25 needs a lint for the files' words (123) rather than more runs; cost before the full path (59) | plugin; benchmarks | — | watched; 123 and 59 in 0.5 |
 
+Decided by the principal on 2026-11-06 ("go with your leans"): 166 to 171 applied as leaned, 166 without the sample message first. In 166 the playbook's step 1 keeps its number (other skills point to steps 3 and 7) and splits inside: one question first, a second round only when something real is reached. Found while applying: 156 ("start with read-only status queries") contradicted 164 (a read-only connection counts as the real thing), introduced within one round; 164 stands, the clause is gone.
+
+### 2026-11-06 (upstream issue 3, follow-up; the skim experiment on the VM tool)
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 173 | Issue 3's follow-up (decided upstream by the principal: "B"): the delete rule names the real hazard (a variable that starts a path), applies to new code, and leaves existing code as it is after a line-by-line check; the people-and-agents split applies to what leaves the repository or a session, and committed documentation counts as reviewed by its commit. The block now lives in `references/standing-instructions.md` as well, so the playbook can offer it to a repository without an instruction file (171), with a lint that keeps it identical to the README's | README; `~/.claude/CLAUDE.md`; plugin (references, playbook step 3); lint | small | done |
+| 174 | `skim.py` keeps list items that carry inline code: in the one measured skim, the person's first command was inline code in a Prerequisites bullet, which the view could not show; test added | plugin (scripts) | small | done |
+| 175 | Hint-following setup rules from the experiment: testers that share host state get project names of their own; no `HOME` redirect for a tool that uses ssh (it reads `~` from the account); a tester's cost and duration come from `usage.py`, never from its own estimate (wrong by a factor of three) | plugin (hallway-test item 3, After 1) | small | done |
+| 176 | The skim question (requirements 2.2) answered from the experiment: an agent's skim is closer to a person's in size and can hold what the script drops, but varies run to run; neither view moved where the chains broke, which was at the program's own output; the script stays, improved by 174. The tool's own findings were transferred to that project; the experiment's folder stays out of this repository | design/requirements.md; benchmarks (none) | small | done; one run per condition, one person |
+
 
 ## Earlier proposals
 

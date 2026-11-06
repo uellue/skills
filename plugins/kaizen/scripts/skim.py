@@ -3,9 +3,10 @@
 
     skim.py README.md [MORE.md ...]
 
-Prints every heading (with its level) and every fenced code block under the heading it belongs to.
-Prose, tables, lists and links are dropped. The hallway test's hint-following mode gives the tester
-only this view, so that its laziness is enforced by what it can see, not by role-play.
+Prints every heading (with its level), every fenced code block under the heading it belongs to, and
+every list item that carries inline code (a command in a bullet catches a skimming eye like a block
+does). Prose, tables, other list items and links are dropped. The hallway test's hint-following mode
+gives the tester only this view, so that its laziness is enforced by what it can see, not by role-play.
 """
 
 import re
@@ -31,6 +32,8 @@ def skim(path: Path) -> str:
             out.append(line)
         elif "<summary>" in line:  # collapsed sections show their title, as on a rendered page
             out.append("> " + re.sub(r"<[^>]+>", "", line).strip())
+        elif re.match(r"^\s*(?:[-*+]|\d+[.)])\s", line) and re.search(r"`[^`]+`", line):
+            out.append(line.strip())  # a list item with inline code: the skimmer's eye stops at monospace
     return "\n".join(out).strip() + "\n"
 
 
