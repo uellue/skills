@@ -1,6 +1,6 @@
 # Ledger template
 
-The project's `design/kaizen.md`, shared by every kaizen skill: the debrief writes proposals and the status of earlier ones, every skill one friction line at the end of a run, anyone a "note for the debrief". The first skill that writes it starts it from this template, after saying where it goes and that it is meant to be committed.
+The project's `design/kaizen.md`, shared by every kaizen skill: the debrief writes proposals and the status of earlier ones, every skill one friction line at the end of a run, anyone a "note for the debrief". The first skill that writes it starts it from this template, after saying where it goes and that it is meant to be committed. When a version is released, the debrief moves its closed rows under `## Closed, <version>` at the end, so that the next debrief reads the open ones first.
 
 ```markdown
 # Kaizen ledger

@@ -5,7 +5,7 @@ description: Which kaizen skill fits now, and what the shared documents are. The
 
 # Playbook
 
-Text id `b5298646`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook b5298646` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `9a868860`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook 9a868860` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The other skills in this plugin are moments in one process. This skill says which moment a session is in, what document that moment reads and writes, and what to do when the document is missing. It proposes; the person decides which moment the session is in and which path to take.
 
@@ -31,7 +31,7 @@ All shared documents live in the project's `design/` directory. "The ledger" is 
 | What we decided | the agent, with the person, from `${CLAUDE_PLUGIN_ROOT}/references/change-record.md` | `design/changes/<name>.md`: need, interface, decisions with who decided and whether reversible, must / should / won't with a size budget, blocking questions | after the walk-throughs, before the build; whenever an implementer would otherwise invent decisions. The agent drafts it and asks the person for each decision it cannot take from the record; it is done when every must-example is cited and every blocking question is answered or named as an assumption the person accepted |
 | Build | the project's own instructions | code, tests citing example IDs, docs | every sub-agent brief names the example IDs each assertion serves; anything it could damage as the decision record's safety row says (`${CLAUDE_PLUGIN_ROOT}/references/change-record.md`) |
 | Does it hold up | `hallway-test` | `design/hallway/<date>.md`; imagined versus observed added to the walk-through | something exists that a first user could try; before a merge request |
-| How did we work | `debrief` | `.claude/debriefs/<date>.md` (private); `design/kaizen.md` (ledger) | on a schedule (end of a day or a stretch); after a skill's first use; at least once per release: wind the working session down, debrief in a fresh session, apply what belongs in the release, then push; "note for the debrief" goes to the ledger at once |
+| How did we work | `debrief` | `.claude/debriefs/<date>.md` (private); `design/kaizen.md` (ledger) | on a schedule (end of a day or a stretch); after a skill's first use; at least once per release: wind the working session down, debrief in a fresh session, apply what belongs in the release, then push; when the work is ready to push or a debrief's proposals are applied, suggest ending the session and give the prompt for the next one, since one session holding several stretches pays for its whole context on every call; "note for the debrief" goes to the ledger at once |
 
 **Acceptance examples have one home**, `design/examples.md`: one line each, with an ID (`E1`, `E2`, …), the concrete situation and observable outcome, a priority (must / should), and the walk step or requirement it came from. Walk-throughs and the requirements interview append to it; decision records, scenarios, tests and tester briefs cite the IDs; nobody keeps a copy. Before a hand-over, list every example with no scenario or test.
 
