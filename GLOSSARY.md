@@ -1,6 +1,6 @@
 # kaizen
 
-The vocabulary of the kaizen plugin and of its development in this repository, where the plugin is also used on itself. The skills and the README speak to their users in these words. A term from another tool carries its namespace ("OpenSpec scenario", "Matt Pocock's `retro`") wherever the local meaning would be read otherwise.
+The vocabulary of the kaizen plugin and of its development in this repository, where the plugin is also used on itself. The skills and the README speak to their users in these words. A term from another tool carries its namespace ("OpenSpec scenario", "Matt Pocock's `retro`") wherever the local meaning would be read otherwise. The plugin explains the words its users meet in `plugins/kaizen/references/words.md`, in plain words; that list must agree with this file.
 
 ## Language
 
@@ -66,7 +66,7 @@ _Avoid_: scenario (unqualified), spec scenario
 
 **Decision record**:
 The short record of what was decided for a change: interface, decisions with who decided, must / should / won't with a size budget, blocking questions.
-_Avoid_: spec, design doc, ADR
+_Avoid_: change record, spec, design doc, ADR
 
 ### Testing and review
 

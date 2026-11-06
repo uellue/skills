@@ -75,7 +75,7 @@ Starting an agent session is onboarding a new employee that knows only the repos
 4. **Label examples** ("this is one case of ..."), and generalise your own corrections.
    Phrase a request as a question when you want pushback; the agent's standing instructions say to answer with a verdict and the argument against before acting.
 5. **Ask the behaviour question early**: "what changes for the user?", "does the test check the outcome the user cares about?"
-6. **Judge behaviour, not text**: try it, play-test it, screenshot it, run it against the real back-end. Measure when the agent has an opinion about itself.
+6. **Judge behaviour, not text**: try it, hallway-test it, screenshot it, run it against the real back-end. Measure when the agent has an opinion about itself.
 7. **Decide or delegate what you would leave hanging**; constraints (reviewer, MR shape, remote, account) before the work, not after.
 8. **Say when you are away**, and what to do meanwhile.
 9. **Challenge one lean per review**; give documents others build on thirty seconds: the unconfirmed items and two quotes.
