@@ -130,7 +130,7 @@ Fifth independent review (2026-11-05, the commits after `d30ceac`, about 420 lin
 
 ### 2026-11-05 (self-test reruns at `ba2fbd8`: `results/2026-11-05-sem-instrument-3.md`, `results/2026-11-05-existing-tool-2.md`)
 
-Not applied: waiting for the principal. Leans in the last column.
+Accepted as leaned by the principal on 2026-11-06 and applied in `6bde1af`; 72 applied as a conditional step (asked only when the work may act on something it could damage), so other projects get no extra question.
 
 | # | Proposal | Destination | Effort | Decision / status |
 |---|---|---|---|---|
@@ -143,7 +143,18 @@ Not applied: waiting for the principal. Leans in the last column.
 | 76 | The tester template's fixed text reads "the requirements or, without them, the documentation" in all four places; the diagnostic option is conditional | plugin (tester-brief) | small | done (accepted 2026-11-06) |
 | 77 | The hallway test quotes the playbook's existing-tool path instead of sending the person through the playbook and back; the playbook chooses its path before offering missing documents | plugin (hallway-test, playbook) | small | done (accepted 2026-11-06) |
 | 78 | Settling the brief in one message: questions that need answers first, then the items one "yes" accepts; sample data the user would have may be read, read-only | plugin (hallway-test) | small | done (accepted 2026-11-06) |
-| 79 | Before creating `design/` for a tiny tool, ask, and offer a lighter home (one file, or `.claude/`) | plugin (playbook, hallway-test) | small | done (accepted 2026-11-06) |
+| 79 | Before creating `design/` for a tiny tool, ask, and offer a lighter home (one file, or `.claude/`) | plugin (playbook, hallway-test) | small | done (accepted 2026-11-06): ask before creating it; the person may name another place |
+
+### 2026-11-06 (generality check: is the plugin over-fitted to the SEM case?)
+
+Reading: the hardware rules were conditional throughout; the bias was in the self-test (one of two scenarios, six of sixteen key items). Gaps found by reading: no way to judge a rendered web page (by eye drives a terminal only); for analysis scripts only 2.5 asks how a wrong result is noticed.
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 80 | The hardware rule becomes a safety rule for anything real a tool could damage or that could cause harm (an instrument; production, valuable or irreplaceable data; a live service; messages to real people): owner, stand-in, limits, labelled output | plugin (change-record, playbook, hallway-test, walkthrough, questionnaire 2.3 and 2.11) | small | done, principal 2026-11-06 (`b0469ff`) |
+| 81 | Self-test scenarios beyond hardware and CLIs: `analysis-script`, `small-website`, key items N17 to N22 | benchmarks | small | done, principal 2026-11-06 |
+| 82 | The debrief's kaizen-on-kaizen pass also looks for missed skills from OpenSpec and Matt Pocock's skills, installed or not, only where one would have changed a cited moment | plugin (debrief) | small | done, principal's question 2026-11-06 |
+| 83 | The debrief behaviour fixture (a synthetic transcript with planted moments) checks that the debrief is offered at the right moments and names the planted missed skills from all three sources | benchmarks | medium | planned for 0.5, with the fixture already planned |
 
 ## Earlier recommendations
 
