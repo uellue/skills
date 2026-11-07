@@ -5,7 +5,7 @@ description: Run a hallway test of a tool, document, instruction file or diagnos
 
 # Hallway test
 
-Text id `bb4cc78b`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test bb4cc78b` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `6492e1bb`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 6492e1bb` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A fresh sub-agent that has not seen the implementation, the specs or the conversation tries the thing as a first user would, with only the requirements and the user documentation, and reports where reality differs from what they promise. Its persona comes from the stakeholder record (`design/stakeholders.md`), its coverage from the walk-through's steps and the acceptance examples when they exist; comparing what the walk imagined with what the tester saw validates the specification.
 
@@ -41,7 +41,7 @@ Settle the items below in short messages, each numbered from 1: first the questi
 
 ## The run
 
-Spawn a general-purpose sub-agent in the background with the mode's brief filled in: the persona, the strict reading rules, the command reference as a user would get it, the method (create, write the expectation down first, run, compare, classify as matches / bug / surprising but defensible / gap / question), the mandatory coverage, the instruction to ask, and the report structure. Two mechanics:
+Spawn a general-purpose sub-agent in the background with the mode's brief filled in: the persona, the strict reading rules, the command reference as a user would get it, the method (create, write the expectation down first, run, compare, classify as matches / bug / surprising but defensible / gap / question), the mandatory coverage, the instruction to ask, and the report structure. While it runs, the person may note thoughts for the debrief (the debrief's capture habits). Two mechanics:
 
 - **Expectations are a file, written first.** The tester writes `expectations.md` in its scratch directory before its first run and reports its timestamp; the main session checks the order. A transcript with no expectation text and the first command in the first minute means the comparison is worthless.
 - **The report comes back as the tester's final message.** Harness rules may forbid a sub-agent from writing report files; the main session writes the record from the message, with the screenshot file names.

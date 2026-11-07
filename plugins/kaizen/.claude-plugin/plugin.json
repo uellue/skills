@@ -1,6 +1,6 @@
 {
   "name": "kaizen",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Continuous improvement of the collaboration with agents (kaizen): a playbook for the life of a project, a requirements interview along a demand and requirements form, a stakeholder walk-through, a hallway test by a fresh sub-agent (by behaviour, by eye, as a diagnosis, on documents and instruction files), and a debrief with cited moments, coaching for the person, a kaizen ledger and transcript tools.",
   "author": {
     "name": "Dieter Weber"
