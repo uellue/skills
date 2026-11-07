@@ -8,7 +8,7 @@
       "case": "walkthrough-asks-for-persona",
       "expected_by_agent": "inputs-1-asks-persona-before-walking still 3 of 3: the next sentences ('Show the personas it has, ask which one to take') still ask for the persona. Confidence: medium.",
       "expected_by_principal": "",
-      "observed": ""
+      "observed": "2026-11-07: prediction wrong. inputs-1-asks-persona-before-walking 0 of 3 (judge FAIL FAIL FAIL each time), messages-about-fifteen-lines 0 of 3, reads-stakeholder-record 3 of 3; $0.93 against $0.45, since it walked. The remaining 'show the personas, ask which one' does not hold the gate; this one sentence does."
     },
     {
       "id": "no-read-record",
@@ -17,7 +17,7 @@
       "case": "walkthrough-asks-for-persona",
       "expected_by_agent": "inputs-1-reads-stakeholder-record still 3 of 3: it held without the plugin too, and 'Show the personas it has' needs the record. Other graders unchanged. Confidence: high.",
       "expected_by_principal": "",
-      "observed": ""
+      "observed": "2026-11-07: confirmed. Every grader 3 of 3; $0.47."
     },
     {
       "id": "no-fifteen-lines",
@@ -26,7 +26,7 @@
       "case": "walkthrough-asks-for-persona",
       "expected_by_agent": "messages-about-fifteen-lines still 3 of 3: a message asking for the persona is short anyway, so the rule does not act in this situation (it failed without the plugin because Claude walked at once). Confidence: medium-low.",
       "expected_by_principal": "",
-      "observed": ""
+      "observed": "2026-11-07: confirmed. Every grader 3 of 3; $0.46. The rule does not act in this situation; whether it acts elsewhere is not tested."
     },
     {
       "id": "no-output-path",
@@ -35,7 +35,7 @@
       "case": "walkthrough-walks-confirmed-persona",
       "expected_by_agent": "output-walk-file-with-template at most 1 of 3: the only mention of design/walkthroughs/ is gone, so the file lands elsewhere (design/ or the root) though with the template; output-examples-in-examples-md still 3 of 3 (its own sentence stays). Confidence: medium.",
       "expected_by_principal": "",
-      "observed": ""
+      "observed": "2026-11-07: the effect confirmed, the mechanism not. output-walk-file-with-template 0 of 3 with Write called 0 times: no walk-through file at all, not one elsewhere; output-examples-in-examples-md 3 of 3 (so it edited files, just not this one); walk-records-questions 3 of 3; $1.01. Traces not kept; where the walk went (the reply, presumably) is not checked."
     }
   ]
 }
