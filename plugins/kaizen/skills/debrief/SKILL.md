@@ -5,7 +5,7 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `8479bf15`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 8479bf15` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `41f05933`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 41f05933` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better) and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report. (Structure adapted, with thanks, from two MIT-licensed skills, `debrief` by Wavez and `retrospective` by florianbuetow; the coaching, the five whys, the usage script and the ledger are this skill's own.)
 
@@ -13,7 +13,7 @@ Use plain words with the person: explain a term of this plugin the first time yo
 
 ## When
 
-Ends do not announce themselves (a compaction, a reboot, a refused turn), so the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". A release is debriefed after its push and merge, not before: its proposals go into the next release, so the work ships. Several first uses in one session make one debrief. Three cheap habits feed it between runs; the first capture into a new ledger first says where it goes:
+Ends do not announce themselves (a compaction, a reboot), so the debrief runs on a schedule the person chooses (a day, a stretch, a new skill's first use), not "before the end". A release is debriefed after its push and merge, not before: its proposals go into the next release, so the work ships. Several first uses in one session make one debrief. Three cheap habits feed it between runs; the first capture into a new ledger first says where it goes:
 
 - **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Sorting is the debrief's job; capture must cost nothing. Once per stretch, while a run of several minutes goes on (the final acceptance tests, a reviewer, the debrief's own readers), invite the person to note thoughts, unless they have something more useful to do; not for a short wait, not again after a no, not without a person.
 - **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation.
@@ -36,7 +36,7 @@ Ends do not announce themselves (a compaction, a reboot, a refused turn), so the
    Before reading more than one session, state the sessions, their sizes, the readers' model and the token estimate (see "Several sessions at once"), and wait; for one session, state its size and go on.
 
    Read the rendering, not the raw JSONL: grepping one's own transcript for patterns has ended sessions. If the session was compacted, say so; the rendering usually still shows the earlier part, so read it there, and use the summary as lower-confidence evidence only where that part is missing; never invent moments. Messages the person queued while a turn ran appear as "USER (queued mid-turn)" and often carry decisions. Text the harness put in the person's place (skill texts, sub-agent reports, notifications, command output) is labelled HARNESS: it is not the person's, and never evidence for coaching.
-2. **The numbers.** The usage script: user messages, API messages, tool calls by name, output and input tokens per model counted once per API message, sub-agents with their tokens, span, compactions.
+2. **The numbers.** The usage script: messages, tool calls by name, tokens per model, sub-agents, span, compactions.
 
    ```bash
    python3 ${CLAUDE_PLUGIN_ROOT}/scripts/usage.py <id>       # each chosen session; without an id, the newest (often the one you run in)
@@ -44,7 +44,7 @@ Ends do not announce themselves (a compaction, a reboot, a refused turn), so the
    ```
 3. **The project's record.** The instruction files (`CLAUDE.md`, `AGENTS.md`), the backlog and decision log if the project keeps them, the stakeholder and requirements records in `design/`, and the agent's feedback memories for this project (`~/.claude/projects/<slug>/memory/`), so that a repeated mistake is recognised as a repeat. Memory is per checkout path: say in the report which memory the session actually had, because a worktree or a VM often had none.
 4. **The ledger and earlier reports.** `design/kaizen.md` (below) and the last three reports in `.claude/debriefs/`. For each earlier proposal, note whether it was acted on, is recurring, or is unknown; a recurring issue is escalated in severity. Adoption is not habit: a proposal marked done last time can still recur, and the finding then is that the destination was a sentence where a check (a hook, a lint rule, a template field) was possible.
-5. **The person.** Before writing findings, ask in one message what went well for them, where they felt friction, and where the agent seemed to lose track (of the scope, a decision, which level is under test when a tool tests itself), citing a moment you suspect. The agent is often blind to its own confusion; the answers are evidence, marked as theirs. If the person is away, put the questions at the end of the report. Their remarks with an emotional lean, positive or negative, go verbatim with the source into `.claude/debriefs/feedback-raw.md` (private) and cleaned into `design/feedback.md`: no ids, names or private projects, and a paraphrase offered where they might not want the original public.
+5. **The person.** Before writing findings, ask in one message what went well for them, where they felt friction, and where the agent seemed to lose track (of the scope, a decision, which level is under test when a tool tests itself), citing a moment you suspect. The agent is often blind to its own confusion; the answers are evidence, marked as theirs. If the person is away, put the questions at the end of the report. Note their remarks with an emotional lean, positive or negative: they become feedback entries (Output).
 
 Match the effort to the stretch: a quick pass for a short, clean session; the full treatment and the five whys for a long one.
 
@@ -77,19 +77,20 @@ And, for this plugin's own improvement (kaizen on kaizen): which of its skills w
 
 ## Output
 
-Two documents, in the repository that was debriefed:
+Three documents, in the repository that was debriefed; when the default branch is checked out, the committed ones go on a working branch:
 
 - **The report**, private: `.claude/debriefs/YYYY-MM-DD.md` (with a `-2` suffix if one exists), from the template in `${CLAUDE_PLUGIN_ROOT}/references/debrief-report.md`, read before writing. It is a subjective snapshot with the coaching in it, so it stays out of version control: before writing anything, run `git -C "$(git rev-parse --show-toplevel)" check-ignore -q .claude/debriefs/x.md` (exit 0: ignored; outside a git repository, ask where to write); if git would track it, offer the line `/.claude/debriefs/` for `.gitignore` (or `.git/info/exclude`, which is not shared) and write nothing until the person agrees. The user can name another place.
-- **The ledger**: `design/kaizen.md`, or where the playbook's step 3 placed `design/`; say where and whether it is committed before creating it. If the repository is public or may become so, the ledger carries no details of other projects (they go to their own backlogs; the ledger says "transferred") and no security findings, secrets or credentials, not even as to-dos. Generalising an entry later does not remove it from git history: if one slipped in, say so before the push, so the person can decide whether to rewrite the unpushed history. Only what is actionable leaves the session. Start it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`; later, append the proposals under the date and update the statuses.
+- **The ledger**: `design/kaizen.md`, or where the playbook's step 3 placed `design/`; say where and whether it is committed before creating it. If the repository is public or may become so, the ledger carries no details of other projects (they go to their own backlogs; the ledger says "transferred") and no security findings, secrets or credentials, not even as to-dos. If one slipped in, say so before the push: git history keeps it. Only what is actionable leaves the session. Start it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`; later, append the proposals under the date and update the statuses.
+- **The feedback entries**: the remarks noted at input 5, verbatim with their source in `.claude/debriefs/feedback-raw.md` (private), cleaned in `design/feedback.md` (no ids, names or private projects; a paraphrase offered where they might not want the original public), from `${CLAUDE_PLUGIN_ROOT}/references/feedback.md`; announced like the ledger.
 
-Show in the reply: the five lines, the coaching in full (the person may not be able to open the report), where their remarks went (what they said, what it became), and the proposals that are not small.
+Reply in two messages: first the five lines and where the person's remarks went (what they said, what it became); then the coaching in full (the person may not be able to open the report) and the proposals that are not small.
 
 ## Rules
 
 - A report and a ledger entry only. Nothing is written to instruction files, memory, hooks or the backlog until the user approves a proposal; then apply exactly that one and record the decision in the ledger.
 - Every finding cites a moment. If you cannot point to one, drop the finding.
 - Do not inflate: three real findings beat ten padded ones, and "this stretch went well" is a valid result.
-- The coaching is for the person's benefit, so it must be candid; it is also private by default, so keep it out of anything the person did not ask to share, and never put it in the ledger.
+- The coaching is for the person's benefit, so it must be candid; it is also private by default, so keep it out of anything the person did not ask to share, and never put it in the ledger. When a cause lies in a skill, the finding goes to the skill, not into the coaching.
 - Plain, actionable language: write every item so that a person or an agent who was not in the session could act on it. Name a practice as a behaviour ("specify the outcome, not the solution"), never by a nickname the session coined; a helpful shorthand goes after the full form, in parentheses. The test: could a colleague copy the line into their own guide and follow it?
 - Brevity: a label in bold, then one line of evidence, then the cause. If a finding needs a paragraph, it is two findings or it is not understood yet. Aim for one screen per section.
 - Lessons versus friction: a lesson is something you would tell another agent on another project; what applies only to this session is friction and goes into the findings, not into proposals for standing rules.
