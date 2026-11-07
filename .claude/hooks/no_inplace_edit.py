@@ -20,8 +20,9 @@ import subprocess
 import sys
 
 EDIT_FORMS = [
-    re.compile(r"\bsed\b[^|;&\n]*\s(?:-[a-zA-Z]*i|--in-place)"),
-    re.compile(r"\bperl\b[^|;&\n]*\s-[a-zA-Z]*i"),
+    # only the options right after the command, so another command's -i (grep -n -i) does not count
+    re.compile(r"\bsed[ \t]+(?:-\S+[ \t]+)*?(?:-[a-zA-Z]*i|--in-place)"),
+    re.compile(r"\bperl[ \t]+(?:-\S+[ \t]+)*?-[a-zA-Z]*i"),
     re.compile(r"\bpython3?\b[\s\S]*(?:write_text\(|write_bytes\(|open\([^)]*['\"][wa]b?\+?['\"])"),
 ]
 REDIRECT = re.compile(r"(?<![0-9&])>{1,2}\s*(?!&)([^\s;&|<>()]+)|\btee\s+(?:-a\s+)?([^\s;&|<>()]+)")
