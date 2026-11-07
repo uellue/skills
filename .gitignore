@@ -2,3 +2,5 @@
 /.claude/debriefs/
 /.claude/transcripts/
 __pycache__/
+# Results of claude plugin eval runs (plugins/kaizen/evals/README.md)
+/plugins/kaizen/evals/results/
