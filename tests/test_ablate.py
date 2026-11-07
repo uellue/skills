@@ -1,6 +1,9 @@
 """Tests for benchmarks/rule-ablation/ablate.py on a synthetic plugin (ledger 204, 214)."""
 
 import importlib.util
+import shlex
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -13,7 +16,9 @@ spec.loader.exec_module(ablate)
 
 class Ablate(unittest.TestCase):
     def setUp(self):
-        self.tmp = Path(tempfile.mkdtemp())
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        self.tmp = Path(tmp.name)
         self.plugin = self.tmp / "plugin"
         (self.plugin / "skills" / "s").mkdir(parents=True)
         (self.plugin / "evals" / "results").mkdir(parents=True)
@@ -38,6 +43,12 @@ class Ablate(unittest.TestCase):
         (self.tmp / "taken").mkdir()
         with self.assertRaises(SystemExit):
             ablate.ablate(self.variant(" Drop this."), self.plugin, self.tmp / "taken")
+
+    def test_printed_command_quotes_a_path_with_a_space(self):
+        out = self.tmp / "with space" / "copy"
+        run = subprocess.run([sys.executable, ROOT / "benchmarks" / "rule-ablation" / "ablate.py", "no-blocks", str(out)],
+                             capture_output=True, text=True, check=True)
+        self.assertIn(f"cd {shlex.quote(str(out))} &&", run.stdout)
 
     def test_every_shipped_variant_matches_the_plugin_once(self):
         for v in ablate.load().values():

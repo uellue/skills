@@ -110,6 +110,18 @@ _Avoid_: check (unqualified), quick tests, CI, unit tests
 A run of a skill by a fresh agent on a fixture, graded against a key written before the run; it shows whether a change to the skill made it better or worse. A self-test is a skill test of the whole plugin.
 _Avoid_: behaviour test (that is the hallway test's behaviour mode), eval, benchmark
 
+**Eval suite**:
+The skill tests that `claude plugin eval` runs: its own term, kept for its files and commands (`plugins/kaizen/evals/`). Each case is a prompt, a fixture and graders; it runs with the plugin (the with-arm) and without it (the without-arm, the baseline).
+_Avoid_: eval (unqualified, for a skill test in general)
+
+**Grader**:
+One check of an eval case, named after the rule of the skill it checks; free (a pattern, a tool call, a file) or judged by a model against PASS and FAIL conditions.
+_Avoid_: assertion, key item (that is the self-test's key)
+
+**Rule ablation**:
+A skill test run on a copy of the plugin with one rule removed, its expected effect written down before the run (`benchmarks/rule-ablation/`); it shows whether, and how, that rule acts in a situation.
+_Avoid_: leave-one-out (unqualified)
+
 **Fixture**:
 The prepared input of a skill test: a transcript with planted moments, a tool with planted defects, a scripted principal with withheld facts, a self-test scenario.
 _Avoid_: behaviour fixture, test data

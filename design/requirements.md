@@ -51,7 +51,7 @@ Acceptance examples: E1 to E6 in `examples.md`.
 ### 2.2 Demand uncertainties
 | Uncertainty | Resolves by |
 |---|---|
-| [unknown] Whether skills can be tested with the harness's own eval mechanism (`claude plugin eval`) and in what format | the maintainer checks the documentation; `testing.md` |
+| [answered] Whether skills can be tested with the harness's own eval mechanism (`claude plugin eval`) and in what format: yes, for what one prompt decides; checked and run 2026-11-07 (topic 204, decision 1; `testing.md`) | — |
 | [unknown] Whether OpenSpec's scenarios improve the build | count review findings that cite a scenario; hallway-test coverage from scenarios (playbook) |
 | [deferred] Whether walk-through stays a skill of its own or becomes the method inside `requirements`; kept separate for now with the pipeline stated | principal, after the next uses |
 | [unknown] How lessons travel between checkouts, worktrees and VMs (memory is per path) | a seeding step in provisioning, or lessons kept in the repository; devvm's `setup-dev` |
@@ -109,7 +109,7 @@ Interviewed: the principal in person, 2026-11-07; where it lives is to be settle
 - [answered] Kaizen on kaizen is a core topic, and tooling for it is very important for the principal's projects; the principal will invest tokens here if the investment is recouped by efficiency in their own and other users' projects, and wants to know whether it is. The outcome that matters most: users of the plugin in other projects are efficient with tokens and their own time; kaizen on kaizen should be efficient as far as possible too.
 - [answered] The whole body of installed text (skills, references, standing instructions) seems to guide every conversation subtly; the principal wants something more solid than that impression.
 - [answered] Lesson from software: errors live in untested paths; code coverage is good but not sufficient, parameter-space coverage matters (Python code meant for floats, given a list, may not fail but do something users then rely on, so a later change breaks them unpredictably). The same fuzziness is expected here.
-- [answered] No sprawl: fixes should reach a general solution instead of piling up conditions for edge cases, as code bloats with ever more if statements. Measured 2026-11-07 (word counts of all skills and references per commit): 1.4 k words on 11-03 to 19.1 k on 11-07; the one size-reduction round cut 19,068 to 18,839 (−1.2 %), and three commits later the texts were at 19,049. Size is not bad in itself: a text should be proportionate to the complexity it handles and well structured (principal, 2026-11-07).
+- [answered] No sprawl: fixes should reach a general solution instead of piling up conditions for edge cases, as code bloats with ever more if statements. Measured 2026-11-07 (word counts of all skills and references per commit): 1.4 k words on 11-03 to 19.1 k on 11-07; the first of three size-reduction rounds cut 19,068 to 18,839 (−1.2 %), and three commits later the texts were at 19,049. Size is not bad in itself: a text should be proportionate to the complexity it handles and well structured (principal, 2026-11-07).
 
 ### Needs (2026-11-07, confirmed as a first selection, possibly not complete)
 1. [answered] Coverage: which skills, parts of skills and standing instructions a test exercised, in skill tests and in use by hand; including the parameter space (the situations a rule meets), not only whether it fired. Proposed first try: `claude plugin eval`.
@@ -131,7 +131,7 @@ Interviewed: the principal in person, 2026-11-07; where it lives is to be settle
 
 ### Decisions (leans accepted by the principal, 2026-11-07)
 1. [answered] First experiment: `claude plugin eval` on one small skill (`walkthrough`), one grader per rule, to get a first coverage table with and without the plugin. Limit (docs checked 2026-11-07, code.claude.com/docs/en/plugin-evals.md): eval runs load no CLAUDE.md, user settings or memory, so standing instructions are outside its reach; a case can resume a recorded transcript (`context.history_file`); no custom-code graders.
-2. [answered] Prediction log from now on: every skill edit states its expected effect (the key item or behaviour it should move) before the next self-test; the round marks it confirmed, not confirmed or side effect.
+2. [answered] Expected-effect log from now on: every skill edit states its expected effect (the key item or behaviour it should move) before the next self-test; the round marks it confirmed, not confirmed or side effect.
 3. [answered] Each self-test round runs twice on the same commit, so noise is visible.
 4. [answered] Sprawl: `check.sh` reports the word change per skill on every commit (information, not a failure); a proposal that adds a rule says which rule it replaces or generalises, or why none.
 - [record] Decision 1, first results (2026-11-07, `plugins/kaizen/evals/README.md`): with the plugin all three cases 1.00, without it 0.33, 0.33 and 1.00 (the negative case); identical verdicts in all three runs per arm; $3.02 for 18 runs. Two rules held without the plugin too (reading the stakeholder record; questions instead of inventions): in that situation the text adds nothing, which bears on sprawl, though one situation is not the parameter space.
