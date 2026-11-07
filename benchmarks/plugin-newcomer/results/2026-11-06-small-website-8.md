@@ -1,4 +1,4 @@
-# Run 2026-11-06 (8): scenario small-website, commit `ff82161`, Opus, 15,529 output tokens, 2.7 minutes
+# Run 2026-11-06 (8): scenario small-website, commit `a8fa6f4`, Opus, 15,529 output tokens, 2.7 minutes
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims. The first run with N27 and N28, after ledger 185 and 186.
 
