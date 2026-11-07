@@ -42,3 +42,4 @@ Entries here are cleaned: no session ids, no names, no private projects, nothing
 - 2026-11-07 | positive | process | A revisit always with its trigger: good project-management practice | effect: the glossary's *revisit*
 - 2026-11-07 | negative | debrief | The coaching did not reach the reply; it stayed in a file the person could not open | effect: row 238
 - 2026-11-07 | positive | collaboration | Showing where the person's input went, as cause and effect without judgment, is very effective | effect: row 238; the standing instruction on hand-overs
+- 2026-11-07 | positive | collaboration | A summary that shows what the person said and what it became keeps them feeling in control while so much of the work is beyond their view and bandwidth | effect: the hand-over rule (238), first used in that summary; scenario after-merge checks it

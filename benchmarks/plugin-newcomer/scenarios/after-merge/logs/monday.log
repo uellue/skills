@@ -1,0 +1,4 @@
+2026-11-01 08:00:01 INFO stage homed
+2026-11-01 08:00:05 WARNING vacuum slow
+2026-11-01 08:02:11 ERROR detector timeout
+2026-11-01 08:02:12 INFO retry
