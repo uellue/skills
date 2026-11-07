@@ -1,4 +1,4 @@
-# Run 2026-11-06 (3): scenario analysis-script, commit `a430f93`, Sonnet, 4,639 output tokens, 0.7 minutes
+# Run 2026-11-06 (3): scenario analysis-script, commit `bd6b674`, Sonnet, 4,639 output tokens, 0.7 minutes
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims (the first independent grade). First tester on Sonnet (ledger 119): it read less than the Opus testers (part of `change-record.md` by grep, not the requirements skill).
 
@@ -18,7 +18,7 @@ Result format: E15. Graded by a separate Sonnet agent that changed none of the s
 | N20 | held (planned) |
 | N24 | not held: "persona", "ledger", "decision record", "safety row", "hand-over" unexplained; tester / sub-agent / fresh first user |
 
-Compared with run 2 at `1b09667` (Opus, graded by the main session): N1 and N17 went from held to partly (grader and model); N24 new.
+Compared with run 2 at `9be3979` (Opus, graded by the main session): N1 and N17 went from held to partly (grader and model); N24 new.
 
 Setup misfit named by the tester: no person to answer; skills simulated by reading them.
 

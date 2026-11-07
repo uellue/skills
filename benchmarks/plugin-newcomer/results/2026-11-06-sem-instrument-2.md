@@ -1,4 +1,4 @@
-# Run 2026-11-06 (2): scenario sem-instrument, commit `a430f93`, Opus, 11,525 output tokens, 2.0 minutes
+# Run 2026-11-06 (2): scenario sem-instrument, commit `bd6b674`, Opus, 11,525 output tokens, 2.0 minutes
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims (the first independent grade; earlier runs were graded by the main session). The tester got the brief as its whole prompt.
 
@@ -18,7 +18,7 @@ Result format: E15. Graded by a separate Sonnet agent that changed none of the s
 | N12 | held: "build may start? No for the real instrument" |
 | N24 | not held: "lean", "principal", "safety row", "envelope" unexplained; decision record / change record |
 
-Compared with run 1 at `1b09667` (graded by the main session): N1, N6 and N7 went from held to partly or not reported, in skill text unchanged since; read as the stricter grader, not a regression. N24 is new. New on this run: playbook step 7 fired ("operate" read aloud and offered for the record).
+Compared with run 1 at `9be3979` (graded by the main session): N1, N6 and N7 went from held to partly or not reported, in skill text unchanged since; read as the stricter grader, not a regression. N24 is new. New on this run: playbook step 7 fired ("operate" read aloud and offered for the record).
 
 Setup misfit named by the tester: `claude plugin list` could not run, so Matt Pocock's skills were assumed absent.
 

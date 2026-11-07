@@ -1,4 +1,4 @@
-# Run 2026-11-06: scenario existing-tool, commit `1b09667`, Opus, 10,516 output tokens, 2.2 minutes
+# Run 2026-11-06: scenario existing-tool, commit `9be3979`, Opus, 10,516 output tokens, 2.2 minutes
 
 Result format: E15. Graded by the main session that had changed the skills (not blind). The tester got its brief through a file it was told to read (same text as `brief.py` printed); the claims the new findings rest on were checked with a grep each.
 
@@ -16,7 +16,7 @@ Result format: E15. Graded by the main session that had changed the skills (not 
 | N15 | held: one question, "not on record", no default |
 | N16 | held: stated, the Opus figure called a guess |
 
-Compared with run 2 (`ba2fbd8`): the detour through the playbook is gone; N10 and N16 from partly to held.
+Compared with run 2 (`ec3b4b9`): the detour through the playbook is gone; N10 and N16 from partly to held.
 
 New findings (ledger 97 to 99): the After section never offers the requirements reconstruction that item 2 promises; "I don't know" to the persona question leads nowhere; a one-file tool is its own source, so the tester needs a copy to run and a rule not to read it.
 

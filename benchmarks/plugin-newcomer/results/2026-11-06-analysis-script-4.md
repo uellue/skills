@@ -1,4 +1,4 @@
-# Run 2026-11-06 (4): scenario analysis-script, commit `b324b06`, Sonnet, 4,081 output tokens, 0.6 minutes
+# Run 2026-11-06 (4): scenario analysis-script, commit `e0dba65`, Sonnet, 4,081 output tokens, 0.6 minutes
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims. Round 1 after ledger 128 to 138. The tester wrote its expectations after its first command (a method deviation, noted by itself).
 
@@ -18,7 +18,7 @@ Result format: E15. Graded by a separate Sonnet agent that changed none of the s
 | N20 | held |
 | N24 | not held: "hand-over", "decision record", "persona", "ledger", "lean", "stand-in" without a gloss at first use |
 
-Compared with the run at `a430f93`: N17 from partly to held (134).
+Compared with the run at `bd6b674`: N17 from partly to held (134).
 
 Setup misfit named by the tester: the scenario's data are marked synthetic, so the only-copy fear was role-played.
 

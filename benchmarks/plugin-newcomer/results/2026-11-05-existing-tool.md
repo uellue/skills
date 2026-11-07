@@ -1,4 +1,4 @@
-# Run 2026-11-05: scenario existing-tool, commit `47007b9`, Opus, 9,046 output tokens, 1.7 minutes
+# Run 2026-11-05: scenario existing-tool, commit `ffd59b3`, Opus, 9,046 output tokens, 1.7 minutes
 
 Result format: E15. The first run of this scenario, prepared with `brief.py` and following `/plugin-selftest` by hand (the skill was not yet loaded in that session). Run from the maintainer's checkout, so the version line printed its status instead of staying silent. Graded by the main session that had changed the skills (not blind); the claims about the hallway-test skill and the tester template were checked with a grep each.
 

@@ -1,10 +1,10 @@
-# Run 2026-11-05: commit `8480733`, Opus, 14,761 output tokens (about 78 k in the harness's total), 2.6 minutes
+# Run 2026-11-05: commit `1a3994b`, Opus, 14,761 output tokens (about 78 k in the harness's total), 2.6 minutes
 
 Result format: E15 (commit, model, grader, output tokens). The first run, before the key existed and with an earlier brief that did not yet forbid volunteering risks: the tester raised hardware safety itself, so N3 to N5 say what the skill texts lacked, not what an agent would have asked. Graded by the main session that had changed the skills (not blind). Full record: `design/hallway/2026-11-05.md`.
 
 | # | Result |
 |---|---|
-| N1 | held for the playbook; the debrief was listed as a first step (fixed in `b6735d7`) |
+| N1 | held for the playbook; the debrief was listed as a first step (fixed in `c81c35e`) |
 | N2 | held: five version lines, every text id matched; the line was not explained (fixed) |
 | N3 | not held: no skill asked about the instrument before the hallway test (fixed) |
 | N4 | not held: no skill asked for a simulator before the hallway test (fixed) |
@@ -15,4 +15,4 @@ Result format: E15 (commit, model, grader, output tokens). The first run, before
 | N9 | held |
 | N10 | held |
 
-Also found: `version.py --stamp` would rewrite an installed copy (fixed, with a test). Next run: at the commit after `b6735d7`, with the brief as it stands.
+Also found: `version.py --stamp` would rewrite an installed copy (fixed, with a test). Next run: at the commit after `c81c35e`, with the brief as it stands.

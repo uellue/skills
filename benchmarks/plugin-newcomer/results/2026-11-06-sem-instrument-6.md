@@ -1,4 +1,4 @@
-# Run 2026-11-06 (6): scenario sem-instrument, commit `c1b66bc`, Opus, 12,717 output tokens, 2.2 minutes
+# Run 2026-11-06 (6): scenario sem-instrument, commit `64f3681`, Opus, 12,717 output tokens, 2.2 minutes
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims. Round 4: the release check after the eighth review, no changes made from it.
 

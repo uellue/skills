@@ -1,4 +1,4 @@
-# Run 2026-11-06: scenario small-website, commit `b0469ff`, Opus, 12,745 output tokens, 2.4 minutes
+# Run 2026-11-06: scenario small-website, commit `d14e602`, Opus, 12,745 output tokens, 2.4 minutes
 
 Result format: E15. The first run of this scenario. Graded by the main session that had changed the skills (not blind); the report's quotes of the plugin's text were checked with a grep each (small path, visual brief, ledger template, hallway-test "propose committing it", walkthrough's blocking persona, the stand-in limits example): all found.
 
