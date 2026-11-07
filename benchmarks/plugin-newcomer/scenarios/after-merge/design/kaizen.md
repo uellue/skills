@@ -1,9 +1,8 @@
 # Kaizen ledger
 
-## Open proposals
+What leaves a debrief: proposals with decisions, the fate of earlier ones, what did not fit in the plugin's skills, and notes for the next debrief. The full reports are private, in `.claude/debriefs/`.
 
-| # | Proposal | Destination | Effort | Decision / status |
-|---|---|---|---|---|
+## Proposals
 
 ## Skill friction
 
