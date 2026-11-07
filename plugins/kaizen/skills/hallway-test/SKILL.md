@@ -1,11 +1,11 @@
 ---
 name: hallway-test
-description: Run a hallway test of a tool, document, instruction file or diagnosis with a fresh sub-agent that sees only the requirements and user documentation, writes expectations before running, and reports bugs, surprises and gaps; optionally by eye in a real terminal. Use it whenever the user wants a tool, CLI, notebook workflow, README, page or agent instruction file tried by a critical first user, asks to "test it before others use it", for a play test, "let someone try this", wants output checked in a real terminal, wants to know whether a user who skims the README and follows the program's hints gets there, or how well a fresh agent copes with an instruction file or a fault; and rather than a walk-through once the thing exists and is being polished (nearly done, smoothing out rough edges).
+description: Run a hallway test of a tool, document, instruction file or diagnosis with a fresh sub-agent that sees only the requirements and user documentation, writes expectations before running, and reports bugs, surprises and gaps; optionally by eye in a real terminal. Use it whenever the user wants a tool, CLI, notebook workflow, README, page or agent instruction file tried by a critical first user, asks to "test it before others use it", for a play test, "let someone try this", wants output checked in a real terminal, wants to know whether a user who skims the README and follows the program's hints gets there, or how well a fresh agent copes with an instruction file or a fault; and rather than a walk-through once the subject exists and is being polished (nearly done, smoothing out rough edges).
 ---
 
 # Hallway test
 
-Text id `7adb187b`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 7adb187b` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `bb4cc78b`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test bb4cc78b` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A fresh sub-agent that has not seen the implementation, the specs or the conversation tries the thing as a first user would, with only the requirements and the user documentation, and reports where reality differs from what they promise. Its persona comes from the stakeholder record (`design/stakeholders.md`), its coverage from the walk-through's steps and the acceptance examples when they exist; comparing what the walk imagined with what the tester saw validates the specification.
 

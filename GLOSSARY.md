@@ -87,8 +87,8 @@ A first-user trial: a fresh agent that sees only what a first user would see tri
 _Avoid_: play test, usability test, user test
 
 **Subject**:
-What a hallway test, a review or a debrief judges.
-_Avoid_: target, system under test
+What a hallway test, a walk-through, a review or a debrief judges: a tool, a document, a process, or the plugin itself.
+_Avoid_: target, system under test, the thing (it reads as the real thing)
 
 **Self-test scenario**:
 A project a persona brings into a self-test; it is input, never the subject.
