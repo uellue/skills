@@ -1,5 +1,5 @@
 ---
-type: tool_used
-tool: Edit
-input_match: 'design/examples\.md.*E2'
+type: regex
+target: { source: file, path: design/examples.md }
+pattern: '\bE2\b'
 ---
