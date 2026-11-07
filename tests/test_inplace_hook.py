@@ -59,6 +59,8 @@ class TestInplaceHook(unittest.TestCase):
         self.assertPasses("python3 .githooks/rehash.py --apply")  # a project script that rewrites by design
         self.assertPasses("python3 -c \"print(open('README.md').read())\"")  # reads only
         self.assertPasses("git commit -q -m 'x' > /dev/null")
+        # its second: grep's -i inside sed's argument
+        self.assertPasses("sed -n \"$(grep -n -i review README.md | head -1 | cut -d: -f1),+25p\" README.md")
         # the hook's first false alarm, 2026-11-07: a commit message that names the forms it blocks
         self.assertPasses("git add README.md check.sh && git commit -q -F - <<'EOF'\nsed -i, perl -i and python3 writes are blocked\nEOF\ngit log -1")
 
