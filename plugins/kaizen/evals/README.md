@@ -52,4 +52,6 @@ Not covered yet: the questionnaire step, the two hats, the measured walk, the sm
 
     claude plugin eval . --tag trigger --scaffold --ablation none --no-publish --max-cost-usd 10
 
+First run (2026-11-07, 48 runs, 650 s, $10.01, more than the $5 to $8 estimated: the skills ran on for up to 12 turns): 14 of 16 cases passed 3 of 3, as expected. `after-merge-offers-debrief` passed 2 of 3 (expected 1 of 3): the playbook started every time and offered the debrief in two. `state-nearly-done` passed 0 of 3 (expected 2 of 3): the walk-through started every time, never the hallway test, and it never asked; nothing in the hallway test's description says "nearly done, smoothing out rough edges".
+
 The fixture script is copied into each case, since a scaffold script must sit in its case's directory; `tests/test_evals.py` fails when the copies differ.
