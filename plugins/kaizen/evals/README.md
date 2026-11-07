@@ -33,11 +33,11 @@ Each grader file is named after the rule it checks in `skills/walkthrough/SKILL.
 
 | Case | Grader | Rule (SKILL.md line) | Kind |
 |---|---|---|---|
-| asks-for-persona | skill-fired | description (3): "walk me through" triggers it | indicator, not scored |
+| asks-for-persona | skill-fired | description (3): "walk me through" triggers it | indicator in a run with baseline; scored with `--ablation none` |
 | asks-for-persona | inputs-1-reads-stakeholder-record | Inputs 1 (22): read `design/stakeholders.md` | free |
 | asks-for-persona | inputs-1-asks-persona-before-walking | Inputs 1 (22): do not walk in a persona nobody confirmed; show the personas, ask | judge |
-| asks-for-persona | messages-about-fifteen-lines | plain words (12): about fifteen lines per message; fails at 20 lines or more | free |
-| walks-confirmed-persona | skill-fired | description (3) | indicator, not scored |
+| asks-for-persona | messages-about-fifteen-lines | plain words (12): about fifteen lines per message; fails at 21 lines or more (20 line breaks) | free |
+| walks-confirmed-persona | skill-fired | description (3) | indicator in a run with baseline; scored with `--ablation none` |
 | walks-confirmed-persona | output-walk-file-with-template | Output (49 to 60): `design/walkthroughs/<persona>-<process>.md` with Steps and Questions for the principal | free |
 | walks-confirmed-persona | output-examples-in-examples-md | Output (49): examples go to `design/examples.md` with the next free ID (E2) | free; reads the file after the run, so Edit and Write both count |
 | walks-confirmed-persona | walk-records-questions-not-inventions | The walk (32 on): do not invent the answer; record a question | judge |
@@ -46,4 +46,4 @@ Each grader file is named after the rule it checks in `skills/walkthrough/SKILL.
 
 Not covered yet: the questionnaire step, the two hats, the measured walk, the small path, numbering within a message, the text-id line (needs Bash), the friction line. The line numbers drift with edits to the skill; the rule names do not.
 
-The fixture script is copied into each case, since a scaffold script must sit in its case's directory; change all copies together.
+The fixture script is copied into each case, since a scaffold script must sit in its case's directory; `tests/test_evals.py` fails when the copies differ.

@@ -8,7 +8,7 @@
       "case": "walkthrough-asks-for-persona",
       "expected_by_agent": "inputs-1-asks-persona-before-walking still 3 of 3: the next sentences ('Show the personas it has, ask which one to take') still ask for the persona. Confidence: medium.",
       "expected_by_principal": "",
-      "observed": "2026-11-07: prediction wrong. inputs-1-asks-persona-before-walking 0 of 3 (judge FAIL FAIL FAIL each time), messages-about-fifteen-lines 0 of 3, reads-stakeholder-record 3 of 3; $0.93 against $0.45, since it walked. The remaining 'show the personas, ask which one' does not hold the gate; this one sentence does."
+      "observed": "2026-11-07: expected effect wrong. inputs-1-asks-persona-before-walking 0 of 3 (judge FAIL FAIL FAIL each time), messages-about-fifteen-lines 0 of 3, reads-stakeholder-record 3 of 3; $0.93 against $0.45, since it walked. The remaining 'show the personas, ask which one' does not hold the gate; this one sentence does."
     },
     {
       "id": "no-read-record",

@@ -20,7 +20,7 @@ Each run is graded blind by an agent that did not run the skill, as in the instr
 
 ## The harness's own mechanism
 
-Claude Code has a plugin evaluation command (`claude plugin eval`: eval suites per plugin with a JSON report, a sandbox, usable in CI). Its exact format was not checked when this plan was written; the maintainer checks it before building the fixtures, and uses it if it fits, so that the suite runs in CI on every change to a skill. Until then the fixtures live under `benchmarks/` in this repository and are run by hand with a sub-agent per fixture.
+Claude Code has a plugin evaluation command (`claude plugin eval`: eval suites per plugin with a JSON report, a sandbox, usable in CI). Checked and first used 2026-11-07 (code.claude.com/docs/en/plugin-evals.md; ledger 214): the suite is `plugins/kaizen/evals/`, one directory per case with a prompt, a fixture script and graders; its README has the commands, the costs and the grader-to-rule table. It fits skill tests that one prompt decides (triggering, gates, what is written); it loads no CLAUDE.md and simulates no person across turns, so the self-test in `benchmarks/plugin-newcomer/`, run by hand with a sub-agent, stays for those (ledger 219).
 
 ## What is not tested this way
 

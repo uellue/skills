@@ -10,6 +10,7 @@ overwritten or deleted), without the plugin's eval results. Prints the eval comm
 """
 
 import json
+import shlex
 import shutil
 import sys
 from pathlib import Path
@@ -47,7 +48,7 @@ def main(argv):
     v = variants[argv[0]]
     out = ablate(v, PLUGIN, argv[1])
     print(f"copy without the rule: {out}\n"
-          f"cd {out} && claude plugin eval . --case {v['case']} --scaffold --allow-tools Write Edit "
+          f"cd {shlex.quote(str(out))} && claude plugin eval . --case {v['case']} --scaffold --allow-tools Write Edit "
           f"--ablation none --no-publish --max-cost-usd 2")
 
 
