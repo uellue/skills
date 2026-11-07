@@ -122,7 +122,7 @@ Interviewed: the principal in person, 2026-11-07; where it lives is to be settle
 - [answered] Budget: about a third of the principal's weekly budget (one seat of the largest Teams licence, no extra credits) while getting this running; afterwards about 10 % for kaizen on kaizen; revised as it goes (principal, 2026-11-07).
 - [answered] Success measure: kept improvements per million tokens, per activity (review, real use, self-test), and the principal's minutes per round (lean accepted 2026-11-07).
 
-### Record of the work so far (retrospective, 2026-11-07, sub-agent on the ledger, archive, self-test results, debriefs and transcripts; report in the session's scratchpad, two claims spot-checked)
+### Record of the work so far (retrospective, 2026-11-07, sub-agent on the ledger, archive, self-test results, debriefs and transcripts; report kept privately in `.claude/debriefs/2026-11-07-topic-204/retro-204.md`, not in the repository, two claims spot-checked)
 - [record] Of ledger rows 54 to 202, 17 named the key item a change should move; of 22 traceable changes, 12 confirmed, 3 partly or unstable, 1 not confirmed, 2 side effects elsewhere, 2 never checked; about 130 were checked only as "nothing missing". No round ran twice on one commit; one key item flipped on unchanged text.
 - [record] Since 0.4: 13.4 k words added, 5.6 k removed; the size reduction mostly moved text into references. The playbook grew from 12 conditionals to 51; `plugins/kaizen/skills/playbook/SKILL.md:22` holds four conditions from four fixes in one bullet (checked).
 - [record] Real defects came from the independent reviews and the principal's use; the self-test key passed a behaviour the principal then called a defect (row 208); message length and numbering were found only in real use. Rounds after the fifth yielded wording fixes, some reverted.
@@ -139,7 +139,7 @@ Interviewed: the principal in person, 2026-11-07; where it lives is to be settle
 5. [answered] Backtrace: a `transcript.py` option that prints, for a chosen message, which skills, references and instructions were in context.
 - [deferred] Need 6 (focused rounds against full runs) and the annotated skill of need 3: an experiment design, after decisions 1 and 2 have produced data; owner the principal.
 
-### Prior art (2026-11-07, sub-agent research, citations still to be checked; notes in the session's scratchpad)
+### Prior art (2026-11-07, sub-agent research, citations still to be checked; notes kept privately in `.claude/debriefs/2026-11-07-topic-204/research-204-prior-art.md`, not in the repository)
 - [record] `claude plugin eval` (Claude Code; `--help` checked): cases run headless with and without the plugin, graders `regex`, `tool_used` (can assert a Skill call), `tool_order`, `file_exists`, `llm`, `baseline`; no grader sees which line of a skill influenced a reply; no custom-code graders.
 - [record] No built-in attribution of a reply to a skill or CLAUDE.md line; transcripts record each skill load with its text, file reads, sub-agents; OpenTelemetry can log raw API bodies.
 - [record] The Claude API returns no token probabilities, so probability-based attribution (ContextCite and others) does not apply directly; ablation by rerunning without a segment and judging the difference does, at roughly 32 or more runs per attributed action (ContextCite's figure).
