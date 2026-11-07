@@ -4,20 +4,27 @@ First experiment of ledger row 214 (`design/requirements.md`, topic 204, decisio
 
 ## Run
 
-From `plugins/kaizen/`:
+This is the one place that says how to run the suites. From the repository root; each command writes its results and its log into a new folder under `plugins/kaizen/evals/results/` (ignored by git), so an agent can read them without copying output:
 
-    # graders first: one run per case, no baseline, local report, a cost ceiling
-    claude plugin eval . --scaffold --allow-tools Write Edit --runs 1 --ablation none --no-publish --max-cost-usd 3
-    # one case
-    claude plugin eval . --case walkthrough-asks-for-persona --scaffold --runs 1 --ablation none --no-publish
-    # the comparison: three runs per case, with and without the plugin
-    claude plugin eval . --scaffold --allow-tools Write Edit --no-publish --max-cost-usd 10
+    # the trigger table (triggers/): one arm, since no kaizen skill can start without the plugin
+    out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-triggers; mkdir -p "$out"
+    claude plugin eval plugins/kaizen --tag trigger --scaffold --ablation none --no-publish -j 3 --max-cost-usd 15 --output-dir "$out" 2>&1 | tee "$out/run.log"
 
+    # the walkthrough comparison (walkthrough/): three runs per case, with and without the plugin
+    out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-walkthrough; mkdir -p "$out"
+    claude plugin eval plugins/kaizen --case 'walkthrough-*' --scaffold --allow-tools Write Edit --no-publish -j 3 --max-cost-usd 6 --output-dir "$out" 2>&1 | tee "$out/run.log"
+
+    # one case, while writing or fixing its graders: one run, no comparison; add --keep-temp to look into a failure
+    out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-<case>; mkdir -p "$out"
+    claude plugin eval plugins/kaizen --case <case> --scaffold --allow-tools Write Edit --runs 1 --ablation none --no-publish --max-cost-usd 2 --output-dir "$out" 2>&1 | tee "$out/run.log"
+
+- Cost ceilings are about 1.5 times the last full run ($10.01 for the triggers, $3.02 for the comparison). A ceiling never stops a run in progress, only the start of the next one, so it guards against a runaway (a skill looping to its turn limit), not against a normal run that costs a little more.
+- `--keep-temp` keeps each run's sandbox with its full trace; it is sealed and needs `chmod` to read. The results file already holds the trace a judge saw, so keep it for one case whose failure the results do not explain.
 - `--scaffold` runs each case's `fixture.sh` (a tiny tool `tally` with a stakeholder record); without it the workspace is empty and most graders fail.
 - `--allow-tools Write Edit` is needed by `walks-confirmed-persona` (writes the walk) and `ignores-unrelated-request` (edits a file); runs never ask for permission.
 - `--no-publish`: by default the HTML report is published to claude.ai; keep it local until we decide otherwise.
 - `--model` pins the agent's model (for a Fable against Opus comparison); `--judge-model` the `llm` graders' judge (default haiku).
-- Results go to `evals/results/<timestamp>/` (ignored by git): `aggregate-result.json` and `report.html`.
+- Each results folder holds `aggregate-result.json` (every grader's verdict, the judge's votes and the trace it saw), `report.html` and `run.log`.
 
 First run (2026-11-07, one run per case, no baseline, default model, judge haiku): $0.59 and 113 s for the three cases ($0.14, $0.08, $0.36). The full comparison (three runs, two arms) is about six times that, roughly $3.50 by that figure; the cost is a list-price estimate, not plan usage. That run's one failure was the grader: the agent wrote E2 to E8 into `design/examples.md`, but not with Edit, so the grader now reads the file.
 
@@ -48,10 +55,10 @@ Not covered yet: the questionnaire step, the two hats, the measured walk, the sm
 
 ## Triggers: which prompt starts which skill
 
-`triggers/` (ledger 223): 16 short prompts on the same fixture, each checked for which kaizen skill starts, if any; the expected skill and the expected effect, written before the first run, are in each case's `description`. Two cases depend on the project's state (principal, 2026-11-07): early in design, "what would a new colleague run into" should start the walk-through; nearly done with a persona, the hallway test; offering both and asking is also right, so a judge grades those two. "What should we do next" is tested only in a defined situation, since in general the answer depends on the session: just after a merge, a debrief is offered, by the debrief itself or by the playbook (principal, 2026-11-07), also judged. New prompts come from real use. A skill cannot start without the plugin, so run them with one arm:
-
-    claude plugin eval . --tag trigger --scaffold --ablation none --no-publish --max-cost-usd 10
+`triggers/` (ledger 223): 16 short prompts on the same fixture, each checked for which kaizen skill starts, if any; the expected skill and the expected effect, written before the first run, are in each case's `description`. Two cases depend on the project's state (principal, 2026-11-07): early in design, "what would a new colleague run into" should start the walk-through; nearly done with a persona, the hallway test; offering both and asking is also right, so a judge grades those two. "What should we do next" is tested only in a defined situation, since in general the answer depends on the session: just after a merge, a debrief is offered, by the debrief itself or by the playbook (principal, 2026-11-07), also judged. New prompts come from real use. Run them with the trigger command under "Run".
 
 First run (2026-11-07, 48 runs, 650 s, $10.01, more than the $5 to $8 estimated: the skills ran on for up to 12 turns): 14 of 16 cases passed 3 of 3, as expected. `after-merge-offers-debrief` passed 2 of 3 (expected 1 of 3): the playbook started every time and offered the debrief in two. `state-nearly-done` passed 0 of 3 (expected 2 of 3): the walk-through started every time, never the hallway test, and it never asked; nothing in the hallway test's description says "nearly done, smoothing out rough edges".
+
+Expected effects of ledger 224 and the description changes (written before the rerun, 2026-11-07): the playbook says to offer the debrief first when a piece of work has just ended, so `after-merge-offers-debrief` passes 3 of 3 (medium-high); the hallway test's description now names the state, so `state-nearly-done` passes at least 2 of 3 (medium); the trimmed hallway-test and debrief descriptions still start their skills in their cases, 3 of 3 each (medium-high); the other cases unchanged.
 
 The fixture script is copied into each case, since a scaffold script must sit in its case's directory; `tests/test_evals.py` fails when the copies differ.
