@@ -52,6 +52,10 @@ _Avoid_: recommendation, recommended answer, default, suggestion
 Steps the agent offered that the principal neither took nor dropped.
 _Avoid_: pending item
 
+**Revisit**:
+A record item kept for a later look, always with its trigger ("revisit when the suite covers a second skill"); without a trigger it is never looked at again.
+_Avoid_: Wiedervorlage, bring forward, BF, tickler, "later" without a trigger
+
 **Skill friction**:
 One line, written at the end of a skill's run, on what in the skill did not fit the situation.
 _Avoid_: bug report, feedback
