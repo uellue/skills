@@ -1,4 +1,4 @@
-# Run 2026-11-06 (8): scenario analysis-script, commit `ff82161`, Sonnet, 10,803 output tokens, 1.6 minutes
+# Run 2026-11-06 (8): scenario analysis-script, commit `a8fa6f4`, Sonnet, 10,803 output tokens, 1.6 minutes
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims. The first run with N27 and N28, after ledger 185 and 186. This tester quoted every message (the brief now insists).
 

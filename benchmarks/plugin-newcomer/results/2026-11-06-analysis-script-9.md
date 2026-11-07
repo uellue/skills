@@ -1,4 +1,4 @@
-# Run 2026-11-06 (9): scenario analysis-script, commit `e2feb75`, Sonnet, 5,972 output tokens, 0.9 minutes
+# Run 2026-11-06 (9): scenario analysis-script, commit `3580aaf`, Sonnet, 5,972 output tokens, 0.9 minutes
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims. Round 6, after ledger 187 to 191. The newcomer entered through the hallway test directly this time.
 
