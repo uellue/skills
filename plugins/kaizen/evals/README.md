@@ -61,4 +61,6 @@ First run (2026-11-07, 48 runs, 650 s, $10.01, more than the $5 to $8 estimated:
 
 Expected effects of ledger 224 and the description changes (written before the rerun, 2026-11-07): the playbook says to offer the debrief first when a piece of work has just ended, so `after-merge-offers-debrief` passes 3 of 3 (medium-high); the hallway test's description now names the state, so `state-nearly-done` passes at least 2 of 3 (medium); the trimmed hallway-test and debrief descriptions still start their skills in their cases, 3 of 3 each (medium-high); the other cases unchanged.
 
+Rerun at 0.5.3 (2026-11-07, 48 runs, 437 s, $8.57, no run errors): 16 of 16 cases passed 3 of 3; every expected effect held. `after-merge-offers-debrief`: the playbook started and offered the debrief in all three runs; `state-nearly-done`: the hallway test started in all three.
+
 The fixture script is copied into each case, since a scaffold script must sit in its case's directory; `tests/test_evals.py` fails when the copies differ.
