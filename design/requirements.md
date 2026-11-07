@@ -101,6 +101,50 @@ Acceptance examples: E1 to E6 in `examples.md`.
 ### 2.12 Applicable standards
 - [answered] None binding. Followed by choice: the principal's demand and requirements form; the five-whys habit (Toyota); the organisation's rule against invented references.
 
+## Topic: methods and tooling for improving the skills (ledger 204)
+
+Interviewed: the principal in person, 2026-11-07; where it lives is to be settled once the topic is clearer (principal). Vocabulary: software testing (coverage, fixture, key) and interpretability (attribution, ablation); new terms go to `GLOSSARY.md`. Leads into ledger 203.
+
+### Demand
+- [answered] Kaizen on kaizen is a core topic, and tooling for it is very important for the principal's projects; the principal will invest tokens here if the investment is recouped by efficiency in their own and other users' projects, and wants to know whether it is. The outcome that matters most: users of the plugin in other projects are efficient with tokens and their own time; kaizen on kaizen should be efficient as far as possible too.
+- [answered] The whole body of installed text (skills, references, standing instructions) seems to guide every conversation subtly; the principal wants something more solid than that impression.
+- [answered] Lesson from software: errors live in untested paths; code coverage is good but not sufficient, parameter-space coverage matters (Python code meant for floats, given a list, may not fail but do something users then rely on, so a later change breaks them unpredictably). The same fuzziness is expected here.
+- [answered] No sprawl: fixes should reach a general solution instead of piling up conditions for edge cases, as code bloats with ever more if statements. Measured 2026-11-07 (word counts of all skills and references per commit): 1.4 k words on 11-03 to 19.1 k on 11-07; the one size-reduction round cut 19,068 to 18,839 (−1.2 %), and three commits later the texts were at 19,049. Size is not bad in itself: a text should be proportionate to the complexity it handles and well structured (principal, 2026-11-07).
+
+### Needs (2026-11-07, confirmed as a first selection, possibly not complete)
+1. [answered] Coverage: which skills, parts of skills and standing instructions a test exercised, in skill tests and in use by hand; including the parameter space (the situations a rule meets), not only whether it fired. Proposed first try: `claude plugin eval`.
+2. [answered] Backtrace: when a condition arises, see how the session got there (what was in context: skills, files, instructions), as with a call stack; and printf-style instrumentation of chosen places. Also asked: whether a plugin can be run step by step, as in a debugger, looking around and changing things.
+3. [answered] Prediction: say, reasonably reliably and at reasonable cost, how an output changes when an instruction is removed or modified; one form proposed by the principal: an annotated skill that states the role of each piece. Asked: is this the halting problem, where only running it tells, or like software, where effects are predictable?
+4. [answered] The inverse problem: to reach an outcome, which change to make, preferring changes and removals over additions (see sprawl above).
+5. [answered] Efficiency: track how well the self-improvement loops work, what contributed to good outcomes and what cost; whether Fable or Opus is better at improving skills (an impression without numbers so far).
+6. [answered] Method: settle by test whether focused rounds (stop at the first serious finding, fix, rewind, continue; as with pytest's stop at first failure and rerun of failed tests) beat full runs with a post-mortem; acceptance stays with the full run.
+- [answered] The notebook-like loop (ledger 203) is a concrete thing to try later; this topic explores first.
+- [answered] Budget: about a third of the principal's weekly budget (one seat of the largest Teams licence, no extra credits) while getting this running; afterwards about 10 % for kaizen on kaizen; revised as it goes (principal, 2026-11-07).
+- [answered] Success measure: kept improvements per million tokens, per activity (review, real use, self-test), and the principal's minutes per round (lean accepted 2026-11-07).
+
+### Record of the work so far (retrospective, 2026-11-07, sub-agent on the ledger, archive, self-test results, debriefs and transcripts; report in the session's scratchpad, two claims spot-checked)
+- [record] Of ledger rows 54 to 202, 17 named the key item a change should move; of 22 traceable changes, 12 confirmed, 3 partly or unstable, 1 not confirmed, 2 side effects elsewhere, 2 never checked; about 130 were checked only as "nothing missing". No round ran twice on one commit; one key item flipped on unchanged text.
+- [record] Since 0.4: 13.4 k words added, 5.6 k removed; the size reduction mostly moved text into references. The playbook grew from 12 conditionals to 51; `plugins/kaizen/skills/playbook/SKILL.md:22` holds four conditions from four fixes in one bullet (checked).
+- [record] Real defects came from the independent reviews and the principal's use; the self-test key passed a behaviour the principal then called a defect (row 208); message length and numbering were found only in real use. Rounds after the fifth yielded wording fixes, some reverted.
+- [record] Cost: the orchestrating session between rounds cost more than its testers. Fable and Opus cannot be compared on this record (different content, stretch sizes, times of day).
+- [record] Every round ran to the end and fixed in batches; no data on focused rounds.
+
+### Decisions (leans accepted by the principal, 2026-11-07)
+1. [answered] First experiment: `claude plugin eval` on one small skill (`walkthrough`), one grader per rule, to get a first coverage table with and without the plugin. Limit (docs checked 2026-11-07, code.claude.com/docs/en/plugin-evals.md): eval runs load no CLAUDE.md, user settings or memory, so standing instructions are outside its reach; a case can resume a recorded transcript (`context.history_file`); no custom-code graders.
+2. [answered] Prediction log from now on: every skill edit states its expected effect (the key item or behaviour it should move) before the next self-test; the round marks it confirmed, not confirmed or side effect.
+3. [answered] Each self-test round runs twice on the same commit, so noise is visible.
+4. [answered] Sprawl: `check.sh` reports the word change per skill on every commit (information, not a failure); a proposal that adds a rule says which rule it replaces or generalises, or why none.
+5. [answered] Backtrace: a `transcript.py` option that prints, for a chosen message, which skills, references and instructions were in context.
+- [deferred] Need 6 (focused rounds against full runs) and the annotated skill of need 3: an experiment design, after decisions 1 and 2 have produced data; owner the principal.
+
+### Prior art (2026-11-07, sub-agent research, citations still to be checked; notes in the session's scratchpad)
+- [record] `claude plugin eval` (Claude Code; `--help` checked): cases run headless with and without the plugin, graders `regex`, `tool_used` (can assert a Skill call), `tool_order`, `file_exists`, `llm`, `baseline`; no grader sees which line of a skill influenced a reply; no custom-code graders.
+- [record] No built-in attribution of a reply to a skill or CLAUDE.md line; transcripts record each skill load with its text, file reads, sub-agents; OpenTelemetry can log raw API bodies.
+- [record] The Claude API returns no token probabilities, so probability-based attribution (ContextCite and others) does not apply directly; ablation by rerunning without a segment and judging the difference does, at roughly 32 or more runs per attributed action (ContextCite's figure).
+- [record] No tool reports per rule "followed, violated, not applicable"; nearest: one check per rule (`plugin eval`, promptfoo, Inspect AI), InFoBench's per-criterion ratio, skill-creator's evidence per expectation.
+- [record] Automatic prompt optimisation: GEPA (learns from traces and written feedback, MIT; its authors report 100 to 500 evaluations) and SkillOpt (edits one skill file; licence unknown) are the nearest; methods needing many cheap runs do not fit long sessions.
+- [record] Resuming a session (`--resume`) keeps the skill text already loaded in its history; testing a changed text means replaying the prompts in a fresh session (inferred from the transcript layout, not documented).
+
 ## Release
 Decides: the principal. Builds: the principal with Claude. Pays: ER-C (tokens). Signs off: the principal, per release.
 
