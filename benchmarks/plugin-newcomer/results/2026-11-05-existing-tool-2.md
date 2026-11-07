@@ -1,4 +1,4 @@
-# Run 2026-11-05 (2): scenario existing-tool, commit `ba2fbd8`, Opus, 11,171 output tokens, 2.1 minutes
+# Run 2026-11-05 (2): scenario existing-tool, commit `ec3b4b9`, Opus, 11,171 output tokens, 2.1 minutes
 
 Result format: E15. Current brief (subject named, untracked copy). Graded by the main session that had changed the skills (not blind); the claims about the tester template and the playbook's order were checked with a grep each.
 
@@ -16,7 +16,7 @@ Result format: E15. Current brief (subject named, untracked copy). Graded by the
 | N15 | held: one persona question, marked "not on record", no default; a stakeholder record offered |
 | N16 | partly: stated and waited for, but with an invented estimate (see N10) |
 
-Compared with run 1 (`47007b9`): N1, N2, N13, N15 moved to held; N16 from not held to partly. The detour through the playbook (offered by the hallway test, sending straight back) is the one new cost.
+Compared with run 1 (`ffd59b3`): N1, N2, N13, N15 moved to held; N16 from not held to partly. The detour through the playbook (offered by the hallway test, sending straight back) is the one new cost.
 
 New findings (ledger 75 to 79): a measured cost range for a behaviour tester (from the runs so far), or "say it is a guess"; the tester template's fixed text assumes requirements (four places) and a diagnostic option; the hallway test quotes the playbook's existing-tool path instead of a round trip; the playbook chooses its path before offering missing documents; what the tester may read includes sample data, read-only; "one message" puts questions that need answers first; a `design/` tree for a tiny tool is asked about, with a lighter home offered.
 

@@ -1,4 +1,4 @@
-# Run 2026-11-06 (6): scenario small-website, commit `2bffec1`, Opus, 13,413 output tokens, 2.7 minutes
+# Run 2026-11-06 (6): scenario small-website, commit `4fdeee8`, Opus, 13,413 output tokens, 2.7 minutes
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims. Round 3, after ledger 150 to 160; the first run with the split key.
 

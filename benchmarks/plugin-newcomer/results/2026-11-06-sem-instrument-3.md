@@ -1,4 +1,4 @@
-# Run 2026-11-06 (3): scenario sem-instrument, commit `b324b06`, Opus, 11,303 output tokens, 2.0 minutes
+# Run 2026-11-06 (3): scenario sem-instrument, commit `e0dba65`, Opus, 11,303 output tokens, 2.0 minutes
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims. Round 1 after ledger 128 to 138.
 
@@ -18,7 +18,7 @@ Result format: E15. Graded by a separate Sonnet agent that changed none of the s
 | N12 | held |
 | N24 | not held: "principal", "Release", "frontier", "envelope"; ledger / kaizen ledger / kaizen.md |
 
-Compared with the run at `a430f93`: N7 from not reported to partly, N10 from not held to partly; the playbook said up front, in its words, that the build waits for the owner and the safe work meanwhile (133). Playbook step 7 fired again ("operate").
+Compared with the run at `bd6b674`: N7 from not reported to partly, N10 from not held to partly; the playbook said up front, in its words, that the build waits for the owner and the safe work meanwhile (133). Playbook step 7 fired again ("operate").
 
 Setup misfit named by the tester: the brief says the scenario's files are committed; this scenario has none, so `main` has no commit.
 

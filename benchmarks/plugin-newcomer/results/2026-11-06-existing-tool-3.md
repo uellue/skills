@@ -1,4 +1,4 @@
-# Run 2026-11-06 (3): scenario existing-tool, commit `b324b06`, Opus, 11,543 output tokens, 2.1 minutes
+# Run 2026-11-06 (3): scenario existing-tool, commit `e0dba65`, Opus, 11,543 output tokens, 2.1 minutes
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims. Round 1 after ledger 128 to 138.
 
@@ -18,7 +18,7 @@ Result format: E15. Graded by a separate Sonnet agent that changed none of the s
 | N23 | held: "I read 'test' as a first user trying tally, not automated tests", from the hallway test's first instruction; not offered as a glossary entry |
 | N24 | partly: "brief", "sub-agent", "output tokens", "scratch directory", "behaviour mode" unexplained; "hallway test", "persona", "lean", "walk-through" explained through `words.md` |
 
-Compared with the run at `a430f93`: N23 from partly to held (130); N24 from not held to partly (128).
+Compared with the run at `bd6b674`: N23 from partly to held (130); N24 from not held to partly (128).
 
 Setup misfit named by the tester: "write expectations before the first command and note the time" cannot be met, since writing a file shows no time.
 

@@ -1,4 +1,4 @@
-# Run 2026-11-06: scenario analysis-script, commit `b0469ff`, Opus, 15,658 output tokens, 2.9 minutes
+# Run 2026-11-06: scenario analysis-script, commit `d14e602`, Opus, 15,658 output tokens, 2.9 minutes
 
 Result format: E15. The first run of this scenario. Graded by the main session that had changed the skills (not blind); the report's claims were checked with a grep each (the tester template's "Anything read-only or forbidden, named", the walk-through's "walk against the running system", README rule 11, and that the hallway test names neither a known answer nor a wrong result): all confirmed.
 

@@ -1,4 +1,4 @@
-# Run 2026-11-05 (2): commit `d30ceac`, Opus, 13,827 output tokens (about 77 k in the harness's total), 2.4 minutes
+# Run 2026-11-05 (2): commit `376c18a`, Opus, 13,827 output tokens (about 77 k in the harness's total), 2.4 minutes
 
 Result format: E15. The brief as kept: the colleague answers only what a skill asks and notes "not asked". The tester read the skill files from disk, so the session's loaded skill texts did not matter. Graded by the main session that had changed the skills (not blind); the two claims about the skill texts that the findings rest on were checked with a grep each.
 
@@ -15,7 +15,7 @@ Result format: E15. The brief as kept: the colleague answers only what a skill a
 | N9 | held: `check-ignore`, the line offered, written after "yes" |
 | N10 | not held: the full path (six or seven documents before any code) starts without an estimate of its cost |
 
-Compared with run 1 (`8480733`): N3 to N7 moved from not held to held or not reported, now without the tester volunteering the risk; N10 moved from held to not held, because this run followed the full path instead of stopping early.
+Compared with run 1 (`1a3994b`): N3 to N7 moved from not held to held or not reported, now without the tester volunteering the risk; N10 moved from held to not held, because this run followed the full path instead of stopping early.
 
 New findings (ledger 54 to 61, for the principal's decision): no path when no simulator exists; labelling simulated output reaches the builder only in the hallway test; "yes accepts the recommendation" can turn the agent's guesses about safety limits into answers; no shared ledger template outside the debrief; no instrument question at session start; no cost note and no feasibility spike for the full path; the version line addressed to the agent, not the person; how often the debrief fires after several first uses; the exact invocation of `grill-me`; questions for an absent owner are listed but never sent.
 

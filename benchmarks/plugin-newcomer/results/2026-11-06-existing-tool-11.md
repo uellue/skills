@@ -1,4 +1,4 @@
-# Run 2026-11-06 (11): scenario existing-tool, commit `a496f23`, Opus, 15,017 output tokens, 2.7 minutes
+# Run 2026-11-06 (11): scenario existing-tool, commit `236bc70`, Opus, 15,017 output tokens, 2.7 minutes
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims. Round 9, after ledger 197 (size reduction round 2).
 

@@ -1,4 +1,4 @@
-# Run 2026-11-06 (6): scenario analysis-script, commit `2bffec1`, Sonnet, 6,411 output tokens, 1.0 minute
+# Run 2026-11-06 (6): scenario analysis-script, commit `4fdeee8`, Sonnet, 6,411 output tokens, 1.0 minute
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims. Round 3, after ledger 150 to 160; the first run with the split key. The tester said its quoted messages were "constructed", since it plays the agent; that holds for every run of this self-test.
 
