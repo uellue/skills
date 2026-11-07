@@ -34,7 +34,7 @@ _Avoid_: admin, responsible
 
 **Ledger**:
 The project's committed list of proposals with their decisions, skill friction and notes for the next debrief.
-_Avoid_: backlog, log, kaizen file
+_Avoid_: backlog, log, kaizen file (as its name: "backlog" is the project's own list of work, such as its issues; `words.md` may say "the backlog for how the work is done" to explain the ledger to a newcomer)
 
 **Proposal**:
 A numbered change in the ledger, with a destination, an effort and a decision.
