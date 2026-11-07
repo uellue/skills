@@ -1,11 +1,11 @@
 ---
 name: hallway-test
-description: Run a hallway test of a tool, document, instruction file or diagnosis process with a fresh sub-agent that sees only the requirements and user-facing documentation, writes expectations before running, and reports bugs, surprises and gaps; optionally judging a real terminal by eye through screenshots. Use it whenever the user wants a tool, command, CLI, notebook workflow, README, page or agent instruction file tried out by a critical first user, asks to "test it before others use it", for a play test, "let someone try this", wants output checked in a real terminal rather than by parsing text, wants to know whether a user who skims the README and follows the program's hints gets there, or wants to measure how well a fresh agent copes with an instruction file or a fault.
+description: Run a hallway test of a tool, document, instruction file or diagnosis with a fresh sub-agent that sees only the requirements and user documentation, writes expectations before running, and reports bugs, surprises and gaps; optionally by eye in a real terminal. Use it whenever the user wants a tool, CLI, notebook workflow, README, page or agent instruction file tried by a critical first user, asks to "test it before others use it", for a play test, "let someone try this", wants output checked in a real terminal, wants to know whether a user who skims the README and follows the program's hints gets there, or how well a fresh agent copes with an instruction file or a fault; and rather than a walk-through once the thing exists and is being polished (nearly done, smoothing out rough edges).
 ---
 
 # Hallway test
 
-Text id `01f23a28`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 01f23a28` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `7adb187b`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 7adb187b` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A fresh sub-agent that has not seen the implementation, the specs or the conversation tries the thing as a first user would, with only the requirements and the user documentation, and reports where reality differs from what they promise. Its persona comes from the stakeholder record (`design/stakeholders.md`), its coverage from the walk-through's steps and the acceptance examples when they exist; comparing what the walk imagined with what the tester saw validates the specification.
 
@@ -65,5 +65,5 @@ While it runs, answer the tester's questions from the design, with the reasoning
 - A finding is a moment: the exact command, what was expected, what was observed, the relevant stderr lines or the screenshot file name.
 - Do not fix during the test what the tester reported as a question; decide first whether it is a bug or a design choice, then fix with its test.
 - A finding that is a vulnerability (data readable by the wrong user, a credential exposed, an unsafe default) is reported to the user first and the plan stops there; the fix path is the proposed next step.
-- If there is no ledger yet, or it shows no debrief, mention the debrief in one line (`/kaizen:debrief`, after a stretch of work).
+- Offer the debrief in one line (`/kaizen:debrief`) when the test ends a stretch of work (before a merge or a release), was this skill's first use in the project, or the ledger shows no debrief yet.
 - At the end, one line into the project's ledger: what in this skill did not fit. If the file is new, say where it goes and whether it is committed, and start it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`.

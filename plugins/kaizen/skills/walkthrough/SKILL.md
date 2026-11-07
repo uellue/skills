@@ -1,11 +1,11 @@
 ---
 name: walkthrough
-description: Put on the shoes of a stakeholder and walk through a process step by step to find the requirements, questions and acceptance examples nobody has written down. Use it during requirements gathering or design, before a change is specified, whenever the user says "walk through", "from the perspective of", "what would an operator / scientist / new colleague do", "how would X use this", or asks how a new repository, deployment, onboarding or workflow would go for someone; also before a hallway test, to decide what to test, and after one, to compare what was imagined with what happened. Where OpenSpec is also installed, use this skill rather than /opsx:explore before a proposal.
+description: Put on the shoes of a stakeholder and walk through a process step by step to find the requirements, questions and acceptance examples nobody has written down. Use it during requirements gathering or design, before a change is specified, whenever the user says "walk through", "from the perspective of", "what would an operator / scientist / new colleague do", "how would X use this", or asks how a new repository, deployment, onboarding or workflow would go for someone; also before a hallway test, to decide what to test, and after one, to compare what was imagined with what happened. Where OpenSpec is also installed, use this skill rather than /opsx:explore before a proposal. Rather than a hallway test while the thing is still being designed.
 ---
 
 # Stakeholder walk-through
 
-Text id `5bd7cae7`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 5bd7cae7` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `a4c82872`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough a4c82872` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 Requirements that nobody wrote down surface when someone who is not the author tries to do the thing: the operator installing the service, the scientist searching for their data, the colleague setting up a repository, the maintainer reading a log at three in the morning. A walk-through does that on paper, with a named persona and a concrete process, before the change is specified. Its output is not a design: it is questions for the owner, gaps, and acceptance examples that the specs and tests can use.
 
@@ -95,3 +95,4 @@ What exists: <documents, code, commands read; the running system used>.
 - Questions, gaps and examples are the deliverable. Do not design the fix here; the principal decides what becomes a requirement, and the decisions go into the decision record (the playbook's "what we decided" moment).
 - A number in the walk has a source (the principal, a measurement, a document); the agent's own estimate is marked as one.
 - At the end, one line into the project's ledger: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).
+- Offer the debrief in one line (`/kaizen:debrief`) when the walk ends a stretch of work or was this skill's first use in the project.

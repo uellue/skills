@@ -1,11 +1,11 @@
 ---
 name: debrief
-description: Debrief a Claude Code session, a stretch of work or several sessions at once on how the collaboration went, not on what it produced. Use it whenever the user asks for a debrief, retrospective, post-mortem, lessons learned, "what did we learn", "how can I work better with you", "kaizen", or wraps up a piece of work; on a schedule, at the end of a working day or a stretch; after a skill of this plugin was used for the first time; and whenever the user says "note for the debrief" (then the note goes to the ledger at once). Produces a private report with cited moments, coaching for the person writing the prompts, process proposals with a destination, and a usage check, and keeps a ledger in the repository so recurring issues and skill friction are visible.
+description: Debrief a Claude Code session, a stretch of work or several sessions at once on how the collaboration went, not on what it produced. Use it whenever the user asks for a debrief, retrospective, post-mortem, lessons learned, "what did we learn", "how can I work better with you", "kaizen", or wraps up a piece of work; after a merge or a release; on a schedule, at the end of a day or a stretch; after a skill of this plugin was used for the first time; and whenever the user says "note for the debrief" (then the note goes to the ledger at once). Produces a private report with cited moments, coaching for the person writing the prompts, process proposals with a destination, and a usage check, and keeps a ledger in the repository so recurring issues and skill friction are visible.
 ---
 
 # Debrief
 
-Text id `82e5ab9d`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 82e5ab9d` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `a4725715`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief a4725715` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better) and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report. (Structure adapted, with thanks, from two MIT-licensed skills, `debrief` by Wavez and `retrospective` by florianbuetow; the coaching, the five whys, the usage script and the ledger are this skill's own.)
 
