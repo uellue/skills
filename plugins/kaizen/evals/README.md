@@ -19,7 +19,7 @@ From `plugins/kaizen/`:
 - `--model` pins the agent's model (for a Fable against Opus comparison); `--judge-model` the `llm` graders' judge (default haiku).
 - Results go to `evals/results/<timestamp>/` (ignored by git): `aggregate-result.json` and `report.html`.
 
-The ceilings above are placeholders, not estimates; the first run tells what a case costs.
+First run (2026-11-07, one run per case, no baseline, default model, judge haiku): $0.59 and 113 s for the three cases ($0.14, $0.08, $0.36). The full comparison (three runs, two arms) is about six times that, roughly $3.50 by that figure; the cost is a list-price estimate, not plan usage. That run's one failure was the grader: the agent wrote E2 to E8 into `design/examples.md`, but not with Edit, so the grader now reads the file.
 
 ## What eval cannot reach
 
@@ -37,7 +37,7 @@ Each grader file is named after the rule it checks in `skills/walkthrough/SKILL.
 | asks-for-persona | messages-about-fifteen-lines | plain words (12): about fifteen lines per message; fails at 20 lines or more | free |
 | walks-confirmed-persona | skill-fired | description (3) | indicator, not scored |
 | walks-confirmed-persona | output-walk-file-with-template | Output (49 to 60): `design/walkthroughs/<persona>-<process>.md` with Steps and Questions for the principal | free |
-| walks-confirmed-persona | output-examples-in-examples-md | Output (49): examples go to `design/examples.md` with the next free ID (E2) | free; misses a rewrite with Write |
+| walks-confirmed-persona | output-examples-in-examples-md | Output (49): examples go to `design/examples.md` with the next free ID (E2) | free; reads the file after the run, so Edit and Write both count |
 | walks-confirmed-persona | walk-records-questions-not-inventions | The walk (32 on): do not invent the answer; record a question | judge |
 | ignores-unrelated-request | skill-not-fired | description (3): does not trigger on a plain edit | scored in both arms |
 | ignores-unrelated-request | edit-done | the task itself, so the case has a score in both arms | free |
