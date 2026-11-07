@@ -1,6 +1,6 @@
 # Baseline: 2026-11-05
 
-Plugin: kaizen as of commit `40bf5c7` (0.4 before the comparison's proposals and the independent review). OpenSpec 1.16.0. The three condition agents ran Opus 5.5; in condition A, the agent chose Sonnet 5.5 for its implementer and its hallway tester (so K9 was found by a Sonnet tester); C's hallway tester inherited Opus. One run per condition. Graded by the orchestrating session from the three reports, not blind: the next run should use a blind grader (see README). "Not reported" means the report does not mention it, not that the run missed it for sure.
+Plugin: kaizen as of commit `b50c1df` (0.4 before the comparison's proposals and the independent review). OpenSpec 1.16.0. The three condition agents ran Opus 5.5; in condition A, the agent chose Sonnet 5.5 for its implementer and its hallway tester (so K9 was found by a Sonnet tester); C's hallway tester inherited Opus. One run per condition. Graded by the orchestrating session from the three reports, not blind: the next run should use a blind grader (see README). "Not reported" means the report does not mention it, not that the run missed it for sure.
 
 | Key | A: kaizen alone | B: OpenSpec alone | C: both |
 |---|---|---|---|
