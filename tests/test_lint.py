@@ -7,6 +7,7 @@ descriptions that keep growing although they load into every session.
 
 import json
 import re
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -177,6 +178,47 @@ class TestManifests(unittest.TestCase):
         market = json.loads((REPO / ".claude-plugin" / "marketplace.json").read_text())
         self.assertRegex(plugin["version"], r"^\d+\.\d+\.\d+$")
         self.assertIn(plugin["name"], [p["name"] for p in market["plugins"]])
+
+
+FEEDBACK_ENTRY = re.compile(r"^- \d{4}-\d{2}-\d{2} \| (positive|negative) \| [A-Za-z][A-Za-z -]* \| .+ \| effect: \S.*$")
+# What makes a public entry identifiable: a session id (full UUID, or a short hex id next to "session"),
+# a rendered-transcript line marker, a particular private report or transcript (the folders may be named).
+IDENTIFYING = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-|session [0-9a-f]{7,}|\bL\d{2,}\b"
+                         r"|\.claude/(debriefs|transcripts)/(?!feedback-raw\.md)[^\s`/]+")
+
+
+class TestFeedback(unittest.TestCase):  # ledger 238
+    def test_entries_have_the_searchable_form(self):
+        text = (REPO / "design" / "feedback.md").read_text()
+        entries = text.split("## Entries", 1)[1].strip().splitlines()
+        self.assertTrue(entries)
+        for line in entries:
+            with self.subTest(line[:60]):
+                self.assertRegex(line, FEEDBACK_ENTRY)
+
+    def test_public_entries_carry_no_identifiable_source(self):
+        for n, line in enumerate((REPO / "design" / "feedback.md").read_text().splitlines(), 1):
+            with self.subTest(n):
+                self.assertNotRegex(line, IDENTIFYING)
+
+    def test_identifying_pattern_catches_what_it_should(self):
+        for bad in ("session 08d2a43f said", "08d2a43f-1bd4-4662-9015-317fdd548a58", "at L2502", ".claude/debriefs/2026-11-07.md"):
+            self.assertRegex(bad, IDENTIFYING, bad)
+        for good in ("commit `5a3ac92`", "row 238", "`.claude/debriefs/feedback-raw.md`", "reports in `.claude/debriefs/`"):
+            self.assertNotRegex(good, IDENTIFYING, good)
+
+    def test_the_raw_file_stays_private(self):
+        r = subprocess.run(["git", "-C", str(REPO), "check-ignore", "-q", ".claude/debriefs/feedback-raw.md"])
+        self.assertEqual(r.returncode, 0, "the raw feedback would be tracked by git")
+
+    def test_the_rules_are_where_agents_read_them(self):
+        # The hand-over rule (cause and effect) in the standing instructions, the debrief's reply and collection.
+        rule = "show where the person's remarks went (what they said, what it became), without judgment"
+        self.assertIn(rule, (PLUGIN / "references" / "standing-instructions.md").read_text())
+        debrief = (PLUGIN / "skills" / "debrief" / "SKILL.md").read_text()
+        self.assertIn("the coaching in full", debrief)
+        self.assertIn("`design/feedback.md`", debrief)
+        self.assertIn("`.claude/debriefs/feedback-raw.md` (private)", debrief)
 
 
 if __name__ == "__main__":
