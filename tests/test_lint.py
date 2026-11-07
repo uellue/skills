@@ -219,6 +219,16 @@ class TestFeedback(unittest.TestCase):  # ledger 238
         self.assertIn("the coaching in full", debrief)
         self.assertIn("`design/feedback.md`", debrief)
         self.assertIn("`.claude/debriefs/feedback-raw.md` (private)", debrief)
+        # The fixes of the after-merge self-test (239 to 244).
+        self.assertIn("Reply in two messages", debrief)
+        self.assertIn("the committed ones go on a working branch", debrief)
+        self.assertIn("When a cause lies in a skill, the finding goes to the skill, not into the coaching", debrief)
+        self.assertIn("references/feedback.md", debrief)
+        hallway = (PLUGIN / "skills" / "hallway-test" / "SKILL.md").read_text()
+        self.assertIn("for after the merge or release", hallway)
+        self.assertIn("A re-run (after fixes, as a last check) reuses the saved brief", hallway)
+        self.assertIn("(`-2` for a second that day)", hallway)
+        self.assertIn("`design/feedback.md`", (REPO / "README.md").read_text())
 
 
 if __name__ == "__main__":
