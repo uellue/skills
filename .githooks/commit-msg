@@ -1,0 +1,8 @@
+#!/bin/sh
+# Warns, never refuses, when a commit changes the plugin, the design records or the benchmarks and its
+# message has no Ledger: trailer naming the ledger rows it serves (CLAUDE.md, ledger 220). The trailer
+# survives rebase merges, so `git log --grep` finds a row's commits after their hashes have changed.
+git diff --cached --name-only | grep -q -E '^(plugins|design|benchmarks)/' || exit 0
+git interpret-trailers --parse "$1" | grep -q -i '^Ledger:' && exit 0
+echo "commit-msg: no 'Ledger: <rows>' trailer; add one if this commit serves ledger rows (CLAUDE.md). Committed anyway." >&2
+exit 0
