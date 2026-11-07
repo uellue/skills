@@ -86,5 +86,56 @@ class TestPrePush(unittest.TestCase):
         self.assertEqual(self.push(), 0)
 
 
+class TestPrePushVersion(unittest.TestCase):
+    """Ledger 222: a change under plugins/kaizen/ needs a new version before it reaches main."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.repo = Path(self.tmp.name)
+        self.git("init", "-q")
+        self.write("plugins/kaizen/.claude-plugin/plugin.json", '{\n  "name": "kaizen",\n  "version": "1.0.0"\n}\n')
+        self.write("plugins/kaizen/skills/s/SKILL.md", "one\n")
+        self.git("add", "-A")
+        self.git("commit", "-q", "-m", "start")
+        self.git("update-ref", "refs/remotes/origin/main", "HEAD")
+
+    git = TestPrePush.git
+
+    def write(self, path, text):
+        (self.repo / path).parent.mkdir(parents=True, exist_ok=True)
+        (self.repo / path).write_text(text)
+
+    def change(self, path, text):
+        self.write(path, text)
+        self.git("add", "-A")
+        self.git("commit", "-q", "-m", f"change {path}")
+
+    def push(self, remote_ref):
+        head = self.git("rev-parse", "HEAD")
+        return subprocess.run(["sh", str(HOOK)], cwd=self.repo, input=f"refs/heads/x {head} {remote_ref} {ZERO}\n",
+                              capture_output=True, text=True)
+
+    def test_plugin_change_without_bump_refused_on_main_warned_elsewhere(self):
+        self.change("plugins/kaizen/skills/s/SKILL.md", "two\n")
+        main = self.push("refs/heads/main")
+        self.assertEqual(main.returncode, 1)
+        self.assertIn("Push refused", main.stderr)
+        branch = self.push("refs/heads/topic")
+        self.assertEqual(branch.returncode, 0)
+        self.assertIn("bump it", branch.stderr)
+
+    def test_bumped_version_passes(self):
+        self.change("plugins/kaizen/skills/s/SKILL.md", "two\n")
+        self.change("plugins/kaizen/.claude-plugin/plugin.json", '{\n  "name": "kaizen",\n  "version": "1.0.1"\n}\n')
+        r = self.push("refs/heads/main")
+        self.assertEqual((r.returncode, r.stderr), (0, ""))
+
+    def test_change_outside_the_plugin_needs_no_bump(self):
+        self.change("design/notes.md", "notes\n")
+        r = self.push("refs/heads/main")
+        self.assertEqual((r.returncode, r.stderr), (0, ""))
+
+
 if __name__ == "__main__":
     unittest.main()
