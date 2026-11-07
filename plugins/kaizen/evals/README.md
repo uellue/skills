@@ -21,6 +21,8 @@ From `plugins/kaizen/`:
 
 First run (2026-11-07, one run per case, no baseline, default model, judge haiku): $0.59 and 113 s for the three cases ($0.14, $0.08, $0.36). The full comparison (three runs, two arms) is about six times that, roughly $3.50 by that figure; the cost is a list-price estimate, not plan usage. That run's one failure was the grader: the agent wrote E2 to E8 into `design/examples.md`, but not with Edit, so the grader now reads the file.
 
+First comparison (2026-11-07, three runs per arm, 18 runs, 676 s, $3.02): every with-arm run scored 1.00; without the plugin, asks-for-persona 0.33 (it walked at once, in a long message), walks-confirmed-persona 0.33 (no walk-through file, no examples), ignores-unrelated-request 1.00 by design. Every grader gave the same verdict in all three runs of an arm. Two graders passed in both arms, so their rules are what Claude does anyway in that situation: reading the stakeholder record, and recording questions instead of inventing answers. The with-arm never failed, so the suite does not yet find a weakness of the skill; that needs harder situations (no stakeholder record, a vague answer, the small path).
+
 ## What eval cannot reach
 
 Runs load only the plugin: no CLAUDE.md, user settings, memory or other plugins. The standing instructions are outside this tool; their coverage needs another one (the backtrace of ledger row 218). There are no custom-code graders.
