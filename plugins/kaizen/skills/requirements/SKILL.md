@@ -5,7 +5,7 @@ description: Interview the person who needs a solution and write a demand and re
 
 # Requirements interview
 
-Text id `caf601c4`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements caf601c4` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `3a9c4780`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements 3a9c4780` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of a demand and requirements form written at ER-C (a checklist; no institute requires it), writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
 
@@ -79,9 +79,9 @@ Decides: <...>. Builds: <...>. Pays: <...>. Signs off: <...>. Owns the instrumen
 
 Mark each item, not only each section: a section marked "answered" with assumed lines inside misleads the next builder. If the person wants the form's Word version filled, produce it from this Markdown with the document tools available, section by section under the same numbers; the Markdown stays the working copy.
 
-## Handover
+## Hand-over
 
-Before saying the document is ready, run the handover check and show its result:
+Before saying the document is ready, run the hand-over check and show its result:
 
 1. Every item still marked `[record]`, `[assumed]`, `[unknown]` or `[deferred]`, as one numbered list quoted in full in the message itself, grouped by section (a number or a file reference alone tells the person nothing), so the person can confirm or strike them in minutes even when they do not want to review the text; a `[record]` item that is never read back counts as confirmed downstream, which it is not.
 2. Section headers whose marker is stale (a section says "pending" while its items are answered, or the reverse).
@@ -96,6 +96,6 @@ Before saying the document is ready, run the handover check and show its result:
 - Never fill a section the person did not answer; mark it `[record]`, `[assumed]` or `[unknown]`, and keep them apart.
 - A requirement that cannot be checked is not finished: for each main scenario, add one acceptance example ("when <situation>, then <observable outcome>") to `design/examples.md`, with the next free ID, a priority and the scenario it comes from, and cite the ID in 2.1. The examples live only there.
 - Keep names of people in the project's own record; keep them out of anything published.
-- Hand the document over with the handover check above, not with "ready for review" alone.
+- Hand the document over with the hand-over check above, not with "ready for review" alone.
 - At the end, one line into the project's ledger: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).
 - Offer the debrief in one line (`/kaizen:debrief`) when the interview ends a stretch of work or was this skill's first use in the project.
