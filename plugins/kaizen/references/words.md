@@ -16,6 +16,6 @@ The kaizen skills use a few words of their own. When an agent uses one with you 
 - **Output tokens**: the unit in which the agent's work is counted against your plan or budget; the hallway test states an estimate before it starts a tester.
 - **Stand-in**: what is used instead of something real that could be damaged: a simulator, a copy of the data, a local preview, a dry run.
 - **Hand-over**: the moment work passes to someone else: a merge request, a release, a tool given to colleagues.
-- **Ledger**: a short file of proposals for improving how the work is done, with their decisions, kept beside the other records (`kaizen.md`). Each skill adds one line to it about what did not fit, so that rough edges surface at your next debrief.
+- **Ledger**: the backlog for how the work is done, not for the work itself: a short file (`design/kaizen.md`) of numbered proposals with their decisions, kept apart from the project's own backlog (its issues or task list). Each skill adds one line to it about what did not fit, so that rough edges surface at your next debrief.
 - **Two hats, five whys**: interview habits the skills use: asking once as the person who needs the tool and once as the one who builds it; and asking "why" past the first answer until the cause is reached.
 - **Debrief**: a look back at how you and the agents worked together, with proposals to work better next time.
