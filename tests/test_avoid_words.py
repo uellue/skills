@@ -33,6 +33,10 @@ class TestAvoidWords(unittest.TestCase):
         self.assertEqual(flags("the use scenario names the `target` dir", self.terms, self.avoid), [])
         self.assertEqual(flags("a scenario, unqualified", self.terms, self.avoid), ["scenario"])
 
+    def test_a_quote_inside_the_explanation_is_not_the_word(self):  # review 7, GLOSSARY.md "kaizen file"
+        _, avoid = glossary('_Avoid_: kaizen file (as its name: "backlog" is the project\'s own list)\n')
+        self.assertEqual(avoid, {"kaizen file"})
+
     def test_commas_inside_parentheses_do_not_split(self):
         self.assertEqual(split_top("a (b, c), d"), ["a (b, c)", " d"])
 

@@ -37,7 +37,7 @@ def glossary(text):
     avoid = set()
     for line in re.findall(r"^_Avoid_: (.*)$", text, re.M):
         for part in split_top(line):
-            quoted = re.search(r"\"(.+?)\"", part)
+            quoted = re.match(r"\s*\"(.+?)\"", part)  # a quoted word only when the part starts with it
             word = quoted.group(1) if quoted else re.sub(r"\(.*", "", part)
             word = word.strip().lower()
             if word:
