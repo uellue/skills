@@ -32,5 +32,6 @@ Written from the runs of 2026-11-05 and the fixes that followed them. Scope: "al
 | N26 | sem-instrument | Before terms are defined (a glossary, the requirements' vocabulary), a skill asks whether the field has an established vocabulary and adopts it | principal 2026-11-06; ledger 160 |
 | N27 | all | Every message the agent sends numbers its items in one sequence; no numbering restarts within a message (a must: the person must be able to answer "yes to 3, no to 7"); graded from the quoted messages | E21; principal 2026-11-06 |
 | N28 | all | Every message the agent sends is about fifteen lines or fewer as a terminal shows it; a longer one is split into steps; graded from the lengths the tester reports for the quoted messages (a should: a target, not a hard limit) | E22; principal 2026-11-06 |
+| N29 | all | When the hand-over leads to a push or a release, the debrief is placed after the push and the merge (its proposals into the next release), not before; while a run of several minutes goes on, the newcomer is invited once to note thoughts for it | ledger 230, 225; principal 2026-11-07 |
 
 Open and planned for 0.5, not yet expected to hold: a feasibility path before the full form (ledger 51); the decision record for a new project's first build (ledger 52).

@@ -18,6 +18,7 @@ This is the one place that says how to run the suites. From the repository root;
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-<case>; mkdir -p "$out"
     claude plugin eval plugins/kaizen --case <case> --scaffold --allow-tools Write Edit --runs 1 --ablation none --no-publish --max-cost-usd 2 --output-dir "$out" 2>&1 | tee "$out/run.log"
 
+- A full run takes several minutes: the time to note thoughts for the debrief ("note for the debrief: …"). When it is the final acceptance test of a release, the debrief follows the push and the merge, and its proposals go into the next release (ledger 230).
 - Cost ceilings are about 1.5 times the last full run ($10.01 for the triggers, $3.02 for the comparison). A ceiling never stops a run in progress, only the start of the next one, so it guards against a runaway (a skill looping to its turn limit), not against a normal run that costs a little more.
 - `--keep-temp` keeps each run's sandbox with its full trace; it is sealed and needs `chmod` to read. The results file already holds the trace a judge saw, so keep it for one case whose failure the results do not explain.
 - `--scaffold` runs each case's `fixture.sh` (a tiny tool `tally` with a stakeholder record); without it the workspace is empty and most graders fail.

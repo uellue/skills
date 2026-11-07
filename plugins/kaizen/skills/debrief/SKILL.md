@@ -5,7 +5,7 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `a4725715`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief a4725715` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `93544d28`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 93544d28` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better) and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report. (Structure adapted, with thanks, from two MIT-licensed skills, `debrief` by Wavez and `retrospective` by florianbuetow; the coaching, the five whys, the usage script and the ledger are this skill's own.)
 
@@ -13,9 +13,9 @@ Use plain words with the person: explain a term of this plugin the first time yo
 
 ## When
 
-Ends do not announce themselves (a compaction, a reboot, a refused turn), so the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". Several first uses in one session make one debrief. Three cheap habits feed it between runs; the first capture into a new ledger first says where it goes:
+Ends do not announce themselves (a compaction, a reboot, a refused turn), so the debrief runs on a schedule the person chooses (the end of a day, the end of a stretch, after the first use of a new skill), not "before the end". A release is debriefed after its push and merge, not before: its proposals go into the next release, so the work ships. Several first uses in one session make one debrief. Three cheap habits feed it between runs; the first capture into a new ledger first says where it goes:
 
-- **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Sorting is the debrief's job; capture must cost nothing.
+- **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Sorting is the debrief's job; capture must cost nothing. Once per stretch, while a run of several minutes goes on (the final acceptance tests, a reviewer, the debrief's own readers), invite the person to note thoughts, unless they have something more useful to do; not for a short wait, not again after a no, not without a person.
 - **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation.
 - **Offered, not decided.** When the agent offers steps and the person neither picks nor drops them, the open offer goes into the ledger's notes before the topic changes; the debrief asks whether it was dropped on purpose.
 

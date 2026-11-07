@@ -81,7 +81,7 @@ Starting an agent session is onboarding a new employee that knows only the repos
 9. **Challenge one lean per review**; give documents others build on thirty seconds: the unconfirmed items and two quotes.
 10. **Don't polish in advance; fix unwanted outcomes when you have a concrete example**, with its test. Security and safety are the exception: think them through before.
 11. **Prefer a check to a sentence**: a hook, a lint rule or a template field holds; a rule in a file is the fallback.
-12. **Debrief at least once per release, in a fresh session**: wind the working session down, start a new one for the debrief (the session that did the work would mostly confirm itself), apply what belongs in this release, then push.
+12. **Debrief after each release, in a fresh session**: while the final acceptance tests run, note thoughts for the debrief; push and merge; then start a new session for the debrief (the session that did the work would mostly confirm itself). Its proposals go into the next release, so there is never "one more thing before the push".
 13. **Be clear and deliberate with words.** Muddy words in the prompt make muddy concepts, winding paths and muddy outcomes. When a term turns out to carry two meanings, settle it once in a glossary (`/mattpocock-skills:domain-modeling` does it with you, and fits well into a debrief); the agent then reads your words in the glossary's sense and says so when it is unsure.
 
 ### What you paste for the agent
@@ -98,14 +98,14 @@ Standing instructions, for `AGENTS.md` or `CLAUDE.md`. Merge, don't append: read
 - When a word in a request is ambiguous or differs from the project's glossary, push back softly: say which reading you take, in the glossary's terms ("I read X as …"), and offer a glossary entry where none fits.
 - A request phrased as a question ("should we ...?", "could X be a good place?", "we can proceed now?") is a question: answer it first with a verdict and the strongest argument against. Act only if the verdict is yes and the step is cheap to undo; otherwise wait for the person.
 - Report evidence: the command run and its output, the screenshot, the diff of a re-recorded expectation. Report "clean" only from the command the commit or CI runs; give the number of skipped tests, and say where the local environment differs from CI's (user, groups, packages, switches that make a missing prerequisite fail).
-- A change beyond a few hundred lines gets a review by an agent that did not write it before it is handed over.
+- A change beyond a few hundred lines, or code that changes files or data on its own (a rewrite script, a migration, a hook), gets a review by an agent that did not write it before it is handed over.
 - At every hand-over that follows accepted leans, list each one: implemented as agreed, or deviated and why.
 - Do not build for cases nobody has hit; when an unwanted outcome appears, fix it with its concrete example and a test. Security and safety are the exception: think them through before building.
 - Use absolute paths and self-contained shell commands; edit files with the Edit tool, not with inline replacement scripts.
 - Never delete through a shell variable that could be empty or unset, in commands you run and in code you write (`"${var:?}"`, above all where the variable starts a path); quote variables, and prefer not creating what you would have to delete. Existing code is checked line by line and otherwise left as it is.
 - A vulnerability found while testing is reported first and stops the plan; the fix path is the proposed next step.
 - Anything that leaves the repository or a session for people and agents at once (issues, merge requests, upstream comments, hand-over notes, reports) is split: a short part for people first (what is wrong or decided, what to do, one example or the list of actions), then the part for agents (context, specifics, commands, what was verified), as a separate block, section or file, marked as reviewed by a person or attached unreviewed. Committed documentation counts as reviewed by its commit and is not restructured unasked.
-- Offer a debrief (`/kaizen:debrief`) in one line, once, at each of these moments: a pull request merged, a release, the end of a day or a stretch of work, the first use of a kaizen skill in the project. Not at other times: an offer at every turn is noise.
+- Offer a debrief (`/kaizen:debrief`) in one line, once, at each of these moments: a pull request merged, a release, the end of a day or a stretch of work, the first use of a kaizen skill in the project; and, once per stretch, while a run of several minutes goes on (above all the final acceptance tests), an invitation to note thoughts for it. Not at other times: an offer at every turn is noise.
 ```
 
 When a project also uses Matt Pocock's skills, for `AGENTS.md` or `CLAUDE.md`:
