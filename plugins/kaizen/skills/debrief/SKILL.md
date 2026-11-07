@@ -5,7 +5,7 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `93544d28`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 93544d28` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `8479bf15`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 8479bf15` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better) and changes to the project's setup. It is honest in both directions and never manufactures criticism: a session that went well gets a short report. (Structure adapted, with thanks, from two MIT-licensed skills, `debrief` by Wavez and `retrospective` by florianbuetow; the coaching, the five whys, the usage script and the ledger are this skill's own.)
 
@@ -44,7 +44,7 @@ Ends do not announce themselves (a compaction, a reboot, a refused turn), so the
    ```
 3. **The project's record.** The instruction files (`CLAUDE.md`, `AGENTS.md`), the backlog and decision log if the project keeps them, the stakeholder and requirements records in `design/`, and the agent's feedback memories for this project (`~/.claude/projects/<slug>/memory/`), so that a repeated mistake is recognised as a repeat. Memory is per checkout path: say in the report which memory the session actually had, because a worktree or a VM often had none.
 4. **The ledger and earlier reports.** `design/kaizen.md` (below) and the last three reports in `.claude/debriefs/`. For each earlier proposal, note whether it was acted on, is recurring, or is unknown; a recurring issue is escalated in severity. Adoption is not habit: a proposal marked done last time can still recur, and the finding then is that the destination was a sentence where a check (a hook, a lint rule, a template field) was possible.
-5. **The person.** Before writing findings, ask in one message what went well for them, where they felt friction, and where the agent seemed to lose track (of the scope, a decision, which level is under test when a tool tests itself), citing a moment you suspect. The agent is often blind to its own confusion; the answers are evidence, marked as theirs. If the person is away, put the questions at the end of the report.
+5. **The person.** Before writing findings, ask in one message what went well for them, where they felt friction, and where the agent seemed to lose track (of the scope, a decision, which level is under test when a tool tests itself), citing a moment you suspect. The agent is often blind to its own confusion; the answers are evidence, marked as theirs. If the person is away, put the questions at the end of the report. Their remarks with an emotional lean, positive or negative, go verbatim with the source into `.claude/debriefs/feedback-raw.md` (private) and cleaned into `design/feedback.md`: no ids, names or private projects, and a paraphrase offered where they might not want the original public.
 
 Match the effort to the stretch: a quick pass for a short, clean session; the full treatment and the five whys for a long one.
 
@@ -73,7 +73,7 @@ Then the two parts that make this skill personal:
 
 Matt Pocock's `retro` covers the agent's environment (checks, navigation, steering files, tool economy). Only the person can invoke it, as a message of its own; otherwise give its `SKILL.md` and the rendered transcript to an independent sub-agent that has not seen your findings. Compare the two reads: agreement strengthens a finding; say what each missed.
 
-And, for this plugin's own improvement (kaizen on kaizen): which of its skills were used, how they ran, where one would have helped and was not used, and what no skill covers. Look for missed skills from the tools the playbook pairs with it too (OpenSpec, Matt Pocock's skills), installed or not: name one only where it would have changed a cited moment, and say what installing it would take. They become proposals for the kaizen plugin: in its own repository, issues or merge requests with the maintainer's say; elsewhere nothing is sent on anyone's behalf, but offer a drafted issue for github.com/uellue/skills or a private message to the maintainer.
+And, for this plugin's own improvement (kaizen on kaizen): which of its skills were used, how they ran, where one would have helped and was not used, and what no skill covers. Look for missed skills from the tools the playbook pairs with it too (OpenSpec, Matt Pocock's skills), installed or not: name one only where it would have changed a cited moment, and say what installing it would take. They become proposals for the kaizen plugin: in its own repository, issues or merge requests with the maintainer's say; elsewhere nothing is sent on anyone's behalf, but offer a drafted issue for github.com/uellue/skills or a private message to the maintainer, with the feedback entries about the plugin on the person's yes.
 
 ## Output
 
@@ -82,7 +82,7 @@ Two documents, in the repository that was debriefed:
 - **The report**, private: `.claude/debriefs/YYYY-MM-DD.md` (with a `-2` suffix if one exists), from the template in `${CLAUDE_PLUGIN_ROOT}/references/debrief-report.md`, read before writing. It is a subjective snapshot with the coaching in it, so it stays out of version control: before writing anything, run `git -C "$(git rev-parse --show-toplevel)" check-ignore -q .claude/debriefs/x.md` (exit 0: ignored; outside a git repository, ask where to write); if git would track it, offer the line `/.claude/debriefs/` for `.gitignore` (or `.git/info/exclude`, which is not shared) and write nothing until the person agrees. The user can name another place.
 - **The ledger**: `design/kaizen.md`, or where the playbook's step 3 placed `design/`; say where and whether it is committed before creating it. If the repository is public or may become so, the ledger carries no details of other projects (they go to their own backlogs; the ledger says "transferred") and no security findings, secrets or credentials, not even as to-dos. Generalising an entry later does not remove it from git history: if one slipped in, say so before the push, so the person can decide whether to rewrite the unpushed history. Only what is actionable leaves the session. Start it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`; later, append the proposals under the date and update the statuses.
 
-Show a short summary in the reply: the five lines and the proposals that are not small.
+Show in the reply: the five lines, the coaching in full (the person may not be able to open the report), where their remarks went (what they said, what it became), and the proposals that are not small.
 
 ## Rules
 

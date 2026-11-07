@@ -19,3 +19,4 @@ The kaizen skills use a few words of their own. When an agent uses one with you 
 - **Ledger**: the backlog for how the work is done, not for the work itself: a short file (`design/kaizen.md`) of numbered proposals with their decisions, kept apart from the project's own backlog (its issues or task list). Each skill adds one line to it about what did not fit, so that rough edges surface at your next debrief.
 - **Two hats, five whys**: interview habits the skills use: asking once as the person who needs the tool and once as the one who builds it; and asking "why" past the first answer until the cause is reached.
 - **Debrief**: a look back at how you and the agents worked together, with proposals to work better next time.
+- **Feedback entry**: something you said about working with the plugin, liked or not, kept as the source of later goals: word for word in a private file, cleaned up (no names, no private projects) in `design/feedback.md`.

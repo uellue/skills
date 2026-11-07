@@ -58,7 +58,11 @@ _Avoid_: Wiedervorlage, bring forward, BF, tickler, "later" without a trigger
 
 **Skill friction**:
 One line, written at the end of a skill's run, on what in the skill did not fit the situation.
-_Avoid_: bug report, feedback
+_Avoid_: bug report, feedback (that is what people say, below)
+
+**Feedback entry**:
+What a person said about working with the plugin, positive or negative, kept as a primary source for goals: verbatim and private in `.claude/debriefs/feedback-raw.md`, cleaned in `design/feedback.md` with its effect (a ledger row, a rule, a test, or none yet).
+_Avoid_: complaint, praise, user voice
 
 **Acceptance example**:
 A concrete situation and its observable outcome, with an ID, a priority and the walk step or requirement it came from.
