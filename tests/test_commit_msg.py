@@ -42,6 +42,12 @@ class TestCommitMsg(unittest.TestCase):
         self.assertEqual(r.returncode, 0)
         self.assertEqual(r.stderr, "")
 
+    def test_lower_case_or_empty_trailer_warns(self):
+        # review 2, finding 9: git log --grep is case-sensitive
+        for i, message in enumerate(("Changed\n\nledger: 3", "Changed\n\nLedger:")):
+            r = self.commit(f"design/{i}.md", message)
+            self.assertIn("no 'Ledger: <rows>' trailer", r.stderr, message)
+
     def test_other_files_need_no_trailer(self):
         r = self.commit("tests/test_x.py", "A test")
         self.assertEqual(r.returncode, 0)

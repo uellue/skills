@@ -72,6 +72,75 @@ class TestRehash(unittest.TestCase):
         self.assertIn(f"{old}: not moved", report.stdout)
         self.assertEqual((self.repo / "record.md").read_text(), f"tested at `{old}`\n")
 
+    def merged_feature(self):
+        """A feature commit, a rebase merge, and a record citing the old hash; returns (old, new)."""
+        self.git("switch", "-q", "-c", "feature")
+        old = self.commit("b.txt", "feature\n", "feature")
+        self.rebase_merge("feature")
+        return old, self.git("rev-parse", "--short", "HEAD")
+
+    def test_main_moved_before_the_merge_is_reported_not_moved(self):
+        # review 2, finding 4: the rebased commit holds main's newer commits, a state nobody tested
+        self.git("switch", "-q", "-c", "feature")
+        old = self.commit("b.txt", "feature\n", "feature")
+        self.git("switch", "-q", "main")
+        self.commit("m.txt", "main moved\n", "main moved")
+        self.rebase_merge("feature")
+        self.commit("record.md", f"tested at `{old}`\n", "record")
+        report = self.run_script()
+        self.assertIn(f"{old}: not moved, same change as", report.stdout)
+
+    def test_unrelated_commit_with_the_same_change_is_not_a_match(self):
+        # review 2, finding 3: a commit of an open branch, the same change made independently on main
+        self.git("switch", "-q", "-c", "other")
+        old = self.commit("fix.txt", "fix\n", "fix on other")
+        self.git("switch", "-q", "main")
+        self.commit("m.txt", "main\n", "main")
+        self.commit("fix.txt", "fix\n", "fix on main")
+        self.commit("record.md", f"see `{old}`\n", "record")
+        self.assertIn(f"{old}: not moved", self.run_script().stdout)
+
+    def test_a_commit_on_main_that_is_not_utf8_does_not_stop_it(self):
+        # review 2, finding 1: the latin-1 commit lands on main after the branch point, so its diff is read
+        self.git("switch", "-q", "-c", "feature")
+        old = self.commit("b.txt", "feature\n", "feature")
+        self.git("switch", "-q", "main")
+        (self.repo / "latin1.txt").write_bytes(b"caf\xe9\n")
+        self.git("add", "latin1.txt")
+        self.git("commit", "-q", "-m", "latin-1")
+        self.rebase_merge("feature")
+        self.commit("record.md", f"tested at `{old}`\n", "record")
+        report = self.run_script()
+        self.assertEqual(report.returncode, 0, report.stderr)
+        self.assertIn(f"{old}: not moved, same change as", report.stdout)
+
+    def test_crlf_and_a_line_documenting_the_pair_are_kept(self):
+        # review 2, findings 2 and 5
+        old, new = self.merged_feature()
+        (self.repo / "record.md").write_bytes(f"tested at `{old}`\r\nmoved `{old}` to `{new}`\r\n".encode())
+        self.git("add", "record.md")
+        self.git("commit", "-q", "-m", "record")
+        report = self.run_script("--apply")
+        self.assertIn("left as it is", report.stdout)
+        self.assertEqual((self.repo / "record.md").read_bytes(), f"tested at `{new}`\r\nmoved `{old}` to `{new}`\r\n".encode())
+
+    def test_onto_a_missing_ref_fails(self):
+        self.assertNotEqual(self.run_script("--onto", "nosuch").returncode, 0)
+
+    def test_post_merge_reports_on_main_and_says_when_it_cannot_run(self):
+        # review 2, finding 6
+        hook = SCRIPT.parent / "post-merge"
+        old, new = self.merged_feature()
+        self.commit("record.md", f"tested at `{old}`\n", "record")
+        (self.repo / ".githooks").mkdir()
+        (self.repo / ".githooks" / "rehash.py").write_bytes(SCRIPT.read_bytes())
+        r = subprocess.run(["sh", str(hook)], cwd=self.repo, capture_output=True, text=True)
+        self.assertIn(f"{old} -> {new}", r.stderr)
+        (self.repo / ".githooks" / "rehash.py").unlink()
+        r = subprocess.run(["sh", str(hook)], cwd=self.repo, capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0)
+        self.assertIn("could not run", r.stderr)
+
     def test_refuses_to_rewrite_a_file_with_uncommitted_changes(self):
         self.git("switch", "-q", "-c", "feature")
         old = self.commit("b.txt", "feature\n", "feature")

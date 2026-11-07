@@ -1,5 +1,5 @@
 {
-  "about": "Leave-one-out on single rules of a skill (ledger 204, 214, 215). Each variant removes one exact text from a copy of the plugin; the eval suite of plugins/kaizen/evals/ then runs against the copy. Expected effects are written and committed before the run; 'observed' is filled in after it. Baseline: the with-arm of 2026-11-07 (6cbc5f3), every grader 3 of 3.",
+  "about": "Leave-one-out on single rules of a skill (ledger 204, 214, 215). Each variant removes one exact text from a copy of the plugin; the eval suite of plugins/kaizen/evals/ then runs against the copy. Expected effects are written and committed before the run; 'observed' is filled in after it. Baseline: the with-arm of 2026-11-07 (`6cbc5f3`), every grader 3 of 3.",
   "variants": [
     {
       "id": "no-blocks",
