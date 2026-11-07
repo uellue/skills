@@ -8,8 +8,8 @@ EVALS = Path(__file__).resolve().parents[1] / "plugins" / "kaizen" / "evals"
 
 class Evals(unittest.TestCase):
     def test_fixture_copies_are_identical(self):
-        # A scaffold script must sit in its case's directory, so each walkthrough case carries a copy.
-        copies = sorted(EVALS.glob("walkthrough/*/fixture.sh"))
+        # A scaffold script must sit in its case's directory, so every case carries a copy.
+        copies = sorted(EVALS.glob("*/*/fixture.sh"))
         self.assertGreater(len(copies), 1)
         first = copies[0].read_text()
         for copy in copies[1:]:
