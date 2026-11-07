@@ -46,4 +46,10 @@ Each grader file is named after the rule it checks in `skills/walkthrough/SKILL.
 
 Not covered yet: the questionnaire step, the two hats, the measured walk, the small path, numbering within a message, the text-id line (needs Bash), the friction line. The line numbers drift with edits to the skill; the rule names do not.
 
+## Triggers: which prompt starts which skill
+
+`triggers/` (ledger 223): 16 short prompts on the same fixture, each checked for which kaizen skill starts, if any; the expected skill and the expected effect, written before the first run, are in each case's `description`. Two cases depend on the project's state (principal, 2026-11-07): early in design, "what would a new colleague run into" should start the walk-through; nearly done with a persona, the hallway test; offering both and asking is also right, so a judge grades those two. "What should we do next" is tested only in a defined situation (just after a merge), since in general the answer depends on the session. New prompts come from real use. A skill cannot start without the plugin, so run them with one arm:
+
+    claude plugin eval . --tag trigger --scaffold --ablation none --no-publish --max-cost-usd 10
+
 The fixture script is copied into each case, since a scaffold script must sit in its case's directory; `tests/test_evals.py` fails when the copies differ.
