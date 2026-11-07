@@ -1,0 +1,41 @@
+{
+  "about": "Leave-one-out on single rules of a skill (ledger 204, 214, 215). Each variant removes one exact text from a copy of the plugin; the eval suite of plugins/kaizen/evals/ then runs against the copy. Expected effects are written and committed before the run; 'observed' is filled in after it. Baseline: the with-arm of 2026-11-07 (6cbc5f3), every grader 3 of 3.",
+  "variants": [
+    {
+      "id": "no-blocks",
+      "file": "skills/walkthrough/SKILL.md",
+      "remove": " This blocks: do not walk in a persona nobody confirmed.",
+      "case": "walkthrough-asks-for-persona",
+      "expected_by_agent": "inputs-1-asks-persona-before-walking still 3 of 3: the next sentences ('Show the personas it has, ask which one to take') still ask for the persona. Confidence: medium.",
+      "expected_by_principal": "",
+      "observed": ""
+    },
+    {
+      "id": "no-read-record",
+      "file": "skills/walkthrough/SKILL.md",
+      "remove": " Read the project's stakeholder record (`design/stakeholders.md`).",
+      "case": "walkthrough-asks-for-persona",
+      "expected_by_agent": "inputs-1-reads-stakeholder-record still 3 of 3: it held without the plugin too, and 'Show the personas it has' needs the record. Other graders unchanged. Confidence: high.",
+      "expected_by_principal": "",
+      "observed": ""
+    },
+    {
+      "id": "no-fifteen-lines",
+      "file": "skills/walkthrough/SKILL.md",
+      "remove": "keep a message to about fifteen lines, one step or question at a time; ",
+      "case": "walkthrough-asks-for-persona",
+      "expected_by_agent": "messages-about-fifteen-lines still 3 of 3: a message asking for the persona is short anyway, so the rule does not act in this situation (it failed without the plugin because Claude walked at once). Confidence: medium-low.",
+      "expected_by_principal": "",
+      "observed": ""
+    },
+    {
+      "id": "no-output-path",
+      "file": "skills/walkthrough/SKILL.md",
+      "remove": "Write the walk-through to `design/walkthroughs/<persona>-<process>.md` and give a short summary in the reply. ",
+      "case": "walkthrough-walks-confirmed-persona",
+      "expected_by_agent": "output-walk-file-with-template at most 1 of 3: the only mention of design/walkthroughs/ is gone, so the file lands elsewhere (design/ or the root) though with the template; output-examples-in-examples-md still 3 of 3 (its own sentence stays). Confidence: medium.",
+      "expected_by_principal": "",
+      "observed": ""
+    }
+  ]
+}
