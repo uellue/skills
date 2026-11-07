@@ -114,6 +114,18 @@ _Avoid_: behaviour test (that is the hallway test's behaviour mode), eval, bench
 The prepared input of a skill test: a transcript with planted moments, a tool with planted defects, a scripted principal with withheld facts, a self-test scenario.
 _Avoid_: behaviour fixture, test data
 
+**Coverage (of a skill)**:
+Which rules of the installed texts (skills, references, standing instructions) a skill test or a session exercised, and in which situations: the rule fired, held or was broken, or did not apply. Like code coverage, with the parameter space (the situations a rule meets) counted, not only whether it ran.
+_Avoid_: usage (that is whether a skill was invoked at all)
+
+**Expected effect**:
+What a change to a skill text should move, named before the next skill test: a key item or an observable behaviour. The test marks it confirmed, not confirmed, or side effect elsewhere.
+_Avoid_: prediction (unqualified), hypothesis
+
+**Kept improvement**:
+A change to a skill that a later skill test or real use confirmed and that was not reverted; counted per activity (review, real use, self-test) against the tokens it cost.
+_Avoid_: fix (unqualified), finding
+
 **Behaviour mode**:
 The hallway test's mode in which the tester builds inputs, writes its expectation for each, runs the subject and compares; the other modes are by eye, diagnosis, hint-following and documents.
 _Avoid_: behaviour test (unqualified)
