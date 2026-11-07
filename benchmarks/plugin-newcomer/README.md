@@ -14,6 +14,7 @@ By hand: `python3 benchmarks/plugin-newcomer/brief.py <scenario>` prints the fil
 - `scenarios/<name>.md`: who the newcomer is, what exists, what they must never volunteer, what to note in particular; `scenarios/<name>/`, if present, is copied into the scratch project.
   - `sem-instrument`: a new colleague who wants an agent to operate a scanning electron microscope; nothing exists yet.
   - `existing-tool`: a scientist with a small working CLI (`tally`) and no requirements, told to get a critical first user to try it.
+  - `after-merge`: the same scientist after the hallway test: the final check, the merge, and the debrief that follows, with three planted remarks (one positive, one annoyed, one naming a colleague); the scenario that reaches N29 and N30 (ledger 237, 238).
 - `key.md`: what a run is checked against, per scenario (N1 to N16).
 - `results/<date>-<scenario>.md`: one file per run.
 
