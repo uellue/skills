@@ -1,14 +1,27 @@
 #!/bin/bash
-# Start the next field-test recording (runbook: design/field-tests/devvm-runbook.md, "Recording, always first").
+# Field-test recordings (runbook: design/field-tests/devvm-runbook.md).
 #
-#   record.sh            records into the next free run-<n> under ~/field-test (run-0 the first time), until `exit`
+#   record.sh            records into the next free run-<n> under ~/field-test (run-0 the first time), until `exit`;
+#                        the run's folder also gets notes.md, your notes about the plugin
 #   record.sh --next     only prints the folder the next recording would use
+#   record.sh --pack N   packs run-N into ~/field-test/run-N.tar.gz, the run's evidence as one file
 #
-# FIELD_TEST_DIR overrides ~/field-test. Output and timing only: never --log-in, which would record every key,
-# passwords included. An existing run folder is never reused or touched; nothing is deleted.
+# The first time, it asks before creating ~/field-test (FIELD_TEST_DIR overrides it). Output and timing only:
+# never --log-in, which would record every key, passwords included. An existing run folder is never reused;
+# nothing is deleted.
 set -euo pipefail
 
 base="${FIELD_TEST_DIR:-$HOME/field-test}"
+
+if [ "${1:-}" = "--pack" ]; then
+    [ $# -eq 2 ] && [[ "$2" =~ ^[0-9]+$ ]] || { echo "usage: record.sh --pack N" >&2; exit 2; }
+    [ -d "$base/run-$2" ] || { echo "no $base/run-$2" >&2; exit 1; }
+    [ ! -e "$base/run-$2.tar.gz" ] || { echo "$base/run-$2.tar.gz exists already" >&2; exit 1; }
+    tar -C "$base" -czf "$base/run-$2.tar.gz" "run-$2"
+    echo "Packed: $base/run-$2.tar.gz ($(du -h "$base/run-$2.tar.gz" | cut -f1)). Look through it for anything private before sharing."
+    exit 0
+fi
+
 n=0
 for d in "$base"/run-*; do
     [ -d "$d" ] || continue
@@ -23,10 +36,16 @@ if [ "${1:-}" = "--next" ]; then
     echo "$run"
     exit 0
 fi
-[ $# -eq 0 ] || { echo "usage: record.sh [--next]" >&2; exit 2; }
+[ $# -eq 0 ] || { echo "usage: record.sh [--next | --pack N]" >&2; exit 2; }
 
-mkdir -p "$base"
+if [ ! -d "$base" ]; then
+    printf 'Create %s as the scratch folder for field-test runs (recordings, notes, copies of the project)? [y/N] ' "$base"
+    read -r answer || answer=""
+    case "$answer" in y | Y | yes) ;; *) echo "Nothing created."; exit 1 ;; esac
+    mkdir -p "$base"
+fi
 mkdir "$run"  # fails rather than reuse a folder another terminal just took
+printf '# Notes, %s\n\n' "${run##*/}" > "$run/notes.md"
 echo "Recording into $run until you type exit. Output and timing only; look through session.log before sharing it."
-echo "Notes at the shell prompt: type them as comments, '# like this' (zsh: 'setopt interactivecomments' first). Not inside Claude."
+echo "Notes: $run/notes.md, or at a shell prompt as comments, '# like this' (zsh: 'setopt interactivecomments' first). Not inside Claude."
 exec script -q -T "$run/timing.log" -O "$run/session.log"

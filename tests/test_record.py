@@ -27,8 +27,34 @@ class TestRecord(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
-    def run_record(self, *args):
-        return subprocess.run(["bash", str(SCRIPT), *args], env=self.env, capture_output=True, text=True)
+    def run_record(self, *args, answer="y\n"):
+        return subprocess.run(["bash", str(SCRIPT), *args], env=self.env, capture_output=True, text=True, input=answer)
+
+    def test_it_asks_before_creating_the_scratch_folder(self):
+        r = self.run_record(answer="n\n")
+        self.assertEqual(r.returncode, 1)
+        self.assertFalse(self.base.exists())
+        self.assertIn("scratch folder", r.stdout)
+        r = self.run_record(answer="")  # no terminal, no answer: nothing created
+        self.assertFalse(self.base.exists())
+        self.assertEqual(self.run_record().returncode, 0)
+        self.assertTrue((self.base / "run-0" / "notes.md").is_file())
+        r = self.run_record(answer="n\n")  # asked only the first time
+        self.assertEqual(r.returncode, 0, r.stdout)
+        self.assertTrue((self.base / "run-1").is_dir())
+
+    def test_pack_makes_one_archive_and_never_overwrites(self):
+        self.run_record()
+        (self.base / "run-0" / "session.log").write_text("x\n")
+        r = self.run_record("--pack", "0")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        archive = self.base / "run-0.tar.gz"
+        listing = subprocess.run(["tar", "-tzf", str(archive)], capture_output=True, text=True).stdout.split()
+        self.assertIn("run-0/session.log", listing)
+        self.assertIn("run-0/notes.md", listing)
+        self.assertEqual(self.run_record("--pack", "0").returncode, 1)
+        self.assertEqual(self.run_record("--pack", "7").returncode, 1)
+        self.assertEqual(self.run_record("--pack", "x").returncode, 2)
 
     def test_first_is_run_0_then_it_counts_up_past_gaps_and_odd_names(self):
         self.assertEqual(self.run_record("--next").stdout.strip(), str(self.base / "run-0"))
