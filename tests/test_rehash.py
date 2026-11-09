@@ -139,7 +139,13 @@ class TestRehash(unittest.TestCase):
         out = self.run_script().stdout
         self.assertIn("main is 2 commits behind origin/main", out)
         self.assertIn("git fetch origin main:main", out)
-        self.git("branch", "-f", "main", "origin/main")
+        self.git("remote", "rename", "origin", "upstream")
+        out = self.run_script().stdout
+        self.assertIn("main is 2 commits behind upstream/main", out)
+        self.assertIn("git fetch upstream main:main", out)
+        self.git("branch", "-f", "main", "upstream/main~1")
+        self.assertIn("main is 1 commit behind", self.run_script().stdout)
+        self.git("branch", "-f", "main", "upstream/main")
         self.assertNotIn("behind", self.run_script().stdout)
 
     def test_onto_a_missing_ref_fails(self):
