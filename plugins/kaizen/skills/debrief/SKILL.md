@@ -5,7 +5,7 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `1fd21442`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 1fd21442` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `d087ce37`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief d087ce37` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better) and changes to the project's setup. (Structure adapted, with thanks, from two MIT-licensed skills, `debrief` by Wavez and `retrospective` by florianbuetow; the coaching, the five whys, the usage script and the ledger are this skill's own.)
 
@@ -17,7 +17,7 @@ Ends do not announce themselves (a compaction, a reboot), so the debrief runs on
 
 - **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Sorting is the debrief's job; capture must cost nothing. Once per stretch, while a run of several minutes goes on (the final acceptance tests, a reviewer, the debrief's own readers), invite the person to note thoughts; not for a short wait, not again after a no, not without a person.
 - **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation.
-- **Offered, not decided.** When the agent offers steps and the person neither picks nor drops them, the open offer goes into the ledger's notes before the topic changes; the debrief asks whether it was dropped on purpose.
+- **Offered, not decided.** An offer the person neither took nor dropped goes into the ledger's notes before the topic changes; the debrief asks whether it was dropped on purpose.
 
 ## Inputs
 
@@ -33,7 +33,7 @@ Ends do not announce themselves (a compaction, a reboot), so the debrief runs on
    - In a fresh session (the newest session's first message is this debrief's own invocation), never take that session. Propose the sessions since the last debrief in the ledger (no ledger yet: those of the last seven days), each with its date, size and first message; say which you will take and wait for a yes.
    - In the session that did the work (wrapping up, or after a skill's first use), the stretch is this session so far; say so, and offer a fresh session for a less anchored read.
 
-   Before reading more than one session, state the sessions, their sizes, the readers' model and the token estimate (see "Several sessions at once"), and wait; for one session, state its size and go on.
+   Before reading several sessions, state them, their sizes, the readers' model and the token estimate, and wait; for one session, state its size and go on.
 
    Read the rendering, not the raw JSONL: grepping one's own transcript for patterns has ended sessions. If the session was compacted, say so; the rendering usually still shows the earlier part, so read it there, and use the summary as lower-confidence evidence only where that part is missing; never invent moments. Messages the person queued while a turn ran appear as "USER (queued mid-turn)" and often carry decisions. Text the harness put in the person's place (skill texts, sub-agent reports, notifications, command output) is labelled HARNESS: it is not the person's, and never evidence for coaching.
 2. **The numbers.** The usage script: messages, tool calls by name, tokens per model, sub-agents, span, compactions.
@@ -44,7 +44,7 @@ Ends do not announce themselves (a compaction, a reboot), so the debrief runs on
    ```
 3. **The project's record.** The instruction files (`CLAUDE.md`, `AGENTS.md`), the backlog and decision log if the project keeps them, the stakeholder and requirements records in `design/`, and the agent's feedback memories for this project (`~/.claude/projects/<slug>/memory/`), so that a repeated mistake is recognised as a repeat. Say which memory the session had: it is per checkout path, and a worktree or a VM often has none.
 4. **The ledger and earlier reports.** `design/kaizen.md` (below) and the last three reports in `.claude/debriefs/`. For each earlier proposal, note whether it was acted on, is recurring, or is unknown; a recurring issue is escalated in severity. Adoption is not habit: a proposal marked done last time can still recur, and the finding then is that the destination was a sentence where a check (a hook, a lint rule, a template field) was possible.
-5. **The person.** Before writing findings, ask in one message what went well for them, where they felt friction, and where the agent seemed to lose track (of the scope, a decision, which level is under test when a tool tests itself), citing a moment you suspect. The agent is often blind to its own confusion; the answers are evidence, marked as theirs. If the person is away, put the questions at the end of the report. Note their remarks with an emotional lean, positive or negative: they become feedback entries (Output).
+5. **The person.** Before writing findings, ask in one message what went well for them, where they felt friction, and where the agent seemed to lose track (of the scope, a decision, which level is under test when a tool tests itself), citing a moment you suspect; where they already said it, quote them and ask only what to add. The agent is often blind to its own confusion; the answers are evidence, marked as theirs. If they are away, the questions end the report. Note their remarks with an emotional lean, positive or negative: they become feedback entries (Output).
 
 Match the effort to the stretch: a quick pass for a short, clean session; the full treatment and the five whys for a long one.
 
@@ -71,13 +71,13 @@ Then the two parts that make this skill personal:
 - **Coaching for the person.** How could the person writing the prompts have been more effective? Which of their moves helped the most (name them, so they are repeated) and which cost (vague scope, muddy words, an unlabelled example, a decision withheld, a review skipped, a slash command inside a message)? Write it to the person directly, the way a peer in a supervision group would: specific, evidence-based, without flattery and without softening. Every item cites a moment, as a finding does, and fits it (no "say so at once" where they did). When a cause lies in a skill, the finding goes to the skill, not into the coaching.
 - **Models and effort.** From the numbers: was the model and effort level proportionate to the work? Where did tokens go (main loop, sub-agents, workflows, context), and would a cheaper model or a lower effort have done for parts of it? Where did a high effort pay off? Check that the model the person asked for is the one in the transcript.
 
-Matt Pocock's `retro` covers the agent's environment (checks, navigation, steering files, tool economy). Only the person can invoke it, as a message of its own; otherwise give its `SKILL.md` and the rendered transcript to an independent sub-agent that has not seen your findings. Compare the two reads: agreement strengthens a finding; say what each missed.
+Matt Pocock's `retro` covers the agent's environment (checks, navigation, steering files). Only the person can invoke it; otherwise give its `SKILL.md` and the rendered transcript to an independent sub-agent that has not seen your findings. Compare the two reads: agreement strengthens a finding; say what each missed.
 
 And, for this plugin's own improvement (kaizen on kaizen): which of its skills were used, how they ran, where one would have helped and was not used, and what no skill covers. Look for missed skills from the tools the playbook pairs with it too (OpenSpec, Matt Pocock's skills), installed or not: name one only where it would have changed a cited moment, and say what installing it would take. They become proposals for the kaizen plugin: in its own repository, issues or merge requests with the maintainer's say; elsewhere nothing is sent on anyone's behalf, but offer a drafted issue for github.com/uellue/skills or a private message to the maintainer, with the feedback entries about the plugin on the person's yes.
 
 ## Output
 
-Three documents, in the repository that was debriefed; when the default branch is checked out, the committed ones go on a working branch:
+Three documents, in the repository that was debriefed; when the default branch is checked out, the committed ones go on a working branch, and you say that it needs its own merge request or offer to carry them into the next one:
 
 - **The report**, private: `.claude/debriefs/YYYY-MM-DD.md` (with a `-2` suffix if one exists), from the template in `${CLAUDE_PLUGIN_ROOT}/references/debrief-report.md`, read before writing. It is a subjective snapshot with the coaching in it, so it stays out of version control: before writing anything, run `git -C "$(git rev-parse --show-toplevel)" check-ignore -q .claude/debriefs/x.md` (exit 0: ignored; outside a git repository, ask where to write); if git would track it, offer the line `/.claude/debriefs/` for `.git/info/exclude`, which protects every branch at once (`.gitignore` on a working branch leaves `main` open until the merge; offer both), and write nothing until the person agrees. The user can name another place.
 - **The ledger**: `design/kaizen.md`, or where the playbook's step 3 placed `design/`; say where and whether it is committed before creating it. Unless its header says, ask once whether the repository is public or may become so, and note the answer there. If so, the ledger carries no details of other projects (they go to their own backlogs; the ledger says "transferred") and no security findings, secrets or credentials, not even as to-dos. If one slipped in, say so before the push: git history keeps it. Only what is actionable leaves the session. Start it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`; later, append the proposals under the date and update the statuses.
