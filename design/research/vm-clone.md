@@ -8,12 +8,26 @@ Research note, 2026-11-09, for a new devvm requirement (to be filed in devvm's t
   `virt-clone --original devvm-snapshots --name devvm-field --file <pool>/devvm-field.qcow2`
 - On this host it must run with the system Python (`PATH=/usr/bin:$PATH virt-clone …`): miniforge's Python first on PATH makes it crash, as devvm's own script notes for `virt-install`.
 - A plain clone is not yet a working devvm VM. Four things need doing by hand (or by a future `devvm clone`):
-  1. **The shared folder.** The clone's virtiofs `source.dir` still points at the original's host checkout; it must point at the working copy, e.g. `virt-xml devvm-field --edit --filesystem source.dir=<working copy>` (not checked).
+  1. **The shared folder.** The clone's virtiofs `source.dir` still points at the original's host checkout; it must point at the working copy, and devvm's own record of it too (see "Pointing the shared folder at a new source" below).
   2. **devvm's own files.** devvm keeps `<pool>/<name>.hostkey` and `<name>.known_hosts` per VM name; the clone needs copies under its name, or `devvm ssh` will not know it (not checked).
   3. **Snapshots.** devvm's snapshots are libvirt snapshots stored in the qcow2 (`virsh snapshot-create-as … --atomic`). Whether `virt-clone` carries them over: not stated in the man page, not checked; assume not, and take a new snapshot `field-start` on the clone.
   4. **The disk chain.** devvm's disks are qcow2 overlays on a shared base image (`qemu-img create -b <base>`). Whether the clone's copy keeps that backing link or becomes a full, larger image: not checked.
 - Inside the clone everything is identical to the original (hostname, SSH host keys, the agent's memory, logins): that is the point ("warts and all"), but both should not run under the same name on one network at once.
 - Lean for devvm: a `devvm clone <new name>` command that does the four steps and refuses while the original runs.
+
+## Pointing the shared folder at a new source
+
+How devvm sets it up now (script at `81c3137`):
+- At `create`, devvm shares the checkout (its git top level) through virtiofs with the tag `devvm-ws`, mounted in the VM at `/workspaces/<the checkout folder's name>` (`plan_mounts`, `add_fs devvm-ws`); a linked worktree adds the main repository's git directory as `devvm-git`; `DEVVM_MOUNTS` adds more. The VM mounts them by tag through its `/etc/fstab`.
+- It records the pair in libvirt metadata: `<workspace host="<checkout>" guest="<path in the VM>"/>` under the namespace `https://devvm.invalid/1` (`virsh metadata … --set`), which `vm_workspace` and `vm_workspace_host` read back.
+- Before `start` and `reset` it checks that every share's source exists (`check_shares`), and says: "shared folders are fixed when a VM is created; to drop a mount, re-create the VM without it". So devvm has no command to move a share.
+
+How to move it by hand (the VM shut off; not checked on a real VM):
+1. The definition: `PATH=/usr/bin:$PATH virt-xml <vm> --edit target=devvm-ws --filesystem source.dir=<new path>` (by analogy with `virt-xml`'s documented `--edit target=hda --disk`); or, safest, `virsh dumpxml --inactive <vm> > vm.xml`, change the `<source dir=…>` of the filesystem whose `<target dir='devvm-ws'/>`, `virsh define vm.xml`.
+2. devvm's record: `virsh metadata <vm> --uri https://devvm.invalid/1 --key devvm --config --set '<workspace host="<new path>" guest="<the old guest path>"/>'`. The guest path stays: the tag and the VM's fstab do not change, so the copy appears where the old checkout did.
+3. **Snapshots carry the old definition.** A libvirt snapshot keeps the domain XML of its moment, and reverting restores it; reverting a snapshot taken before the move brings the old source back. If the old path still exists (for a clone of `devvm-snapshots`: the maintainer's real checkout), the VM silently shares it again, since `check_shares` only sees that a source exists. So: move the share first, then take the new snapshot (`field-start`), and delete or never use the older ones on the clone.
+
+For the field test this means: clone `devvm-snapshots` (shut off), move its `devvm-ws` share to the working copy, update the metadata, take `field-start`; the runbook's reset by snapshot then keeps pointing at the working copy, which the runbook swaps for a fresh copy of the master between runs while the VM is off.
 
 ## For agents
 
