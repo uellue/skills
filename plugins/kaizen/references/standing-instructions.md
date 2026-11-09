@@ -3,6 +3,7 @@
 The block a project pastes into its `AGENTS.md` or `CLAUDE.md`. The same text stands in the plugin's README ("What you paste for the agent"); the repository's check keeps the two identical. Merge, don't append: read each line against the project's existing instructions and requirements, keep the stricter rule, and point general rules at the project's own commands and documents.
 
 ```text
+Kaizen standing instructions, version 0.6.0-dev.1: /kaizen:update brings them up to date with a newer plugin.
 - Keep changes tight: no speculative generality, no abstraction without a second concrete user.
 - Follow established formats, patterns and tools; before writing a mechanism a library implements, search for the library; before defining a term, look for the field's established vocabulary (a community glossary or ontology) and ask which one the project uses; ask before adding a new dependency, with its current release looked up, not recalled, and flag it in the hand-over.
 - A pull request or release description starts from the branch's log and diff, grouped by area, so that nothing is left out; the size of a change is not its importance, and the agent can rarely judge which changes matter to which readers: ask the person, or leave the summary on top to them.

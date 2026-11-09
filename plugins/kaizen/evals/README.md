@@ -33,7 +33,7 @@ First comparison (2026-11-07, three runs per arm, 18 runs, 676 s, $3.02): every 
 
 ## What eval cannot reach
 
-Runs load only the plugin: no CLAUDE.md, user settings, memory or other plugins. The standing instructions are outside this tool; their coverage needs another one (the backtrace of ledger row 218). There are no custom-code graders.
+Runs load only the plugin: no CLAUDE.md, user settings, memory or other plugins. Python does not start inside the sandbox ("Failed to import encodings module", checked 2026-11-09 with `--keep-temp`), so no skill's start-up line (`scripts/version.py`) runs there: a case about what that line says, such as the notice that names `/kaizen:update` (ledger 280), fails for the instrument, not the skill; `tests/test_scripts.py` covers the script. The standing instructions are outside this tool; their coverage needs another one (the backtrace of ledger row 218). There are no custom-code graders.
 
 ## Coverage: grader to rule
 

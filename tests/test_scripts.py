@@ -272,6 +272,68 @@ class TestVersion(unittest.TestCase):
         self.assertIn("debrief", r.stderr)
 
 
+class TestProjectNotice(unittest.TestCase):
+    """version.py at a skill's start, in a project whose records are older than the installed plugin (ledger 280, E33)."""
+
+    OLD_BLOCK = "## Working rules\n\n- Keep changes tight: no speculative generality, no abstraction without a second concrete user.\n"
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.project = Path(self.tmp.name) / "project"
+        self.project.mkdir()
+        env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+        subprocess.run(["git", "init", "-q"], cwd=self.project, env=env, check=True)
+        self.installed = json.loads((SCRIPTS.parent / ".claude-plugin" / "plugin.json").read_text())["version"]
+        skill = SCRIPTS.parent / "skills" / "playbook" / "SKILL.md"
+        self.text_id = re.search(r"^Text id `([0-9a-f]{8})`", skill.read_text(), re.M).group(1)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def start(self, skill="playbook"):
+        """What a skill runs at its start, in the project; only the notice line, not the maintainer's status line."""
+        r = subprocess.run([sys.executable, SCRIPTS / "version.py", skill, self.text_id], cwd=self.project, capture_output=True, text=True)
+        return "\n".join(l for l in r.stdout.splitlines() if "/kaizen:update" in l)
+
+    def test_an_unversioned_copy_is_named_once_per_installed_version(self):
+        (self.project / "CLAUDE.md").write_text(self.OLD_BLOCK)
+        first = self.start()
+        self.assertIn("CLAUDE.md: standing instructions from before 0.6 (no version line)", first)
+        self.assertIn(f"Said once for {self.installed}", first)
+        self.assertEqual(self.start(), "")
+        self.assertEqual((self.project / ".git" / "info" / "kaizen-update-noticed").read_text().strip(), self.installed)
+        (self.project / ".git" / "info" / "kaizen-update-noticed").write_text("0.5.5\n")
+        self.assertIn("/kaizen:update", self.start())
+
+    def test_an_older_version_line_and_an_old_ledger_are_named(self):
+        (self.project / "AGENTS.md").write_text("Kaizen standing instructions, version 0.5.9: /kaizen:update brings them up to date.\n" + self.OLD_BLOCK)
+        (self.project / "design").mkdir()
+        (self.project / "design" / "kaizen.md").write_text("# Kaizen ledger\n\nMessage size: comfortable, asked 2026-11-01.\n")
+        out = self.start()
+        self.assertIn("AGENTS.md: standing instructions from 0.5.9", out)
+        self.assertIn("design/kaizen.md: no Public: line", out)
+
+    def test_silent_when_current_or_when_the_project_never_used_the_plugin(self):
+        self.assertEqual(self.start(), "")
+        (self.project / "CLAUDE.md").write_text(f"Kaizen standing instructions, version {self.installed}: x\n" + self.OLD_BLOCK)
+        self.assertEqual(self.start(), "")
+
+    def test_the_update_skill_itself_does_not_point_at_itself(self):
+        (self.project / "CLAUDE.md").write_text(self.OLD_BLOCK)
+        update = SCRIPTS.parent / "skills" / "update" / "SKILL.md"
+        self.text_id = re.search(r"^Text id `([0-9a-f]{8})`", update.read_text(), re.M).group(1)
+        self.assertEqual(self.start("update"), "")
+
+    def test_versions_compare_with_a_pre_release_before_its_release(self):
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("version", SCRIPTS / "version.py")
+        v = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(v)
+        order = ["0.5.5", "0.5.10", "0.6.0-dev.1", "0.6.0-dev.2", "0.6.0", "0.6.1", "1.0.0"]
+        self.assertEqual(sorted(order, key=v.version_key), order)
+
+
 class TestPythonVersion(unittest.TestCase):
     def test_old_python_gets_one_line(self):  # E11
         for name in ("transcript.py", "usage.py"):
