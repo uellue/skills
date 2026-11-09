@@ -15,7 +15,7 @@ Whenever something about the plugin strikes you (confusing, missing, good, annoy
 
 - **Through the plugin itself:** everything it offers is yours to use, including "note for the debrief" and `/kaizen:debrief` in devvm; what lands in devvm's ledger and feedback files is read in the analysis too.
 
-Notes about devvm itself go wherever the plugin tells you, as usual.
+Notes about devvm itself go wherever you as the manager see fit, if you like guided by the plugin, as usual.
 
 ## Rules for this run
 
