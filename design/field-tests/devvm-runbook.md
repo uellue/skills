@@ -30,7 +30,7 @@ Every part below starts in a terminal on the host with `design/field-tests/recor
 
 ## Here, after each run (L1, with me)
 
-8. I read the exported session, your notes and the checkout's diff; grade against N32 to N50 and the walk's E38 to E41; check row 292 (did the plugin walk the inner role through environment, roles, what runs where); findings go to the ledger by layer: the plugin (fix here), devvm (a draft for devvm's tracker, for the run that is kept), the field-test method. Fixes, then the version raised (0.6.0-dev.2, …) and pushed, so that step 5 brings them.
+8. I read the exported session, your notes (the notes file, the `#` lines in the recording, and what the plugin wrote into devvm's ledger and feedback files in the clone) and the checkout's diff; grade against N32 to N50 and the walk's E38 to E41; check row 292 (did the plugin walk the inner role through environment, roles, what runs where); findings go to the ledger by layer: the plugin (fix here), devvm (a draft for devvm's tracker, for the run that is kept), the field-test method. Fixes, then the version raised (0.6.0-dev.2, …) and pushed, so that step 5 brings them.
 
 ## Reset for the next run (kaizen on kaizen only; never part of normal plugin use)
 
