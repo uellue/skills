@@ -11,11 +11,10 @@ In your devvm session (Claude Code in the VM, in the devvm checkout), type `/kai
 Whenever something about the plugin strikes you (confusing, missing, good, annoying), note it, in whichever of these is at hand:
 
 - **At a shell prompt** (not inside Claude): type the note as a comment, `# the update asked twice about the tracker`. The shell ignores it, and the recording keeps it with its time. In zsh, run `setopt interactivecomments` once first; bash needs nothing.
-- **While Claude is running:** one line in the notes file named in your runbook, from a second terminal. Not into Claude itself: a note typed there goes to devvm's agent and becomes part of its work.
+- **While Claude is running:** one line in the notes file named in your runbook, from a second terminal or your editor. This doesn't go into your Claude session.
+- **Through the plugin itself:** everything it offers is yours to use, including "note for the debrief" and `/kaizen:debrief` in devvm; what lands in devvm's ledger and feedback files is read in the analysis, too.
 
-- **Through the plugin itself:** everything it offers is yours to use, including "note for the debrief" and `/kaizen:debrief` in devvm; what lands in devvm's ledger and feedback files is read in the analysis too.
-
-Notes about devvm itself go wherever you as the manager see fit. Please follow your normal procedures there.
+Notes about devvm itself go wherever you see fit. Please follow your normal procedures there.
 
 ## Rules for this run
 
@@ -24,6 +23,6 @@ Notes about devvm itself go wherever you as the manager see fit. Please follow y
 
 ## When you are done
 
-1. Tell the plugin you are done, and let it hand over as it would.
+1. Wind the session down as you normally would.
 2. Answer in the notes file: Did we do OK? Was anything in this brief, or in the plugin, uncomfortable or unclear?
 3. Follow "Handing back" in your runbook.
