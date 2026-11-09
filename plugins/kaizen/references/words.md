@@ -5,6 +5,8 @@ The kaizen skills use a few words of their own. When an agent uses one with you 
 - **Lean**: the agent's preferred answer to an open question, given with the question so that "yes" accepts it. A lean you accept becomes a decision.
 - **Principal**: you, as the person who decides for the project and reviews the work.
 - **Owner**: whoever may authorise work on something real (an instrument, a live site, irreplaceable data) and sets its limits; often not the principal. A project may use "owner" for its maintainer; then say which you mean.
+- **Inbox**: the ledger's notes section ("Notes for the next debrief") in its other role: ideas you drop during work wait there until `/kaizen:sync` or the debrief routes each to its place (an issue, a comment, a ledger row, or the bin) and leaves only the link.
+- **Sync**: `/kaizen:sync`, bringing the project and its upstream (the remote repository and the issue tracker) in step in both directions; you type it yourself.
 - **Standing instructions**: the short block of rules for the agent that a project copies into its `CLAUDE.md` or `AGENTS.md`; its first line names the plugin version it is from, so that `/kaizen:update` can show what changed since.
 - **Persona**: a described user (who they are, what they want, what they know), whose shoes a walk-through or a hallway test steps into.
 - **Stakeholder**: anyone with a stake in the tool: its users, whoever maintains it, whoever owns what it touches, whoever reads what it produces.

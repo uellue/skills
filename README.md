@@ -24,7 +24,7 @@ In a Claude Code session in your project:
 /kaizen:sync          the project and its upstream in step: tracker read, notes routed, what waits to go out
 ```
 
-Not sure where you are? Start with `/kaizen:playbook`; it offers two further skills, requirements and walk-through, when they fit. The words the skills use are explained in [Words you will see](plugins/kaizen/references/words.md).
+`/kaizen:update` and `/kaizen:sync` start only when you type them: asking in words ("let's sync") does not start them, by design, since they change your instructions or talk to your upstream. Not sure where you are? Start with `/kaizen:playbook`; it offers two further skills, requirements and walk-through, when they fit. The words the skills use are explained in [Words you will see](plugins/kaizen/references/words.md).
 
 ## Plugins
 
