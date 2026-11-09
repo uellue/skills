@@ -4,7 +4,7 @@ For the maintainer. From the walk-through `design/walkthroughs/maintainer-field-
 
 ## Recording, always first
 
-Every part below starts in a terminal on the host under `script`, before anything else: `mkdir -p ~/field-test/run-<n> && script -q -T ~/field-test/run-<n>/timing.log -O ~/field-test/run-<n>/session.log` (`run-0` for the once-only part), and ends with `exit`. Output and timing only: never `--log-in`, which records every key, passwords included. Outside devvm, so it survives the reset. `devvm ssh` runs inside it, so the VM side is recorded too. It records what the transcript cannot (the commands outside Claude, their output, the timing) and tests the method a colleague will use (variant 2); the Claude session's own record stays its transcript (step 7), since Claude's full-screen interface makes the recording large and hard to read; whether it is still useful for the session is one of the run's findings.
+Every part below starts in a terminal on the host with `design/field-tests/record.sh` from this repository, before anything else, and ends with `exit`. It records into the next free `~/field-test/run-<n>` (`run-0` the first time, which is the once-only part; `record.sh --next` shows the folder without starting), with util-linux `script`, output and timing only: never `--log-in`, which records every key, passwords included. Outside devvm, so it survives the reset. `devvm ssh` runs inside it, so the VM side is recorded too. It records what the transcript cannot (the commands outside Claude, their output, the timing) and tests the method a colleague will use (variant 2); the Claude session's own record stays its transcript (step 7), since Claude's full-screen interface makes the recording large and hard to read; whether it is still useful for the session is one of the run's findings.
 
 ## Once, before the first run (recorded as run-0)
 
@@ -14,7 +14,7 @@ Every part below starts in a terminal on the host under `script`, before anythin
 
 ## Each run
 
-3a. **Recording:** start `run-<n>` (see "Recording, always first"); every step below in that terminal, `exit` after step 7. The reset (steps 9 to 11) is recorded too, as part of the next run's recording or of its own.
+3a. **Recording:** `record.sh` (see "Recording, always first"); every step below in that terminal, `exit` after step 7. The reset (steps 9 to 11) is recorded too, as part of the next run's recording or of its own.
 
 4. **L3, the checkout.** On the host, a fresh clone of devvm's `main` in the folder the VM shares (or a new folder the VM is pointed at with `devvm use`). Record its commit in L1: tell me, or add a line `run <n>: devvm <commit>` to the notes file. Then, for the hand-back only: `echo /.claude/transcripts/ >> <clone>/.git/info/exclude` (nothing else is ignored for the run, so that what the plugin itself sets up is still visible).
 5. **L2, install the branch inside the VM.** `devvm -n devvm-snapshots ssh`, then:
