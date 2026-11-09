@@ -10,6 +10,8 @@ For the maintainer. From the walk-through `design/walkthroughs/maintainer-field-
 
 ## Each run
 
+3a. **Recording, on the host, first.** `mkdir -p ~/field-test/run-<n> && script -q -T ~/field-test/run-<n>/timing.log -O ~/field-test/run-<n>/session.log`, then every step below in that terminal (`devvm ssh` runs inside it, so the VM side is recorded too); `exit` ends it after step 7. Output and timing only: never `--log-in`, which records every key, passwords included. Outside devvm, so it survives the reset. It records what the transcript cannot (the commands outside Claude, their output, the timing) and tests the method a colleague will use (variant 2); the Claude session's own record stays its transcript (step 7), since Claude's full-screen interface makes the recording large and hard to read; whether it is still useful for the session is one of the run's findings.
+
 4. **L3, the checkout.** On the host, a fresh clone of devvm's `main` in the folder the VM shares (or a new folder the VM is pointed at with `devvm use`). Record its commit in L1: tell me, or add a line `run <n>: devvm <commit>` to the notes file. Then, for the hand-back only: `echo /.claude/transcripts/ >> <clone>/.git/info/exclude` (nothing else is ignored for the run, so that what the plugin itself sets up is still visible).
 5. **L2, install the branch inside the VM.** `devvm -n devvm-snapshots ssh`, then:
    `claude plugin marketplace remove uellue` (if present; it also uninstalls kaizen there),
@@ -19,7 +21,8 @@ For the maintainer. From the walk-through `design/walkthroughs/maintainer-field-
 6. **L3, the run.** In the VM, in the checkout: `claude`, then follow `design/field-tests/devvm-brief.md` (a copy is in this repository; read it as the inner role, nothing else). Notes about the plugin go to `~/field-test-notes.md` on the host.
 7. **L3 to L1, handing back.** Before anything is reset:
    - in the VM, in the checkout: `t=$(find ~/.claude/plugins -name transcript.py -path '*kaizen*' | head -1); python3 "$t" locate` lists the sessions of this checkout with their ids; `python3 "$t" export <id>` writes the run's session into the checkout's `.claude/transcripts/<id>/`, which the host sees (ignored by git since step 4; the script refuses otherwise). Where the plugin is installed inside `~/.claude/plugins/` was not checked, hence the `find`.
-   - tell me here: the run number, the session id, the checkout's path on the host, anything posted (nothing, in a churn run).
+   - `exit` the recording (step 3a); look through `session.log` for anything private first.
+   - tell me here: the run number, the session id, the checkout's path on the host, the recording's folder, anything posted (nothing, in a churn run).
 
 ## Here, after each run (L1, with me)
 
