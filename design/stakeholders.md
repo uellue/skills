@@ -45,7 +45,8 @@ Wants: to know what did not fit in a skill's use, with the moment; proposals tha
 Knows: the skill texts and the scripts.
 Has: this repository, its design record, the debriefs. Tries a changed skill on the checkout's version, and needs to see which version ran (E16; principal, 2026-11-05).
 Never reads: a debrief's coaching section (private to the person debriefed).
-Confidence: interviewed (the manager, 2026-11-05).
+Field tests (principal, 2026-11-09): the outer role in a field test; plays the inner role (a user of the plugin in another project) themself (variant 1) exactly as a colleague would (variant 2), to judge the handovers; ready to churn and retry from the same state; a colleague in variant 2 keeps their project's improvements.
+Confidence: interviewed (the manager, 2026-11-05; field tests 2026-11-09).
 
 ## The recipient of agent output outside the project
 
