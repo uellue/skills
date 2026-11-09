@@ -1,0 +1,38 @@
+[
+ {
+  "author": {
+   "login": "second-user"
+  },
+  "body": "When I just ran `devvm start`, I got:\n\n> error: Failed to start domain 'empty-main'\n> error: Requested operation is not valid: network 'default' is not active\n\nMaybe devvm should start that network, too (or ask to start it, if auto-starting is considered rude)",
+  "closedAt": null,
+  "comments": [],
+  "createdAt": "2026-11-07T01:20:36Z",
+  "number": 17,
+  "state": "OPEN",
+  "title": "devvm should start the vm's network if it isn't already running"
+ },
+ {
+  "author": {
+   "login": "second-user"
+  },
+  "body": "Some notes from first use:\n\n- For `DEVVM_POOL_DIR` an existing libvirt pool was accepted (I prefer to manage these myself), but then the actual permissions aren't checked (it tries to make a directory in there called `base`, which fails if that directory isn't owned by me). \n- I liked the guidance after `./install.sh` - next step is clear. `devvm setup` should have the same!\n- I don't understand the claudism in the \"linked worktree\" paragraph in the readme 🤷 what is \"at that path\"?\n- `devvm create` hangs before \"cloud-init done\"  if I do the `devvm ssh sudo tail [..]`  thing in another terminal (my guess: `create` waits for its `ssh` connection to finish, which it doesn't, because in my setup, the first `ssh` command makes the connection which is re-used by subsequent `ssh` calls to that same host; `devvm ssh` should disable ssh control master and just make a new connection every time)\n- `devvm create` again has good next steps\n- `devvm setup-dev` should maybe separate out some things; I don't always need claude, but git identity is almost always useful. Could be interactive?",
+  "closedAt": null,
+  "comments": [],
+  "createdAt": "2026-11-05T22:35:03Z",
+  "number": 16,
+  "state": "OPEN",
+  "title": "First use notes"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "In a VM created for a project that is a git worktree with submodules, `git status` fails with \"fatal: not a git repository\" for the first submodule; commands that name paths still work. [Body shortened for this fixture: the original quotes paths of another project.]",
+  "closedAt": "2026-11-04T08:49:06Z",
+  "comments": [],
+  "createdAt": "2026-11-03T16:49:56Z",
+  "number": 8,
+  "state": "CLOSED",
+  "title": "Meatproxy: git status fails in VMs for worktree checkouts with submodules (\"not a git repository\" for the first submodule)"
+ }
+]
