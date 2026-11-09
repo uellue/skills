@@ -7,6 +7,8 @@ The project's `design/kaizen.md`, shared by every kaizen skill: the debrief writ
 
 What leaves a debrief: proposals with decisions, the fate of earlier ones, what did not fit in the plugin's skills, and notes for the next debrief. The full reports are private, in `.claude/debriefs/`.
 
+Public: <yes / no / may become>, asked <date>.
+
 ## Proposals
 ### <date>
 | # | Proposal | Destination | Effort | Decision / status |

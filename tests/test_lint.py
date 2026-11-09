@@ -229,6 +229,22 @@ class TestFeedback(unittest.TestCase):  # ledger 238
         self.assertIn("A re-run (after fixes, as a last check) reuses the saved brief", hallway)
         self.assertIn("(`-2` for a second that day)", hallway)
         self.assertIn("`design/feedback.md`", (REPO / "README.md").read_text())
+        # The fixes of the after-merge rerun (245 to 251).
+        self.assertIn("for `.git/info/exclude`, which protects every branch at once", debrief)
+        coaching = next(p for p in debrief.split("\n- ") if p.startswith("**Coaching for the person.**"))
+        self.assertIn("Every item cites a moment", coaching)
+        self.assertIn("When a cause lies in a skill, the finding goes to the skill, not into the coaching", coaching)
+        self.assertIn("ask once whether the repository is public or may become so", debrief)
+        self.assertIn("Public: <yes / no / may become>", (PLUGIN / "references" / "ledger.md").read_text())
+        self.assertIn('A decision ("yes to all") is not a feedback entry', debrief)
+        self.assertIn("its first line `Brief: <file>. Usage: <minutes, output tokens, model>.`", hallway)
+        self.assertIn("Give the cost in minutes, then as a share of a budget the person named, output tokens only in brackets", hallway)
+        self.assertIn("Read this skill's friction lines in the ledger first", hallway)
+        self.assertNotIn("in a fresh session**", (REPO / "README.md").read_text())
+        fixture = REPO / "benchmarks" / "plugin-newcomer" / "scenarios" / "after-merge" / "design" / "hallway"
+        first = (fixture / "2026-11-07.md").read_text().splitlines()
+        self.assertTrue(first[2].startswith("Brief: `2026-11-07-brief.md`. Usage:"), first[2])
+        self.assertTrue((fixture / "2026-11-07-brief.md").exists())
 
 
 if __name__ == "__main__":
