@@ -127,6 +127,14 @@ def main(argv=None):
     args = a.parse_args(argv)
     if git("rev-parse", "--verify", "--quiet", f"{args.onto}^{{commit}}", check=False).returncode != 0:
         raise SystemExit(f"--onto {args.onto}: no such commit")
+    # A local main behind its upstream lacks the rebased commits, so every citation would read as unmatched (ledger 278).
+    upstream = git("rev-parse", "--abbrev-ref", "--symbolic-full-name", f"{args.onto}@{{upstream}}", check=False)
+    if upstream.returncode == 0:
+        up = upstream.stdout.strip()
+        behind = int(git("rev-list", "--count", f"{args.onto}..{up}").stdout.strip())
+        if behind:
+            print(f"warning: {args.onto} is {behind} commits behind {up} (as of the last fetch); "
+                  f"update it with `git fetch origin {args.onto}:{args.onto}` and run this again")
     moves, unmatched = plan(args.onto)
     for old, (new, where) in moves.items():
         print(f"{old} -> {new}  ({sum(where.values())} in {', '.join(sorted(where))})")

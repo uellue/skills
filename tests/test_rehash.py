@@ -124,6 +124,24 @@ class TestRehash(unittest.TestCase):
         self.assertIn("left as it is", report.stdout)
         self.assertEqual((self.repo / "record.md").read_bytes(), f"tested at `{new}`\r\nmoved `{old}` to `{new}`\r\n".encode())
 
+    def test_main_behind_its_upstream_is_named_with_the_command_that_updates_it(self):
+        # ledger 278: the local main had not been updated after the rebase merge upstream
+        self.git("switch", "-q", "-c", "feature")
+        old = self.commit("b.txt", "feature\n", "feature")
+        self.commit("record.md", f"tested at `{old}`\n", "record")
+        self.rebase_merge("feature")
+        self.git("update-ref", "refs/remotes/origin/main", "main")
+        self.git("remote", "add", "origin", "https://example.invalid/repo.git")
+        self.git("config", "branch.main.remote", "origin")
+        self.git("config", "branch.main.merge", "refs/heads/main")
+        self.git("switch", "-q", "feature")
+        self.git("branch", "-f", "main", "main~2")
+        out = self.run_script().stdout
+        self.assertIn("main is 2 commits behind origin/main", out)
+        self.assertIn("git fetch origin main:main", out)
+        self.git("branch", "-f", "main", "origin/main")
+        self.assertNotIn("behind", self.run_script().stdout)
+
     def test_onto_a_missing_ref_fails(self):
         self.assertNotEqual(self.run_script("--onto", "nosuch").returncode, 0)
 

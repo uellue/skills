@@ -7,7 +7,43 @@ import unittest
 from pathlib import Path
 
 HOOK = Path(__file__).resolve().parents[1] / ".githooks" / "pre-push"
+PRE_COMMIT = Path(__file__).resolve().parents[1] / ".githooks" / "pre-commit"
 ZERO = "0" * 40
+
+
+class TestPreCommit(unittest.TestCase):
+    """The pre-commit hook runs ./check.sh without git's hook variables (ledger 279)."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.repo = Path(self.tmp.name) / "repo"
+        self.seen = Path(self.tmp.name) / "seen.txt"
+        self.repo.mkdir()
+        self.git("init", "-q")
+        hooks = self.repo / ".githooks"
+        hooks.mkdir()
+        (hooks / "pre-commit").write_text(PRE_COMMIT.read_text())
+        (hooks / "pre-commit").chmod(0o755)
+        # A stand-in for check.sh that records the git variables it was given.
+        (self.repo / "check.sh").write_text(f"#!/bin/sh\nenv | grep '^GIT_' > '{self.seen}'\nexit 0\n")
+        (self.repo / "check.sh").chmod(0o755)
+        self.git("config", "core.hooksPath", ".githooks")
+        (self.repo / "f").write_text("a\n")
+        self.git("add", "-A")
+        self.git("commit", "-q", "-m", "first")
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def git(self, *args):
+        env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+        env.update({"GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t", "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t"})
+        return subprocess.run(["git", *args], cwd=self.repo, env=env, capture_output=True, text=True, check=True).stdout.strip()
+
+    def test_commit_all_gives_the_check_no_git_variables(self):
+        (self.repo / "f").write_text("b\n")
+        self.git("commit", "-q", "-a", "-m", "second")
+        self.assertEqual(self.seen.read_text(), "")
 
 
 class TestPrePush(unittest.TestCase):
