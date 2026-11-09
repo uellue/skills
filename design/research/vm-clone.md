@@ -7,13 +7,14 @@ Research note, 2026-11-09, for a new devvm requirement (to be filed in devvm's t
 - `virt-clone` is the libvirt tool for this: it copies a shut-off VM's definition and disks under a new name, with a new UUID and MAC address.
   `virt-clone --original devvm-snapshots --name devvm-field --file <pool>/devvm-field.qcow2`
 - On this host it must run with the system Python (`PATH=/usr/bin:$PATH virt-clone …`): miniforge's Python first on PATH makes it crash, as devvm's own script notes for `virt-install`.
-- A plain clone is not yet a working devvm VM. Four things need doing by hand (or by a future `devvm clone`):
+- A plain clone is not yet a working devvm VM. Five things need doing by hand (or by a future `devvm clone`):
   1. **The shared folder.** The clone's virtiofs `source.dir` still points at the original's host checkout; it must point at the working copy, and devvm's own record of it too (see "Pointing the shared folder at a new source" below).
-  2. **devvm's own files.** devvm keeps `<pool>/<name>.hostkey` and `<name>.known_hosts` per VM name; the clone needs copies under its name, or `devvm ssh` will not know it (not checked).
+  2. **devvm's own files.** devvm keeps `<pool>/<name>.hostkey` (and `.pub`) and `<name>.known_hosts` per VM name; ssh checks the host key under the alias `<name>`. The clone needs the two host-key files copied under its name; devvm writes the missing `known_hosts` from `.hostkey.pub` by itself (script lines 462–470).
+  5. **The checkout's VM.** `devvm use` stores the VM name in the checkout's git directory (`.git/devvm-vm`), so a copy of the checkout still names the original VM: every `devvm` command run in the copy would act on the original until `devvm use <clone>` is run there.
   3. **Snapshots.** devvm's snapshots are libvirt snapshots stored in the qcow2 (`virsh snapshot-create-as … --atomic`). Whether `virt-clone` carries them over: not stated in the man page, not checked; assume not, and take a new snapshot `field-start` on the clone.
   4. **The disk chain.** devvm's disks are qcow2 overlays on a shared base image (`qemu-img create -b <base>`). Whether the clone's copy keeps that backing link or becomes a full, larger image: not checked.
 - Inside the clone everything is identical to the original (hostname, SSH host keys, the agent's memory, logins): that is the point ("warts and all"), but both should not run under the same name on one network at once.
-- Lean for devvm: a `devvm clone <new name>` command that does the four steps and refuses while the original runs.
+- Lean for devvm: a `devvm clone <new name>` command that does these steps and refuses while the original runs.
 
 ## Pointing the shared folder at a new source
 
@@ -23,7 +24,7 @@ How devvm sets it up now (script at `81c3137`):
 - Before `start` and `reset` it checks that every share's source exists (`check_shares`), and says: "shared folders are fixed when a VM is created; to drop a mount, re-create the VM without it". So devvm has no command to move a share.
 
 How to move it by hand (the VM shut off; not checked on a real VM):
-1. The definition: `PATH=/usr/bin:$PATH virt-xml <vm> --edit target=devvm-ws --filesystem source.dir=<new path>` (by analogy with `virt-xml`'s documented `--edit target=hda --disk`); or, safest, `virsh dumpxml --inactive <vm> > vm.xml`, change the `<source dir=…>` of the filesystem whose `<target dir='devvm-ws'/>`, `virsh define vm.xml`.
+1. The definition: `PATH=/usr/bin:$PATH virt-xml <vm> --edit target=devvm-ws --filesystem source.dir=<new path>` (checked on `devvm-snapshots` with `--print-diff`, which changes nothing: it alters exactly the `<source dir>` of that filesystem); or, safest, `virsh dumpxml --inactive <vm> > vm.xml`, change the `<source dir=…>` of the filesystem whose `<target dir='devvm-ws'/>`, `virsh define vm.xml`.
 2. devvm's record: `virsh metadata <vm> --uri https://devvm.invalid/1 --key devvm --config --set '<workspace host="<new path>" guest="<the old guest path>"/>'`. The guest path stays: the tag and the VM's fstab do not change, so the copy appears where the old checkout did.
 3. **Snapshots carry the old definition.** A libvirt snapshot keeps the domain XML of its moment, and reverting restores it; reverting a snapshot taken before the move brings the old source back. If the old path still exists (for a clone of `devvm-snapshots`: the maintainer's real checkout), the VM silently shares it again, since `check_shares` only sees that a source exists. So: move the share first, then take the new snapshot (`field-start`), and delete or never use the older ones on the clone.
 
