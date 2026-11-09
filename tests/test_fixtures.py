@@ -78,5 +78,38 @@ class TestTrackedProject(unittest.TestCase):
         self.assertIn("record open questions at the end of `spec.md`", (FIXTURE / "CLAUDE.md").read_text())
 
 
+class TestTrackedSync(unittest.TestCase):
+    """The scenario tracked-sync: its fixture holds what N44 to N50 assume (ledger 291)."""
+
+    SYNC = BENCH / "scenarios" / "tracked-sync"
+
+    def test_the_tracker_state_the_scenario_assumes(self):
+        issues = {i["number"]: i for i in json.loads((self.SYNC / ".tracker" / "issues.json").read_text())}
+        pulls = {p["number"]: p for p in json.loads((self.SYNC / ".tracker" / "pulls.json").read_text())}
+        self.assertEqual(issues[17]["state"], "CLOSED")
+        self.assertEqual(pulls[21]["state"], "MERGED")
+        self.assertIn("Closes #17", pulls[21]["body"])
+        self.assertEqual((issues[16]["state"], issues[16]["comments"]), ("OPEN", []))
+        for item in [*issues.values(), *pulls.values()]:
+            self.assertEqual(set(item["author"]), {"login"})
+            self.assertIn(item["author"]["login"], {"owner", "second-user"})
+
+    def test_the_setting_the_inbox_and_the_stale_question_are_there(self):
+        claude = (self.SYNC / "CLAUDE.md").read_text()
+        self.assertIn("## Issue tracker", claude)
+        self.assertIn("Kaizen standing instructions, version ", claude)
+        ledger = (self.SYNC / "design" / "kaizen.md").read_text()
+        notes = ledger.split("## Notes for the next debrief", 1)[1]
+        self.assertEqual(len(re.findall(r"^- 2026-11-09, \d\d:\d\d:", notes, re.M)), 4)
+        self.assertIn("as #8 suggests", (self.SYNC / "design" / "spec.md").read_text())
+
+    def test_every_key_item_cites_an_example_and_the_state_is_marked_invented(self):
+        rows = [r for r in (BENCH / "key.md").read_text().splitlines() if "| tracked-sync |" in r]
+        self.assertEqual(len(rows), 7)
+        for r in rows:
+            self.assertRegex(r, r"\bE\d+\b", r[:12])
+        self.assertIn("Invented for this scenario", (self.SYNC / "SOURCE.md").read_text())
+
+
 if __name__ == "__main__":
     unittest.main()
