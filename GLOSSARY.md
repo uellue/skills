@@ -94,6 +94,10 @@ _Avoid_: small-change path, lite mode, fast track
 A first-user trial: a fresh agent that sees only what a first user would see tries a subject and reports what broke or surprised it.
 _Avoid_: play test, usability test, user test
 
+**Human trial**:
+A real person, the participant, tries a subject in their own environment from a written brief, and the agent reads what happened from what they send back (a recording, notes in the moment, a report they approved); inside it, the usability-testing terms task scenario, think-aloud, moderated and unmoderated apply (requirements, topic ledger 269).
+_Avoid_: human-in-the-loop test, user test, human hallway test
+
 **Subject**:
 What a hallway test, a walk-through, a review or a debrief judges: a tool, a document, a process, or the plugin itself.
 _Avoid_: target, system under test, the thing (it reads as the real thing)
