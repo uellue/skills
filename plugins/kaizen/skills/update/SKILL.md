@@ -1,0 +1,28 @@
+---
+name: update
+description: Bring a project up to date after the kaizen plugin was updated - what changed for projects since the version the project's records are from, the standing instructions merged line by line with the project's own adaptations kept, new settings and records offered, everything the project chose on purpose named and kept until confirmed, all on a branch, ending with the version applied. Only when the user types /kaizen:update; the other kaizen skills say once per new version when the project is behind.
+disable-model-invocation: true
+---
+
+# Update
+
+Text id `e0186cb5`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py update e0186cb5` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+
+An update must never feel like a regression: whatever the project's people established, chose on purpose or said they liked stays as it is until they confirm a change. The person stays in control of every line that changes; the update proposes, shows and asks.
+
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number a message's items from 1 in one sequence that never restarts within it, so the person can answer by number.
+
+## Steps
+
+1. **Where the project stands.** Run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py --project` and read `${CLAUDE_PLUGIN_ROOT}/references/changelog.md` from the project's version up to the installed one (a block without a version line is from before 0.6.0). Read the project's instruction file (`CLAUDE.md` or `AGENTS.md`), its ledger if any, and its own records of decisions and requirements, wherever it keeps them. Say in one message what the update covers, which items of the changelog apply here, and that it works on a branch; nothing is written before the person agrees.
+2. **What the project chose on purpose.** Before proposing a change, look in those records for the project's earlier choice on the same point (a record deliberately not committed, open questions kept in a document of its own, wording someone said they liked, an adaptation of a standing rule) and name it beside the change. Where the plugin's newer default differs, offer the default and keep the project's way unless the person says otherwise.
+3. **The standing instructions.** Compare the project's copy with `${CLAUDE_PLUGIN_ROOT}/references/standing-instructions.md` line by line, by content: list each line that is new, changed or gone, one numbered item each, in a few words; list the project's own adaptations (its commands, documents, dependency list) as kept. Ask which numbers to take; merge them into the project's wording ("merge, don't append"), and set the version line to the installed version.
+4. **New settings and records.** For each item of the changelog that needs an answer (the issue tracker, the ledger's header lines), ask the question it names, once, without guessing; offer to record the answer where the changelog says. A record that does not exist yet (the ledger, feedback entries) is created when a skill first needs it, after saying where it goes, not now; the project's own records stay where they are, and the ledger links to them instead of copying them.
+5. **The tracker, first look.** When the project has an issue tracker, read the open issues and pull requests (for GitHub `gh issue list` and `gh pr list`); name those from others that have waited more than two days for an answer and offer a short reply as a draft, split into a part for people and a part for agents; post nothing without the person's yes. Issues stay in the tracker; only what concerns working with the plugin and the agent gets a ledger row, with the link and one line.
+6. **Hand over.** The changes go on a working branch (a new one when the project is on its default branch), committed with the person's agreement; offer a pull request description from the branch's log and diff that names the plugin version applied ("kaizen 0.6.0"), leaving the summary on top to the person. List what was taken, what was kept and why, and what waits for an answer; show where the person's remarks went.
+
+## Rules
+
+- Never change the instruction file, a record or anything upstream without the person's yes for that item; one yes may take a numbered list.
+- Say which layer each finding is about: the plugin, the project, or the work with the agent.
+- At the end, one line into the project's ledger: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).

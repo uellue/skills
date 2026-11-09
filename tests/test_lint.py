@@ -176,7 +176,10 @@ class TestManifests(unittest.TestCase):
     def test_versions_and_names(self):
         plugin = json.loads((PLUGIN / ".claude-plugin" / "plugin.json").read_text())
         market = json.loads((REPO / ".claude-plugin" / "marketplace.json").read_text())
-        self.assertRegex(plugin["version"], r"^\d+\.\d+\.\d+$")
+        self.assertRegex(plugin["version"], r"^\d+\.\d+\.\d+(-[0-9A-Za-z.]+)?$")  # a pre-release for a branch (ledger 280)
+        # the standing-instruction block names the version it is from, so a project's copy can be compared (281)
+        block = (PLUGIN / "references" / "standing-instructions.md").read_text()
+        self.assertIn(f"\nKaizen standing instructions, version {plugin['version']}: ", block)
         self.assertIn(plugin["name"], [p["name"] for p in market["plugins"]])
 
 
