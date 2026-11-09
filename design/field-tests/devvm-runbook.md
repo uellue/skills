@@ -51,13 +51,13 @@ Then start the copy and log in:
 devvm -n "$VM" start
 devvm -n "$VM" ssh                                              # no IP address after a minute: see the note below
 ```
-Check that the state is the one each run should start from (for this test: the released kaizen, before the update; `claude plugin list`), then `exit`. Back on the host:
+Check that the state is the one each run should start from (for this test: the released kaizen, before the update; `claude plugin list`), then `exit`. Back on the host, all three together (run 0 skipped the first two, and the snapshot then held a running VM):
 ```
-devvm -n "$VM" stop
-cp -a "${FIELD_TEST_DIR:?}"/work "${FIELD_TEST_DIR:?}"/master  # the master copy of the working copy
-devvm -n "$VM" snapshot field-start
+devvm -n "$VM" stop && cp -a "${FIELD_TEST_DIR:?}"/work "${FIELD_TEST_DIR:?}"/master && devvm -n "$VM" snapshot field-start
+virsh snapshot-list "$VM"                                       # field-start, state shutoff
 exit                                                            # ends the recording
 ```
+A snapshot taken wrongly is replaced with `devvm -n "$VM" snapshot -u field-start` (VM stopped).
 Never revert the snapshots `clean`, `dev`, `dev2` on the copy if they show up there: they would share your real checkout again (`design/research/vm-clone.md`).
 
 If the copy gets no IP address (run 0 did: its network was tied to the original's MAC): the fix, done once, is in `design/research/vm-clone.md`, "Seen in run 0". Done for `devvm-field` on 2026-11-09; a new clone needs it again.
