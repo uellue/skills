@@ -1,4 +1,6 @@
-# Human trials: getting the recording from the participant to the agent session
+# Field tests: getting the recording from the participant to the agent session
+
+(First written as "human trials"; renamed 2026-11-09, glossary *field test*. The file name stays.)
 
 Research note, 2026-11-09. Status: background, facts only; the decisions are not made here. Follows `human-trials.md` (recording with `script`), which is not repeated. "Not verified" marks anything I did not read in a source or run myself. "Tried here" marks my own runs (bash 5.2.37, util-linux `script`, gh 2.46.0 on Debian; zsh and asciinema are not installed here).
 

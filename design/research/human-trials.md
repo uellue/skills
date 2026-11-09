@@ -1,4 +1,6 @@
-# Human trials of a tool, with a recording for the agent
+# Field tests of a tool, with a recording for the agent
+
+(First written as "human trials"; renamed 2026-11-09, glossary *field test*. The file name stays.)
 
 Research note, 2026-11-09. Status: background, not a requirement. "Suggestion" marks my own proposals; everything else is from a named source or a run I did (marked "tried here").
 

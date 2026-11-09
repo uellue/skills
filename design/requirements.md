@@ -147,12 +147,12 @@ Interviewed: the principal in person, 2026-11-07; where it lives is to be settle
 - [record] Automatic prompt optimisation: GEPA (learns from traces and written feedback, MIT; its authors report 100 to 500 evaluations) and SkillOpt (edits one skill file; licence unknown) are the nearest; methods needing many cheap runs do not fit long sessions.
 - [record] Resuming a session (`--resume`) keeps the skill text already loaded in its history; testing a changed text means replaying the prompts in a fresh session (inferred from the transcript layout, not documented).
 
-## Topic: human trials (ledger 269)
+## Topic: field tests (ledger 269)
 
-Interviewed: the principal in person, from 2026-11-09; drafted first from the record (ledger 269, the feedback entry of 2026-11-09, `design/research/human-trials.md`). Vocabulary: [answered] *human trial*, a real person tries a subject and the agent reads what happened (glossary entry to add); inside it the usability-testing terms participant, task scenario, think-aloud, moderated and unmoderated (round 1, item 20).
+Interviewed: the principal in person, from 2026-11-09; drafted first from the record (ledger 269, the feedback entry of 2026-11-09, `design/research/human-trials.md`). Vocabulary: [answered] *field test*, a real person tries a subject in their own environment and the agent reads what happened (glossary entry; first called "human trial", renamed by the principal because it reads as a clinical trial and raises ethics concerns, round 4); inside it the usability-testing terms participant, task scenario, think-aloud, moderated and unmoderated (round 1, item 20).
 
 ### Demand
-- [answered] Current friction is how to perform human trials, as opposed to automated hallway tests; they happen in a different environment, and copy and paste between the participant and the session does not always work or is not sufficient (principal, 2026-11-09, feedback entry; "the most pressing item").
+- [answered] Current friction is how to perform field tests with people, as opposed to automated hallway tests; they happen in a different environment, and copy and paste between the participant and the session does not always work or is not sufficient (principal, 2026-11-09, feedback entry; "the most pressing item").
 - [answered] The need: both setting up the test and returning the results with the lowest friction possible. Copy and paste is appropriate for small issues, not for a whole run (round 1, item 21).
 - [answered] One good scenario exists: in the `claude plugin eval` work the agent set the run up to write (tee) its output to the right places, the principal ran it, said when it was done, and the agent read the output. It works where the session and the command can exchange files; it does not work as it is across isolation (different containers, VMs, hosts) (item 21).
 - [answered] General, not an example: it holds every time the kaizen plugin is used, and probably for every agent user, so it may make sense as a standalone tool or pattern, separate from kaizen. The devvm tool was part of it: set up the proper isolation, but allow the necessary exchange with the environment with minimal friction (item 22).
@@ -179,10 +179,13 @@ Interviewed: the principal in person, from 2026-11-09; drafted first from the re
 - [record] The hallway test's testers are agents only (by eye in a real terminal, behaviour, hint-following, documents); no mode for a person.
 - [record] Research (2026-11-09, sub-agent, read before commit): `script`/`scriptreplay` record output and timing as text, not as a picture; usability practice has task scenarios, think-aloud, moderated and unmoderated sessions; devcontainers or VMs give a clean start; privacy is the main risk (an input log holds passwords). `script` on macOS not checked; asciinema and tmux not verified.
 
+### First try (round 4, 2026-11-09; options in `design/research/human-trials-exchange.md`; refined after trying out)
+- [answered] Transport: an issue in a private repository; the participant drags the two files in after looking at them; only members see them. Upload is browser-only (`gh` 2.46 has no attachment flag, checked); whether the agent can download the attachments with `gh` is checked in the setup session (item 36).
+- [answered] Notes in the moment: `#` lines at the prompt; the brief's start commands include `setopt interactivecomments` for zsh, where comments at the prompt are off by default (zsh manual, not tried here; to confirm in the setup session) (item 37).
+- [answered] Removing private data: the participant's own agent plus their own eye; secret scanners such as gitleaks optional, not required (no new dependency) (item 38).
+
 ### Open (the frontier when the interview paused, 2026-11-09)
-- How the files travel from the participant's machine to the session: options and prior art in `design/research/human-trials-exchange.md` (research agent, 2026-11-09), then a choice by the principal.
-- How the participant records a comment in the moment (`#`, `echo`, a marker): the same research, then a choice.
-- The session setup for the first round with the principal, step by step at the work computer (item 31).
+- The session setup for the first round with the principal, step by step at the work computer (item 31), including the two checks above.
 - Then: the brief itself, its acceptance examples in `design/examples.md`, the hand-over check.
 
 ## Release
