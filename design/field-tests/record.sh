@@ -28,4 +28,5 @@ fi
 mkdir -p "$base"
 mkdir "$run"  # fails rather than reuse a folder another terminal just took
 echo "Recording into $run until you type exit. Output and timing only; look through session.log before sharing it."
+echo "Notes at the shell prompt: type them as comments, '# like this' (zsh: 'setopt interactivecomments' first). Not inside Claude."
 exec script -q -T "$run/timing.log" -O "$run/session.log"
