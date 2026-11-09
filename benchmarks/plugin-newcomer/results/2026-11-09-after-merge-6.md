@@ -1,4 +1,4 @@
-# Run 2026-11-09 (6): scenario after-merge, commit `d331318`, Opus, 2.4 minutes, 14.6 k output tokens
+# Run 2026-11-09 (6): scenario after-merge, commit `9ecd416`, Opus, 2.4 minutes, 14.6 k output tokens
 
 Result format: E15. Graded together with `2026-11-09-after-merge-5.md` by the same separate Sonnet agent. Second run on the same commit (ledger 216).
 

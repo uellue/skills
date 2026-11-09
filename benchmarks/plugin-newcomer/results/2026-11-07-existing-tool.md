@@ -1,4 +1,4 @@
-# Run 2026-11-07: scenario existing-tool, commit `7c6df08`, Opus, 11,603 output tokens, 2.1 minutes
+# Run 2026-11-07: scenario existing-tool, commit `a692047`, Opus, 11,603 output tokens, 2.1 minutes
 
 Result format: E15. Graded by a separate Sonnet agent that changed none of the skills, from the tester's report, the key and the main session's checked claims (12, all confirmed but the tester's own reading-rule breach). Run at the same time as `2026-11-07-existing-tool-2.md` on the same commit (ledger 216); the final acceptance test of 0.5.4 (ledger 230). Step 0 skipped: no description and no skill with a comparison suite changed.
 
