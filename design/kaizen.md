@@ -2,6 +2,9 @@
 
 What leaves a debrief: proposals with decisions, the fate of earlier ones, what did not fit in the plugin's skills, and notes for the next debrief. The full reports are private, in `.claude/debriefs/` (not under version control). Closed rows and finished records are in `design/archive/`: `ledger-2026-11.md` holds every proposal section from the plugin's first week to the 0.5 work, with the reviews and the decisions; a row below keeps its original number, so the archive has its context. The debrief of 2026-11-03 was about another project and lives in that repository.
 
+Public: yes (the project's `CLAUDE.md`), recorded 2026-11-09.
+Message size: comfortable ("Message size felt OK here, will see when going back to the IDE how that develops"), asked 2026-11-09.
+
 ## Open proposals
 
 Statuses as last recorded. Rows 10 to 30 are lessons for other repositories, to be carried over by the principal; 12, 34, 51, 52, 59, 83, 93, 109, 110 are planned or parked; 204, then 203, are the next topics after the debrief of 2026-11-07; 96 to 112 and 179 to 183 are leans waiting for a round or a decision; 149, 159, 172, 184, 192, 194, 196, 198, 200, 202 are watched.
@@ -228,6 +231,19 @@ Watched (minor): the "offered, not decided" rule not in hallway-test, so its Aft
 
 Watched (minor): `Message size:` values force "shorter" on "fine, a bit long" though the words are quoted (both runs; with 266); no neutral class for feedback entries (both runs); the paraphrase needs a message before writing that the two-message reply does not name (run 7); a re-run does not add the fixed bugs as cases, and "all After steps apply" repeats the requirements offer (run 7); the debrief commits without a named commit step (run 8).
 
+### 2026-11-09 (debrief of the stretch from the debrief of topic 204 to 0.5.5: two readers, split at the compaction)
+
+Statuses: 227 held live (the hook blocked the agent's own ledger edit); 228 paid on its first day (the hook's review found two defects); 229 reports, but N25 failed in all eight runs (→ 276); 230 violated once (the pull request offered before the acceptance test, caught by the principal); 254 holds in the skill but recurred in the agent's own replies (three debrief offers in 15 minutes; → 275); 209: the length settled by the principal, the script still open.
+
+| # | Proposal | Destination | Effort | Decision / status |
+|---|---|---|---|---|
+| 272 | Sentences cut from skill texts to fit the word budget went unreported ("never manufactures criticism", "questions that blocked while the person was away", "Muddy words …" from the debrief; the substance survives elsewhere). Lean: `check.sh` lists sentences removed since the merge base that appear nowhere else in the plugin, and the hand-over names them | `check.sh`, script, `tests/` | small | proposed |
+| 273 | The rerun stop rule ("only minor findings and no grade differs, at most three pairs") was half-applied: four pairs ran, the stop cited only the first clause; N24 differs in every pair, so the second clause and 216's trigger can never be met. Lean: the stop rule goes into the ledger section when set, the stop cites every clause, and a borderline item does not count for "no grade differs" (here and in 216) | self-test procedure; 216 | small | proposed |
+| 274 | A pull request text cut to a third lost its exceptions ("255 not reached", "the rewrite not reviewed again"). Lean: shortening a pull request text or hand-over keeps the exceptions: not reached, not reviewed, skipped counts | standing instructions (README block, global copy) | small | proposed |
+| 275 | The debrief was offered three times in 15 minutes, right after 254 fixed the same in the skill: "once" is a sentence for the agent's own replies. Lean: 209's transcript script also counts debrief offers per stretch | plugin script, with 209 | small | proposed |
+| 276 | N25 (plain words) not held in all eight after-merge runs, graded minor each time; the avoid-words report (229) grew without changing what is written. Lean: make N25 the next round's target | plugin; next self-test round | medium | proposed |
+| 277 | The principal's ladder for losing track: best it does not happen; then the agent notices and corrects itself; then the agent notices and the person helps; then the person notices; the only fail is when it persists long enough to cause friction that better messages or introspection would have prevented. Lean: the debrief places each such finding on the ladder and lets "persisted" drive its severity | debrief "What to look at"; report template | small | proposed |
+
 ## Skill friction
 
 Unresolved lines only; the resolved ones are in the archive with what fixed them.
@@ -239,6 +255,7 @@ Unresolved lines only; the resolved ones are in the archive with what fixed them
 - 2026-11-07, debrief (the 0.5 work, a fresh session): one reader per session does not fit a 1.1 MB rendering (about 280 k tokens); split into two readers by time, which the skill does not mention; the `retro` comparison again not run.
 - 2026-11-07, requirements (topic 204, one topic inside the plugin's own requirements): facts arrived between rounds from three background agents; relaying them broke the fifteen-line limit and restarted numbering, and the skill says nothing about relaying results between rounds; the topic's needs had no scenario to hang an acceptance example on.
 - 2026-11-07, debrief (topic 204, a fresh session): the person was on a laptop without an IDE, so the unconfirmed `[record]` items had to be shown in the chat; neither the requirements skill nor the debrief says how to confirm record items with a person who cannot open files.
+- 2026-11-09, debrief (a fresh session on the stretch to 0.5.5): this ledger itself lacked the template's `Public:` and `Message size:` lines, since it predates them, so the skill's "ask once" relied on the agent noticing; the `retro` comparison was not run a third time.
 
 ## Notes for the next debrief
 
