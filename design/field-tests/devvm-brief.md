@@ -13,6 +13,8 @@ Whenever something about the plugin strikes you (confusing, missing, good, annoy
 - **At a shell prompt** (not inside Claude): type the note as a comment, `# the update asked twice about the tracker`. The shell ignores it, and the recording keeps it with its time. In zsh, run `setopt interactivecomments` once first; bash needs nothing.
 - **While Claude is running:** one line in the notes file named in your runbook, from a second terminal. Not into Claude itself: a note typed there goes to devvm's agent and becomes part of its work.
 
+- **Through the plugin itself:** everything it offers is yours to use, including "note for the debrief" and `/kaizen:debrief` in devvm; what lands in devvm's ledger and feedback files is read in the analysis too.
+
 Notes about devvm itself go wherever the plugin tells you, as usual.
 
 ## Rules for this run
