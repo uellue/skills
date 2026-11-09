@@ -14,6 +14,8 @@ So a brief gives the starting point and the method (how to record, how to note, 
 | Notes: "one line to the notes file … outside devvm" | Three ways, whichever is at hand: a `#` comment at a shell prompt (it lands in the recording), the notes file from a second terminal or the editor, or the plugin's own features ("note for the debrief", `/kaizen:debrief`) | Counters the instrumentation: noting must cost nothing and use what the person would use anyway; the plugin's own notes are feedback too |
 | "Notes about devvm itself go wherever the plugin tells you, as usual." | "Notes about devvm itself go wherever you see fit. Please follow your normal procedures there." | The plugin may guide, but the person decides; no role word ("as the manager") either: it reads as a job title to a colleague, and "maintainer" belongs to the outer role |
 | "Tell the plugin you are done, and let it hand over as it would." | "Wind the session down as you normally would." | How a session ends is the person's habit, and the plugin's hand-over is under test, not to be prompted |
+| "Nothing goes upstream … Let the plugin draft them; say 'not now' when it offers to post." | "Nothing goes upstream …" (the second sentence removed) | The rule of the setting stays; how to react to the plugin's offers is the person's own |
+| "This doesn't go into your Claude session." | "It stays outside your Claude session." | Says what the note is (private, apart from the session) rather than sounding like a warning that something is lost |
 
 Added on the principal's suggestion (same day), both countering the setting rather than steering the person:
 
