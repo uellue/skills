@@ -204,6 +204,14 @@ _Avoid_: version stamp, header
 Bringing a project's records up to the installed plugin with `/kaizen:update`, after the plugin itself was updated (`claude plugin update`); the two are different steps.
 _Avoid_: upgrade, migration (for the skill's work)
 
+**Sync**:
+`/kaizen:sync`: bringing a project and its upstream in step in both directions (the tracker read and the ledger updated; the inbox routed; what waits to go out posted on a yes).
+_Avoid_: pull, refresh
+
+**Inbox**:
+The ledger's notes section in its role of holding ideas dropped during work until a sync or a debrief routes each to its place, leaving only the link.
+_Avoid_: slush pile, scratchpad
+
 **Changes for projects**:
 `references/changelog.md`: per plugin version, what a project adopts, changes or keeps; not the plugin's own history.
 _Avoid_: release notes

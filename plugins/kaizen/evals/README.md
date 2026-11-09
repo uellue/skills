@@ -41,6 +41,8 @@ Runs load only the plugin: no CLAUDE.md, user settings, memory or other plugins.
 
 The sandbox keeps the caller's PATH but hides the home directory (checked 2026-11-09 with the probe below and `--keep-temp`). Where the first `python3` on PATH lives under the home directory (miniforge, conda, pyenv, a virtual environment), it starts and cannot find its standard library: "Fatal Python error: Failed to import encodings module". Then no skill's start-up line (`scripts/version.py`) runs, silently, since the skills say "if it fails, carry on". So every command above runs with the system's Python first: prefix it with `PATH="/usr/bin:$PATH"`. The case `probe-python-in-sandbox` (`probes/`) tests the sandbox itself, not a skill: it prints PATH, HOME and each `python3` with whether it finds its library, and passes when `/usr/bin/python3` does; run it on a new machine or a new Claude Code version, with `--keep-temp` to read its output in the trace (the report shows only the prompt).
 
+Rerun with the prefix (2026-11-09, so that the start-up lines run for the first time in an eval): the trigger table 16 of 16 at 1.00 ($8.58, 433 s), the walkthrough comparison unchanged (with the plugin 1.00 in all three cases, without 0.33, 1.00, 0.33; $3.04, 237 s); the earlier results stand.
+
 The cases in `update/` (ledger 280) check the notice the start-up line prints when a project's records are older: one names `/kaizen:update`, one stays silent; both pass with the PATH prefix (2026-11-09, one run each, $0.30) and failed for the instrument without it. The standing instructions are outside this tool; their coverage needs another one (the backtrace of ledger row 218). There are no custom-code graders.
 
 ## Coverage: grader to rule

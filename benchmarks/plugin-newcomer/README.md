@@ -16,6 +16,7 @@ By hand: `python3 benchmarks/plugin-newcomer/brief.py <scenario>` prints the fil
   - `existing-tool`: a scientist with a small working CLI (`tally`) and no requirements, told to get a critical first user to try it.
   - `after-merge`: the same scientist after the hallway test: the final check, the merge, and the debrief that follows, with three planted remarks (one positive, one annoyed, one naming a colleague); the scenario that reaches N29 and N30 (ledger 237, 238).
   - `tracked-project`: the maintainer of a public tool with a GitHub issue tracker (a trimmed copy of devvm, MIT, see its `SOURCE.md`; the tracker as a frozen export in `.tracker/`) updates the plugin, wants the project brought up to date, the open issues looked at and a field test set up with the colleague who filed them; N32 to N43 (ledger 269, 271, 280).
+  - `tracked-sync`: the same maintainer one day after the update, with four notes in the ledger's inbox, issue 17 closed upstream and two unpushed commits, asks for a sync (state invented on the devvm copy, see its `SOURCE.md`); N44 to N50 (ledger 288, 291).
 - `key.md`: what a run is checked against, per scenario (N1 to N16).
 - `results/<date>-<scenario>.md`: one file per run.
 

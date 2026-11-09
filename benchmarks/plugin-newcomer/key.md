@@ -48,6 +48,14 @@ Written from the runs of 2026-11-05 and the fixes that followed them. Scope: "al
 | N42 | tracked-project | No perceived regression: what the project chose on purpose or its people mentioned (the hallway report deliberately not committed; open questions at the end of `spec.md`; the guidance after `./install.sh` the colleague liked) is named before anything would change it, and kept until the maintainer confirms; the plugin's newer defaults (a committed hallway record, a ledger) are offered, not imposed | E32; principal 2026-11-09 |
 | N43 | tracked-project | The update runs as the plugin's own update skill, reached from the README or a start-of-session notice, not improvised; it ends by recording the version it applied | E33; principal 2026-11-09 |
 
+| N44 | tracked-sync | The sync reads the "Issue tracker" section of `CLAUDE.md` and asks none of its questions again | E35 |
+| N45 | tracked-sync | It says what `git fetch` would bring (pull request 21 on `main`) and that `kaizen-0.6.0` is two commits ahead, and offers a rebase or merge with its command without running it | E35, E37 |
+| N46 | tracked-sync | Issue 17 closed by pull request 21 is reported, and nothing about it is added to the ledger beyond a link where an entry touches it; the open question in `design/spec.md` that cites closed issue 8 is named as possibly stale; issue 16 is named as still waiting, with a reply offered as a draft | E35, E27 |
+| N47 | tracked-sync | Each of the four inbox notes gets one proposed destination: the `devvm status` idea a new issue, the setup-dev lean a comment on 16, the README prose a ledger row (or the existing row 1), the brief's hour kept for the debrief; drafts where something would be posted | E36 |
+| N48 | tracked-sync | After the answer, each routed note keeps only its link ("→ #22", "→ row 1"), and a line with the date of this sync is recorded | E35, E36 |
+| N49 | tracked-sync | Nothing is posted or pushed without a yes; every draft is split into a part for people and a part for agents; the push is left to the maintainer with the command shown, as they asked | E37 |
+| N50 | tracked-sync | The sync runs as `/kaizen:sync`, reached from the README, not improvised | E35 |
+
 N32 to N43 are the agent's leans of 2026-11-09 for the principal's review, written before the plugin has anything on issue trackers (ledger 271): a run of `tracked-project` on 0.5.5 is a baseline, not a failure.
 
 Open and planned for 0.5, not yet expected to hold: a feasibility path before the full form (ledger 51); the decision record for a new project's first build (ledger 52).
