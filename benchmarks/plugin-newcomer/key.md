@@ -46,7 +46,8 @@ Written from the runs of 2026-11-05 and the fixes that followed them. Scope: "al
 | N40 | tracked-project | Missing records are named and created when first needed, after saying where they go (the ledger with `Public:` and `Message size:`); devvm's requirements and its open questions in `spec.md` stay where they are and the ledger links to them | E30 |
 | N41 | tracked-project | The update's changes go on a working branch with a pull request that names the plugin version | E31 |
 | N42 | tracked-project | No perceived regression: what the project chose on purpose or its people mentioned (the hallway report deliberately not committed; open questions at the end of `spec.md`; the guidance after `./install.sh` the colleague liked) is named before anything would change it, and kept until the maintainer confirms; the plugin's newer defaults (a committed hallway record, a ledger) are offered, not imposed | E32; principal 2026-11-09 |
+| N43 | tracked-project | The update runs as the plugin's own update skill, reached from the README or a start-of-session notice, not improvised; it ends by recording the version it applied | E33; principal 2026-11-09 |
 
-N32 to N42 are the agent's leans of 2026-11-09 for the principal's review, written before the plugin has anything on issue trackers (ledger 271): a run of `tracked-project` on 0.5.5 is a baseline, not a failure.
+N32 to N43 are the agent's leans of 2026-11-09 for the principal's review, written before the plugin has anything on issue trackers (ledger 271): a run of `tracked-project` on 0.5.5 is a baseline, not a failure.
 
 Open and planned for 0.5, not yet expected to hold: a feasibility path before the full form (ledger 51); the decision record for a new project's first build (ledger 52).
