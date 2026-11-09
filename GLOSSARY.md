@@ -189,3 +189,21 @@ _Avoid_: recursion, meta
 **Text id**:
 A short fingerprint of a skill's text, which tells a session that it runs an older text than the one on disk.
 _Avoid_: version, hash
+
+### Updates
+
+**Standing instructions**:
+The block of rules for the agent that a project copies into its `CLAUDE.md` or `AGENTS.md`, merged with its own rules; its first line is the version line.
+_Avoid_: working rules (a project's own heading for it), the paste block
+
+**Version line**:
+The first line of the standing instructions, naming the plugin version they are from; the record of which version a project last applied.
+_Avoid_: version stamp, header
+
+**Update** (of a project):
+Bringing a project's records up to the installed plugin with `/kaizen:update`, after the plugin itself was updated (`claude plugin update`); the two are different steps.
+_Avoid_: upgrade, migration (for the skill's work)
+
+**Changes for projects**:
+`references/changelog.md`: per plugin version, what a project adopts, changes or keeps; not the plugin's own history.
+_Avoid_: release notes
