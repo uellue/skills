@@ -202,7 +202,7 @@ class TestFeedback(unittest.TestCase):  # ledger 238
                 self.assertNotRegex(line, IDENTIFYING)
 
     def test_identifying_pattern_catches_what_it_should(self):
-        for bad in ("session 08d2a43f said", "08d2a43f-1bd4-4662-9015-317fdd548a58", "at L2502", ".claude/debriefs/2026-11-07.md"):
+        for bad in ("session 0123abcd said", "0123abcd-4567-89ab-cdef-0123456789ab", "at L2502", ".claude/debriefs/2026-11-07.md"):
             self.assertRegex(bad, IDENTIFYING, bad)
         for good in ("commit `5a3ac92`", "row 238", "`.claude/debriefs/feedback-raw.md`", "reports in `.claude/debriefs/`"):
             self.assertNotRegex(good, IDENTIFYING, good)
