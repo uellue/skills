@@ -290,10 +290,50 @@ class TestProjectNotice(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
-    def start(self, skill="playbook"):
-        """What a skill runs at its start, in the project; only the notice line, not the maintainer's status line."""
-        r = subprocess.run([sys.executable, SCRIPTS / "version.py", skill, self.text_id], cwd=self.project, capture_output=True, text=True)
+    def start(self, skill="playbook", cwd=None):
+        """What a skill runs at its start, in the project; only the notice line, not the maintainer's status line.
+        Without git's hook variables, so that a commit hook's GIT_DIR cannot point it at the real repository (279)."""
+        env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+        r = subprocess.run([sys.executable, SCRIPTS / "version.py", skill, self.text_id], cwd=cwd or self.project,
+                           capture_output=True, text=True, env=env)
+        self.last = r
         return "\n".join(l for l in r.stdout.splitlines() if "/kaizen:update" in l)
+
+    def test_a_version_line_in_a_quote_or_bold_after_a_merge_is_read(self):
+        for line in (f"> Kaizen standing instructions, version {self.installed}: x",
+                     f"**Kaizen standing instructions, version {self.installed}**: x",
+                     f"- Kaizen standing instructions, version: {self.installed}"):
+            with self.subTest(line):
+                (self.project / "CLAUDE.md").write_text(line + "\n" + self.OLD_BLOCK)
+                self.assertEqual(self.start(), "")
+
+    def test_a_read_only_git_dir_or_no_git_never_breaks_the_line_nor_claims_once(self):
+        (self.project / "CLAUDE.md").write_text(self.OLD_BLOCK)
+        info = self.project / ".git" / "info"
+        info.mkdir(exist_ok=True)
+        info.chmod(0o500)
+        try:
+            out = self.start()
+            self.assertEqual(self.last.returncode, 0, self.last.stderr)
+            self.assertIn("/kaizen:update", out)
+            self.assertNotIn("Said once", out)
+        finally:
+            info.chmod(0o700)
+        plain = Path(self.tmp.name) / "plain"
+        plain.mkdir()
+        (plain / "CLAUDE.md").write_text(self.OLD_BLOCK)
+        out = self.start(cwd=plain)
+        self.assertIn("/kaizen:update", out)
+        self.assertNotIn("Said once", out)
+
+    def test_the_update_marks_the_notice_as_said_so_skills_inside_it_stay_quiet(self):
+        (self.project / "CLAUDE.md").write_text(self.OLD_BLOCK)
+        update = SCRIPTS.parent / "skills" / "update" / "SKILL.md"
+        playbook_id = self.text_id
+        self.text_id = re.search(r"^Text id `([0-9a-f]{8})`", update.read_text(), re.M).group(1)
+        self.assertEqual(self.start("update"), "")
+        self.text_id = playbook_id
+        self.assertEqual(self.start("playbook"), "")
 
     def test_an_unversioned_copy_is_named_once_per_installed_version(self):
         (self.project / "CLAUDE.md").write_text(self.OLD_BLOCK)

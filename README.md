@@ -10,7 +10,7 @@ claude plugin install kaizen@uellue --scope user
 ```
 
 Or inside a session: `/plugin marketplace add uellue/skills`, then `/plugin install kaizen@uellue`.
-To follow updates, turn on auto-update for the `uellue` marketplace under `/plugin` → Marketplaces. After an update, the first kaizen skill you run in a project says once whether the project's records are from an older version; then `/kaizen:update` shows what changed and brings the project up to date on a branch, asking before each change.
+To follow updates, turn on auto-update for the `uellue` marketplace under `/plugin` → Marketplaces. After an update, the first kaizen skill you run in a project says once, when the project's records are from an older version, that `/kaizen:update` shows what changed and brings the project up to date on a branch, asking before each change.
 
 ## First steps
 

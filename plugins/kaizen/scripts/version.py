@@ -10,7 +10,8 @@
 
 With SKILL and ID it also looks at the project it runs in (the git top level of the working directory): when
 the project's records belong to an older version of the plugin than the installed one, it prints one line
-naming /kaizen:update, once per installed version (remembered in the clone's .git/info/, never committed).
+naming /kaizen:update, once per installed version (remembered in the clone's or worktree's .git/info/, never
+committed; outside git, or where that cannot be written, it says so each time and does not claim "once").
 The records: the standing instructions in CLAUDE.md or AGENTS.md (their first line names the version they
 are from; a copy without that line is older than any versioned one), and a ledger missing a line the current
 template has.
@@ -65,7 +66,8 @@ def commit() -> str:
     return f", commit {r.stdout.strip()}" + (" with uncommitted changes" if dirty.strip() else "")
 
 
-MARKER = re.compile(r"^Kaizen standing instructions, version (\S+?)[.:]?(?:\s|$)", re.M)
+# the line may sit in a quote, a list or bold after a merge ("merge, don't append"); "version: 0.6.0" counts too
+MARKER = re.compile(r"^[\s>*_#-]*Kaizen standing instructions,? version:?\s+(\d\S*?)[.:,*_]?(?:\s|$)", re.M | re.I)
 BLOCK_START = "- Keep changes tight: no speculative generality"  # the block's first rule, in every version so far
 LEDGER_LINES = ("Public:", "Message size:")  # lines of references/ledger.md's header a current ledger carries
 NOTICED = "kaizen-update-noticed"
@@ -87,7 +89,7 @@ def project_root() -> Path:
 def project_records(root: Path, installed: str) -> list[str]:
     """What in the project belongs to an older version of the plugin; empty when nothing does."""
     older = []
-    for name in ("CLAUDE.md", "AGENTS.md", ".claude/CLAUDE.md"):
+    for name in ("CLAUDE.md", "AGENTS.md", ".claude/CLAUDE.md", "CLAUDE.local.md"):
         f = root / name
         if not f.is_file():
             continue
@@ -106,21 +108,45 @@ def project_records(root: Path, installed: str) -> list[str]:
     return older
 
 
-def notice(installed: str):
-    """One line naming /kaizen:update when the project is behind, once per installed version and clone."""
+def noticed_file(root: Path) -> Path | None:
+    """Where this clone (each worktree has its own) remembers the version it was told about; None outside git."""
+    gitdir = subprocess.run(["git", "-C", str(root), "rev-parse", "--absolute-git-dir"], capture_output=True, text=True)
+    return Path(gitdir.stdout.strip()) / "info" / NOTICED if gitdir.returncode == 0 and gitdir.stdout.strip() else None
+
+
+def remember(seen: Path | None, installed: str) -> bool:
+    """Write the version told about; False when it cannot be kept (no git, a read-only .git), never an error."""
+    if seen is None:
+        return False
+    try:
+        seen.parent.mkdir(exist_ok=True)
+        seen.write_text(installed + "\n")
+        return True
+    except OSError:
+        return False
+
+
+def notice(installed: str, during_update: bool = False):
+    """One line naming /kaizen:update when the project is behind, once per installed version and clone or worktree.
+
+    Inside the update itself nothing is printed, but the version is remembered, so that a skill run during
+    the update does not repeat the notice (a self-test run, 2026-11-09)."""
     root = project_root()
+    seen = noticed_file(root)
+    if during_update:
+        remember(seen, installed)
+        return
     older = project_records(root, installed)
     if not older:
         return
-    gitdir = subprocess.run(["git", "-C", str(root), "rev-parse", "--absolute-git-dir"], capture_output=True, text=True)
-    seen = Path(gitdir.stdout.strip()) / "info" / NOTICED if gitdir.returncode == 0 else None
-    if seen and seen.is_file() and seen.read_text().strip() == installed:
-        return
+    try:
+        if seen and seen.is_file() and seen.read_text().strip() == installed:
+            return
+    except OSError:
+        pass
+    once = f" Said once for {installed}." if remember(seen, installed) else ""
     print(f"kaizen {installed} is installed; this project's records are older ({'; '.join(older)}): "
-          f"/kaizen:update brings them up to date, on a branch, asking before each change. Said once for {installed}.")
-    if seen:
-        seen.parent.mkdir(exist_ok=True)
-        seen.write_text(installed + "\n")
+          f"/kaizen:update brings them up to date, asking before each change.{once}")
 
 
 def stamp(skills: list[Path]):
@@ -150,7 +176,7 @@ def main():
         print(__doc__)
         return
     if len(sys.argv) not in (2, 3):
-        sys.exit("usage: version.py SKILL [ID] | --stamp | --help")
+        sys.exit("usage: version.py SKILL [ID] | --project | --stamp | --help")
     skills = sorted(PLUGIN.glob("skills/*/SKILL.md"))
     if sys.argv[1] == "--stamp":
         return stamp(skills)
@@ -165,8 +191,7 @@ def main():
         sys.exit(f"no skill {sys.argv[1]}; skills: {', '.join(s.parent.name for s in skills)}")
     if len(sys.argv) == 3:
         verdict(p, sys.argv[2].strip("`"), version)
-        if p.parent.name != "update":
-            notice(version)
+        notice(version, during_update=p.parent.name == "update")
         return
     line = f"kaizen {version}{commit()}; {p.parent.name} text id {written_id(p)} (compare with the id at the top of the skill)"
     if written_id(p) != text_id(p):

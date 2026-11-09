@@ -4,12 +4,12 @@ What `/kaizen:update` brings into a project, newest first: what a project adopts
 
 ## 0.6.0
 
-- **Version line.** The standing-instruction block starts with "Kaizen standing instructions, version …"; a project that has the block adds the line, so that the skills can tell when the project is behind.
+- **Version line.** The standing-instruction block starts with "Kaizen standing instructions, version …"; a project that has the block adds the line, first inside whatever section holds the block, so that the skills can tell when the project is behind. A project without the block has no version line, and its ledger alone tells the skills it is behind.
 - **Issue tracker.** Where a project's issues and pull requests live (GitHub, GitLab, a mail list, none) is a setting in its instruction file, asked once: the tracker and repository, when the agent reads it (at the start of work on an issue, before a pull request, in the debrief), and who may post. The section the update writes, filled in with the answers:
 
   ```text
   ## Issue tracker
-  Issues and pull requests: <tracker, repository>. They are the backlog of the work; design/kaizen.md (the ledger) holds only what concerns working with the plugin and the agent, with a link where an issue touches that. Read the tracker <when>. Post nothing (comments, replies, labels, closing) without <who>'s yes; drafts first, split into a part for people and a part for agents. A fix says "Closes #n", a part of an issue "Refs #n".
+  Issues and pull requests: <tracker, repository>. They are the backlog of the work; design/kaizen.md (the ledger) holds only what concerns working with the plugin and the agent, with a link where an issue touches that. Read the tracker <when>. Post <how often: e.g. only replies the person asked for>, nothing (comments, replies, labels, closing) without the yes of <the person who decides>; drafts first, in .claude/drafts/ (kept out of git), split into a part for people and a part for agents. A fix says "Closes #n", a part of an issue "Refs #n".
   ```
 - **Unanswered reporters.** The first time the update reads the tracker, it names issues and pull requests from others that have had no answer for more than two days and offers a short reply as a draft.
 
@@ -21,4 +21,4 @@ What `/kaizen:update` brings into a project, newest first: what a project adopts
 
 ## Before 0.5.5
 
-Projects from these versions have the standing instructions without a version line; the comparison line by line covers them. Records were the same as in 0.5.5 except for the two ledger lines and the feedback entries.
+Projects from these versions have the standing instructions without a version line, and so do projects from 0.5.5: a block without one takes the sections of 0.5.5 and 0.6.0, and the comparison line by line covers its wording. Records were the same as in 0.5.5 except for what that section lists.
