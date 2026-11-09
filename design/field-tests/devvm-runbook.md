@@ -3,7 +3,7 @@
 You test the plugin by using it in devvm. Everything runs on the host unless it says "in the VM".
 
 Two variants:
-- **Variant 1, repeatable** (the maintainer, testing changes to the plugin): a fixed starting state, reset after each run. Your own devvm checkout and VMs are never touched.
+- **Variant 1, repeatable** (the maintainer, testing changes to the plugin): a fixed starting state, copied once from your VM and checkout, reset after each run. Your own checkout is only read; your VM is shut off once while it is copied, and otherwise never touched.
 - **Variant 2, real work** (a colleague, or the maintainer's last run): their own checkout and VM, only the recording and notes added; nothing is reset.
 
 ## In every new terminal on the host, first
@@ -20,20 +20,40 @@ Inside a recording, `$FIELD_TEST_RUN` is the run's folder (`$FIELD_TEST_DIR/run-
 
 ### Run 0: the starting state, once
 
+A copy of your VM `devvm-snapshots` and of its checkout, as they are. Your VM is shut off while they are copied (its disk is about 70 GiB).
 ```
+export ORIG=devvm-snapshots
+export ORIG_CHECKOUT="$HOME/src/devvm"                          # what it shares: virsh metadata "$ORIG" --uri https://devvm.invalid/1 --key devvm
+export POOL=/cachedata/weber/libvirt                            # DEVVM_POOL_DIR in ~/.config/devvm/site.env
+export LIBVIRT_DEFAULT_URI=qemu:///system
 "$SKILLS"/design/field-tests/record.sh                          # asks to create the folder, records run-0
-git clone https://github.com/modama-rdm/devvm "${FIELD_TEST_DIR:?}"/work/devvm
-cd "${FIELD_TEST_DIR:?}"/work/devvm
-devvm use "$VM" && devvm create                                 # a VM of its own, with the working copy mounted
-devvm setup-dev                                                 # as you normally set up a devvm VM; log in to Claude
+devvm -n "$ORIG" stop
+mkdir "${FIELD_TEST_DIR:?}"/work
+cp -a "${ORIG_CHECKOUT:?}" "${FIELD_TEST_DIR:?}"/work/devvm     # same folder name: the VM sees it at /workspaces/devvm
+PATH=/usr/bin:$PATH virt-clone --original "$ORIG" --name "$VM" --file "${POOL:?}/$VM.qcow2"
+devvm -n "$ORIG" start                                          # your VM is free again
+cp -a "${POOL:?}/$ORIG.hostkey" "${POOL:?}/$VM.hostkey"         # the clone has the same host key; devvm writes
+cp -a "${POOL:?}/$ORIG.hostkey.pub" "${POOL:?}/$VM.hostkey.pub" #   $VM.known_hosts from it by itself
 ```
-Bring VM and working copy into the state you want each run to start from (for this test: the released kaizen, before the update). Then:
+Point the copy's shared folder at the working copy, and the working copy at the copy's VM:
+```
+PATH=/usr/bin:$PATH virt-xml "$VM" --edit target=devvm-ws --filesystem source.dir="${FIELD_TEST_DIR:?}"/work/devvm
+virsh metadata "$VM" --uri https://devvm.invalid/1 --key devvm --config \
+  --set "<workspace host=\"${FIELD_TEST_DIR:?}/work/devvm\" guest=\"/workspaces/devvm\"/>"
+cd "${FIELD_TEST_DIR:?}"/work/devvm && devvm use "$VM"          # the copy said devvm-snapshots
+devvm status                                                    # VM: devvm-field; the workspace: the working copy
+virsh dumpxml "$VM" | grep -B2 devvm-ws                         # source dir: the working copy
+virsh snapshot-list "$VM"                                       # expected empty; if not, stop and tell me
+qemu-img info "${POOL:?}/$VM.qcow2" | grep -i 'backing\|disk size'   # for the research note
+```
+Then start it, `devvm -n "$VM" ssh`, and check that the state is the one each run should start from (for this test: the released kaizen, before the update; `claude plugin list`). Back on the host:
 ```
 devvm -n "$VM" stop
 cp -a "${FIELD_TEST_DIR:?}"/work "${FIELD_TEST_DIR:?}"/master  # the master copy of the working copy
 devvm -n "$VM" snapshot field-start
 exit                                                            # ends the recording
 ```
+Never revert the snapshots `clean`, `dev`, `dev2` on the copy if they show up there: they would share your real checkout again (`design/research/vm-clone.md`).
 
 ### Each run
 
@@ -71,7 +91,8 @@ Then work on devvm as you normally would, in your own checkout and VM, with `dev
 ## Why it is done this way
 
 - The recording runs on the host, so it also covers the VM; output and timing only, never keystrokes.
-- Variant 1: the snapshot resets everything inside the VM (plugin, the agent's memory, settings); the working copy comes from the host, so it is reset by copying the master; the VM is stopped while it changes. Whether devvm's reset boots the VM so that it sees the new copy was not checked.
+- Variant 1 starts from copies of your VM and checkout, warts and all, so the test meets the setting a real user has (principal, 2026-11-09). The copy's shared folder and devvm's record of it are moved before the snapshot, because a snapshot keeps the definition of its moment.
+- The snapshot resets everything inside the VM (plugin, the agent's memory, settings); the working copy comes from the host, so it is reset by copying the master; the VM is stopped while it changes. The snapshot keeps the shared folder pointing at `work/devvm`, so the fresh copy is what the VM sees after the reset.
 - The session is exported into the checkout because the reset would erase it inside the VM.
 - Nothing is deleted: every run's folder keeps its recording, notes, working copy and session.
 - `${VAR:?}` stops a command when the variable is empty, so no path is ever built from nothing.
