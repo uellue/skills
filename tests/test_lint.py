@@ -256,12 +256,14 @@ class TestFeedback(unittest.TestCase):  # ledger 238
         self.assertNotIn("neither took nor dropped", block)
         self.assertNotIn("neither took nor dropped", (fixture.parent / "kaizen.md").read_text())
         # 261 to 264.
-        self.assertIn("the After steps all apply", hallway)
+        self.assertIn("all After steps apply", hallway)
         self.assertIn("the proposals that are not small, and the branch with its merge request", debrief)
         self.assertIn("The cost in minutes first, a guess called one, tokens in brackets", debrief)
         self.assertNotIn("token estimate", debrief)
         self.assertIn("Ask too whether the messages' length suited them, and offer longer or shorter: always in the first debrief", debrief)
-        self.assertIn("Message size: <comfortable / shorter / longer>, asked <date>.", block)
+        self.assertIn('Message size: <comfortable / shorter / longer> ("<their words>"), asked <date>.', block)
+        # 265: a re-run starts in one message.
+        self.assertIn('one message holds the reading, what changed, the leans and the cost relative to the last run, ending "Start?"', hallway)
         for skill in ("hallway-test", "playbook"):
             self.assertIn("references/ledger.md`, which says what to ask first", (PLUGIN / "skills" / skill / "SKILL.md").read_text(), skill)
         self.assertNotIn("kept out of anything published", (REPO / "README.md").read_text())

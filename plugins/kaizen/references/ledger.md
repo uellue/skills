@@ -10,7 +10,7 @@ The notes section also takes, before the topic changes, an offer the person neit
 What leaves a debrief: proposals with decisions, the fate of earlier ones, what did not fit in the plugin's skills, and notes for the next debrief. The full reports are private, in `.claude/debriefs/`.
 
 Public: <yes / no / may become>, asked <date>.
-Message size: <comfortable / shorter / longer>, asked <date>.
+Message size: <comfortable / shorter / longer> ("<their words>"), asked <date>.
 
 ## Proposals
 ### <date>
