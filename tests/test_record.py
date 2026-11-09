@@ -18,7 +18,7 @@ class TestRecord(unittest.TestCase):
         bindir.mkdir()
         # a stand-in for util-linux script that writes down its arguments instead of recording
         fake = bindir / "script"
-        fake.write_text('#!/bin/sh\nprintf "%s\\n" "$@" > "$FAKE_ARGS"\n')
+        fake.write_text('#!/bin/sh\nprintf "%s\\n" "$@" > "$FAKE_ARGS"\necho "$FIELD_TEST_RUN" > "$FAKE_ARGS.run"\n')
         fake.chmod(fake.stat().st_mode | stat.S_IEXEC)
         self.args = Path(self.tmp.name) / "args"
         self.env = {**os.environ, "FIELD_TEST_DIR": str(self.base), "PATH": f"{bindir}:{os.environ['PATH']}",
@@ -54,6 +54,9 @@ class TestRecord(unittest.TestCase):
         self.assertIn("run-0/notes.md", listing)
         self.assertEqual(self.run_record("--pack", "0").returncode, 1)
         self.assertEqual(self.run_record("--pack", "7").returncode, 1)
+        self.run_record()  # run-1
+        self.assertEqual(self.run_record("--pack").returncode, 0)  # the latest by default
+        self.assertTrue((self.base / "run-1.tar.gz").is_file())
         self.assertEqual(self.run_record("--pack", "x").returncode, 2)
 
     def test_first_is_run_0_then_it_counts_up_past_gaps_and_odd_names(self):
@@ -71,6 +74,7 @@ class TestRecord(unittest.TestCase):
         self.assertEqual(self.args.read_text().split("\n")[:5],
                          ["-q", "-T", str(run / "timing.log"), "-O", str(run / "session.log")])
         self.assertNotIn("--log-in", self.args.read_text())
+        self.assertEqual(Path(str(self.args) + ".run").read_text().strip(), str(run))  # FIELD_TEST_RUN in the shell
         self.assertNotIn("-I", self.args.read_text().split("\n"))
         self.assertEqual(self.run_record("--next").stdout.strip(), str(self.base / "run-1"))
 
