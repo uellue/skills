@@ -1,62 +1,67 @@
 # Runbook: field test of kaizen in devvm
 
-You test the plugin by using it in devvm. Everything below runs on the host unless it says "in the VM". `S` is this repository (`~/src/skills`), `D` the folder the VM `devvm-snapshots` shares with the host.
+You test the plugin by using it in devvm. Everything runs on the host unless it says "in the VM". `S` is this repository (`~/src/skills`), `F` the scratch folder `~/field-test` (`record.sh` asks before creating it).
 
-## Once
+Two variants:
+- **Variant 1, repeatable** (the maintainer, testing changes to the plugin): a fixed starting state, reset after each run. Your own devvm checkout and VMs are never touched.
+- **Variant 2, real work** (a colleague, or the maintainer's last run): their own checkout and VM, only the recording and notes added; nothing is reset.
 
-```
-S/design/field-tests/record.sh            # starts recording (run-0); type exit at the end
-devvm ls -a                               # find devvm-snapshots and its shared folder: that is D
-devvm -n devvm-snapshots snapshot field-start
-touch ~/field-test-notes.md               # your notes file
-exit
-```
+## Variant 1
 
-## Each run
-
-1. Start recording: `S/design/field-tests/record.sh`
-2. Put a fresh devvm into `D` (with the VM stopped: it may keep seeing the old folder otherwise; not checked):
-   ```
-   devvm -n devvm-snapshots stop
-   mv D ~/field-test/previous-devvm-$(date +%s)    # only if D holds an earlier run's clone
-   git clone https://github.com/modama-rdm/devvm D
-   echo /.claude/transcripts/ >> D/.git/info/exclude
-   devvm -n devvm-snapshots start
-   ```
-3. In the VM (`devvm -n devvm-snapshots ssh`), install the test version:
-   ```
-   claude plugin marketplace remove uellue          # if present
-   claude plugin marketplace add uellue/skills#field-tests-269
-   claude plugin install kaizen@uellue --scope user
-   claude plugin list                               # shows the version
-   ```
-4. In the VM, in the checkout: `claude`. From here, follow `S/design/field-tests/devvm-brief.md`.
-5. When you are done, still in the VM, in the checkout:
-   ```
-   t=$(find ~/.claude/plugins -name transcript.py -path '*kaizen*' | head -1)
-   python3 "$t" locate              # note the session id
-   python3 "$t" export <id>
-   exit                             # leave the VM
-   exit                             # end the recording
-   ```
-6. Tell me here: the run number, the session id. I take it from there.
-
-## Reset (only for testing the plugin, never in normal use)
+### Run 0: the starting state, once
 
 ```
-devvm -n devvm-snapshots reset field-start
-devvm ls -a                       # destroy the testing VMs this run created: devvm -n <name> destroy
+S/design/field-tests/record.sh                    # asks to create F, records run-0
+git clone https://github.com/modama-rdm/devvm F/work/devvm
+cd F/work/devvm
+devvm use devvm-field && devvm create             # a VM of its own, with F/work/devvm mounted
+devvm setup-dev                                    # as you normally set up a devvm VM; log in to Claude
+```
+Bring VM and working copy into the state you want each run to start from (for this test: the released kaizen, before the update). Then:
+```
+devvm -n devvm-field stop
+cp -a F/work F/master                              # the master copy of the working copy
+devvm -n devvm-field snapshot field-start
+exit                                               # ends the recording
 ```
 
-Then the next run, from step 1. Nothing is deleted: recordings, notes and old clones stay in `~/field-test/`.
+### Each run
 
-## The last run, kept
+```
+S/design/field-tests/record.sh                    # run-<n>, with F/run-<n>/notes.md
+devvm -n devvm-field reset field-start
+devvm -n devvm-field ssh                           # in the VM, in the checkout:
+  claude plugin marketplace remove uellue
+  claude plugin marketplace add uellue/skills#field-tests-269
+  claude plugin install kaizen@uellue --scope user
+  claude                                           # then follow S/design/field-tests/devvm-brief.md
+```
+When you are done, still in the VM, in the checkout:
+```
+  t=$(find ~/.claude/plugins -name transcript.py -path '*kaizen*' | head -1)
+  python3 "$t" locate                              # note the session id
+  python3 "$t" export <id>                         # into the checkout, which the host keeps
+  exit                                             # leaves the VM
+devvm -n devvm-field stop
+mv F/work F/run-<n>/work                           # this run's working copy, kept as evidence
+cp -a F/master F/work                              # the next run starts from the master again
+exit                                               # ends the recording
+S/design/field-tests/record.sh --pack <n>          # F/run-<n>.tar.gz
+```
+Tell me here: the run number. The testing VMs a run created: `devvm ls -a`, then `devvm -n <name> destroy`.
 
-Skip the reset. In the brief, the rule "nothing goes upstream" does not apply. `D` stays devvm's working checkout.
+## Variant 2
+
+In the terminal you will work in, before anything else:
+```
+S/design/field-tests/record.sh                    # (a colleague gets the script with the brief)
+```
+Then work on devvm as you normally would, in your own checkout and VM, with `devvm-brief.md` beside you. At the end, in the VM, in your checkout, export the session as in variant 1 (the `find`, `locate`, `export` lines), copy `.claude/transcripts/<id>` into `F/run-<n>/`, `exit`, then `record.sh --pack <n>` and send the archive (a colleague: as an attachment to an issue in the private repository, after looking through it).
 
 ## Why it is done this way
 
 - The recording runs on the host, so it also covers the VM; output and timing only, never keystrokes.
-- The snapshot resets everything inside the VM (plugin, the agent's memory, settings); the git tree comes from the host, hence the fresh clone.
-- The session is exported into `D` because the reset would erase it inside the VM.
+- Variant 1: the snapshot resets everything inside the VM (plugin, the agent's memory, settings); the working copy comes from the host, so it is reset by copying the master; the VM is stopped while it changes. Whether devvm's reset boots the VM so that it sees the new copy was not checked.
+- The session is exported into the checkout because the reset would erase it inside the VM.
+- Nothing is deleted: every run's folder keeps its recording, notes, working copy and session.
 - Layers and the reasons in full: `design/walkthroughs/maintainer-field-test-devvm.md`.
