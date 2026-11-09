@@ -35,7 +35,7 @@ Every part below starts in a terminal on the host with `design/field-tests/recor
 ## Reset for the next run (kaizen on kaizen only; never part of normal plugin use)
 
 9. **L4:** `devvm -n devvm-snapshots reset field-start` (the VM back to before the plugin was installed). Testing VMs the run created: list with `devvm ls -a`, destroy the run's own with `devvm -n <name> destroy`.
-10. **L3:** the run's clone stays where it is until its material is analysed; the next run gets a fresh clone (step 4). Delete an old clone by hand, after checking the path.
+10. **L3:** the run's clone stays, named after its run (e.g. `~/field-test/run-<n>-devvm`), with its exported session; the next run gets a fresh clone (step 4). Everything a run leaves (clone, recording, notes) is kept: it is real-world evidence of kaizen on kaizen (principal, 2026-11-09). Nothing in this runbook deletes it.
 11. Then from step 4.
 
 ## The last run: turning it into variant 2
