@@ -1,0 +1,206 @@
+[
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "From a hallway test on 2026-11-07: a developer who skims the README and then follows only what devvm prints reached a VM, ran their tests, reset and destroyed it without going back to the docs. These changes fix the rough spots it found:\n\n- devvm ssh CMD runs where a login starts (the workspace), by sourcing the VM's /etc/profile.d/devvm-workspace.sh first; `devvm ssh ./test.sh` used to fail in the home directory. Arguments that begin with an ssh option (devvm ssh -L ...) pass unchanged. Scripts that rely on relative paths in the home directory change: the e2e test had three, now ~/...\n- test without .devvm/config.env says to run devvm init first.\n- ls says when this checkout has no VM yet, and names create.\n- start on a running VM says \"already running\".\n- The destroy prompt without a terminal reads \"...? (no terminal to confirm; ...)\".\n- The help lists setup-dev with the commands for all VMs, not under the unshared-only heading.\n\nRequirements and spec record the owner's decision on ssh CMD.",
+  "createdAt": "2026-11-07T18:19:49Z",
+  "headRefName": "hallway-2026-11-07",
+  "mergedAt": "2026-11-07T18:33:39Z",
+  "number": 20,
+  "state": "MERGED",
+  "title": "Hints for a first user who follows only the output"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "…zen recommends\n\nThe mattpocock-skills plugin at user scope like kaizen; OpenSpec from npm into ~/.local, with Node.js 22 LTS from nodejs.org (checksum verified), since Debian 13's Node is too old; OPENSPEC_TELEMETRY=0 at the top of .bashrc. No `openspec init`: that is a project's decision. No opt-out, the owner's call (spec open question 5, now decided).\n\nThe token step now looks for its own export line instead of the \"# devvm setup-dev\" marker, which the telemetry line would have matched.\n\nTested: DEVVM_E2E_REQUIRED=1 tests/run.sh unit e2e, all passed, 0 skipped.",
+  "createdAt": "2026-11-07T17:19:35Z",
+  "headRefName": "setup-dev-companions",
+  "mergedAt": "2026-11-07T17:26:40Z",
+  "number": 19,
+  "state": "MERGED",
+  "title": "setup-dev: also Matt Pocock's skills and OpenSpec, the companions kai…"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "Merged into the existing instructions rather than appended",
+  "createdAt": "2026-11-07T17:14:44Z",
+  "headRefName": "claude-md-working-rules",
+  "mergedAt": "2026-11-07T17:19:45Z",
+  "number": 18,
+  "state": "MERGED",
+  "title": "CLAUDE.md: working rules from the kaizen plugin's standing instructions"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "Per feedback from @second-user who likes longer-lived VMs: Documentation covers this use case now. `devvm use` as a helper so that one doesn't need to type the VM name all the time.",
+  "createdAt": "2026-11-05T13:30:14Z",
+  "headRefName": "docs-long-lived-vms",
+  "mergedAt": "2026-11-05T14:36:09Z",
+  "number": 15,
+  "state": "MERGED",
+  "title": "Longer lived VMs"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "devvm save writes the VM's memory and devices to disk with libvirt's managed save and stops it: it frees RAM and CPUs and survives a host reboot. start restores it and sets the guest clock, which stood still meanwhile. start also continues a paused VM (virsh suspend, or libvirt on a full disk), so it means \"make it run\" in every state. The names are libvirt's (its suspend pauses in RAM). ls and status show \"saved\" and \"paused\"; ssh and the commands that need the IP say so instead of waiting.\n\nA save image survives snapshot-revert, and the next start then restored the old memory over the reverted disk (reproduced; the libvirt-guests service can leave such an image on host shutdown, too). reset now removes it first, destroy passes --managed-save, snapshot refuses a saved VM, and stop resumes a paused VM before the ACPI shutdown.",
+  "createdAt": "2026-11-04T16:20:47Z",
+  "headRefName": "save-vm",
+  "mergedAt": "2026-11-04T16:30:56Z",
+  "number": 14,
+  "state": "MERGED",
+  "title": "save: a VM's state to disk, restored by start"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "The State column of virsh snapshot-list is the VM's state when the snapshot was taken. devvm takes live snapshots, so every row said \"running\", which read as if each snapshot were a running VM. Both commands now print name and creation time (\"Taken\"), or \"No snapshots\".\n\nThe e2e check that a deleted snapshot is gone matched the indented virsh table; it now matches the new line format.",
+  "createdAt": "2026-11-04T14:38:49Z",
+  "headRefName": "snapshot-list-state",
+  "mergedAt": "2026-11-04T16:21:13Z",
+  "number": 13,
+  "state": "MERGED",
+  "title": "status, snapshot -l: list snapshots without virsh's State column"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "…t SSH\n\nstart probed SSH with BatchMode and treated every failure as \"not up yet\". With a key that needs a passphrase and no ssh-agent, the probe always gets \"Permission denied\", so start retried for about two minutes and then reported that SSH does not answer, although the VM was up and an interactive ssh worked.\n\nwait already handled this. Its probe is now a function, probe_ssh, used by both: \"Permission denied\" counts as up (start then hints at ssh-add), a host key mismatch or a shut-off VM fails at once, and a timeout reports the last error. Unit tests in tests/unit/ssh_probe.sh.",
+  "createdAt": "2026-11-04T14:28:55Z",
+  "headRefName": "start-passphrase-key",
+  "mergedAt": "2026-11-04T14:33:19Z",
+  "number": 12,
+  "state": "MERGED",
+  "title": "start: a key that needs a passphrase no longer looks like a VM withou…"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "…led reset\n\ncreate refused a missing DEVVM_MOUNTS source already, but with an unnormalised path and no way out. It now names the folder, where DEVVM_MOUNTS is set, and what to do.\n\nA shared folder removed on the host later broke more: in a running VM the mount stays, empty and not writable, unnoticed. reset then failed with libvirt's words, left the VM shut off and an orphaned root virtiofsd holding its log file, so every later start failed, even with the folder restored, until root killed it. start on a stopped VM failed with libvirt's words as well.\n\nstart and reset (and with it test) now check the sources in the VM's libvirt definition first and refuse with the folder and the remedies: restore it, or re-create the VM without it. status shows a Missing: line.\n\nUnit tests for the messages and the refusal before libvirt is asked; e2e steps for a missing source at create and a folder removed while the VM runs and while it is off. README and design/ updated.",
+  "createdAt": "2026-11-04T09:44:31Z",
+  "headRefName": "missing-mount-source",
+  "mergedAt": "2026-11-04T09:56:27Z",
+  "number": 11,
+  "state": "MERGED",
+  "title": "Missing mount sources: actionable errors, and no stuck VM after a fai…"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "Retconning a high-level description of what the tool does, how and why, to stabilize agentic development",
+  "createdAt": "2026-11-04T08:50:55Z",
+  "headRefName": "design-docs",
+  "mergedAt": "2026-11-04T09:23:47Z",
+  "number": 10,
+  "state": "MERGED",
+  "title": "Design docs"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "git links the submodules of a linked worktree to their module directories in the main repository's git directory by relative paths. In the VM, the checkout is at /workspaces/<folder>, while the git directory is shared at its host path, so those paths dangled and git status failed with \"not a git repository\".\r\n\r\nsetup.sh now also links the git directory to where the relative paths lead from the checkout in the VM, unless something is there already. This also covers worktrees whose own .git file is relative (extensions.relativeWorktrees).\r\n\r\nCloses #8 ",
+  "createdAt": "2026-11-04T08:14:29Z",
+  "headRefName": "fix-worktree-submodules",
+  "mergedAt": "2026-11-04T08:49:04Z",
+  "number": 9,
+  "state": "MERGED",
+  "title": "Submodules of a shared linked worktree resolve in the VM (#8)"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "…d output\n\nSettings: defaults < site.env < project config.env < environment. The site's DEVVM_MAX_VCPUS/RAM_MB/DISK_GB cap the VM size; create refuses a larger VM and a project cannot raise them. create prints the size it creates.\n\nCommands: one message for a missing VM; commands refuse arguments they do not take; -n without a value, --help/-h/help (stdout, exit 0), the unknown-command error after the usage; stop waits until the VM is off, start until SSH answers; status is a short summary (-v for virsh's); plain confirmations for snapshot, reset and destroy; the virt-install console hint is dropped.\n\nTests: run_tests was in the middle of tests/unit/cli.sh, so tests after it never ran; lint now requires it to be the last line. New unit tests for the above, and e2e steps for the limit, stop/start, status and destroy. README updated.",
+  "createdAt": "2026-11-03T15:17:01Z",
+  "headRefName": "hallway-fixes",
+  "mergedAt": "2026-11-03T15:32:45Z",
+  "number": 7,
+  "state": "MERGED",
+  "title": "Hallway test fixes: settings order and site limits, clearer errors an…"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "Checked in the lifecycle test, which also runs in CI.",
+  "createdAt": "2026-11-03T14:20:41Z",
+  "headRefName": "setup-dev-tools",
+  "mergedAt": "2026-11-03T14:28:29Z",
+  "number": 6,
+  "state": "MERGED",
+  "title": "e2e test: setup-dev installs the screenshot tools and the kaizen plugin"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "…nshots\n\nThe kaizen plugin (owner/skills marketplace, user scope) is installed after Claude Code; its hallway-test skill drives a real terminal by screenshots, which needs xvfb, xterm, xdotool and imagemagick (Debian packages, installed if missing). Both steps are skipped when already present. Checked in a fresh VM.",
+  "createdAt": "2026-11-03T14:06:35Z",
+  "headRefName": "setup-dev-tools",
+  "mergedAt": "2026-11-03T14:13:17Z",
+  "number": 5,
+  "state": "MERGED",
+  "title": "setup-dev: install the kaizen plugin and the tools for terminal scree…"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "Checked locally with act (lint-unit job); the e2e job needs a real run.",
+  "createdAt": "2026-11-03T13:08:05Z",
+  "headRefName": "ci",
+  "mergedAt": "2026-11-03T13:43:32Z",
+  "number": 4,
+  "state": "MERGED",
+  "title": "GitHub Actions: lint and unit tests, and the e2e test on a KVM runner"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "",
+  "createdAt": "2026-11-03T12:58:51Z",
+  "headRefName": "snapshots",
+  "mergedAt": "2026-11-03T13:00:59Z",
+  "number": 3,
+  "state": "MERGED",
+  "title": "Improve snapshot management"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "",
+  "createdAt": "2026-11-03T11:10:13Z",
+  "headRefName": "self-hosting-and-wait",
+  "mergedAt": "2026-11-03T11:10:23Z",
+  "number": 2,
+  "state": "MERGED",
+  "title": "Self-tests"
+ },
+ {
+  "author": {
+   "login": "owner"
+  },
+  "body": "Make sure devvm is self-hosting.\n\nLogging in to claude over and over again was annoying, so it can now use a token",
+  "createdAt": "2026-11-03T10:44:21Z",
+  "headRefName": "self-hosting-and-wait",
+  "mergedAt": "2026-11-03T11:07:48Z",
+  "number": 1,
+  "state": "MERGED",
+  "title": "Devvm development with devvm; fixes; claude"
+ }
+]
