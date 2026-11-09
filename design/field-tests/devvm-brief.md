@@ -4,13 +4,7 @@ You try the kaizen plugin (version 0.6.0-dev.1) while you work on devvm as you n
 
 ## What to do
 
-In your devvm session (Claude Code in the VM, in the devvm checkout):
-
-1. Start with any kaizen skill, or simply with `/kaizen:update`; the plugin should tell you that devvm is behind and what to run. Follow it.
-2. Then type `/kaizen:sync`, and follow it.
-3. Then work on the open issues from devvm's tracker, as far as you like, with the plugin guiding you.
-
-You decide everything the plugin asks; answer as yourself. Do not look up how the plugin works; if you would have to, that is a finding.
+In your devvm session (Claude Code in the VM, in the devvm checkout), type `/kaizen:update`. From there on, work as you normally would.
 
 ## Notes while you work
 

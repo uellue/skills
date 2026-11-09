@@ -197,6 +197,8 @@ Interviewed: the principal in person, from 2026-11-09; drafted first from the re
 
 - [record] Facts for the plan's branch step (claude-code-guide agent, from code.claude.com/docs/en/plugins/: cli-reference, host-marketplace, marketplace-reference, loading; read 2026-11-09): a marketplace can be added at a branch with `claude plugin marketplace add uellue/skills#<branch>`, or pinned for a project in `.claude/settings.json` (`extraKnownMarketplaces` with `ref`); only one marketplace per name, so `uellue` from `main` must be removed first, which also uninstalls its plugins; `claude plugin marketplace update uellue` fetches the branch's newest commit, and `claude plugin update kaizen@uellue` installs it only when `version` in `plugin.json` changed (0.5.5 now), so the branch needs its own version string; `claude plugin list` shows the installed version.
 
+- [answered] A field-test brief for a person gives the starting point and the method (recording, notes, what not to post, how to hand back), never how to behave: humans come with their own persona and agenda; telling them to "follow" the plugin or how to answer is a personality change. In devvm: start with `/kaizen:update`, then work as you normally would; the rest should flow from the plugin (principal, 2026-11-09).
+
 ### Open (the frontier when the interview paused, 2026-11-09)
 - The principal's review of E23 to E31 and N32 to N41.
 - The branch's version string for the field test (lean: a pre-release such as `0.6.0-dev.1`, raised on every change devvm should get) and whether devvm pins the branch in its project settings or the principal installs it at user scope (lean: user scope, so devvm's repository does not point at a branch).
