@@ -225,7 +225,7 @@ class TestFeedback(unittest.TestCase):  # ledger 238
         self.assertIn("When a cause lies in a skill, the finding goes to the skill, not into the coaching", debrief)
         self.assertIn("references/feedback.md", debrief)
         hallway = (PLUGIN / "skills" / "hallway-test" / "SKILL.md").read_text()
-        self.assertIn("for after the merge or release", hallway)
+        self.assertIn("when a merge or release follows, offer it once, after that", hallway)
         self.assertIn("A re-run (after fixes, as a last check) reuses the saved brief", hallway)
         self.assertIn("(`-2` for a second that day)", hallway)
         self.assertIn("`design/feedback.md`", (REPO / "README.md").read_text())
@@ -238,13 +238,23 @@ class TestFeedback(unittest.TestCase):  # ledger 238
         self.assertIn("Public: <yes / no / may become>", (PLUGIN / "references" / "ledger.md").read_text())
         self.assertIn('A decision ("yes to all") is not a feedback entry', debrief)
         self.assertIn("its first line `Brief: <file>. Usage: <minutes, output tokens, model>.`", hallway)
-        self.assertIn("Give the cost in minutes, then as a share of a budget the person named, output tokens only in brackets", hallway)
+        self.assertIn("Give the cost in minutes (against their limit, if they gave one), output tokens only in brackets", hallway)
+        self.assertNotIn("budget the person named", hallway)
         self.assertIn("Read this skill's friction lines in the ledger first", hallway)
         self.assertNotIn("in a fresh session**", (REPO / "README.md").read_text())
         fixture = REPO / "benchmarks" / "plugin-newcomer" / "scenarios" / "after-merge" / "design" / "hallway"
         first = (fixture / "2026-11-07.md").read_text().splitlines()
         self.assertTrue(first[2].startswith("Brief: `2026-11-07-brief.md`. Usage:"), first[2])
         self.assertTrue((fixture / "2026-11-07-brief.md").exists())
+        # The fixes of the second after-merge rerun (252 to 258).
+        self.assertIn("say that it needs its own merge request or offer to carry them into the next one", debrief)
+        ledger = (PLUGIN / "references" / "ledger.md").read_text()
+        self.assertIn("asking once whether the repository is or may become public", ledger)
+        self.assertIn("an offer the person neither took nor dropped", ledger)
+        for skill in ("hallway-test", "playbook"):
+            self.assertIn("references/ledger.md`, which says what to ask first", (PLUGIN / "skills" / skill / "SKILL.md").read_text(), skill)
+        self.assertNotIn("kept out of anything published", (REPO / "README.md").read_text())
+        self.assertIn("where they already said it, quote them and ask only what to add", debrief)
 
 
 if __name__ == "__main__":

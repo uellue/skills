@@ -5,7 +5,7 @@ description: Which kaizen skill fits now, and what the shared documents are. The
 
 # Playbook
 
-Text id `65415bc2`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook 65415bc2` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `01c5cea9`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook 01c5cea9` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The other skills are moments in one process; this skill says which moment a session is in, what that moment reads and writes, and what to do when a document is missing. It proposes; the person decides.
 
@@ -69,4 +69,4 @@ At every point where the session finds a defect, a misunderstanding, a gap in a 
 ## Rules
 
 - A missing document is a finding, not a reason to assume its content.
-- At the end, one line into the project's ledger: what in this skill did not fit. If it does not exist yet, say first where it will go (`design/kaizen.md`, or where step 3 placed `design/`) and whether it will be committed, and start it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`.
+- At the end, one line into the project's ledger: what in this skill did not fit. If it does not exist yet, say first where it will go (`design/kaizen.md`, or where step 3 placed `design/`) and whether it will be committed, and start it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`, which says what to ask first.

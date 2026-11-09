@@ -5,7 +5,7 @@ description: Run a hallway test of a tool, document, instruction file or diagnos
 
 # Hallway test
 
-Text id `85e7e6ac`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 85e7e6ac` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `770244cd`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 770244cd` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A fresh sub-agent that has not seen the implementation, the specs or the conversation tries the subject as a first user would, with only the requirements and the user documentation, and reports where reality differs from what they promise. Its persona comes from the stakeholder record (`design/stakeholders.md`), its coverage from the walk-through's steps and the acceptance examples when they exist.
 
@@ -39,7 +39,7 @@ Settle the items below in short messages, each numbered from 1: first the questi
 6. **Who answers questions.** The tester asks the main session when the requirements do not say what should happen; the main session answers from the design and records what it could not answer confidently as TODO items for the principal. With no design, the principal answers: ask whether they stay available during the run, or collect the questions for afterwards.
 7. **Where the record goes** and the summary length; the record and the files written before it go on a working branch, a new one if the repository is on its main branch. With no `design/` yet and the playbook not yet run, ask before creating it, and whether committed files become public (then it goes where the playbook's step 3 says).
 8. **The mode** (above), with your lean: behaviour for "does it do what it should", hint-following for "will people who don't read get there", by eye for output meant for people.
-9. **The model, the expected cost and the duration**, stated before launching; wait for an explicit yes (a repeated or empty command is not one). Read this skill's friction lines in the ledger first. Give the cost in minutes, then as a share of a budget the person named, output tokens only in brackets. Measured: two to three minutes (10 k to 15 k) for a short README run (Opus); 14 minutes (46 k) for a behaviour test of a small CLI (Sonnet); anything else is a guess and is called one. A cheaper model is enough for the by-eye tester and the eval cells; the behaviour and diagnosis testers benefit from the session's model.
+9. **The model, the expected cost and the duration**, stated before launching; wait for an explicit yes (a repeated or empty command is not one). Read this skill's friction lines in the ledger first. Give the cost in minutes (against their limit, if they gave one), output tokens only in brackets. Measured: two to three minutes (10 k to 15 k) for a short README run (Opus); 14 minutes (46 k) for a behaviour test of a small CLI (Sonnet); anything else is a guess and is called one. A cheaper model is enough for the by-eye tester and the eval cells; the behaviour and diagnosis testers benefit from the session's model.
 
 ## The run
 
@@ -67,5 +67,5 @@ While it runs, answer the tester's questions from the design, with the reasoning
 - A finding is a moment: the exact command, what was expected, what was observed, the relevant stderr lines or the screenshot file name.
 - Do not fix during the test what the tester reported as a question; decide first whether it is a bug or a design choice, then fix with its test.
 - A finding that is a vulnerability (data readable by the wrong user, a credential exposed, an unsafe default) is reported to the user first and the plan stops there; the fix path is the proposed next step.
-- Offer the debrief in one line (`/kaizen:debrief`), for after the merge or release, when the test ends a stretch of work, was this skill's first use in the project, or the ledger shows no debrief yet.
-- At the end, one line into the project's ledger: what in this skill did not fit. If the file is new, say where it goes and whether it is committed, and start it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`.
+- Offer the debrief in one line (`/kaizen:debrief`) when the test ends a stretch of work, was this skill's first use in the project, or the ledger shows no debrief yet; when a merge or release follows, offer it once, after that.
+- At the end, one line into the project's ledger: what in this skill did not fit. If the file is new, start it from `${CLAUDE_PLUGIN_ROOT}/references/ledger.md`, which says what to ask first.
