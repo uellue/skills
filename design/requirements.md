@@ -147,6 +147,44 @@ Interviewed: the principal in person, 2026-11-07; where it lives is to be settle
 - [record] Automatic prompt optimisation: GEPA (learns from traces and written feedback, MIT; its authors report 100 to 500 evaluations) and SkillOpt (edits one skill file; licence unknown) are the nearest; methods needing many cheap runs do not fit long sessions.
 - [record] Resuming a session (`--resume`) keeps the skill text already loaded in its history; testing a changed text means replaying the prompts in a fresh session (inferred from the transcript layout, not documented).
 
+## Topic: human trials (ledger 269)
+
+Interviewed: the principal in person, from 2026-11-09; drafted first from the record (ledger 269, the feedback entry of 2026-11-09, `design/research/human-trials.md`). Vocabulary: [answered] *human trial*, a real person tries a subject and the agent reads what happened (glossary entry to add); inside it the usability-testing terms participant, task scenario, think-aloud, moderated and unmoderated (round 1, item 20).
+
+### Demand
+- [answered] Current friction is how to perform human trials, as opposed to automated hallway tests; they happen in a different environment, and copy and paste between the participant and the session does not always work or is not sufficient (principal, 2026-11-09, feedback entry; "the most pressing item").
+- [answered] The need: both setting up the test and returning the results with the lowest friction possible. Copy and paste is appropriate for small issues, not for a whole run (round 1, item 21).
+- [answered] One good scenario exists: in the `claude plugin eval` work the agent set the run up to write (tee) its output to the right places, the principal ran it, said when it was done, and the agent read the output. It works where the session and the command can exchange files; it does not work as it is across isolation (different containers, VMs, hosts) (item 21).
+- [answered] General, not an example: it holds every time the kaizen plugin is used, and probably for every agent user, so it may make sense as a standalone tool or pattern, separate from kaizen. The devvm tool was part of it: set up the proper isolation, but allow the necessary exchange with the environment with minimal friction (item 22).
+- [answered] Three parties always exchange: the agent's development session, the human, and the subject under test with its environment. Developing a plugin is the tricky case: switching between a clean test project, the plugin and an agent start, and the development setup and session. In the plugin's self-tests the agent had trouble keeping these layers apart, so human trials must pay attention to the layers (item 22).
+- [answered] Goal: make trials so easy and smooth that users do them all the time, and collect enough data to find actionable items and feedback for development; the debriefs found human input the most valuable for improvements. How often is not a rule; the manager controls it (item 24).
+- [answered] First trial: on devvm (github.com/modama-rdm/devvm), where there was friction; a second user and tester exists already (item 23). Develop and explore with the principal on devvm first; when ready, try it with the second user (round 2).
+
+### Requirements (round 2, 2026-11-09)
+- [answered] The target scenario: a separate user on a separate machine. How the data travels is important: evaluate options and look for prior art; places where agents and humans already exchange information exist, and issue trackers are made for that (item 25).
+- [answered] Unmoderated, with a brief that gives commands the participant can run for the steps, and a way to record comments in the moment (perhaps `echo` in the shell; what else works); a person might talk to someone beside them, but voice recording is not the way (item 26).
+- [answered] No time target: subjective ease and convenience is the key, learned from feedback, not clocks (item 27).
+- [answered] The brief and the trial record name each layer (the participant's host, devvm, the VM, any agent inside) and label every finding with its layer; try it and see how it works in practice (item 28).
+- [answered] Recordings stay private on the receiving host; the subject's findings go to its own issues, findings about the method to this repository (item 29).
+- [answered] The brief may include a prompt for the participant's own agent that turns the session's output into something that can be posted. Ask for privacy there: many testers will share everything, but we need their "ok". Give the tester the feeling of staying in control; ask specifically whether we did OK or whether anything in the brief made them uncomfortable (item 29).
+- [deferred] Whether this becomes a standalone tool or pattern, separate from kaizen: after the first trial, the principal (item 30).
+- [deferred] The session setup for the first round with the principal (where the participant side runs, which boundary the files cross): worked out step by step at the principal's work computer, not in one line (round 3, item 31).
+- [answered] The brief's prompt for the participant's own agent turns the recording into a short report, shows it to them, posts nothing without their "ok", and offers to remove anything they mark (item 32).
+- [answered] The brief ends with "Did we do OK? Was anything in this brief uncomfortable or unclear?"; the answer becomes a feedback entry (item 33).
+- [answered] For now the brief lives in this repository as a reference of the hallway test (a human mode); it moves only if item 30 says so (item 34).
+- [record] Recorded next step: one trial with one colleague, then a concept (ledger 269, principal 2026-11-09).
+- [record] What comes back today without a recording: devvm's second user filed their first-use notes as a GitHub issue in free text (good next-step guidance noted, a README sentence not understood, a hang with a guessed cause, a request to split a command), and a later error as another issue; the owner's hallway test of devvm on 2026-11-07 was an agent's.
+
+### Current solutions and prior art
+- [record] The hallway test's testers are agents only (by eye in a real terminal, behaviour, hint-following, documents); no mode for a person.
+- [record] Research (2026-11-09, sub-agent, read before commit): `script`/`scriptreplay` record output and timing as text, not as a picture; usability practice has task scenarios, think-aloud, moderated and unmoderated sessions; devcontainers or VMs give a clean start; privacy is the main risk (an input log holds passwords). `script` on macOS not checked; asciinema and tmux not verified.
+
+### Open (the frontier when the interview paused, 2026-11-09)
+- How the files travel from the participant's machine to the session: options and prior art in `design/research/human-trials-exchange.md` (research agent, 2026-11-09), then a choice by the principal.
+- How the participant records a comment in the moment (`#`, `echo`, a marker): the same research, then a choice.
+- The session setup for the first round with the principal, step by step at the work computer (item 31).
+- Then: the brief itself, its acceptance examples in `design/examples.md`, the hand-over check.
+
 ## Release
 Decides: the principal. Builds: the principal with Claude. Pays: ER-C (tokens). Signs off: the principal, per release.
 
