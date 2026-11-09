@@ -47,7 +47,7 @@ class TestTrackedProject(unittest.TestCase):
         for item in [*self.issues.values(), *self.pulls.values()]:
             self.assertEqual(set(item["author"]), {"login"})
         self.assertNotRegex(text, r"@(?!second-user|owner)[A-Za-z0-9-]{2,}\b(?![.@])")
-        self.assertNotIn("data-management", text)
+        self.assertIn("[Body shortened for this fixture", self.issues[8]["body"])  # it quoted another project's paths
 
     def test_the_copied_instructions_are_older_than_the_readme_as_n32_says(self):
         readme = standing_instructions((REPO / "README.md").read_text())
