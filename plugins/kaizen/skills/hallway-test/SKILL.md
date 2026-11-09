@@ -5,7 +5,7 @@ description: Run a hallway test of a tool, document, instruction file or diagnos
 
 # Hallway test
 
-Text id `770244cd`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 770244cd` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `77d9867c`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 77d9867c` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A fresh sub-agent that has not seen the implementation, the specs or the conversation tries the subject as a first user would, with only the requirements and the user documentation, and reports where reality differs from what they promise. Its persona comes from the stakeholder record (`design/stakeholders.md`), its coverage from the walk-through's steps and the acceptance examples when they exist.
 
@@ -23,7 +23,7 @@ Modes, often combined:
 
 When the request says "test", which can mean its own tests or a first user trying it, say before anything else which reading you take, in one line that also says what the test is ("I read 'test' as a fresh agent trying it as a first user and reporting what breaks, a hallway test; not automated tests"), and let the person correct it.
 
-A re-run (after fixes, as a last check) reuses the saved brief and record: ask only what changed, and state the cost relative to the last run.
+A re-run (after fixes, as a last check) reuses the saved brief and record: ask only what changed, and state the cost relative to the last run; the After steps all apply.
 
 Settle the items below in short messages, each numbered from 1: first the questions only the person can answer (with, for a tool that writes, whether the data are the originals and another copy exists, item 3); then, with the answers in hand, your leans as one block that one "yes" accepts (when it would run past fifteen lines, the record's place and the ledger get a message of their own); last, on its own, the model, cost and duration with the request to start (item 9). Together they become the tester's brief. For an existing tool before its first hand-over, the first message is the reading of the request and the no-requirements line, one line each, and the questions only the person can answer (who is first, how a wrong result would show, which cases matter most, who answers during the run, where the record goes); whether to start a stakeholder record goes into the leans. When the subject is a framework, a plugin or a process, the persona brings a sample project of their own: it is input, not the subject, and the brief names both.
 

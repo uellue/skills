@@ -11,4 +11,3 @@ Public: may become (with the paper), asked 2026-11-07.
 - 2026-11-07, hallway-test: the cost was stated in output tokens, which the author could not judge.
 
 ## Notes for the next debrief
-Also here, before the topic changes: an offer the person neither took nor dropped ("the rest later").

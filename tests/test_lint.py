@@ -247,10 +247,21 @@ class TestFeedback(unittest.TestCase):  # ledger 238
         self.assertTrue(first[2].startswith("Brief: `2026-11-07-brief.md`. Usage:"), first[2])
         self.assertTrue((fixture / "2026-11-07-brief.md").exists())
         # The fixes of the second after-merge rerun (252 to 258).
-        self.assertIn("say that it needs its own merge request or offer to carry them into the next one", debrief)
+        self.assertIn("which needs its own merge request unless the person carries them into the next one", debrief)
         ledger = (PLUGIN / "references" / "ledger.md").read_text()
         self.assertIn("asking once whether the repository is or may become public", ledger)
-        self.assertIn("an offer the person neither took nor dropped", ledger)
+        # 260: guidance stays in the template's prose, not in the block a project's ledger copies.
+        prose, block = ledger.split("```markdown", 1)
+        self.assertIn("an offer the person neither took nor dropped", prose)
+        self.assertNotIn("neither took nor dropped", block)
+        self.assertNotIn("neither took nor dropped", (fixture.parent / "kaizen.md").read_text())
+        # 261 to 264.
+        self.assertIn("the After steps all apply", hallway)
+        self.assertIn("the proposals that are not small, and the branch with its merge request", debrief)
+        self.assertIn("The cost in minutes first, a guess called one, tokens in brackets", debrief)
+        self.assertNotIn("token estimate", debrief)
+        self.assertIn("Ask too whether the messages' length suited them, and offer longer or shorter: always in the first debrief", debrief)
+        self.assertIn("Message size: <comfortable / shorter / longer>, asked <date>.", block)
         for skill in ("hallway-test", "playbook"):
             self.assertIn("references/ledger.md`, which says what to ask first", (PLUGIN / "skills" / skill / "SKILL.md").read_text(), skill)
         self.assertNotIn("kept out of anything published", (REPO / "README.md").read_text())
