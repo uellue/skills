@@ -8,15 +8,19 @@ This is the one place that says how to run the suites. From the repository root;
 
     # the trigger table (triggers/): one arm, since no kaizen skill can start without the plugin
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-triggers; mkdir -p "$out"
-    claude plugin eval plugins/kaizen --tag trigger --scaffold --ablation none --no-publish -j 3 --max-cost-usd 15 --output-dir "$out" 2>&1 | tee "$out/run.log"
+    PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --tag trigger --scaffold --ablation none --no-publish -j 3 --max-cost-usd 15 --output-dir "$out" 2>&1 | tee "$out/run.log"
 
     # the walkthrough comparison (walkthrough/): three runs per case, with and without the plugin
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-walkthrough; mkdir -p "$out"
-    claude plugin eval plugins/kaizen --case 'walkthrough-*' --scaffold --allow-tools Write Edit --no-publish -j 3 --max-cost-usd 6 --output-dir "$out" 2>&1 | tee "$out/run.log"
+    PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'walkthrough-*' --scaffold --allow-tools Write Edit --no-publish -j 3 --max-cost-usd 6 --output-dir "$out" 2>&1 | tee "$out/run.log"
+
+    # the update notice (update/): Bash for the start-up line
+    out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-update; mkdir -p "$out"
+    PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'update-*' --scaffold --allow-tools Bash --runs 1 --ablation none --no-publish -j 2 --max-cost-usd 2 --output-dir "$out" 2>&1 | tee "$out/run.log"
 
     # one case, while writing or fixing its graders: one run, no comparison; add --keep-temp to look into a failure
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-<case>; mkdir -p "$out"
-    claude plugin eval plugins/kaizen --case <case> --scaffold --allow-tools Write Edit --runs 1 --ablation none --no-publish --max-cost-usd 2 --output-dir "$out" 2>&1 | tee "$out/run.log"
+    PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case <case> --scaffold --allow-tools Write Edit --runs 1 --ablation none --no-publish --max-cost-usd 2 --output-dir "$out" 2>&1 | tee "$out/run.log"
 
 - A full run takes several minutes: the time to note thoughts for the debrief ("note for the debrief: …"). When it is the final acceptance test of a release, the debrief follows the push and the merge, and its proposals go into the next release (ledger 230).
 - Cost ceilings are about 1.5 times the last full run ($10.01 for the triggers, $3.02 for the comparison). A ceiling never stops a run in progress, only the start of the next one, so it guards against a runaway (a skill looping to its turn limit), not against a normal run that costs a little more.
@@ -33,7 +37,11 @@ First comparison (2026-11-07, three runs per arm, 18 runs, 676 s, $3.02): every 
 
 ## What eval cannot reach
 
-Runs load only the plugin: no CLAUDE.md, user settings, memory or other plugins. Python does not start inside the sandbox ("Failed to import encodings module", checked 2026-11-09 with `--keep-temp`), so no skill's start-up line (`scripts/version.py`) runs there: a case about what that line says, such as the notice that names `/kaizen:update` (ledger 280), fails for the instrument, not the skill; `tests/test_scripts.py` covers the script. The standing instructions are outside this tool; their coverage needs another one (the backtrace of ledger row 218). There are no custom-code graders.
+Runs load only the plugin: no CLAUDE.md, user settings, memory or other plugins.
+
+The sandbox keeps the caller's PATH but hides the home directory (checked 2026-11-09 with the probe below and `--keep-temp`). Where the first `python3` on PATH lives under the home directory (miniforge, conda, pyenv, a virtual environment), it starts and cannot find its standard library: "Fatal Python error: Failed to import encodings module". Then no skill's start-up line (`scripts/version.py`) runs, silently, since the skills say "if it fails, carry on". So every command above runs with the system's Python first: prefix it with `PATH="/usr/bin:$PATH"`. The case `probe-python-in-sandbox` (`probes/`) tests the sandbox itself, not a skill: it prints PATH, HOME and each `python3` with whether it finds its library, and passes when `/usr/bin/python3` does; run it on a new machine or a new Claude Code version, with `--keep-temp` to read its output in the trace (the report shows only the prompt).
+
+The cases in `update/` (ledger 280) check the notice the start-up line prints when a project's records are older: one names `/kaizen:update`, one stays silent; both pass with the PATH prefix (2026-11-09, one run each, $0.30) and failed for the instrument without it. The standing instructions are outside this tool; their coverage needs another one (the backtrace of ledger row 218). There are no custom-code graders.
 
 ## Coverage: grader to rule
 
