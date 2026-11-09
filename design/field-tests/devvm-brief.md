@@ -11,14 +11,14 @@ In your devvm session (Claude Code in the VM, in the devvm checkout), type `/kai
 Whenever something about the plugin strikes you (confusing, missing, good, annoying), note it. Be frank: the raw reaction is what helps, swearing and sighs included; nothing you write here is held against anyone. Also note what you do that the recording does not see, such as reading the README in a browser, asking a colleague, or looking something up elsewhere. Use whichever of these is at hand:
 
 - **At a shell prompt** (not inside Claude): type the note as a comment, `# the update asked twice about the tracker`. The shell ignores it, and the recording keeps it with its time. In zsh, run `setopt interactivecomments` once first; bash needs nothing.
-- **While Claude is running:** one line in the notes file named in your runbook, from a second terminal or your editor. This doesn't go into your Claude session.
+- **While Claude is running:** one line in the notes file named in your runbook, from a second terminal or your editor. It stays outside your Claude session.
 - **Through the plugin itself:** everything it offers is yours to use, including "note for the debrief" and `/kaizen:debrief` in devvm; what lands in devvm's ledger and feedback files is read in the analysis, too.
 
 Notes about devvm itself go wherever you see fit. Please follow your normal procedures there.
 
 ## Rules for this run
 
-- Nothing goes upstream: no pushes, no comments, no issues, no pull requests. Let the plugin draft them; say "not now" when it offers to post. (In the run that is kept, this rule is lifted.)
+- Nothing goes upstream: no pushes, no comments, no issues, no pull requests. (In the run that is kept, this rule is lifted.)
 - Stop when you want to; there is no target.
 
 ## When you are done
