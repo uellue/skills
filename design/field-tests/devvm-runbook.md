@@ -60,7 +60,7 @@ exit                                                            # ends the recor
 ```
 Never revert the snapshots `clean`, `dev`, `dev2` on the copy if they show up there: they would share your real checkout again (`design/research/vm-clone.md`).
 
-Open (run 0, 2026-11-09): the copy started but never got an IP address. `virt-clone` gives it a new MAC address, and no lease for it appears in `virsh net-dhcp-leases default`; the suspected cause is a network setup inside tied to the original's MAC, not confirmed. Look with `virsh console "$VM"` (Ctrl+] leaves it) and tell me what the boot shows.
+If the copy gets no IP address (run 0 did: its network was tied to the original's MAC): the fix, done once, is in `design/research/vm-clone.md`, "Seen in run 0". Done for `devvm-field` on 2026-11-09; a new clone needs it again.
 
 ### Each run
 
