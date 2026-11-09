@@ -71,8 +71,8 @@ class TestRecord(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stderr)
         run = self.base / "run-0"
         self.assertTrue(run.is_dir())
-        self.assertEqual(self.args.read_text().split("\n")[:5],
-                         ["-q", "-T", str(run / "timing.log"), "-O", str(run / "session.log")])
+        self.assertEqual(self.args.read_text().split("\n")[:6],
+                         ["-q", "-f", "-T", str(run / "timing.log"), "-O", str(run / "session.log")])
         self.assertNotIn("--log-in", self.args.read_text())
         self.assertEqual(Path(str(self.args) + ".run").read_text().strip(), str(run))  # FIELD_TEST_RUN in the shell
         self.assertNotIn("-I", self.args.read_text().split("\n"))
