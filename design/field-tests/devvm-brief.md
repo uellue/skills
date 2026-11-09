@@ -8,7 +8,12 @@ In your devvm session (Claude Code in the VM, in the devvm checkout), type `/kai
 
 ## Notes while you work
 
-Whenever something about the plugin strikes you (confusing, missing, good, annoying), add one line to the notes file named in your runbook, outside devvm, with the time. Notes about devvm itself go wherever the plugin tells you, as usual.
+Whenever something about the plugin strikes you (confusing, missing, good, annoying), note it, in whichever of these is at hand:
+
+- **At a shell prompt** (not inside Claude): type the note as a comment, `# the update asked twice about the tracker`. The shell ignores it, and the recording keeps it with its time. In zsh, run `setopt interactivecomments` once first; bash needs nothing.
+- **While Claude is running:** one line in the notes file named in your runbook, from a second terminal. Not into Claude itself: a note typed there goes to devvm's agent and becomes part of its work.
+
+Notes about devvm itself go wherever the plugin tells you, as usual.
 
 ## Rules for this run
 
