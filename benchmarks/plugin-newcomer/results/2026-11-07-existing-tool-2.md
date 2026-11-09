@@ -1,4 +1,4 @@
-# Run 2026-11-07 (2): scenario existing-tool, commit `7c6df08`, Opus, 13,320 output tokens, 2.2 minutes
+# Run 2026-11-07 (2): scenario existing-tool, commit `a692047`, Opus, 13,320 output tokens, 2.2 minutes
 
 Result format: E15. Graded together with `2026-11-07-existing-tool.md` by the same separate Sonnet agent, from both reports, the key and the main session's checked claims. Second run on the same commit (ledger 216).
 

@@ -1,4 +1,4 @@
-# Run 2026-11-07 (3): scenario after-merge, commit `5a43eab`, Opus, 2.9 minutes
+# Run 2026-11-07 (3): scenario after-merge, commit `1103bb9`, Opus, 2.9 minutes
 
 Result format: E15. Graded together with `2026-11-07-after-merge-4.md` by a separate Sonnet agent that changed none of the skills, from both reports, the key, the scenario, the previous pair's results and the main session's checked claims with the expected effects (7, all confirmed; claim 3 by reasoning). Rerun after 239 to 244, fixture fixed; two runs on one commit (ledger 216).
 

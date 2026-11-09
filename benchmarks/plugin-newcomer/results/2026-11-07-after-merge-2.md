@@ -1,4 +1,4 @@
-# Run 2026-11-07 (2): scenario after-merge (first runs), commit `9ecb1d8`, Opus, 2.7 minutes
+# Run 2026-11-07 (2): scenario after-merge (first runs), commit `cdb509a`, Opus, 2.7 minutes
 
 Result format: E15. Graded together with `2026-11-07-after-merge.md` by the same separate Sonnet agent. Second run on the same commit (ledger 216); the same fixture defect (claim 9), which here shaped the debrief's suspected moment and one coaching item.
 

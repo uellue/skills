@@ -1,4 +1,4 @@
-# Run 2026-11-07: scenario after-merge (first runs), commit `9ecb1d8`, Opus, 2.7 minutes
+# Run 2026-11-07: scenario after-merge (first runs), commit `cdb509a`, Opus, 2.7 minutes
 
 Result format: E15. Graded together with `2026-11-07-after-merge-2.md` by a separate Sonnet agent that changed none of the skills, from both reports, the key, the scenario and the main session's checked claims (10, all confirmed). The tester got its brief through the file `brief.py` printed. Two runs on one commit (ledger 216). The scenario's fixture had a defect (claim 9: no branch `hallway-tally`, `tally.py` unfixed and sorting the levels); fixed after these runs.
 
