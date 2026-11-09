@@ -31,7 +31,7 @@ devvm -n "$ORIG" stop
 mkdir "${FIELD_TEST_DIR:?}"/work
 cp -a "${ORIG_CHECKOUT:?}" "${FIELD_TEST_DIR:?}"/work/devvm     # same folder name: the VM sees it at /workspaces/devvm
 PATH=/usr/bin:$PATH virt-clone --original "$ORIG" --name "$VM" --file "${POOL:?}/$VM.qcow2"
-devvm -n "$ORIG" start                                          # your VM is free again
+devvm -n "$ORIG" start                                          # your VM is free again (or leave it off while testing)
 cp -a "${POOL:?}/$ORIG.hostkey" "${POOL:?}/$VM.hostkey"         # the clone has the same host key; devvm writes
 cp -a "${POOL:?}/$ORIG.hostkey.pub" "${POOL:?}/$VM.hostkey.pub" #   $VM.known_hosts from it by itself
 ```
@@ -46,7 +46,12 @@ virsh dumpxml "$VM" | grep -B2 devvm-ws                         # source dir: th
 virsh snapshot-list "$VM"                                       # expected empty; if not, stop and tell me
 qemu-img info "${POOL:?}/$VM.qcow2" | grep -i 'backing\|disk size'   # for the research note
 ```
-Then start it, `devvm -n "$VM" ssh`, and check that the state is the one each run should start from (for this test: the released kaizen, before the update; `claude plugin list`). Back on the host:
+Then start the copy and log in:
+```
+devvm -n "$VM" start
+devvm -n "$VM" ssh                                              # no IP address after a minute: see the note below
+```
+Check that the state is the one each run should start from (for this test: the released kaizen, before the update; `claude plugin list`), then `exit`. Back on the host:
 ```
 devvm -n "$VM" stop
 cp -a "${FIELD_TEST_DIR:?}"/work "${FIELD_TEST_DIR:?}"/master  # the master copy of the working copy
@@ -54,6 +59,8 @@ devvm -n "$VM" snapshot field-start
 exit                                                            # ends the recording
 ```
 Never revert the snapshots `clean`, `dev`, `dev2` on the copy if they show up there: they would share your real checkout again (`design/research/vm-clone.md`).
+
+Open (run 0, 2026-11-09): the copy started but never got an IP address. `virt-clone` gives it a new MAC address, and no lease for it appears in `virsh net-dhcp-leases default`; the suspected cause is a network setup inside tied to the original's MAC, not confirmed. Look with `virsh console "$VM"` (Ctrl+] leaves it) and tell me what the boot shows.
 
 ### Each run
 

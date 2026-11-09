@@ -8,6 +8,7 @@
 #
 # Inside the recorded shell, FIELD_TEST_RUN is the run's folder.
 #
+# Written as it goes (-f), so a run can be followed live and survives a crash (run 0, 2026-11-09).
 # The first time, it asks before creating ~/field-test (FIELD_TEST_DIR overrides it). Output and timing only:
 # never --log-in, which would record every key, passwords included. An existing run folder is never reused;
 # nothing is deleted.
@@ -53,4 +54,4 @@ printf '# Notes, %s\n\n' "${run##*/}" > "$run/notes.md"
 echo "Recording into $run until you type exit. Output and timing only; look through session.log before sharing it."
 echo "Notes: $run/notes.md, or at a shell prompt as comments, '# like this' (zsh: 'setopt interactivecomments' first). Not inside Claude."
 export FIELD_TEST_RUN="$run"
-exec script -q -T "$run/timing.log" -O "$run/session.log"
+exec script -q -f -T "$run/timing.log" -O "$run/session.log"
