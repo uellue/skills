@@ -34,7 +34,13 @@ Bare metal on a shared machine is the risk: the limits must exist before the fir
 
 ## Answers from the principal (2026-11-10)
 - Frame: the subject is the developer's own tool; one shot, no reset ("my main concern is getting work done in that project"); the agent gets a view of the session and forwarded ports, and the skill finds the appropriate channels for data exchange; the skill works without any input from this repository and stays general ("not hand-crafted"); it adapts to each scenario with the walk-through and requirements skills; it takes care of safety, since the test runs bare metal on a shared machine; the principal is empowered on that machine.
-- Questions 1 to 7: open.
+1. The skill starts whenever the person expresses a wish or intent to try out the project they are working on, or to fix an issue that appeared in real-world use: "I found it very helpful to add instrumentation to a session and then chat about it."
+2. Yes: safety limits written and agreed before any runbook.
+3. Yes: at each runbook step and when asked, not on a timer; "it worked well to prompt the watching agent with what I want."
+4. Yes, three levels: mention inline ("I saw you did several runs, so now I'll handle it like this"), prompt more forcefully when a deviation may compromise the test, and "scream" when something may be unsafe; the person can always override: "the agent on either side never gatekeeps beyond the built-in safety gates of Claude."
+5. Yes: runbook and brief tracked in the project (`design/field-tests/`), evidence private (`.claude/field-tests/`): "natural places that are usually shared between layers, and relatively safe to contain any missteps (version controlled, per project/worktree isolation)."
+6. Yes: the agent only reads on the test machine until the person allows commands one at a time.
+7. Yes, as the desired production outcome; a shortcut on one machine (the maintainer playing both roles): the draft is written, never filed, and read from here.
 
 ## Gaps
 - No field-test skill (step 1); the hallway test's description says nothing about a person.

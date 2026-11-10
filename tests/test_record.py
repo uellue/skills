@@ -1,4 +1,4 @@
-"""design/field-tests/record.sh: the next run folder, and the recording command it starts (ledger 269, E38)."""
+"""plugins/kaizen/scripts/record.sh: the next run folder, and the recording command it starts (ledger 269, E38)."""
 
 import os
 import stat
@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-SCRIPT = Path(__file__).resolve().parents[1] / "design" / "field-tests" / "record.sh"
+SCRIPT = Path(__file__).resolve().parents[1] / "plugins" / "kaizen" / "scripts" / "record.sh"
 
 
 class TestRecord(unittest.TestCase):

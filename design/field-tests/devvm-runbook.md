@@ -12,6 +12,7 @@ Two variants:
 export SKILLS="$HOME/src/skills"                 # this repository
 export FIELD_TEST_DIR="$HOME/field-test"         # the scratch folder; record.sh asks before creating it
 export VM=devvm-field                            # variant 1's VM
+export REC="$SKILLS/plugins/kaizen/scripts/record.sh"   # the recording helper (in the plugin since 0.6.0-dev.2)
 ```
 
 Inside a recording, `$FIELD_TEST_RUN` is the run's folder (`$FIELD_TEST_DIR/run-<n>`), set by `record.sh`.
@@ -26,7 +27,7 @@ export ORIG=devvm-snapshots
 export ORIG_CHECKOUT="$HOME/src/devvm"                          # what it shares: virsh metadata "$ORIG" --uri https://devvm.invalid/1 --key devvm
 export POOL=/cachedata/weber/libvirt                            # DEVVM_POOL_DIR in ~/.config/devvm/site.env
 export LIBVIRT_DEFAULT_URI=qemu:///system
-"$SKILLS"/design/field-tests/record.sh                          # asks to create the folder, records run-0
+"$REC"                                                          # asks to create the folder, records run-0
 devvm -n "$ORIG" stop
 mkdir "${FIELD_TEST_DIR:?}"/work
 cp -a "${ORIG_CHECKOUT:?}" "${FIELD_TEST_DIR:?}"/work/devvm     # same folder name: the VM sees it at /workspaces/devvm
@@ -66,7 +67,7 @@ If the copy gets no IP address (run 0 did: its network was tied to the original'
 
 Paste one line at a time: this terminal breaks multi-line pastes (run 0 to 8). The next run is offered once the last one was processed and acted on (principal, 2026-11-10).
 ```
-"$SKILLS"/design/field-tests/record.sh                          # run-<n>, with $FIELD_TEST_RUN/notes.md
+"$REC"                                                          # run-<n>, with $FIELD_TEST_RUN/notes.md
 devvm -n "$VM" reset field-start
 devvm -n "$VM" ssh                                              # in the VM, in the checkout (Ctrl+R finds the next three in the history):
   claude plugin marketplace remove uellue
@@ -88,9 +89,9 @@ exit                                                            # ends the recor
 ```
 Then, in the same terminal, now outside the recording:
 ```
-"$SKILLS"/design/field-tests/record.sh --pack                   # the latest run as one file: run-<n>.tar.gz
+"$REC" --pack                                                   # the latest run as one file: run-<n>.tar.gz
 ```
-Tell me here: the run number. I grade it with `design/field-tests/grade-brief.md` and `transcript.py messages` (numbering and length per reply), and we go through the findings before the next run. The testing VMs a run created: `devvm ls -a`, then `devvm -n <name> destroy`.
+Tell me here: the run number. I grade it with `plugins/kaizen/references/field-test-grade.md` and `transcript.py messages` (numbering and length per reply), and we go through the findings before the next run. The testing VMs a run created: `devvm ls -a`, then `devvm -n <name> destroy`.
 
 The export needs git to ignore `.claude/transcripts/` in the working copy: `master` has the line in `.git/info/exclude` since run 8.
 
@@ -98,9 +99,9 @@ The export needs git to ignore `.claude/transcripts/` in the working copy: `mast
 
 In the terminal you will work in, after the variables above:
 ```
-"$SKILLS"/design/field-tests/record.sh                          # (a colleague gets the script with the brief)
+"$REC"                                                          # (a colleague gets the script with the brief)
 ```
-Then work on devvm as you normally would, in your own checkout and VM, with `devvm-brief.md` beside you. At the end, in the VM, in your checkout, export the session as in variant 1 (the `find`, `locate`, `export` lines); back on the host, `cp -a <your checkout>/.claude/transcripts "${FIELD_TEST_RUN:?}"/`, `exit`, then `"$SKILLS"/design/field-tests/record.sh --pack` and send the archive (a colleague: as an attachment to an issue in the private repository, after looking through it).
+Then work on devvm as you normally would, in your own checkout and VM, with `devvm-brief.md` beside you. At the end, in the VM, in your checkout, export the session as in variant 1 (the `find`, `locate`, `export` lines); back on the host, `cp -a <your checkout>/.claude/transcripts "${FIELD_TEST_RUN:?}"/`, `exit`, then `"$REC" --pack` and send the archive (a colleague: as an attachment to an issue in the private repository, after looking through it).
 
 ## Why it is done this way
 

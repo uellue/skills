@@ -1,5 +1,5 @@
 #!/bin/bash
-# Field-test recordings (runbook: design/field-tests/devvm-runbook.md).
+# Field-test recordings (the field-test skill, step 4: a view of the person's terminal for the agent).
 #
 #   record.sh            records into the next free run-<n> under ~/field-test (run-0 the first time), until `exit`;
 #                        the run's folder also gets notes.md, your notes about the plugin

@@ -5,7 +5,7 @@ description: Which kaizen skill fits now, and what the shared documents are. The
 
 # Playbook
 
-Text id `e27359b3`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook e27359b3` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `02389ff2`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook 02389ff2` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The other skills are moments in one process; this skill says which moment a session is in, what that moment reads and writes, and what to do when a document is missing. It proposes; the person decides.
 
@@ -41,6 +41,7 @@ Each step that asks something is its own message (steps 5 and 7 may share one; t
 | What we decided | the agent drafts it from `${CLAUDE_PLUGIN_ROOT}/references/decision-record.md` and asks the person each decision it cannot take from the record | `design/changes/<name>.md`: need, interface, decisions with who decided and whether reversible, must / should / won't with a size budget, blocking questions | after the walk-throughs, before the build; whenever an implementer would otherwise invent decisions; done when every must-example is cited and every blocking question is answered or named as an assumption the person accepted |
 | Build | the project's own instructions | code, tests citing example IDs, docs | every sub-agent brief names the example IDs each assertion serves; anything it could damage as the decision record's safety row says |
 | Does it hold up | `hallway-test` | `design/hallway/<date>.md`; imagined versus observed added to the walk-through | something exists that a first user could try; before a merge request |
+| Does it hold up for real | `field-test` | `design/field-tests/<scenario>-runbook.md`; evidence in `.claude/field-tests/` (private) | a person tries it for real (real data, a real machine, an issue from real use), the session following along |
 | How did we work | `debrief` | `.claude/debriefs/<date>.md` (private); the ledger | on a schedule (a day, a stretch, a skill's first use); after each release, in a fresh session, after the push and merge, with notes taken while the final acceptance tests ran; its proposals go into the next release; when the work is ready to push or a debrief's proposals are applied, suggest ending the session with the prompt for the next one; "note for the debrief" goes to the ledger at once |
 
 **Acceptance examples have one home**, `design/examples.md`: one line each, with an ID (`E1`, `E2`, …), the concrete situation and observable outcome, a priority (must / should), and the walk step or requirement it came from. Walk-throughs and the requirements interview append to it; decision records, scenarios, tests and tester briefs cite the IDs; nobody keeps a copy. Before a hand-over, list every example with no scenario or test.

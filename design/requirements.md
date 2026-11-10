@@ -202,6 +202,14 @@ Interviewed: the principal in person, from 2026-11-09; drafted first from the re
 - [answered] Variant 1 (repeatable) works on copies: a master copy and a working copy in a scratch folder the person agreed to, a VM of its own snapshotted in the starting condition; the person's own ("production") checkout is never touched. Variant 2 observes real development work in the person's own checkout and VM, with only the instruments added. A run's evidence is one folder, packed into one archive file to move around (principal, 2026-11-09).
 - [answered] A field-test brief for a person gives the starting point and the method (recording, notes, what not to post, how to hand back), never how to behave: humans come with their own persona and agenda; telling them to "follow" the plugin or how to answer is a personality change. In devvm: start with `/kaizen:update`, then work as you normally would; the rest should flow from the plugin (principal, 2026-11-09).
 
+### The field-test skill for any project (walk-through, 2026-11-10)
+- [answered] Scope: the skill serves any project's field test of its own subject (a developer taking a tool from simulation to a shared test machine), not only kaizen on kaizen; general, "not hand-crafted"; each scenario is fitted with the walk-through and requirements skills; it runs without input from this repository ("pristine"). Walk: `design/walkthroughs/developer-field-test-own-tool.md`; persona "A developer field-testing their own tool"; E43 to E48.
+- [answered] Starts whenever the person wants to try out what they work on, or to fix an issue that appeared in real-world use; instrumenting a session and chatting about it is the method.
+- [answered] Safety limits (what the subject may touch, how a run is stopped, what must never happen, who agreed) are written before any runbook whenever the subject runs outside an isolated VM. The agent only reads on such a machine until the person allows commands one at a time.
+- [answered] During a run the agent looks at the live view at each runbook step and when asked; it mentions deviations inline, prompts more forcefully when one may compromise the test, and "screams" at something unsafe; the person can always override, and no agent gatekeeps beyond Claude's built-in safety gates.
+- [answered] Runbook and brief are tracked in the project (`design/field-tests/`); the evidence is private (`.claude/field-tests/`).
+- [answered] Plugin findings from another project: a drafted issue for the plugin's repository, which the person sends.
+
 ### Open (the frontier when the interview paused, 2026-11-09)
 - The principal's review of E23 to E31 and N32 to N41.
 - The branch's version string for the field test (lean: a pre-release such as `0.6.0-dev.1`, raised on every change devvm should get) and whether devvm pins the branch in its project settings or the principal installs it at user scope (lean: user scope, so devvm's repository does not point at a branch).
