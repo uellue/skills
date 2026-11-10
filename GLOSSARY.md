@@ -98,6 +98,10 @@ _Avoid_: play test, usability test, user test
 A real person, the participant, tries a subject for real in their own environment (real data, a real machine, an issue from real use), and the agent reads what happened: live, through channels both checked before the run, talking about it as it happens (the field-test skill, 2026-11-10), or afterwards from what they send back (a recording, notes in the moment, a report they approved); a brief gives the start and the method when the participant is someone else; inside it, the usability-testing terms task scenario, think-aloud, moderated and unmoderated apply (requirements, topic ledger 269).
 _Avoid_: human trial (it reads as a clinical trial), human-in-the-loop test, user test, human hallway test
 
+**The start** (of a field-test run):
+The hand-over at which a run begins: the agent says the runbook is ready, which step begins and what it waits for; the person starts and says when it runs; only then does the agent look (field-test skill, step 6; ledger 299).
+_Avoid_: go, kick-off, launch
+
 **Subject**:
 What a hallway test, a walk-through, a review or a debrief judges: a tool, a document, a process, or the plugin itself.
 _Avoid_: target, system under test, the thing (it reads as the real thing)
