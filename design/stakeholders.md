@@ -56,3 +56,12 @@ Knows: their own project, not ours.
 Has: increasingly, their own agent reading our output.
 Never reads: bulk generated text posted as if a person wrote it.
 Confidence: simulated, from the manager's "two audiences" notes (2026-11-04 and 11-05).
+
+## A developer field-testing their own tool
+
+Who: a project's developer who takes something that has been "cooking" in simulation to its first real use, on a shared test machine with other things on it ("bare metal", not a VM; not production yet, but some users may run it in production later). Develops in a devvm VM with an agent; the tool's services are reached through forwarded ports.
+Wants: to get the project's work done first; the field test as instrumentation around real work, no reset; the agent to find and agree the channels for exchanging data (a view of the session, forwarded ports, files) on its own; safety on a shared machine; to report findings about the plugin upstream on the side.
+Knows: their project, its services and the test machine (and is empowered on it); kaizen from an older version of its skills, brought up to date with `/kaizen:update`; not this repository's conversations, which must not leak into the test.
+Has: the project's checkout in a devvm VM, the test machine, the plugin installed at user scope.
+Never reads: a runbook longer than the steps it needs; anything here about how the field test "should" go.
+Confidence: interview (the principal, 2026-11-10, as the developer of another project; walk-through `design/walkthroughs/developer-field-test-own-tool.md`).
