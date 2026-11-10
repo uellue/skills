@@ -5,11 +5,11 @@ description: Run a hallway test of a tool, document, instruction file or diagnos
 
 # Hallway test
 
-Text id `aab1c907`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test aab1c907` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `32df0c58`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 32df0c58` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A fresh sub-agent that has not seen the implementation, the specs or the conversation tries the subject as a first user would, with only the requirements and the user documentation, and reports where reality differs from what they promise. Its persona comes from the stakeholder record (`design/stakeholders.md`), its coverage from the walk-through's steps and the acceptance examples when they exist.
 
-Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number a message's items from 1 in one sequence that never restarts within it, so the person can answer by number.
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number items in one sequence across messages, never restarting while any is open, so the person can answer by number.
 
 Modes, often combined:
 

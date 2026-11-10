@@ -6,11 +6,11 @@ disable-model-invocation: true
 
 # Sync
 
-Text id `97d32077`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py sync 97d32077` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `1d5e4ae0`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py sync 1d5e4ae0` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The project's backlog lives upstream (its issue tracker and pull requests); the ledger holds how the work is done, and its notes section is the inbox for ideas dropped during work until they find their place. A sync moves things across that border in both directions, with `git` and the tracker's CLI (`gh` for GitHub, `glab` for GitLab), the person supported rather than replaced: reading is the agent's to do; anything that changes something (a rebase, a push, a post) is proposed with its command and explained where it may be unfamiliar, and the agent runs it only where the person has authorised that, otherwise the person runs it. Nothing leaves the machine without the person's yes.
 
-Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number a message's items from 1 in one sequence that never restarts within it, so the person can answer by number.
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number items in one sequence across messages, never restarting while any is open, so the person can answer by number.
 
 ## Steps
 
