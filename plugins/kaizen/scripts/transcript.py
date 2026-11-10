@@ -243,17 +243,27 @@ ITEM = re.compile(r"^ ?(?:\*\*)?(\d{1,3})(?:\*\*)?[.)](?:\*\*)?\s")  # "1.", "**
 LONG_LINES = 20  # the eval graders' limit for "about fifteen lines" (evals/walkthrough, messages-about-fifteen-lines)
 
 
-def numbers(text: str) -> list[int]:
-    """The numbers of a reply's top-level numbered items; code blocks and indented sub-lists do not count."""
+LABEL = re.compile(r"^ ?[-*] \*\*(\d{1,3})\*\*\s")  # "- **17** ...": a bullet with the number in bold (standing instructions)
+
+
+def numbers(text: str, kinds: list | None = None) -> list[int]:
+    """The numbers of a reply's top-level numbered items, as markdown list items ("1.") or bold labels ("- **1**");
+    code blocks and indented sub-lists do not count. `kinds`, if given, gets "list" or "label" for each."""
     out, fenced = [], False
     for line in text.splitlines():
         if line.lstrip().startswith(("```", "~~~")):
             fenced = not fenced
             continue
         indent = len(line) - len(line.lstrip(" \t"))
-        m = None if fenced or indent >= 2 else ITEM.match(line)  # an indent of two or more: a sub-list
-        if m:
-            out.append(int(m.group(1)))
+        if fenced or indent >= 2:  # an indent of two or more: a sub-list
+            continue
+        for kind, pattern in (("list", ITEM), ("label", LABEL)):
+            m = pattern.match(line)
+            if m:
+                out.append(int(m.group(1)))
+                if kinds is not None:
+                    kinds.append(kind)
+                break
     return out
 
 
@@ -273,10 +283,14 @@ def messages(path: Path, out=sys.stdout):
                     current = {"line": n, "text": ""}
                     replies.append(current)
                 current["text"] += text.rstrip() + "\n"
-    counts = {"restarts": 0, "jumps": 0, "long": 0}
+    counts = {"restarts": 0, "jumps": 0, "long": 0, "list": 0}
     last = None
     for r in replies:
-        nums, flags = numbers(r["text"]), []
+        kinds = []
+        nums, flags = numbers(r["text"], kinds), []
+        if "list" in kinds:  # a markdown display renumbers such a list from its first number
+            flags.append("LIST SYNTAX")
+            counts["list"] += 1
         if nums and last is not None and nums[0] <= last:  # across replies, only going back counts
             if nums[0] == 1:
                 flags.append(f"RESTART at 1 after {last}")
@@ -284,11 +298,11 @@ def messages(path: Path, out=sys.stdout):
             else:  # open items restated with their numbers, as the standing instructions ask
                 again = [k for k in nums if k <= last]
                 flags.append(f"restates {again[0]}-{again[-1]}")
-        for a, b in zip(nums, nums[1:]):
+        for a, b, kind in zip(nums, nums[1:], kinds[1:]):
             if b <= a:
                 flags.append(f"RESTART at {b} after {a}")
                 counts["restarts"] += 1
-            elif b > a + 1:
+            elif b > a + 1 and kind == "list":  # gaps between bold labels are open items restated
                 flags.append(f"JUMP {a}->{b}")
                 counts["jumps"] += 1
         lines = r["text"].rstrip("\n").count("\n") + 1
@@ -298,7 +312,7 @@ def messages(path: Path, out=sys.stdout):
         span = "" if not nums else f"  numbers {nums[0]}-{nums[-1]}" if nums == list(range(nums[0], nums[-1] + 1)) else "  numbers " + ",".join(map(str, nums))
         print(f"L{r['line']}  {lines} lines{span}  {'  '.join(flags)}".rstrip() + f"  | {gist(r['text'], 50)}", file=out)
         last = nums[-1] if nums else last
-    print(f"{len(replies)} replies, {counts['restarts']} restarts, {counts['jumps']} jumps, {counts['long']} long (over {LONG_LINES} lines)", file=out)
+    print(f"{len(replies)} replies, {counts['restarts']} restarts, {counts['jumps']} jumps, {counts['long']} long (over {LONG_LINES} lines), {counts['list']} in list syntax", file=out)
 
 
 def resolve(arg: str | None, project: Path) -> Path:

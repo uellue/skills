@@ -5,11 +5,11 @@ description: Interview the person who needs a solution and write a demand and re
 
 # Requirements interview
 
-Text id `cc48e9ab`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements cc48e9ab` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `481a9d28`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements 481a9d28` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of a demand and requirements form written at ER-C (a checklist; no institute requires it), writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
 
-Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number items in one sequence across messages, never restarting while any is open, so the person can answer by number.
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number items as bold labels (`- **7**`, never `7.`), one sequence across messages, never restarting while any is open.
 
 This skill tightens an idea that exists, however loosely (the playbook's test decides); from nothing to an idea, a discovery interview such as Matt Pocock's `grill-me` serves better, and its result is the record this interview starts from. Where the project keeps a `GLOSSARY.md`, write the requirements in its terms, and raise a term the interview finds missing or contradictory instead of defining it here.
 

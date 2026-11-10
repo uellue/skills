@@ -5,11 +5,11 @@ description: Run a field test - a person tries the project's subject (a tool, a 
 
 # Field test
 
-Text id `78abeaa4`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py field-test 78abeaa4` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `91e52b83`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py field-test 91e52b83` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A field test puts the subject in front of a real person in a real setting: the person works, the agent follows along through channels both agreed and checked, and they talk about what happens while it happens. It finds what simulations, unit tests and agent-only hallway tests cannot: the real data, the real machine, the person's own way of working. Every setting is different, so most of the work is fitting the test to it with the person; this skill carries only what is general.
 
-Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number items in one sequence across messages, never restarting while any is open, so the person can answer by number.
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number items as bold labels (`- **7**`, never `7.`), one sequence across messages, never restarting while any is open.
 
 ## Steps
 
