@@ -237,6 +237,18 @@ class TestMessages(unittest.TestCase):
         self.assertNotIn("RESTART", out)
         self.assertNotIn("JUMP", out)
 
+    def test_bold_labels_count_and_markdown_list_syntax_is_flagged(self):
+        # principal 2026-11-10: a markdown display renumbers "17. 18. 35." as 17, 18, 19; items are "- **17** ..."
+        out = self.measure([
+            user("2026-01-02T10:00:00Z", "go"),
+            *self.reply("2026-01-02T10:00:01Z", "- **17** Review?\n- **18** Push?\n- **35** Hallway test?", "m1"),
+            user("2026-01-02T10:00:02Z", "17 yes"),
+            *self.reply("2026-01-02T10:00:03Z", "Steps:\n1. a\n2. b", "m2"),
+        ])
+        self.assertIn("numbers 17,18,35", out)
+        self.assertEqual(out.count("LIST SYNTAX"), 1, out)
+        self.assertIn("1 in list syntax", out)
+
     def test_a_long_reply_is_flagged_with_its_line_count(self):
         out = self.measure([user("2026-01-02T10:00:00Z", "go"), *self.reply("2026-01-02T10:00:01Z", "\n".join(f"line {i}" for i in range(25)), "m1")])
         self.assertIn("25 lines", out)

@@ -6,11 +6,11 @@ disable-model-invocation: true
 
 # Update
 
-Text id `0a07a181`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py update 0a07a181` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `82038394`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py update 82038394` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 An update must never feel like a regression: whatever the project's people established, chose on purpose or said they liked stays as it is until they confirm a change. The person stays in control of every line that changes; the update proposes, shows and asks.
 
-Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number items in one sequence across messages, never restarting while any is open, so the person can answer by number.
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number items as bold labels (`- **7**`, never `7.`), one sequence across messages, never restarting while any is open.
 
 ## Steps
 

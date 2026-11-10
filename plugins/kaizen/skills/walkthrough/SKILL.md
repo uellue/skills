@@ -5,11 +5,11 @@ description: Put on the shoes of a stakeholder and walk through a process step b
 
 # Stakeholder walk-through
 
-Text id `5ef04298`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 5ef04298` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `8a8ed129`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py walkthrough 8a8ed129` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 Requirements that nobody wrote down surface when someone who is not the author tries to do the thing: the operator installing the service, the scientist searching for their data, the colleague setting up a repository, the maintainer reading a log at three in the morning. A walk-through does that on paper, with a named persona and a concrete process, before the change is specified. Its output is not a design: it is questions for the owner, gaps, and acceptance examples that the specs and tests can use.
 
-Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number items in one sequence across messages, never restarting while any is open, so the person can answer by number.
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number items as bold labels (`- **7**`, never `7.`), one sequence across messages, never restarting while any is open.
 
 The walk-through is one of three moments for the same persona and process: the walk-through imagines it before anything exists and produces the use scenarios (section 2.1 of the requirements) and the acceptance examples; the `hallway-test` skill executes it with fresh eyes once something exists; comparing the two, what was expected to go wrong against what did, validates the specification and the implementation. The `playbook` skill in this plugin says when each fires.
 
