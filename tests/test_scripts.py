@@ -168,6 +168,61 @@ class TestRender(Fixture):
         self.assertNotIn("Traceback", p.stderr)
 
 
+class TestMessages(unittest.TestCase):
+    """transcript.py messages: numbering and length of the agent's replies to the person (ledger 209; field-test
+    run 8: the sync restarted at 1 while the update's questions 6 to 8 were open, the debrief jumped from 7 to 13)."""
+
+    def measure(self, lines):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "s.jsonl"
+            write_jsonl(p, lines)
+            r = subprocess.run([sys.executable, SCRIPTS / "transcript.py", "messages", str(p)], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        return r.stdout
+
+    def reply(self, ts, text, mid):
+        return assistant_lines(ts, mid, [{"type": "text", "text": text}])
+
+    def test_a_restart_while_numbers_were_used_is_flagged_a_continuation_is_not(self):
+        out = self.measure([
+            user("2026-01-02T10:00:00Z", "/kaizen:update"),
+            *self.reply("2026-01-02T10:00:01Z", "Questions:\n1. Branch?\n2. Ledger?\n3. Tracker?", "m1"),
+            user("2026-01-02T10:00:02Z", "1 yes"),
+            *self.reply("2026-01-02T10:00:03Z", "Next:\n1. Push?\n2. Draft?", "m2"),
+            user("2026-01-02T10:00:04Z", "go on"),
+            *self.reply("2026-01-02T10:00:05Z", "Then:\n3. Commit?\n4. PR?", "m3"),
+        ])
+        self.assertEqual(out.count("RESTART"), 1, out)
+        self.assertIn("RESTART at 1 after 3", out)
+        self.assertIn("1 restart", out)
+
+    def test_a_jump_within_a_reply_is_flagged(self):
+        out = self.measure([user("2026-01-02T10:00:00Z", "go"), *self.reply("2026-01-02T10:00:01Z", "1. a\n2. b\n**7.** c\n8. d", "m1")])
+        self.assertIn("JUMP 2->7", out)
+
+    def test_code_blocks_and_indented_sublists_are_not_items(self):
+        text = "1. Run:\n```\n1. not an item\n```\n   1. a sub-step\n2. Done."
+        out = self.measure([user("2026-01-02T10:00:00Z", "go"), *self.reply("2026-01-02T10:00:01Z", text, "m1")])
+        self.assertNotIn("RESTART", out)
+        self.assertNotIn("JUMP", out)
+        self.assertIn("numbers 1-2", out)
+
+    def test_text_blocks_between_tool_calls_make_one_reply_and_harness_text_does_not_split_it(self):
+        out = self.measure([
+            user("2026-01-02T10:00:00Z", "go"),
+            *self.reply("2026-01-02T10:00:01Z", "1. first", "m1"),
+            user("2026-01-02T10:00:02Z", "Base directory for this skill: /x"),
+            *self.reply("2026-01-02T10:00:03Z", "1. again", "m2"),
+        ])
+        self.assertIn("RESTART", out)  # within one reply: a restart, flagged as such
+        self.assertIn("1 replies", out)
+
+    def test_a_long_reply_is_flagged_with_its_line_count(self):
+        out = self.measure([user("2026-01-02T10:00:00Z", "go"), *self.reply("2026-01-02T10:00:01Z", "\n".join(f"line {i}" for i in range(25)), "m1")])
+        self.assertIn("25 lines", out)
+        self.assertIn("LONG", out)
+
+
 class TestLocate(Fixture):
     def test_sessions_recognisable_by_first_message(self):  # E8
         out = self.run_script(SCRIPTS / "transcript.py", "locate").stdout

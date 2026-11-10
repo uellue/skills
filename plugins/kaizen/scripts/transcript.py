@@ -239,6 +239,63 @@ def render(path: Path, lim: dict, out=sys.stdout):
             p(f"\n##### L{n} SUMMARY: {trunc(o.get('summary', ''), 300)}")
 
 
+ITEM = re.compile(r"^(?:\*\*)?(\d+)[.)](?:\*\*)?\s")
+LONG_LINES = 20  # the eval graders' limit for "about fifteen lines" (evals/walkthrough, messages-about-fifteen-lines)
+
+
+def numbers(text: str) -> list[int]:
+    """The numbers of a reply's top-level numbered items; code blocks and indented sub-lists do not count."""
+    out, fenced = [], False
+    for line in text.splitlines():
+        if line.lstrip().startswith("```"):
+            fenced = not fenced
+            continue
+        m = None if fenced or line[:1] in (" ", "\t") else ITEM.match(line)
+        if m:
+            out.append(int(m.group(1)))
+    return out
+
+
+def messages(path: Path, out=sys.stdout):
+    """One line per reply of the agent to the person (all its text between two messages the person typed):
+    its length and its numbers, flagged when the numbering restarts (also across replies), jumps, or the reply
+    is long. A measurement for the debrief and the tests (ledger 209), not a verdict: a restart is right when
+    nothing was open any more."""
+    replies, current = [], None
+    for n, o in read(path):
+        if person_texts(o):
+            current = None
+        elif o.get("type") == "assistant":
+            text = as_text((o.get("message") or {}).get("content"))
+            if text.strip():
+                if current is None:
+                    current = {"line": n, "text": ""}
+                    replies.append(current)
+                current["text"] += text.rstrip() + "\n"
+    counts = {"restarts": 0, "jumps": 0, "long": 0}
+    last = None
+    for r in replies:
+        nums, flags = numbers(r["text"]), []
+        if nums and last is not None and nums[0] <= last:  # across replies, only a restart counts
+            flags.append(f"RESTART at {nums[0]} after {last}")
+            counts["restarts"] += 1
+        for a, b in zip(nums, nums[1:]):
+            if b <= a:
+                flags.append(f"RESTART at {b} after {a}")
+                counts["restarts"] += 1
+            elif b > a + 1:
+                flags.append(f"JUMP {a}->{b}")
+                counts["jumps"] += 1
+        lines = r["text"].rstrip("\n").count("\n") + 1
+        if lines > LONG_LINES:
+            flags.append("LONG")
+            counts["long"] += 1
+        span = "" if not nums else f"  numbers {nums[0]}-{nums[-1]}" if nums == list(range(nums[0], nums[-1] + 1)) else "  numbers " + ",".join(map(str, nums))
+        print(f"L{r['line']}  {lines} lines{span}  {'  '.join(flags)}".rstrip() + f"  | {gist(r['text'], 50)}", file=out)
+        last = nums[-1] if nums else last
+    print(f"{len(replies)} replies, {counts['restarts']} restarts, {counts['jumps']} jumps, {counts['long']} long (over {LONG_LINES} lines)", file=out)
+
+
 def resolve(arg: str | None, project: Path) -> Path:
     """A session or sub-agent transcript by path, id or unique id prefix; the newest session without arg."""
     if arg and (arg.endswith(".jsonl") or "/" in arg):
@@ -319,6 +376,8 @@ def main():
     a.add_argument("id", nargs="?", help="session or sub-agent id, prefix or .jsonl path (default: the newest session)")
     for k, v in LIMITS.items():
         a.add_argument(f"--{k}", type=int, default=v, help=f"characters kept per {k} item (default {v})")
+    a = sub.add_parser("messages", help="numbering and length of the agent's replies to the person")
+    a.add_argument("id", nargs="?", help="session id, prefix or .jsonl path (default: the newest session)")
     a = sub.add_parser("export", help="copy a session with its sub-agents and its rendering")
     a.add_argument("id", nargs="?", help="session id, prefix or .jsonl path (default: the newest session)")
     a.add_argument("--to", type=Path, help="destination (default: <repo>/.claude/transcripts/<id>/)")
@@ -329,6 +388,8 @@ def main():
         locate(Path(args.dir))
     elif args.cmd == "render":
         render(resolve(args.id, project), {k: getattr(args, k) for k in LIMITS})
+    elif args.cmd == "messages":
+        messages(resolve(args.id, project))
     elif args.cmd == "export":
         export(resolve(args.id, project), args.to, args.allow_tracked)
 

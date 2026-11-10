@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: sync-answers-not-drafts
+context:
+  scaffold_script: fixture.sh
