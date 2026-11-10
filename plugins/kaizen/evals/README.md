@@ -22,6 +22,14 @@ This is the one place that says how to run the suites. From the repository root;
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-sync; mkdir -p "$out"
     PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'sync-*' --scaffold --allow-tools Bash Write Edit --runs 5 --ablation none --no-publish -j 5 --max-cost-usd 4 --judge-model sonnet --output-dir "$out" 2>&1 | tee "$out/run.log"
 
+    # the debrief reproducer (debrief/): a debrief of an exported session, Bash for the scripts
+    out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-debrief; mkdir -p "$out"
+    PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'debrief-*' --scaffold --allow-tools Bash Write Edit --runs 8 --ablation none --no-publish -j 4 --max-cost-usd 8 --judge-model sonnet --output-dir "$out" 2>&1 | tee "$out/run.log"
+
+    # an older plugin version, e.g. the one a field test ran (run 8: 1f231b7): a worktree, the cases copied in
+    #   git worktree add --detach <scratch>/kaizen-old 1f231b7; cp -a plugins/kaizen/evals/sync <scratch>/kaizen-old/plugins/kaizen/evals/
+    #   then run the command from <scratch>/kaizen-old
+
     # one case, while writing or fixing its graders: one run, no comparison; add --keep-temp to look into a failure
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-<case>; mkdir -p "$out"
     PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case <case> --scaffold --allow-tools Write Edit --runs 1 --ablation none --no-publish --max-cost-usd 2 --output-dir "$out" 2>&1 | tee "$out/run.log"
@@ -84,13 +92,17 @@ The fixture script is copied into each case, since a scaffold script must sit in
 
 `sync/answers-not-drafts` (ledger 291; field-test run 8, 2026-11-10): the owner types `/kaizen:sync` on devvm one day after the update (the fixture of the self-test's `tracked-sync`, embedded in `fixture.sh`), with issue 16 from another person unanswered, and drops an idea in passing ("a glossary"). Expected, in the principal's words: no drafted replies to people on the tracker unless asked, "point out where an answer from me is needed"; the dropped idea lands in the ledger's inbox at once. Written first and run against the plugin as installed in run 8 (commit `1f231b7`, a worktree with this folder copied in), where it must fail:
 
-| Grader | run-8 version (6 runs) | 0.6.0-dev.2 (5 runs) |
-|---|---|---|
-| no-reply-drafts (judge) | failed 6 of 6 | passed 5 of 5 |
-| idea-in-inbox (the ledger file) | failed 6 of 6 | passed 5 of 5 |
-| no-drafts-written (no Write to `.claude/drafts/`) | passed 6 of 6 | passed 5 of 5 |
+With the graders as they stand (five runs each, sonnet judge, results `20261110-082239-sync-run8` and `20261110-082242-sync-dev2`):
 
-No drafts were written in either version: the run-8 version offered them, which is what the person objected to; the guard stays. An earlier draft of 0.6.0-dev.2 passed no-reply-drafts in only 2 of 3, by routing an inbox note as "a comment on #16", which answers a person too; the inbox step now names that case. Not reproducible in one turn, so not in this suite: the restart of numbering across messages (a prompt has to state the open numbers, and stating them prevents the restart: the run-8 version continued at 5 in 3 of 3), and the plain words of the "Out" list (the sync reaches it only after an answer; a judge of the first reply's plain words failed both versions in every run, so it measured the judge). Both are measured on real sessions instead: `transcript.py messages <session>` (ledger 209) lists each reply's numbers and length, and found 12 restarts in run 8's update and sync session.
+| Grader | run-8 version | 0.6.0-dev.2 |
+|---|---|---|
+| no-reply-drafts (judge) | failed 3 of 5 | passed 5 of 5 |
+| idea-in-inbox (the ledger file) | failed 4 of 5 | passed 5 of 5 |
+| no-drafts-written, -edit, -bash (nothing written to `.claude/drafts/`) | passed 5 of 5 | passed 5 of 5 |
+
+How the graders got there, since each change was checked on both versions: the first fixture lacked "who runs commands" in the tracker setting, so the sync stopped at that question in all runs and never reached the drafts (results `075053`); the setting was added, as devvm's had it in run 8. A judge of the first reply's plain words failed both versions in every run, so it measured the judge and was dropped. The drafts judge then failed the run-8 version 11 of 11, but in 2 of those the reply only repeated the project's setting ("drafts go to `.claude/drafts/` first"), and once it failed 0.6.0-dev.2 for offering the body of a new issue the owner would open; the grader now says that neither counts, which lets 2 of 5 run-8 runs pass. Earlier drafts of 0.6.0-dev.2 passed only 2 of 3, by routing an inbox note as "a comment on #16", which answers a person too; the inbox step now names that case.
+
+No drafts were written in either version: the run-8 version offered them, which is what the person objected to; the guards stay, the Bash one matching only writes (`>` or `tee` into the folder), since the sync may check that git ignores it. Not reproducible in one turn, so not in this suite: the restart of numbering across messages (a prompt has to state the open numbers, and stating them prevents the restart: the run-8 version continued at 5 in 6 of 6), and the plain words of the "Out" list, which the sync reaches only after an answer. Both are measured on real sessions instead: `transcript.py messages <session>` (ledger 209) lists each reply's numbers and length, and found 12 restarts in run 8's update and sync session.
 
 ## Debrief: reproducers from field-test run 8
 

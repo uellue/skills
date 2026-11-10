@@ -239,7 +239,7 @@ def render(path: Path, lim: dict, out=sys.stdout):
             p(f"\n##### L{n} SUMMARY: {trunc(o.get('summary', ''), 300)}")
 
 
-ITEM = re.compile(r"^(?:\*\*)?(\d+)[.)](?:\*\*)?\s")
+ITEM = re.compile(r"^ ?(?:\*\*)?(\d{1,3})(?:\*\*)?[.)](?:\*\*)?\s")  # "1.", "**1.**", "**1**.", "1)"; not a year
 LONG_LINES = 20  # the eval graders' limit for "about fifteen lines" (evals/walkthrough, messages-about-fifteen-lines)
 
 
@@ -247,10 +247,11 @@ def numbers(text: str) -> list[int]:
     """The numbers of a reply's top-level numbered items; code blocks and indented sub-lists do not count."""
     out, fenced = [], False
     for line in text.splitlines():
-        if line.lstrip().startswith("```"):
+        if line.lstrip().startswith(("```", "~~~")):
             fenced = not fenced
             continue
-        m = None if fenced or line[:1] in (" ", "\t") else ITEM.match(line)
+        indent = len(line) - len(line.lstrip(" \t"))
+        m = None if fenced or indent >= 2 else ITEM.match(line)  # an indent of two or more: a sub-list
         if m:
             out.append(int(m.group(1)))
     return out
@@ -276,9 +277,13 @@ def messages(path: Path, out=sys.stdout):
     last = None
     for r in replies:
         nums, flags = numbers(r["text"]), []
-        if nums and last is not None and nums[0] <= last:  # across replies, only a restart counts
-            flags.append(f"RESTART at {nums[0]} after {last}")
-            counts["restarts"] += 1
+        if nums and last is not None and nums[0] <= last:  # across replies, only going back counts
+            if nums[0] == 1:
+                flags.append(f"RESTART at 1 after {last}")
+                counts["restarts"] += 1
+            else:  # open items restated with their numbers, as the standing instructions ask
+                again = [k for k in nums if k <= last]
+                flags.append(f"restates {again[0]}-{again[-1]}")
         for a, b in zip(nums, nums[1:]):
             if b <= a:
                 flags.append(f"RESTART at {b} after {a}")

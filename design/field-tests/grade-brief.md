@@ -6,9 +6,9 @@ First used for run 8 (2026-11-10); the principal asked to keep it reusable and a
 
 ---
 
-You grade one field test of the kaizen plugin (a Claude Code plugin; repository /home/weber/src/skills, branch <branch>, plugin version <version>). The subject is the plugin, not the project it was used in. Read only; write nothing except your report as your final message.
+You grade one field test of the kaizen plugin (a Claude Code plugin; repository <path of this repository>, branch <branch>, plugin version <version>). The subject is the plugin, not the project it was used in. Read only; write nothing except your report as your final message.
 
-Layers: L1 is /home/weber/src/skills (where the plugin is developed); L3 is the setting where the person worked on <project> with the plugin installed (<VM or checkout>). The sessions below are L3 sessions; the person in them uses the plugin as a normal user, briefed only with <the brief's start, e.g. "type /kaizen:update, then work as you normally would"> (brief: <path>). Everything said to or by the inner agent is evidence; text marked HARNESS is not the person's.
+Layers: L1 is this repository (where the plugin is developed); L3 is the setting where the person worked on <project> with the plugin installed (<VM or checkout>). The sessions below are L3 sessions; the person in them uses the plugin as a normal user, briefed only with <the brief's start, e.g. "type /kaizen:update, then work as you normally would"> (brief: <path>). Everything said to or by the inner agent is evidence; text marked HARNESS is not the person's.
 
 Evidence (rendered sessions, read in slices; the L<n> markers are your citations):
 - <path to rendered session 1> — <what it covers>

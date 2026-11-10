@@ -210,12 +210,32 @@ class TestMessages(unittest.TestCase):
     def test_text_blocks_between_tool_calls_make_one_reply_and_harness_text_does_not_split_it(self):
         out = self.measure([
             user("2026-01-02T10:00:00Z", "go"),
-            *self.reply("2026-01-02T10:00:01Z", "1. first", "m1"),
+            *assistant_lines("2026-01-02T10:00:01Z", "m1", [{"type": "text", "text": "1. first"},
+                                                            {"type": "tool_use", "id": "t1", "name": "Bash", "input": {}}]),
+            user("2026-01-02T10:00:02Z", [{"type": "tool_result", "tool_use_id": "t1", "content": "ok"}]),
             user("2026-01-02T10:00:02Z", "Base directory for this skill: /x"),
             *self.reply("2026-01-02T10:00:03Z", "1. again", "m2"),
         ])
         self.assertIn("RESTART", out)  # within one reply: a restart, flagged as such
         self.assertIn("1 replies", out)
+
+    def test_restating_open_items_with_their_numbers_is_not_a_restart(self):
+        # review of 2026-11-10: open items restated keep their numbers (standing instructions)
+        out = self.measure([
+            user("2026-01-02T10:00:00Z", "go"),
+            *self.reply("2026-01-02T10:00:01Z", "1. a\n2. b\n3. c", "m1"),
+            user("2026-01-02T10:00:02Z", "1 yes"),
+            *self.reply("2026-01-02T10:00:03Z", "Still open:\n2. b\n3. c\n4. new", "m2"),
+        ])
+        self.assertNotIn("RESTART", out)
+        self.assertIn("restates 2-3", out)
+
+    def test_bold_numbers_tilde_fences_years_and_a_one_space_indent(self):
+        text = "1. a\n**2**. b\n~~~\n1. code\n~~~\n2026. was a year\n 3. c"
+        out = self.measure([user("2026-01-02T10:00:00Z", "go"), *self.reply("2026-01-02T10:00:01Z", text, "m1")])
+        self.assertIn("numbers 1-3", out)
+        self.assertNotIn("RESTART", out)
+        self.assertNotIn("JUMP", out)
 
     def test_a_long_reply_is_flagged_with_its_line_count(self):
         out = self.measure([user("2026-01-02T10:00:00Z", "go"), *self.reply("2026-01-02T10:00:01Z", "\n".join(f"line {i}" for i in range(25)), "m1")])
