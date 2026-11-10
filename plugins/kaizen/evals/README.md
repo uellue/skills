@@ -167,4 +167,6 @@ Groups 1 and 2 of the order agreed with the principal (the suites most likely af
 | update | 2 of 2 |
 | walkthrough | with the plugin: walks the confirmed persona 3 of 3; asks for the persona 2 of 3 (the failing reply asks and waits; default haiku judge); the unrelated edit 2 of 3 (one run made no edit; no sandbox kept, cause unknown). Without: 0.33, 1.00, 0.33, as before |
 
+Added after the acceptance run, from the first real field test (ledger 299), not run yet: `frames-first/graders/plain-question.md` (the once-or-repeated question in plain words), `runbook-channels/graders/probe-in-runbook.md` (every step the person does is a runbook step), `runbook-channels/graders/explicit-go.md` (a hand-over before the agent looks; only partly testable in one turn); `runbook-format.md` now requires code blocks, not a table. Their first run decides whether a case fails for the deviation or for the grader.
+
 The list-syntax scan: 4 of 24 readable replies in list syntax, against 177 of 189 before the bold-label rule. `field-test-setting/existing-setups` passed 3 of 3 by the grader, which supports the decision of row 296 (no new instruction).
