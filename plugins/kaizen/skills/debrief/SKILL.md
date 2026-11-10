@@ -5,7 +5,7 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `a03a41e7`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief a03a41e7` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `f5b36bd9`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief f5b36bd9` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better) and changes to the project's setup. (Structure adapted, with thanks, from two MIT-licensed skills, `debrief` by Wavez and `retrospective` by florianbuetow; the coaching, the five whys, the usage script and the ledger are this skill's own.)
 
@@ -17,7 +17,7 @@ The debrief runs on a schedule the person chooses (a day, a stretch, a new skill
 
 - **"Note for the debrief."** When the person or the agent says it, write the note into the ledger's notes section at once, with the moment, and carry on. Routing it is the debrief's job (Output, the ledger); capture must cost nothing. Once per stretch, while a run of several minutes goes on (the final acceptance tests, a reviewer, the debrief's own readers), invite the person to note thoughts; not for a short wait, not again after a no, not without a person.
 - **Skill friction.** At the end of every run of a skill of this plugin, one line into the ledger: what in the skill did not fit the situation.
-- **Offered, not decided.** An offer the person neither took nor dropped goes into the ledger's notes before the topic changes; the debrief asks whether it was dropped on purpose.
+- **Offered, not decided.** An offer the person neither took nor dropped goes into the inbox (`${CLAUDE_PLUGIN_ROOT}/references/ledger.md`); the debrief asks whether it was dropped on purpose.
 
 ## Inputs
 
