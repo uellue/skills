@@ -7,7 +7,7 @@ What a field test's brief for a person gives, and what it leaves out. Learned fr
 - **The start:** one command or one situation ("open the tool on your last session's export"; "type `/kaizen:update`, then work as you normally would").
 - **The method:** the recording, started for them; the ways to note things in the moment, whichever is at hand (a `#` line at the shell prompt, which lands in the recording, with `setopt interactivecomments` first in zsh; the notes file from a second terminal or an editor; the subject's own features for feedback); what to note that the recording cannot see (a page read in a browser, a colleague asked, something looked up elsewhere).
 - **Be frank:** the raw reaction is what helps, swearing and sighs included; nothing written there is held against anyone.
-- **The setting's rules:** what must not leave the machine during the test (posts, pushes), and the safety limits, as rules of the setting, not as a script for reacting to the subject.
+- **The setting's rules:** what must not leave the machine during the test (posts, pushes), and those safety limits that the participant's own actions could break ("stop with `./downstaging.sh`, never the test reset"), as rules of the setting, not as a script for reacting to the subject. Limits the setup enforces (a read-only mount, ports on localhost) stay out: each one enforced is a line less in the brief.
 - **The hand-back:** wind the session down as you normally would; how the evidence reaches the developer (one archive, looked through first for anything private); and the closing question: "Did we do OK? Was anything in this brief uncomfortable or unclear?"
 
 ## What it leaves out
