@@ -15,7 +15,7 @@ What `/kaizen:update` brings into a project, newest first: what a project adopts
   Issues and pull requests: <tracker, repository>. They are the backlog of the work; design/kaizen.md (the ledger) holds what concerns working with the plugin and the agent, with a link where an issue touches that, and in its notes section (the inbox) any idea dropped during work, about the project too, until /kaizen:sync or the debrief routes it. Read the tracker <when>. Post nothing (comments, replies, labels, closing) and draft no replies to people unless <the person who decides> asks; point out where their answer is needed instead. Commands that change something (push, rebase, posts) are run by <the person, with the agent's help / the agent after a yes>; a draft they ask for goes to .claude/drafts/ (kept out of git), split into a part for people and a part for agents. A fix says "Closes #n", a part of an issue "Refs #n".
   ```
 - **Sync and inbox.** `/kaizen:sync` reads the tracker from then on, marks ledger rows whose issues closed, and routes the ledger's notes (now an inbox for any idea dropped during work) to an issue, a comment, a ledger row or the bin; the update only takes the first look.
-- **Unanswered reporters.** The first time the update reads the tracker, it names issues and pull requests from others that have had no answer for more than two days and offers a short reply as a draft.
+- **Unanswered reporters.** The first time the update reads the tracker, it names issues and pull requests from others that have had no answer for more than two days, as places where the person's answer is needed; it drafts a reply only when asked (0.6.0-dev.2; dev.1 offered a draft).
 
 ## 0.5.5
 
