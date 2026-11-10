@@ -64,28 +64,35 @@ If the copy gets no IP address (run 0 did: its network was tied to the original'
 
 ### Each run
 
+Paste one line at a time: this terminal breaks multi-line pastes (run 0 to 8). The next run is offered once the last one was processed and acted on (principal, 2026-11-10).
 ```
 "$SKILLS"/design/field-tests/record.sh                          # run-<n>, with $FIELD_TEST_RUN/notes.md
 devvm -n "$VM" reset field-start
-devvm -n "$VM" ssh                                              # in the VM, in the checkout:
+devvm -n "$VM" ssh                                              # in the VM, in the checkout (Ctrl+R finds the next three in the history):
   claude plugin marketplace remove uellue
   claude plugin marketplace add uellue/skills#field-tests-269
   claude plugin install kaizen@uellue --scope user
+  claude plugin list                                            # kaizen at the version under test, e.g. 0.6.0-dev.2
   claude                                                        # then follow $SKILLS/design/field-tests/devvm-brief.md
 ```
 When you are done, still in the VM, in the checkout:
 ```
   t=$(find ~/.claude/plugins -name transcript.py -path '*kaizen*' | head -1)
-  python3 "$t" locate                                           # note the session id
-  python3 "$t" export <id>                                      # into the checkout, which the host keeps
+  python3 "$t" locate                                           # this run's sessions are the newest (run 8 had two: the work, then a debrief)
+  python3 "$t" export <id>                                      # once per session of this run; into the checkout, which the host keeps
   exit                                                          # leaves the VM
 devvm -n "$VM" stop
 mv "${FIELD_TEST_DIR:?}"/work "${FIELD_TEST_RUN:?}"/work        # this run's working copy, kept as evidence
 cp -a "${FIELD_TEST_DIR:?}"/master "${FIELD_TEST_DIR:?}"/work   # the next run starts from the master again
 exit                                                            # ends the recording
+```
+Then, in the same terminal, now outside the recording:
+```
 "$SKILLS"/design/field-tests/record.sh --pack                   # the latest run as one file: run-<n>.tar.gz
 ```
-Tell me here: the run number. The testing VMs a run created: `devvm ls -a`, then `devvm -n <name> destroy`.
+Tell me here: the run number. I grade it with `design/field-tests/grade-brief.md` and `transcript.py messages` (numbering and length per reply), and we go through the findings before the next run. The testing VMs a run created: `devvm ls -a`, then `devvm -n <name> destroy`.
+
+The export needs git to ignore `.claude/transcripts/` in the working copy: `master` has the line in `.git/info/exclude` since run 8.
 
 ## Variant 2
 
