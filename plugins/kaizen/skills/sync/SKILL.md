@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Sync
 
-Text id `f34da001`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py sync f34da001` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `2713e2f0`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py sync 2713e2f0` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The project's backlog lives upstream (its issue tracker and pull requests); the ledger holds how the work is done, and its notes section is the inbox for ideas dropped during work until they find their place. A sync moves things across that border in both directions, with `git` and the tracker's CLI (`gh` for GitHub, `glab` for GitLab), the person supported rather than replaced: reading is the agent's to do; anything that changes something (a rebase, a push, a post) is proposed with its command and explained where it may be unfamiliar, and the agent runs it only where the person has authorised that, otherwise the person runs it. Nothing leaves the machine without the person's yes.
 
@@ -25,5 +25,5 @@ Use plain words with the person: explain a term of this plugin the first time yo
 - Never post, push, close, label, rebase or force anything without the person's yes for that item; reading is free.
 - Issues stay in the tracker: never copy an issue's text into the ledger; link it and say in one line what it is about.
 - Say which layer each finding is about: the project's work (the tracker) or the work with the agent (the ledger).
-- An idea the person drops on the way (a next step, a wish), or an offer left open when the topic changes, goes into the ledger's notes (the inbox) at once; say so in the reply.
+- Ideas dropped on the way and offers left open go into the inbox at once (`${CLAUDE_PLUGIN_ROOT}/references/ledger.md`).
 - At the end, one line into the project's ledger: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).
