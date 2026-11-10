@@ -12,7 +12,7 @@ This is the one place that says how to run the suites.
     python3 plugins/kaizen/evals/run.py sync --case 'sync-*' --scaffold --allow-tools Bash Write Edit --runs 1 --ablation none --no-publish --judge-model sonnet --max-cost-usd 1
     python3 plugins/kaizen/evals/run.py --status
 
-It passes everything after the label to `claude plugin eval plugins/kaizen`, sets `--output-dir` to `results/<date>-<time>-<label>` with a `run.log`, and puts the system's Python first on PATH. Measured cost per run (2026-11-10, list price, judge sonnet where the suite has judges): triggers $0.19, walkthrough $0.17, update $0.16, sync $0.24, debrief $0.49, field-test $0.38 on average and up to $0.90 for the runbook case. Estimate a run as runs × cases × that figure, and say it before starting.
+It passes everything after the label to `claude plugin eval plugins/kaizen`, sets `--output-dir` to `results/<date>-<time>-<label>` with a `run.log`, and puts the system's Python first on PATH. Measured cost per run (2026-11-10, list price, judge sonnet where the suite has judges): triggers $0.19, walkthrough $0.17, update $0.16, sync $0.24, debrief $0.49, field-test $0.38 on average, about $1 for the runbook case (single runs up to $2.50; results `093853`, `094057`). Estimate a run as runs × cases × that figure, and say it before starting.
 
 **How to spend it.** While a case is written or fixed: one run, one version, and read the replies; the comparison with an older version (the field test's, or the last release) runs once, when the graders are stable. Spend runs where much work remains; leave the refinement of nearly-done items for later. Run the suites in descending order of how likely the change affects them; the less likely rest, and repeated runs for statistics, belong to the final acceptance tests before a push or a release, after asking. Which suite a change touches is hard to tell for skill texts, so the acceptance run takes all of them.
 
@@ -42,7 +42,7 @@ The commands below show each suite's arguments; give them to `run.py` without th
 
     # an older plugin version, e.g. the one a field test ran (run 8: 1f231b7): a worktree, the cases copied in
     #   git worktree add --detach <scratch>/kaizen-old 1f231b7; cp -a plugins/kaizen/evals/sync <scratch>/kaizen-old/plugins/kaizen/evals/
-    #   then run the command from <scratch>/kaizen-old
+    #   python3 plugins/kaizen/evals/run.py sync-old --plugin <scratch>/kaizen-old/plugins/kaizen <args>   # same stretch, same budget
 
     # one case, while writing or fixing its graders: one run, no comparison; add --keep-temp to look into a failure
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-<case>; mkdir -p "$out"
@@ -151,5 +151,5 @@ What changed on the way, each change run on both versions: the first draft of th
 
 `field-test-setting/` has its own fixture: tally with a small compose stack (project `tally-stack`), a test setup whose `ops/reset.sh` runs `down --volumes`, and a timer that counts at once. Within the $5 stretch of 2026-11-10 (spent $2.11 of it), one run per case before a change, as the budget rule asks:
 
-- `existing-setups` (row 296): staging planned on the machine where the test setup also runs. Before any skill change, the reply found on its own that `ops/reset.sh` would delete the staging volumes under the shared project name, proposed `-p tally-staging`, and saw the timer's immediate start; the judge failed it on the wording, so the grader now accepts any wording (`143256`). After that, one more run stayed at the frame and was failed (`setting-after-existing-setups`). The behaviour exists without a new instruction, so none was added (principal: instructions only if needed); the case stays as a guard and is flaky, 1 of 2.
+- `existing-setups` (row 296): staging planned on the machine where the test setup also runs. Before any skill change, the reply found on its own that `ops/reset.sh` would delete the staging volumes under the shared project name, proposed `-p tally-staging`, and saw the timer's immediate start; the judge failed it on the wording, so the grader now accepts any wording (`143256`). After that, one more run stayed at the frame and was failed (`setting-after-existing-setups`). By the graders the case passed 0 of 2 (the first under the old grader, the second under the new); the "1" is the first reply read by hand, which shows the behaviour. On that reading no instruction was added (principal: instructions only if needed); the case stays as a guard, and its next acceptance run decides whether the reading holds.
 - A recorder case (row 295, "the recorder runs where the person types; read what it does together") was removed: in all three runs the reply stayed at the frame (is the subject the stack or tally alone?) and a single turn never reached step 4, so it could not test the instruction. The instruction went into step 4 anyway, from the role-play's observation; the real field test checks it.

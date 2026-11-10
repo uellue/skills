@@ -34,7 +34,7 @@ class TestRecord(unittest.TestCase):
         r = self.run_record(answer="n\n")
         self.assertEqual(r.returncode, 1)
         self.assertFalse(self.base.exists())
-        self.assertIn("scratch folder", r.stdout)
+        self.assertIn("folder for field-test runs", r.stdout)
         r = self.run_record(answer="")  # no terminal, no answer: nothing created
         self.assertFalse(self.base.exists())
         self.assertEqual(self.run_record().returncode, 0)
@@ -80,13 +80,24 @@ class TestRecord(unittest.TestCase):
 
     def test_the_run_and_its_archive_are_private_to_the_owner(self):
         # review of 2026-11-10: on a shared machine, a recording readable by others leaks what the terminal showed
-        self.run_record()
+        # and the recorded shell keeps the person's own umask (review of 2026-11-10, H1: a umask of 077 there made
+        # every file of the session owner-only, which changes the setting under test)
+        r = subprocess.run(["bash", "-c", f"umask 0022; exec bash {SCRIPT}"], env=self.env, capture_output=True,
+                           text=True, input="y\n")
+        self.assertEqual(r.returncode, 0, r.stderr)
         run = self.base / "run-0"
-        self.assertEqual(stat.S_IMODE(run.stat().st_mode) & 0o077, 0, oct(run.stat().st_mode))
-        self.assertEqual(stat.S_IMODE((run / "notes.md").stat().st_mode) & 0o077, 0)
-        self.assertEqual(Path(str(self.args) + ".umask").read_text().strip(), "0077")  # what script's files get
+        self.assertEqual(stat.S_IMODE(run.stat().st_mode), 0o700, oct(run.stat().st_mode))
+        self.assertEqual(Path(str(self.args) + ".umask").read_text().strip(), "0022")  # the session's own umask
         self.run_record("--pack")
         self.assertEqual(stat.S_IMODE((self.base / "run-0.tar.gz").stat().st_mode) & 0o077, 0)
+
+    def test_a_relative_folder_gives_an_absolute_run_path(self):
+        # review of 2026-11-10, L5: FIELD_TEST_RUN must stay valid after a cd in the recorded shell
+        self.env["FIELD_TEST_DIR"] = "ft"
+        r = subprocess.run(["bash", str(SCRIPT)], env=self.env, capture_output=True, text=True, input="y\n",
+                           cwd=self.tmp.name)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual(Path(str(self.args) + ".run").read_text().strip(), str(Path(self.tmp.name) / "ft" / "run-0"))
 
     def test_unknown_arguments_are_refused(self):
         self.assertEqual(self.run_record("now").returncode, 2)

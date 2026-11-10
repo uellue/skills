@@ -13,8 +13,10 @@
 # never --log-in, which would record every key, passwords included. An existing run folder is never reused;
 # nothing is deleted.
 set -euo pipefail
-umask 077  # the run, its recording and its archive are the owner's alone: on a shared machine others could read them
+# The run folder and the archive are the owner's alone (on a shared machine others could read what the terminal
+# showed); the recorded shell keeps the person's own umask, so the session itself is not changed.
 base="${FIELD_TEST_DIR:-$HOME/field-test}"
+case "$base" in /*) ;; *) base="$PWD/$base" ;; esac  # FIELD_TEST_RUN must stay valid after a cd
 
 n=0
 for d in "$base"/run-*; do
@@ -32,7 +34,7 @@ if [ "${1:-}" = "--pack" ]; then
     [[ "$p" =~ ^[0-9]+$ ]] || { echo "usage: record.sh --pack [N]" >&2; exit 2; }
     [ -d "$base/run-$p" ] || { echo "no $base/run-$p" >&2; exit 1; }
     [ ! -e "$base/run-$p.tar.gz" ] || { echo "$base/run-$p.tar.gz exists already" >&2; exit 1; }
-    tar -C "$base" -czf "$base/run-$p.tar.gz" "run-$p"
+    (umask 077; tar -C "$base" -czf "$base/run-$p.tar.gz" "run-$p")
     echo "Packed: $base/run-$p.tar.gz ($(du -h "$base/run-$p.tar.gz" | cut -f1)). Look through it for anything private before sharing."
     exit 0
 fi
@@ -44,12 +46,12 @@ fi
 [ $# -eq 0 ] || { echo "usage: record.sh [--next | --pack [N]]" >&2; exit 2; }
 
 if [ ! -d "$base" ]; then
-    printf 'Create %s as the scratch folder for field-test runs (recordings, notes, copies of the project)? [y/N] ' "$base"
+    printf 'Create %s as the folder for field-test runs (recordings, notes, the evidence of each run)? [y/N] ' "$base"
     read -r answer || answer=""
     case "$answer" in y | Y | yes) ;; *) echo "Nothing created."; exit 1 ;; esac
     mkdir -p "$base"
 fi
-mkdir "$run"  # fails rather than reuse a folder another terminal just took
+mkdir -m 700 "$run"  # private; fails rather than reuse a folder another terminal just took
 printf '# Notes, %s\n\n' "${run##*/}" > "$run/notes.md"
 echo "Recording into $run until you type exit. Output and timing only; look through session.log before sharing it."
 echo "Notes: $run/notes.md, or at a shell prompt as comments, '# like this' (zsh: 'setopt interactivecomments' first). Not inside Claude."
