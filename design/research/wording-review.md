@@ -1,6 +1,6 @@
 # A wording pass for text other people read
 
-Source: a snippet by a colleague of the principal (GitHub ks1p), shared on 2026-11-10 with permission to fold it into kaizen as appropriate. Kept here verbatim until it has its place (ledger row 297).
+Source: a snippet by ales (GitHub sk1p), a colleague of the principal, shared on 2026-11-10 with permission to fold it into kaizen as appropriate and to be named. Kept here verbatim until it has its place (ledger row 297).
 
 > ## Review the wording of text that other people will read
 >
