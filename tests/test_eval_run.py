@@ -24,8 +24,9 @@ class TestEvalRun(unittest.TestCase):
         fake = bindir / "claude"
         fake.write_text(
             "#!/usr/bin/env python3\n"
-            "import json, os, sys\n"
+            "import json, os, sys, time\n"
             "a = sys.argv[1:]\n"
+            "time.sleep(float(os.environ.get('FAKE_SLEEP', '0')))\n"
             "out = a[a.index('--output-dir') + 1]\n"
             "open(os.environ['FAKE_ARGS'], 'w').write(json.dumps({'args': a, 'path': os.environ['PATH']}))\n"
             "json.dump({'costUsd': float(os.environ.get('COST', '1.5'))}, open(os.path.join(out, 'aggregate-result.json'), 'w'))\n"
@@ -84,9 +85,57 @@ class TestEvalRun(unittest.TestCase):
     def test_only_runs_since_the_stretch_began_count(self):
         self.run_it("--new-stretch", "10")
         self.run_it("a", "--max-cost-usd", "3", COST="5")
-        self.run_it("--new-stretch", "10")
+        self.run_it("--new-stretch", "10", "--force")
         r = self.run_it("--status")
         self.assertIn("spent $0.00 of $10.00", r.stdout)
+
+    def test_a_new_stretch_does_not_silently_replace_one_with_spend(self):
+        # review of 2026-11-10, M3: after a refusal, --new-stretch would start again at $0
+        self.run_it("--new-stretch", "10")
+        self.run_it("a", "--max-cost-usd", "3", COST="5")
+        r = self.run_it("--new-stretch", "10")
+        self.assertEqual(r.returncode, 3)
+        self.assertIn("$5.00", r.stderr)
+        r = self.run_it("--new-stretch", "10", "--force")  # the person's decision; the old stretch is kept
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertTrue(list(self.results.glob(".stretch-*.json")))
+
+    def test_a_corrupt_stretch_file_is_an_error_not_a_fresh_start(self):
+        self.run_it("--new-stretch", "10")
+        (self.results / ".stretch.json").write_text('{"start": "x", "budget": 10')
+        r = self.run_it("a", "--max-cost-usd", "1")
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("corrupt", r.stderr)
+
+    def test_numbers_and_labels_are_checked(self):
+        # review L1, L2: a negative or non-finite ceiling, a label that leaves the results folder
+        self.run_it("--new-stretch", "10")
+        for bad in ("-50", "nan", "inf", "x"):
+            self.assertEqual(self.run_it("a", "--max-cost-usd", bad).returncode, 2, bad)
+        self.assertEqual(self.run_it("a", "--max-cost-usd").returncode, 2)
+        for label in ("sync/x", "../up", ".."):
+            self.assertEqual(self.run_it(label, "--max-cost-usd", "1").returncode, 2, label)
+        self.assertEqual(self.run_it("--new-stretch", "nan", "--force").returncode, 2)
+
+    def test_an_older_plugin_runs_within_the_same_stretch(self):
+        # review M2: the comparison with an older version must not bypass the budget
+        self.run_it("--new-stretch", "10")
+        old = Path(self.tmp.name) / "old-kaizen"
+        old.mkdir()
+        r = self.run_it("old", "--plugin", str(old), "--max-cost-usd", "2")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual(json.loads(self.args.read_text())["args"][2], str(old))
+        self.assertIn("spent $1.50 of $10.00", r.stdout)
+
+    def test_parallel_runs_cannot_pass_the_reserve_together(self):
+        # review M1: three parallel runs of $3 under a $7.50 limit all ran
+        self.run_it("--new-stretch", "10")
+        procs = [subprocess.Popen([sys.executable, str(SCRIPT), f"p{i}", "--max-cost-usd", "3"],
+                                  env={**self.env, "COST": "3", "FAKE_SLEEP": "1"}, stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE, text=True) for i in range(3)]
+        codes = sorted(p.wait() for p in procs)
+        self.assertEqual(codes, [0, 0, 3])
+        self.assertIn("spent $6.00", self.run_it("--status").stdout)
 
     def test_the_output_folder_is_the_wrappers_own(self):
         self.run_it("--new-stretch")
