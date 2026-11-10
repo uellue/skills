@@ -18,6 +18,10 @@ This is the one place that says how to run the suites. From the repository root;
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-update; mkdir -p "$out"
     PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'update-*' --scaffold --allow-tools Bash --runs 1 --ablation none --no-publish -j 2 --max-cost-usd 2 --output-dir "$out" 2>&1 | tee "$out/run.log"
 
+    # the sync reproducer (sync/): Bash for git, Write and Edit to see whether drafts are written; a sonnet judge
+    out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-sync; mkdir -p "$out"
+    PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'sync-*' --scaffold --allow-tools Bash Write Edit --runs 5 --ablation none --no-publish -j 5 --max-cost-usd 4 --judge-model sonnet --output-dir "$out" 2>&1 | tee "$out/run.log"
+
     # one case, while writing or fixing its graders: one run, no comparison; add --keep-temp to look into a failure
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-<case>; mkdir -p "$out"
     PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case <case> --scaffold --allow-tools Write Edit --runs 1 --ablation none --no-publish --max-cost-usd 2 --output-dir "$out" 2>&1 | tee "$out/run.log"
@@ -75,3 +79,15 @@ Expected effects of ledger 224 and the description changes (written before the r
 Rerun at 0.5.3 (2026-11-07, 48 runs, 437 s, $8.57, no run errors): 16 of 16 cases passed 3 of 3; every expected effect held. `after-merge-offers-debrief`: the playbook started and offered the debrief in all three runs; `state-nearly-done`: the hallway test started in all three.
 
 The fixture script is copied into each case, since a scaffold script must sit in its case's directory; `tests/test_evals.py` fails when the copies differ.
+
+## Sync: reproducers from field-test run 8
+
+`sync/answers-not-drafts` (ledger 291; field-test run 8, 2026-11-10): the owner types `/kaizen:sync` on devvm one day after the update (the fixture of the self-test's `tracked-sync`, embedded in `fixture.sh`), with issue 16 from another person unanswered, and drops an idea in passing ("a glossary"). Expected, in the principal's words: no drafted replies to people on the tracker unless asked, "point out where an answer from me is needed"; the dropped idea lands in the ledger's inbox at once. Written first and run against the plugin as installed in run 8 (commit `1f231b7`, a worktree with this folder copied in), where it must fail:
+
+| Grader | run-8 version (6 runs) | 0.6.0-dev.2 (5 runs) |
+|---|---|---|
+| no-reply-drafts (judge) | failed 6 of 6 | passed 5 of 5 |
+| idea-in-inbox (the ledger file) | failed 6 of 6 | passed 5 of 5 |
+| no-drafts-written (no Write to `.claude/drafts/`) | passed 6 of 6 | passed 5 of 5 |
+
+No drafts were written in either version: the run-8 version offered them, which is what the person objected to; the guard stays. An earlier draft of 0.6.0-dev.2 passed no-reply-drafts in only 2 of 3, by routing an inbox note as "a comment on #16", which answers a person too; the inbox step now names that case. Not reproducible in one turn, so not in this suite: the restart of numbering across messages (a prompt has to state the open numbers, and stating them prevents the restart: the run-8 version continued at 5 in 3 of 3), and the plain words of the "Out" list (the sync reaches it only after an answer; a judge of the first reply's plain words failed both versions in every run, so it measured the judge). Both are measured on real sessions instead: `transcript.py messages <session>` (ledger 209) lists each reply's numbers and length, and found 12 restarts in run 8's update and sync session.
