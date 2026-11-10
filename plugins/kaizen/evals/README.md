@@ -153,3 +153,18 @@ What changed on the way, each change run on both versions: the first draft of th
 
 - `existing-setups` (row 296): staging planned on the machine where the test setup also runs. Before any skill change, the reply found on its own that `ops/reset.sh` would delete the staging volumes under the shared project name, proposed `-p tally-staging`, and saw the timer's immediate start; the judge failed it on the wording, so the grader now accepts any wording (`143256`). After that, one more run stayed at the frame and was failed (`setting-after-existing-setups`). By the graders the case passed 0 of 2 (the first under the old grader, the second under the new); the "1" is the first reply read by hand, which shows the behaviour. On that reading no instruction was added (principal: instructions only if needed); the case stays as a guard, and its next acceptance run decides whether the reading holds.
 - A recorder case (row 295, "the recorder runs where the person types; read what it does together") was removed: in all three runs the reply stayed at the frame (is the subject the stack or tally alone?) and a single turn never reached step 4, so it could not test the instruction. The instruction went into step 4 anyway, from the role-play's observation; the real field test checks it.
+
+## Acceptance before the push of 0.6.0-dev.2 (2026-11-10)
+
+Groups 1 and 2 of the order agreed with the principal (the suites most likely affected first; the trigger table left out, 48 of 48 that morning with the field-test skill and its description barely changed since), in a $20 stretch through `run.py`: $12.14 spent, folders `*-accept-*`.
+
+| Suite | Result |
+|---|---|
+| numbering | 3 of 3 |
+| field-test | frame, safety, trigger, existing setups 3 of 3 each; runbook and channels: channels 3 of 3, runbook format 1 of 3 (the known weak point) |
+| sync | 4 of 5 on the drafts judge; the failing reply offers a comment on #16 "only if you ask" and drafts only new issues, which the grader excludes: a misread by the judge |
+| debrief | 4 of 4 |
+| update | 2 of 2 |
+| walkthrough | with the plugin: walks the confirmed persona 3 of 3; asks for the persona 2 of 3 (the failing reply asks and waits; default haiku judge); the unrelated edit 2 of 3 (one run made no edit; no sandbox kept, cause unknown). Without: 0.33, 1.00, 0.33, as before |
+
+The list-syntax scan: 4 of 24 readable replies in list syntax, against 177 of 189 before the bold-label rule. `field-test-setting/existing-setups` passed 3 of 3 by the grader, which supports the decision of row 296 (no new instruction).
