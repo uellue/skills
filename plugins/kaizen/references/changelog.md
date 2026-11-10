@@ -4,6 +4,8 @@ What `/kaizen:update` brings into a project, newest first: what a project adopts
 
 ## 0.6.0
 
+- **Numbering across messages** (new in 0.6.0-dev.2, first line of the block after the version line). Items and questions are numbered in one sequence across the agent's messages, never restarting while any is open, no item without a number, no jumps. From field-test run 8, where restarts across messages kept recurring.
+- **Ledger and inbox** (changed in 0.6.0-dev.2). The issue-tracker section below now says the ledger's notes section is the inbox for ideas about the project too; a project at 0.6.0-dev.1 has the older sentence "holds only what concerns working with the plugin and the agent" and replaces it.
 - **Version line.** The standing-instruction block starts with "Kaizen standing instructions, version …"; a project that has the block adds the line, first inside whatever section holds the block, so that the skills can tell when the project is behind. A project without the block has no version line, and its ledger alone tells the skills it is behind.
 - **Issue tracker.** Where a project's issues and pull requests live (GitHub, GitLab, a mail list, none) is a setting in its instruction file, asked once: the tracker and repository, when the agent reads it (at the start of work on an issue, before a pull request, in the debrief), and who may post. The section the update writes, filled in with the answers:
 

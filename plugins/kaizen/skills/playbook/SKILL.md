@@ -5,13 +5,13 @@ description: Which kaizen skill fits now, and what the shared documents are. The
 
 # Playbook
 
-Text id `01c5cea9`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook 01c5cea9` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `e27359b3`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py playbook e27359b3` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The other skills are moments in one process; this skill says which moment a session is in, what that moment reads and writes, and what to do when a document is missing. It proposes; the person decides.
 
 All shared documents live in the project's `design/` directory, or where step 3 placed them; "the ledger" is always the project's own `kaizen.md` there.
 
-Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number a message's items from 1 in one sequence that never restarts within it, so the person can answer by number.
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number items in one sequence across messages, never restarting while any is open, so the person can answer by number.
 
 ## When a session starts
 

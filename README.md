@@ -94,6 +94,7 @@ Standing instructions, for `AGENTS.md` or `CLAUDE.md`. Merge, don't append: read
 
 ```text
 Kaizen standing instructions, version 0.6.0-dev.1: /kaizen:update brings them up to date with a newer plugin.
+- Number every item and question you put to the person in one sequence across your messages: a new message continues from the last number used and never restarts at 1 while earlier numbered items are open; no item without a number, no jumps. Restart only when nothing is open and nothing is still to come back from work in the background.
 - Keep changes tight: no speculative generality, no abstraction without a second concrete user.
 - Follow established formats, patterns and tools; before writing a mechanism a library implements, search for the library; before defining a term, look for the field's established vocabulary (a community glossary or ontology) and ask which one the project uses; ask before adding a new dependency, with its current release looked up, not recalled, and flag it in the hand-over.
 - A pull request or release description starts from the branch's log and diff, grouped by area, so that nothing is left out; the size of a change is not its importance, and the agent can rarely judge which changes matter to which readers: ask the person, or leave the summary on top to them.

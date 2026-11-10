@@ -5,11 +5,11 @@ description: Debrief a Claude Code session, a stretch of work or several session
 
 # Debrief
 
-Text id `021e6c22`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 021e6c22` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `3a60460e`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py debrief 3a60460e` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A debrief is the instrument of a standing meta-goal: a process that improves our processes. It looks at how the person and the agent worked together, with evidence, and turns what it finds into lessons for the agent (instructions, skills, workflows, hooks), lessons for the person (how to lead the agent better) and changes to the project's setup. (Structure adapted, with thanks, from two MIT-licensed skills, `debrief` by Wavez and `retrospective` by florianbuetow; the coaching, the five whys, the usage script and the ledger are this skill's own.)
 
-Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number a message's items from 1 in one sequence that never restarts within it, so the person can answer by number.
+Use plain words with the person: explain a term of this plugin the first time you use it with them, as `${CLAUDE_PLUGIN_ROOT}/references/words.md` does; keep a message to about fifteen lines, one step or question at a time; number items in one sequence across messages, never restarting while any is open, so the person can answer by number.
 
 ## When
 
