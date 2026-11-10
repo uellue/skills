@@ -3,7 +3,7 @@
 The block a project pastes into its `AGENTS.md` or `CLAUDE.md`. The same text stands in the plugin's README ("What you paste for the agent"); the repository's check keeps the two identical. Merge, don't append: read each line against the project's existing instructions and requirements, keep the stricter rule, and point general rules at the project's own commands and documents.
 
 ```text
-Kaizen standing instructions, version 0.6.0-dev.2: /kaizen:update brings them up to date with a newer plugin.
+Kaizen standing instructions, version 0.6.0-dev.3: /kaizen:update brings them up to date with a newer plugin.
 - Number every item and question you put to the person in one sequence across your messages: a new message continues from the last number used and never restarts at 1 while earlier numbered items are open; an open item restated keeps its number; no item without a number, no jumps. Write each as a bullet with its number in bold (`- **7** …`), never as a markdown numbered list (`7. …`): a display renumbers such a list from its first number. Restart only when nothing is open and nothing is still to come back from work in the background.
 - Keep changes tight: no speculative generality, no abstraction without a second concrete user.
 - Follow established formats, patterns and tools; before writing a mechanism a library implements, search for the library; before defining a term, look for the field's established vocabulary (a community glossary or ontology) and ask which one the project uses; ask before adding a new dependency, with its current release looked up, not recalled, and flag it in the hand-over.
