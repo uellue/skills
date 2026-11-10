@@ -70,6 +70,7 @@ class TestEvalRun(unittest.TestCase):
         self.assertTrue(out.name.endswith("-sync"))
         self.assertTrue((out / "run.log").is_file())
         self.assertIn("spent $1.50 of $10.00", r.stdout)
+        self.assertIn("replies in list syntax", r.stdout)  # the scan runs after each run (scan_lists.py)
 
     def test_it_refuses_a_run_that_could_pass_the_reserve(self):
         self.run_it("--new-stretch", "10")  # reserve: runs stop at $7.50

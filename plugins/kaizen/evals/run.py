@@ -93,6 +93,11 @@ def main(argv):
     if "CASE" in text:  # the summary table at the end of the log
         print("CASE" + text.split("CASE", 1)[1][:2000])
     print(out)
+    sys.path.insert(0, str(HERE))
+    from scan_lists import scan  # replies in markdown numbered-list syntax, which a display renumbers
+
+    total, hits = scan(out)
+    print(f"{hits} of {total} replies in list syntax")
     status(s)
     return p.returncode
 
