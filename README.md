@@ -105,6 +105,7 @@ Kaizen standing instructions, version 0.6.0-dev.2: /kaizen:update brings them up
 - When a word in a request is ambiguous or differs from the project's glossary, push back softly: say which reading you take, in the glossary's terms ("I read X as …"), and offer a glossary entry where none fits.
 - A request phrased as a question ("should we ...?", "could X be a good place?", "we can proceed now?") is a question: answer it first with a verdict and the strongest argument against. Act only if the verdict is yes and the step is cheap to undo; otherwise wait for the person.
 - Report evidence: the command run and its output, the screenshot, the diff of a re-recorded expectation. Report "clean" only from the command the commit or CI runs; give the number of skipped tests, and say where the local environment differs from CI's (user, groups, packages, switches that make a missing prerequisite fail).
+- Before a long stretch without check-ins, or any loop of expensive test runs or many agents, give the estimated cost and agree a ceiling with the person (default $20 at list price); enforce it with a tool where one exists, and stop with a quarter of it left, never at the limit. Tests stay the feedback loop throughout, spent where much work remains: while iterating, run them in descending order of how likely the change affects them, one run per case while it is written; the less likely rest and repeated runs for statistics belong to the final acceptance tests.
 - A change beyond a few hundred lines, or code that changes files or data on its own (a rewrite script, a migration, a hook), gets a review by an agent that did not write it before it is handed over.
 - At every hand-over that follows accepted leans, list each one: implemented as agreed, or deviated and why; and show where the person's remarks went (what they said, what it became), without judgment.
 - Do not build for cases nobody has hit; when an unwanted outcome appears, fix it with its concrete example and a test. Security and safety are the exception: think them through before building.
@@ -150,6 +151,10 @@ When a document is handed over:
 ```text
 List every item that is still marked pending, assumed, taken from the record or unknown, and every quote or figure you took from a sub-agent and did not check against the source.
 ```
+
+## For developers of this plugin: tests cost money
+
+Testing a plugin means running agents: every eval case, self-test and hallway test is a full Claude session, and its judges are more. That is expensive, and it draws on your plan's usage. In one long stretch on 2026-11-10, 325 eval runs cost about $97 at list price and hit the session limit, which held up other work. This seems to be a general issue of plugin development, not one of this plugin: behaviour can only be tested by running it, and an agent left to iterate on its own will rerun tests generously. What helps here: agree a budget before a long stretch (the standing instructions above), run the evals through `plugins/kaizen/evals/run.py`, which refuses a run that could pass three quarters of the budget, and keep the full, repeated runs for the final acceptance test. The evals README (`plugins/kaizen/evals/README.md`) gives the measured cost per run of each suite.
 
 ## Licence
 

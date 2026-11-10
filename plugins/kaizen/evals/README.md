@@ -4,7 +4,19 @@ First experiment of ledger row 214 (`design/requirements.md`, topic 204, decisio
 
 ## Run
 
-This is the one place that says how to run the suites. From the repository root; each command writes its results and its log into a new folder under `plugins/kaizen/evals/results/` (ignored by git), so an agent can read them without copying output:
+This is the one place that says how to run the suites.
+
+**Budget first.** Eval runs are expensive and draw on the person's plan: on 2026-11-10, 325 runs in one stretch cost $96.74 at list price and hit the session limit, which held up the person's other work (ledger note of that day). So every run goes through `run.py`, which keeps a stretch's spend and refuses a run that could pass three quarters of the budget:
+
+    python3 plugins/kaizen/evals/run.py --new-stretch 20        # after agreeing the budget and the estimate with the person; 20 is the default
+    python3 plugins/kaizen/evals/run.py sync --case 'sync-*' --scaffold --allow-tools Bash Write Edit --runs 1 --ablation none --no-publish --judge-model sonnet --max-cost-usd 1
+    python3 plugins/kaizen/evals/run.py --status
+
+It passes everything after the label to `claude plugin eval plugins/kaizen`, sets `--output-dir` to `results/<date>-<time>-<label>` with a `run.log`, and puts the system's Python first on PATH. Measured cost per run (2026-11-10, list price, judge sonnet where the suite has judges): triggers $0.19, walkthrough $0.17, update $0.16, sync $0.24, debrief $0.49, field-test $0.38 on average and up to $0.90 for the runbook case. Estimate a run as runs × cases × that figure, and say it before starting.
+
+**How to spend it.** While a case is written or fixed: one run, one version, and read the replies; the comparison with an older version (the field test's, or the last release) runs once, when the graders are stable. Spend runs where much work remains; leave the refinement of nearly-done items for later. Run the suites in descending order of how likely the change affects them; the less likely rest, and repeated runs for statistics, belong to the final acceptance tests before a push or a release, after asking. Which suite a change touches is hard to tell for skill texts, so the acceptance run takes all of them.
+
+The commands below show each suite's arguments; give them to `run.py` without the `PATH=…`, the output folder and the `tee`. Each writes its results and its log into a new folder under `plugins/kaizen/evals/results/` (ignored by git), so an agent can read them without copying output:
 
     # the trigger table (triggers/): one arm, since no kaizen skill can start without the plugin
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-triggers; mkdir -p "$out"
