@@ -114,3 +114,19 @@ No drafts were written in either version: the run-8 version offered them, which 
 | offers-upstream-issue (judge, sonnet) | failed 3 of 8 | passed 8 of 8 |
 
 The reproducer is weak: the run-8 version fails it only sometimes, while in the real run 8, a long session with many open items, both failed. A small fixture is easier than real work; the field test remains the stronger check (principal, 2026-11-10: "that's an issue to keep an eye on").
+
+## Field test: the skill's cases (E43 to E46)
+
+`field-test/` (ledger 283; walk-through `design/walkthroughs/developer-field-test-own-tool.md`): a stand-in project, the small tool tally, tested only on simulated exports, about to meet real data on a shared analysis machine. It is not the project the walk was for, so the skill meets that one fresh. Run with `--case 'field-test-*' --scaffold --allow-tools Bash Write Edit --judge-model sonnet`, as for the sync. Written before the skill and run against the plugin of run 8 (no field-test skill), then against 0.6.0-dev.2 with it; three runs per case, five for the runbook case (final results `20261110-091858`/`091901` and, for the runbook case, `092141`/`092144`):
+
+| Case: grader | without the skill | with the skill |
+|---|---|---|
+| every case: skill-fired | 0 of 17 | 17 of 17 |
+| frames-first: frame-by-asking (E43) | 0 of 3 | 3 of 3 |
+| safety-first: limits-before-runbook (E44) | 0 of 3 | 3 of 3 |
+| safety-first: no-commands-on-the-machine (no `ssh`) | 3 of 3 | 3 of 3 |
+| real-world-issue: skill-fired (the trigger "fix an issue from real use") | 0 of 3 | 3 of 3 |
+| runbook-channels: channels-probed (E45) | 2 of 5 | 4 of 5 |
+| runbook-channels: runbook-format (E46) | 0 of 5 | 4 of 5 |
+
+What changed on the way, each change run on both versions: the first draft of the skill asked for the safety limits only in its step 3, after the frame and the walk, so a person who had said "bare metal, shared" got frame questions first (limits-before-runbook 1 of 3); the skill now asks for them in the first round. The runbook case's prompt left the channel, the goal and the code's place open, so a single turn never reached a runbook; those answers are now in the prompt, and the shared folder is a real folder of the fixture (`shared-ft/`), so the probe can succeed. The runbook judge reads the whole trace (`focus: trace`), since the skill writes the runbook to a file. Without the skill, the agent read the request as a coding task and changed tally at once. Not covered: E47 (fitting with the walk-through skill) and E48 (grading and filing after a run) need several turns; the field test checks them.

@@ -1,0 +1,7 @@
+---
+description: "E45 and E46 (same walk, steps 5 and 6): frame and safety limits are agreed. Expected: the skill names the channels for exchanging data (a view of the session, files, ports), checks each with a harmless probe from where the agent runs before the run, and writes the runbook as variables first and one command per line, each with what it does, to read and adjust together, not a script to run."
+max_turns: 25
+allowed_tools: [Read, Glob, Grep, Bash, Skill, Write, Edit]
+---
+
+Field test of tally, agreed so far: just me, one shot on my real work, on the analysis machine (bare metal, shared). Limits: tally only reads /data/exports/2026-10, nothing else; it runs under `nice -n 19`; I stop a run with Ctrl+C; it must never write anywhere under /data; the machine is mine to use for this (I own the account and agreed, nobody else needs to). I'll run it from my terminal over ssh while you, in this VM, follow along: the folder `shared-ft/` in this checkout is mounted on the analysis machine too (as ~/shared-ft there), so a recording of my terminal can go there; my home there is not under /data. I want to learn whether tally meets the 2 million files in 10 minutes requirement on a real month (about 1.5 million files) and whether the counts look right. tally's checkout there is ~/tally at the same commit as here; copy record.sh into shared-ft/ if you need it. Now let's get to the runbook.
