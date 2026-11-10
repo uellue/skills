@@ -91,3 +91,14 @@ The fixture script is copied into each case, since a scaffold script must sit in
 | no-drafts-written (no Write to `.claude/drafts/`) | passed 6 of 6 | passed 5 of 5 |
 
 No drafts were written in either version: the run-8 version offered them, which is what the person objected to; the guard stays. An earlier draft of 0.6.0-dev.2 passed no-reply-drafts in only 2 of 3, by routing an inbox note as "a comment on #16", which answers a person too; the inbox step now names that case. Not reproducible in one turn, so not in this suite: the restart of numbering across messages (a prompt has to state the open numbers, and stating them prevents the restart: the run-8 version continued at 5 in 3 of 3), and the plain words of the "Out" list (the sync reaches it only after an answer; a judge of the first reply's plain words failed both versions in every run, so it measured the judge). Both are measured on real sessions instead: `transcript.py messages <session>` (ledger 209) lists each reply's numbers and length, and found 12 restarts in run 8's update and sync session.
+
+## Debrief: reproducers from field-test run 8
+
+`debrief/routes-inbox` (field-test run 8, regrade of 2026-11-10): a debrief of one session exported into the checkout (`transcript.py locate` finds `.claude/transcripts/`, so the sandbox's hidden home does not matter), with the person away ("put your questions at the end", which the skill allows). The ledger's inbox holds a project idea never routed; in the session the person said "Note for upstream plugin: …". Expected: the debrief proposes a destination for the note, and offers the upstream issue as a numbered question. In run 8 both failed.
+
+| Grader | run-8 version (8 runs) | 0.6.0-dev.2 (8 runs) |
+|---|---|---|
+| routes-inbox-note (judge, sonnet) | failed 1 of 8 | passed 8 of 8 |
+| offers-upstream-issue (judge, sonnet) | failed 3 of 8 | passed 8 of 8 |
+
+The reproducer is weak: the run-8 version fails it only sometimes, while in the real run 8, a long session with many open items, both failed. A small fixture is easier than real work; the field test remains the stronger check (principal, 2026-11-10: "that's an issue to keep an eye on").
