@@ -18,7 +18,7 @@ class TestRecord(unittest.TestCase):
         bindir.mkdir()
         # a stand-in for util-linux script that writes down its arguments instead of recording
         fake = bindir / "script"
-        fake.write_text('#!/bin/sh\nprintf "%s\\n" "$@" > "$FAKE_ARGS"\necho "$FIELD_TEST_RUN" > "$FAKE_ARGS.run"\n')
+        fake.write_text('#!/bin/sh\nprintf "%s\\n" "$@" > "$FAKE_ARGS"\necho "$FIELD_TEST_RUN" > "$FAKE_ARGS.run"\numask > "$FAKE_ARGS.umask"\n')
         fake.chmod(fake.stat().st_mode | stat.S_IEXEC)
         self.args = Path(self.tmp.name) / "args"
         self.env = {**os.environ, "FIELD_TEST_DIR": str(self.base), "PATH": f"{bindir}:{os.environ['PATH']}",
@@ -77,6 +77,16 @@ class TestRecord(unittest.TestCase):
         self.assertEqual(Path(str(self.args) + ".run").read_text().strip(), str(run))  # FIELD_TEST_RUN in the shell
         self.assertNotIn("-I", self.args.read_text().split("\n"))
         self.assertEqual(self.run_record("--next").stdout.strip(), str(self.base / "run-1"))
+
+    def test_the_run_and_its_archive_are_private_to_the_owner(self):
+        # review of 2026-11-10: on a shared machine, a recording readable by others leaks what the terminal showed
+        self.run_record()
+        run = self.base / "run-0"
+        self.assertEqual(stat.S_IMODE(run.stat().st_mode) & 0o077, 0, oct(run.stat().st_mode))
+        self.assertEqual(stat.S_IMODE((run / "notes.md").stat().st_mode) & 0o077, 0)
+        self.assertEqual(Path(str(self.args) + ".umask").read_text().strip(), "0077")  # what script's files get
+        self.run_record("--pack")
+        self.assertEqual(stat.S_IMODE((self.base / "run-0.tar.gz").stat().st_mode) & 0o077, 0)
 
     def test_unknown_arguments_are_refused(self):
         self.assertEqual(self.run_record("now").returncode, 2)

@@ -2,7 +2,7 @@
 # Field-test recordings (the field-test skill, step 4: a view of the person's terminal for the agent).
 #
 #   record.sh            records into the next free run-<n> under ~/field-test (run-0 the first time), until `exit`;
-#                        the run's folder also gets notes.md, your notes about the plugin
+#                        the run's folder also gets notes.md, your notes about the test
 #   record.sh --next     only prints the folder the next recording would use
 #   record.sh --pack [N] packs run-N (default: the latest) into ~/field-test/run-N.tar.gz, the run's evidence as one file
 #
@@ -13,7 +13,7 @@
 # never --log-in, which would record every key, passwords included. An existing run folder is never reused;
 # nothing is deleted.
 set -euo pipefail
-
+umask 077  # the run, its recording and its archive are the owner's alone: on a shared machine others could read them
 base="${FIELD_TEST_DIR:-$HOME/field-test}"
 
 n=0

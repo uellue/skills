@@ -1,6 +1,6 @@
 # Brief: grading a field-test run
 
-The field-test skill gives this brief, filled in, to one fresh reader agent (Opus; read only) after a run, with the run's sessions rendered by `transcript.py render`. The filled brief and the report stay private, beside the run's evidence (`.claude/field-tests/run-<n>/grade.md`). When a grade misjudges, the person's correction goes into the project's list of what works as designed (`design/field-tests/works-as-designed.md`, each entry with the run and the person's words), and the next grade reads it.
+The field-test skill gives this brief, filled in, to one fresh reader agent (Opus; read only) after a run, with the run's sessions rendered by `transcript.py render`. The filled brief and the report stay private, in the run's evidence folder (`grade.md` beside the recording). When a grade misjudges, the person's correction goes into the project's list of what works as designed (`design/field-tests/works-as-designed.md`, each entry with the run and the person's words), and the next grade reads it.
 
 ---
 
