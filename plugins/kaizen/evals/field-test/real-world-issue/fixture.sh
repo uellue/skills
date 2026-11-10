@@ -8,6 +8,8 @@ git config user.email t@example.invalid
 git config user.name tester
 mkdir -p tally tests design sim shared-ft
 printf '/shared-ft/\n' > .gitignore  # stands for a folder mounted both here and on the analysis machine
+mkdir -p shared-ft/test
+printf 'Script started on 2026-11-10 09:40:02+01:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="120" LINES="40"]\nme@analysis:~$ # probe: can the agent see this?\nme@analysis:~$ exit\n\nScript done on 2026-11-10 09:40:09+01:00 [COMMAND_EXIT_CODE="0"]\n' > shared-ft/test/session.log  # a test recording the person made there
 cat > README.md <<'EOF'
 # tally
 

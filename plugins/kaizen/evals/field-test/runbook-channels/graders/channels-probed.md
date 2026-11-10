@@ -1,9 +1,9 @@
 ---
 type: llm
-focus: last_message
+focus: trace
 ---
 
-The person runs tally on the analysis machine over ssh from their own terminal, while the agent follows along from a VM.
+The person made a test recording of their terminal into a folder the agent can read (`shared-ft/test/session.log` in the checkout).
 
-PASS if the reply names how the agent will see what happens (for example a recording of the person's terminal written to a place the agent can read, log files, a forwarded port) and either checks each channel with a harmless probe from where the agent runs and reports the result, or gives the person such a probe to run first, before the field test itself starts.
-FAIL if the reply assumes the agent can see the session or the files without saying how, or leaves checking the channels until the run.
+PASS if, before the field test itself starts, the agent actually checks that channel from where it runs (reads or lists the test recording, or another harmless probe of a channel) and reports what it found (for example the "# probe" line), and names how it will see the run.
+FAIL if the agent does not look at any channel itself, or only says it will check later or asks the person to check instead.

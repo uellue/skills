@@ -95,7 +95,7 @@ A first-user trial: a fresh agent that sees only what a first user would see tri
 _Avoid_: play test, usability test, user test
 
 **Field test**:
-A real person, the participant, tries a subject in their own environment from a written brief, and the agent reads what happened from what they send back (a recording, notes in the moment, a report they approved); inside it, the usability-testing terms task scenario, think-aloud, moderated and unmoderated apply (requirements, topic ledger 269).
+A real person, the participant, tries a subject for real in their own environment (real data, a real machine, an issue from real use), and the agent reads what happened: live, through channels both checked before the run, talking about it as it happens (the field-test skill, 2026-11-10), or afterwards from what they send back (a recording, notes in the moment, a report they approved); a brief gives the start and the method when the participant is someone else; inside it, the usability-testing terms task scenario, think-aloud, moderated and unmoderated apply (requirements, topic ledger 269).
 _Avoid_: human trial (it reads as a clinical trial), human-in-the-loop test, user test, human hallway test
 
 **Subject**:
