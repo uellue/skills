@@ -16,6 +16,8 @@ It passes everything after the label to `claude plugin eval plugins/kaizen`, set
 
 **How to spend it.** While a case is written or fixed: one run, one version, and read the replies; the comparison with an older version (the field test's, or the last release) runs once, when the graders are stable. Spend runs where much work remains; leave the refinement of nearly-done items for later. Run the suites in descending order of how likely the change affects them; the less likely rest, and repeated runs for statistics, belong to the final acceptance tests before a push or a release, after asking. Which suite a change touches is hard to tell for skill texts, so the acceptance run takes all of them.
 
+**List syntax.** After each run `run.py` also runs `scan_lists.py` on its folder, which reports every final reply that uses markdown numbered-list syntax outside a code block (with or without gaps); `python3 plugins/kaizen/evals/scan_lists.py` scans all stored results, at no cost. Baseline before the rule (2026-11-10): 177 of 189 stored replies. `numbering/asked-for-list` checks the other side: asked for "a numbered markdown list, so I can paste it into our wiki", with the numbering line in the fixture's `CLAUDE.md`, the agent gives one (3 of 3, $0.25), so the rule needs no exception for requested lists (principal: a test first, instructions only if needed).
+
 The commands below show each suite's arguments; give them to `run.py` without the `PATH=…`, the output folder and the `tee`. Each writes its results and its log into a new folder under `plugins/kaizen/evals/results/` (ignored by git), so an agent can read them without copying output:
 
     # the trigger table (triggers/): one arm, since no kaizen skill can start without the plugin
