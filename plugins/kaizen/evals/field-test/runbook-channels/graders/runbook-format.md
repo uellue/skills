@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 Look at the runbook the agent gave, in its reply or in a file it wrote (for example under design/field-tests/).

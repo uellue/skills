@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 Field-test run of 2026-11-10: the channel probe was asked for only in the chat, not in the runbook, so the person, following the runbook, never did it.
