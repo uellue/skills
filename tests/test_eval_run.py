@@ -137,6 +137,37 @@ class TestEvalRun(unittest.TestCase):
         self.assertEqual(codes, [0, 0, 3])
         self.assertIn("spent $6.00", self.run_it("--status").stdout)
 
+    def test_a_reader_never_sees_a_half_written_stretch(self):
+        # 2026-11-11: a parallel run read the file outside the lock while another rewrote it, and stopped as "corrupt"
+        import importlib.util
+        import threading
+        spec = importlib.util.spec_from_file_location("eval_run", SCRIPT)
+        run = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(run)
+        run.RESULTS = self.results
+        run.STRETCH = self.results / ".stretch.json"
+        self.results.mkdir()
+        s = {"start": "2026-11-11T00:00:00", "budget": 10.0, "runs": [{"dir": "x" * 200, "label": "l", "ceiling": 1.0}] * 50}
+        run.save(s)
+        stop, errors = threading.Event(), []
+
+        def write():
+            while not stop.is_set():
+                run.save(s)
+        w = threading.Thread(target=write)
+        w.start()
+        try:
+            for _ in range(3000):
+                try:
+                    run.load()
+                except run.Corrupt as e:
+                    errors.append(e)
+                    break
+        finally:
+            stop.set()
+            w.join()
+        self.assertEqual(errors, [])
+
     def test_the_output_folder_is_the_wrappers_own(self):
         self.run_it("--new-stretch")
         r = self.run_it("x", "--max-cost-usd", "1", "--output-dir", "/tmp/elsewhere")
