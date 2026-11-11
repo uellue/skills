@@ -60,6 +60,13 @@ def load():
         raise Corrupt(f"{STRETCH} is corrupt ({e}); look at it before starting a new stretch") from e
 
 
+def save(s):
+    """Write the stretch whole: a reader outside the lock sees the old file or the new one, never half of it."""
+    tmp = STRETCH.with_name(f"{STRETCH.name}.{os.getpid()}.tmp")
+    tmp.write_text(json.dumps(s, indent=1))
+    os.replace(tmp, STRETCH)
+
+
 def spent(s) -> float:
     total = 0.0
     for r in s["runs"]:
@@ -107,7 +114,7 @@ def new_stretch(argv) -> int:
         if STRETCH.exists():
             STRETCH.rename(RESULTS / f".stretch-{datetime.now():%Y%m%d-%H%M%S}.json")  # kept, not overwritten
         s = {"start": datetime.now().isoformat(timespec="seconds"), "budget": budget, "runs": []}
-        STRETCH.write_text(json.dumps(s, indent=1))
+        save(s)
     print(f"new stretch: budget ${budget:.2f}; runs stop at ${budget * (1 - RESERVE):.2f}, a quarter kept in reserve")
     return 0
 
@@ -159,7 +166,7 @@ def main(argv):
         out = RESULTS / f"{datetime.now():%Y%m%d-%H%M%S}-{label}"
         out.mkdir(parents=True, exist_ok=True)
         s["runs"].append({"dir": str(out), "label": label, "ceiling": ceiling})
-        STRETCH.write_text(json.dumps(s, indent=1))
+        save(s)
     env = {**os.environ, "PATH": "/usr/bin:" + os.environ.get("PATH", "")}
     try:
         with open(out / "run.log", "w") as log:
