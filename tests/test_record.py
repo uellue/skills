@@ -18,7 +18,7 @@ class TestRecord(unittest.TestCase):
         bindir.mkdir()
         # a stand-in for util-linux script that writes down its arguments instead of recording
         fake = bindir / "script"
-        fake.write_text('#!/bin/sh\nprintf "%s\\n" "$@" > "$FAKE_ARGS"\necho "$FIELD_TEST_RUN" > "$FAKE_ARGS.run"\numask > "$FAKE_ARGS.umask"\n')
+        fake.write_text('#!/bin/sh\n[ "$1" = --help ] && { echo " -O, --log-out <file>"; exit 0; }\nprintf "%s\\n" "$@" > "$FAKE_ARGS"\necho "$FIELD_TEST_RUN" > "$FAKE_ARGS.run"\numask > "$FAKE_ARGS.umask"\n')
         fake.chmod(fake.stat().st_mode | stat.S_IEXEC)
         self.args = Path(self.tmp.name) / "args"
         self.env = {**os.environ, "FIELD_TEST_DIR": str(self.base), "PATH": f"{bindir}:{os.environ['PATH']}",
@@ -42,6 +42,30 @@ class TestRecord(unittest.TestCase):
         r = self.run_record(answer="n\n")  # asked only the first time
         self.assertEqual(r.returncode, 0, r.stdout)
         self.assertTrue((self.base / "run-1").is_dir())
+
+    def test_a_script_without_the_needed_options_stops_before_anything_is_created(self):
+        # review of 2026-11-11: BSD or old util-linux script said "Recording into …", then failed, leaving run-0
+        old = Path(self.tmp.name) / "oldbin"
+        old.mkdir()
+        (old / "script").write_text("#!/bin/sh\necho 'usage: script [-adkpqr] [file]'\nexit 1\n")
+        (old / "script").chmod(0o755)
+        self.base.mkdir()
+        r = subprocess.run(["bash", str(SCRIPT)], env={**self.env, "PATH": f"{old}:{os.environ['PATH']}"},
+                           capture_output=True, text=True, input="y\n")
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("util-linux", r.stderr)
+        self.assertNotIn("Recording into", r.stdout)
+        self.assertEqual(list(self.base.iterdir()), [])
+
+    def test_help_and_pack_without_runs_say_what_they_mean(self):
+        r = self.run_record("--help")
+        self.assertEqual(r.returncode, 0)
+        self.assertIn("FIELD_TEST_DIR", r.stdout)
+        self.assertIn("keystrokes", r.stdout)
+        self.base.mkdir()
+        r = self.run_record("--pack")
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("no run yet", r.stderr)
 
     def test_pack_makes_one_archive_and_never_overwrites(self):
         self.run_record()

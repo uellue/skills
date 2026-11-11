@@ -298,10 +298,16 @@ def messages(path: Path, out=sys.stdout):
             else:  # open items restated with their numbers, as the standing instructions ask
                 again = [k for k in nums if k <= last]
                 flags.append(f"restates {again[0]}-{again[-1]}")
-        for a, b, kind in zip(nums, nums[1:], kinds[1:]):
-            if b <= a:
-                flags.append(f"RESTART at {b} after {a}")
+        top = 0
+        for i, (a, b, kind) in enumerate(zip(nums, nums[1:], kinds[1:])):
+            top = max(top, a)
+            if b == 1:
+                flags.append(f"RESTART at 1 after {a}")
                 counts["restarts"] += 1
+            elif b <= top:  # open items restated after a new one keep their numbers (standing instructions)
+                if not any(f.startswith("restates") for f in flags):
+                    again = sorted({k for k in nums[i + 1:] if k <= top})
+                    flags.append(f"restates {again[0]}-{again[-1]}")
             elif b > a + 1 and kind == "list":  # gaps between bold labels are open items restated
                 flags.append(f"JUMP {a}->{b}")
                 counts["jumps"] += 1
@@ -311,7 +317,7 @@ def messages(path: Path, out=sys.stdout):
             counts["long"] += 1
         span = "" if not nums else f"  numbers {nums[0]}-{nums[-1]}" if nums == list(range(nums[0], nums[-1] + 1)) else "  numbers " + ",".join(map(str, nums))
         print(f"L{r['line']}  {lines} lines{span}  {'  '.join(flags)}".rstrip() + f"  | {gist(r['text'], 50)}", file=out)
-        last = nums[-1] if nums else last
+        last = max([last or 0, *nums]) if nums else last  # the highest number so far, not the last one shown
     print(f"{len(replies)} replies, {counts['restarts']} restarts, {counts['jumps']} jumps, {counts['long']} long (over {LONG_LINES} lines), {counts['list']} in list syntax", file=out)
 
 

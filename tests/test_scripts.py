@@ -230,6 +230,23 @@ class TestMessages(unittest.TestCase):
         self.assertNotIn("RESTART", out)
         self.assertIn("restates 2-3", out)
 
+    def test_a_new_item_then_restated_open_items_in_one_reply_is_not_a_restart(self):
+        # review of 2026-11-11: "- **4** new" then the open 2 and 3 restated counted as a restart, and the next
+        # reply's new 4 would have read as a restatement
+        out = self.measure([
+            user("2026-01-02T10:00:00Z", "go"),
+            *self.reply("2026-01-02T10:00:01Z", "- **1** a\n- **2** b\n- **3** c", "m1"),
+            user("2026-01-02T10:00:02Z", "1 yes"),
+            *self.reply("2026-01-02T10:00:03Z", "- **4** new\n\nStill open:\n- **2** b\n- **3** c", "m2"),
+            user("2026-01-02T10:00:04Z", "ok"),
+            *self.reply("2026-01-02T10:00:05Z", "- **5** next", "m3"),
+            user("2026-01-02T10:00:06Z", "ok"),
+            *self.reply("2026-01-02T10:00:07Z", "- **1** again", "m4"),
+        ])
+        self.assertIn("1 restarts", out)
+        self.assertIn("RESTART at 1 after 5", out)
+        self.assertIn("restates 2-3", out)
+
     def test_bold_numbers_tilde_fences_years_and_a_one_space_indent(self):
         text = "1. a\n**2**. b\n~~~\n1. code\n~~~\n2026. was a year\n 3. c"
         out = self.measure([user("2026-01-02T10:00:00Z", "go"), *self.reply("2026-01-02T10:00:01Z", text, "m1")])
@@ -431,6 +448,17 @@ class TestProjectNotice(unittest.TestCase):
         self.assertEqual((self.project / ".git" / "info" / "kaizen-update-noticed").read_text().strip(), self.installed)
         (self.project / ".git" / "info" / "kaizen-update-noticed").write_text("0.5.5\n")
         self.assertIn("/kaizen:update", self.start())
+
+    def test_bold_closing_after_the_number_is_not_part_of_the_version(self):
+        # review of 2026-11-11: "**… version 0.5.9**:" was read as "0.5.9**", and a "0.6.0-dev.1**" as newer than dev.3
+        for line, seen in (("**Kaizen standing instructions, version 0.5.9**: x", "from 0.5.9\n"),
+                           ("**Kaizen standing instructions, version 0.0.1-dev.1:**", "from 0.0.1-dev.1\n")):
+            with self.subTest(line):
+                (self.project / "CLAUDE.md").write_text(line + "\n" + self.OLD_BLOCK)
+                self.start()
+                notice = subprocess.run([sys.executable, SCRIPTS / "version.py", "--project"], cwd=self.project,
+                                        capture_output=True, text=True).stdout
+                self.assertIn(seen, notice + "\n")
 
     def test_an_older_version_line_and_an_old_ledger_are_named(self):
         (self.project / "AGENTS.md").write_text("Kaizen standing instructions, version 0.5.9: /kaizen:update brings them up to date.\n" + self.OLD_BLOCK)

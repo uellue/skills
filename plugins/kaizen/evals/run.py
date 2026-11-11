@@ -68,6 +68,15 @@ def save(s):
     os.replace(tmp, STRETCH)
 
 
+def fresh(path: Path) -> Path:
+    """path, or path-2, path-3 …: the first that does not exist yet (two runs or stretches in one second)."""
+    k, p = 1, path
+    while p.exists() or p.with_name(p.name + ".json").exists():
+        k += 1
+        p = path.with_name(f"{path.name}-{k}")
+    return p
+
+
 def spent(s) -> float:
     total = 0.0
     for r in s["runs"]:
@@ -113,7 +122,8 @@ def new_stretch(argv) -> int:
                   file=sys.stderr)
             return 3
         if STRETCH.exists():
-            STRETCH.rename(RESULTS / f".stretch-{datetime.now():%Y%m%d-%H%M%S}.json")  # kept, not overwritten
+            archive = fresh(RESULTS / f".stretch-{datetime.now():%Y%m%d-%H%M%S}")
+            STRETCH.rename(archive.with_name(archive.name + ".json"))  # kept, not overwritten
         s = {"start": datetime.now().isoformat(timespec="seconds"), "budget": budget, "runs": []}
         save(s)
     print(f"new stretch: budget ${budget:.2f}; runs stop at ${budget * (1 - RESERVE):.2f}, a quarter kept in reserve")
@@ -138,6 +148,11 @@ def main(argv):
         print(__doc__, file=sys.stderr)
         return 2
     label, args = argv[0], argv[1:]
+    joined = [a for a in args if re.match(r"--[A-Za-z-]+=", a)]
+    if joined:
+        print(f"write each option and its value as two words ({joined[0].replace('=', ' ', 1)}), so the checks see them",
+              file=sys.stderr)
+        return 2
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", label) or ".." in label:
         print(f"a label is a plain name (letters, digits, '.', '_', '-'), not {label!r}", file=sys.stderr)
         return 2
@@ -149,7 +164,7 @@ def main(argv):
         if flag not in args:
             args = [*args, flag, default]
     if "--output-dir" in args:
-        print("run.py sets --output-dir itself (results/<date>-<label>)", file=sys.stderr)
+        print("run.py sets --output-dir itself (results/<date>-<time>-LABEL)", file=sys.stderr)
         return 2
     plugin = PLUGIN
     if "--plugin" in args:
@@ -171,8 +186,8 @@ def main(argv):
             print(f"refused: spent ${used:.2f}, this run may cost up to ${ceiling:.2f}, the stretch stops at "
                   f"${limit:.2f} (budget ${s['budget']:.2f}). Ask the person before going on.", file=sys.stderr)
             return 3
-        out = RESULTS / f"{datetime.now():%Y%m%d-%H%M%S}-{label}"
-        out.mkdir(parents=True, exist_ok=True)
+        out = fresh(RESULTS / f"{datetime.now():%Y%m%d-%H%M%S}-{label}")
+        out.mkdir(parents=True)
         s["runs"].append({"dir": str(out), "label": label, "ceiling": ceiling})
         save(s)
     env = {**os.environ, "PATH": "/usr/bin:" + os.environ.get("PATH", "")}

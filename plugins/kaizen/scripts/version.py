@@ -67,7 +67,7 @@ def commit() -> str:
 
 
 # the line may sit in a quote, a list or bold after a merge ("merge, don't append"); "version: 0.6.0" counts too
-MARKER = re.compile(r"^[\s>*_#-]*Kaizen standing instructions,? version:?\s+(\d\S*?)[.:,*_]?(?:\s|$)", re.M | re.I)
+MARKER = re.compile(r"^[\s>*_#-]*Kaizen standing instructions,? version:?\s+(\d[0-9A-Za-z.-]*?)[.:,*_]*(?:\s|$)", re.M | re.I)
 BLOCK_START = "- Keep changes tight: no speculative generality"  # the block's first rule, in every version so far
 LEDGER_LINES = ("Public:", "Message size:")  # lines of references/ledger.md's header a current ledger carries
 NOTICED = "kaizen-update-noticed"

@@ -5,6 +5,7 @@
 #                        the run's folder also gets notes.md, your notes about the test
 #   record.sh --next     only prints the folder the next recording would use
 #   record.sh --pack [N] packs run-N (default: the latest) into ~/field-test/run-N.tar.gz, the run's evidence as one file
+#   record.sh --help     says this in short
 #
 # Inside the recorded shell, FIELD_TEST_RUN is the run's folder.
 #
@@ -28,8 +29,21 @@ for d in "$base"/run-*; do
 done
 run="$base/run-$n"
 
+if [ "${1:-}" = "--help" ] || [ "${1:-}" = "-h" ]; then
+    cat <<EOF
+usage: record.sh [--next | --pack [N]]
+Records what your terminal shows (output and timing, never your keystrokes) into the next run-<n> folder under
+$base (set FIELD_TEST_DIR to choose another), until you type exit; only you can read that folder.
+  --next      print the folder the next recording would use
+  --pack [N]  pack run-N (default: the latest) into one archive, to look through before sharing
+Needs util-linux script (Linux).
+EOF
+    exit 0
+fi
+
 if [ "${1:-}" = "--pack" ]; then
     [ $# -le 2 ] || { echo "usage: record.sh --pack [N]" >&2; exit 2; }
+    [ "$n" -gt 0 ] || [ $# -eq 2 ] || { echo "no run yet in $base" >&2; exit 1; }
     p="${2:-$((n - 1))}"
     [[ "$p" =~ ^[0-9]+$ ]] || { echo "usage: record.sh --pack [N]" >&2; exit 2; }
     [ -d "$base/run-$p" ] || { echo "no $base/run-$p" >&2; exit 1; }
@@ -44,6 +58,11 @@ if [ "${1:-}" = "--next" ]; then
     exit 0
 fi
 [ $# -eq 0 ] || { echo "usage: record.sh [--next | --pack [N]]" >&2; exit 2; }
+# BSD script (macOS) and util-linux before -O and -T existed would fail after "Recording into …" (review 2026-11-11)
+script --help 2>&1 | grep -- '--log-out' >/dev/null || {  # not grep -q: with pipefail, an early exit fails the pipe
+    echo "record.sh needs util-linux script with --log-out (Linux); the script found here lacks it. Nothing was recorded." >&2
+    exit 1
+}
 
 if [ ! -d "$base" ]; then
     printf 'Create %s as the folder for field-test runs (recordings, notes, the evidence of each run)? [y/N] ' "$base"
@@ -54,6 +73,6 @@ fi
 mkdir -m 700 "$run"  # private; fails rather than reuse a folder another terminal just took
 printf '# Notes, %s\n\n' "${run##*/}" > "$run/notes.md"
 echo "Recording into $run until you type exit. Output and timing only; look through session.log before sharing it."
-echo "Notes: $run/notes.md, or at a shell prompt as comments, '# like this' (zsh: 'setopt interactivecomments' first). Not inside Claude."
+echo "Notes: $run/notes.md, or at a shell prompt as comments, '# like this' (zsh: 'setopt interactivecomments' first), not in the Claude prompt."
 export FIELD_TEST_RUN="$run"
 exec script -q -f -T "$run/timing.log" -O "$run/session.log"
