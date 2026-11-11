@@ -14,6 +14,8 @@ This is the one place that says how to run the suites.
 
 It passes everything after the label to `claude plugin eval plugins/kaizen`, sets `--output-dir` to `results/<date>-<time>-<label>` with a `run.log`, and puts the system's Python first on PATH. Measured cost per run (2026-11-10, list price, judge sonnet where the suite has judges): triggers $0.19, walkthrough $0.17, update $0.16, sync $0.24, debrief $0.49, field-test $0.38 on average, about $1 for the runbook case (single runs up to $2.50; results `093853`, `094057`). Estimate a run as runs × cases × that figure, and say it before starting.
 
+**One run is the default** (principal 2026-11-11: "the full suite with all repeats is too expensive, period"). `run.py` adds `--runs 1 --ablation none` unless the command says otherwise, and refuses a second `--case` (the eval keeps only the last). Repeats only where a run failed, and for the known borderline cases, up to three runs: `runbook-format` (1 of 3 at the dev.2 acceptance), the walkthrough's `asks-for-persona` (2 of 3), the sync drafts judge (one misread). The run without the plugin only for a comparison someone asked for.
+
 **How to spend it.** While a case is written or fixed: one run, one version, and read the replies; the comparison with an older version (the field test's, or the last release) runs once, when the graders are stable. Spend runs where much work remains; leave the refinement of nearly-done items for later. Run the suites in descending order of how likely the change affects them; the less likely rest, and repeated runs for statistics, belong to the final acceptance tests before a push or a release, after asking. Which suite a change touches is hard to tell for skill texts, so the acceptance run takes all of them.
 
 **List syntax.** After each run `run.py` also runs `scan_lists.py` on its folder, which reports every final reply that uses markdown numbered-list syntax outside a code block (with or without gaps); `python3 plugins/kaizen/evals/scan_lists.py` scans all stored results, at no cost. Baseline before the rule (2026-11-10): 177 of 189 stored replies. `numbering/asked-for-list` checks the other side: asked for "a numbered markdown list, so I can paste it into our wiki", with the numbering line in the fixture's `CLAUDE.md`, the agent gives one (3 of 3, $0.25), so the rule needs no exception for requested lists (principal: a test first, instructions only if needed).
@@ -24,7 +26,7 @@ The commands below show each suite's arguments; give them to `run.py` without th
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-triggers; mkdir -p "$out"
     PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --tag trigger --scaffold --ablation none --no-publish -j 3 --max-cost-usd 15 --output-dir "$out" 2>&1 | tee "$out/run.log"
 
-    # the walkthrough comparison (walkthrough/): three runs per case, with and without the plugin
+    # the walkthrough comparison (walkthrough/): three runs per case, with and without the plugin; only when a comparison is asked for, otherwise one run with the plugin
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-walkthrough; mkdir -p "$out"
     PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'walkthrough-*' --scaffold --allow-tools Write Edit --no-publish -j 3 --max-cost-usd 6 --output-dir "$out" 2>&1 | tee "$out/run.log"
 
@@ -34,11 +36,11 @@ The commands below show each suite's arguments; give them to `run.py` without th
 
     # the sync reproducer (sync/): Bash for git, Write and Edit to see whether drafts are written; a sonnet judge
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-sync; mkdir -p "$out"
-    PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'sync-*' --scaffold --allow-tools Bash Write Edit --runs 5 --ablation none --no-publish -j 5 --max-cost-usd 4 --judge-model sonnet --output-dir "$out" 2>&1 | tee "$out/run.log"
+    PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'sync-*' --scaffold --allow-tools Bash Write Edit --ablation none --no-publish --max-cost-usd 1 --judge-model sonnet --output-dir "$out" 2>&1 | tee "$out/run.log"
 
     # the debrief reproducer (debrief/): a debrief of an exported session, Bash for the scripts
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-debrief; mkdir -p "$out"
-    PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'debrief-*' --scaffold --allow-tools Bash Write Edit --runs 8 --ablation none --no-publish -j 4 --max-cost-usd 8 --judge-model sonnet --output-dir "$out" 2>&1 | tee "$out/run.log"
+    PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'debrief-*' --scaffold --allow-tools Bash Write Edit --ablation none --no-publish --max-cost-usd 2 --judge-model sonnet --output-dir "$out" 2>&1 | tee "$out/run.log"
 
     # an older plugin version, e.g. the one a field test ran (run 8: 1f231b7): a worktree, the cases copied in
     #   git worktree add --detach <scratch>/kaizen-old 1f231b7; cp -a plugins/kaizen/evals/sync <scratch>/kaizen-old/plugins/kaizen/evals/

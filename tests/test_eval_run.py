@@ -73,6 +73,25 @@ class TestEvalRun(unittest.TestCase):
         self.assertIn("spent $1.50 of $10.00", r.stdout)
         self.assertIn("replies in list syntax", r.stdout)  # the scan runs after each run (scan_lists.py)
 
+    def test_one_run_with_the_plugin_is_the_default(self):
+        # principal 2026-11-11: "the full suite with all repeats is too expensive, period"; repeats only when asked
+        self.run_it("--new-stretch", "10")
+        self.run_it("x", "--max-cost-usd", "1")
+        a = json.loads(self.args.read_text())["args"]
+        self.assertEqual(a[a.index("--runs") + 1], "1")
+        self.assertEqual(a[a.index("--ablation") + 1], "none")
+        self.run_it("y", "--max-cost-usd", "1", "--runs", "3", "--ablation", "with-without")
+        a = json.loads(self.args.read_text())["args"]
+        self.assertEqual((a.count("--runs"), a[a.index("--runs") + 1]), (1, "3"))
+        self.assertEqual((a.count("--ablation"), a[a.index("--ablation") + 1]), (1, "with-without"))
+
+    def test_a_second_case_is_refused(self):
+        # claude plugin eval keeps only the last --case; twice a run of two suites ran one (2026-11-10, 2026-11-11)
+        self.run_it("--new-stretch", "10")
+        r = self.run_it("x", "--case", "a-*", "--case", "b-*", "--max-cost-usd", "1")
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("--case", r.stderr)
+
     def test_it_refuses_a_run_that_could_pass_the_reserve(self):
         self.run_it("--new-stretch", "10")  # reserve: runs stop at $7.50
         self.assertEqual(self.run_it("a", "--max-cost-usd", "3", COST="4").returncode, 0)

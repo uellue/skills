@@ -8,7 +8,8 @@ session limit; "Standing instructions didn't work too well regarding budget").
     run.py LABEL [--plugin PATH] <claude plugin eval args>
                                               one eval run: needs --max-cost-usd; refused when the stretch's spend
                                               plus that ceiling would pass three quarters of the budget (the reserve);
-                                              --plugin runs another copy, e.g. an older version, in the same stretch
+                                              --plugin runs another copy, e.g. an older version, in the same stretch;
+                                              one run, plugin arm only, unless --runs or --ablation say otherwise
 
 A run writes into results/<date>-<time>-LABEL with its run.log; the system's Python comes first on PATH (the eval
 sandbox hides the home directory, see README). The spend counts each run's measured cost, or its ceiling while it
@@ -140,6 +141,13 @@ def main(argv):
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", label) or ".." in label:
         print(f"a label is a plain name (letters, digits, '.', '_', '-'), not {label!r}", file=sys.stderr)
         return 2
+    if args.count("--case") > 1:
+        print("give one --case glob (claude plugin eval keeps only the last); run each suite on its own", file=sys.stderr)
+        return 2
+    # principal 2026-11-11: one run with the plugin is the default; repeats and the baseline arm only when asked
+    for flag, default in (("--runs", "1"), ("--ablation", "none")):
+        if flag not in args:
+            args = [*args, flag, default]
     if "--output-dir" in args:
         print("run.py sets --output-dir itself (results/<date>-<label>)", file=sys.stderr)
         return 2
