@@ -5,7 +5,7 @@ description: Run a hallway test of a tool, document, instruction file or diagnos
 
 # Hallway test
 
-Text id `073a1ab3`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 073a1ab3` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `8c6f17f3`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py hallway-test 8c6f17f3` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 A fresh sub-agent that has not seen the implementation, the specs or the conversation tries the subject as a first user would, with only the requirements and the user documentation, and reports where reality differs from what they promise. Its persona comes from the stakeholder record (`design/stakeholders.md`), its coverage from the walk-through's steps and the acceptance examples when they exist.
 
@@ -17,7 +17,7 @@ Modes, often combined:
 - **By eye**: for output meant for people, the tester drives the tool in a real terminal through `${CLAUDE_PLUGIN_ROOT}/scripts/xterm-shots.py` (needs `xvfb`, `xterm`, `xdotool` and `imagemagick`) and judges screenshots only, which catches what text parsing misses (output scrolled off, wrapped lines, a pager). A rendered web page cannot be judged by eye yet (planned): it is judged by its source and its text, the person looks at it in the local preview with the examples as a checklist, and the record says so. Brief: `${CLAUDE_PLUGIN_ROOT}/references/visual-brief.md`.
 - **Diagnosis**: the process under test is finding out what is wrong. The main session injects faults that look real into a running system; the tester gets the symptom, the persona and the user-facing documents only, and its investigation log, verdict, time and tokens are the measurement. Brief: `${CLAUDE_PLUGIN_ROOT}/references/diagnosis-brief.md`.
 - **Hint-following (the impatient user)**: a first user who does not read: they skim the README for a command that looks right, run it, and then follow only what the program prints. The tester sees the README only through `${CLAUDE_PLUGIN_ROOT}/scripts/skim.py`, so its laziness is enforced; each time the output gives no next step, the chain breaks, a finding whose fix belongs in the program's output. Measured: commands to the goal, breaks, minutes; a `Read` of a document the brief did not allow invalidates the run. Brief: `${CLAUDE_PLUGIN_ROOT}/references/impatient-brief.md`.
-- **Documents and instruction files**: for a README, the tester follows it from a clean checkout and reports where it stops. For an agent instruction file (`AGENTS.md`, `CLAUDE.md`), an evaluation: variants of the file in separate worktrees × typical tasks × one fresh, cheap agent per cell, an answer key written before the runs, a blind grader that did not write the variants, the usage per cell; layout questions are decided by measurement, not argument.
+- **Documents and instruction files**: for a README, the tester follows it from a clean checkout, reports where it stops and applies `${CLAUDE_PLUGIN_ROOT}/references/wording-review.md`. For an agent instruction file (`AGENTS.md`, `CLAUDE.md`), an evaluation: variants of the file in separate worktrees × typical tasks × one fresh, cheap agent per cell, an answer key written before the runs, a blind grader that did not write the variants, the usage per cell; layout questions are decided by measurement, not argument.
 
 ## Before launching
 

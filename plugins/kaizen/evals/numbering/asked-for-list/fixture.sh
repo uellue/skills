@@ -12,5 +12,5 @@ cat > CLAUDE.md <<'EOF'
 # tally
 
 ## Working rules
-- Number every item and question you put to the person in one sequence across your messages: a new message continues from the last number used and never restarts at 1 while earlier numbered items are open; an open item restated keeps its number; no item without a number, no jumps. Write each as a bullet with its number in bold (`- **7** …`), never as a markdown numbered list (`7. …`): a display renumbers such a list from its first number. Restart only when nothing is open and nothing is still to come back from work in the background.
+- Number every item and question you put to the person in one sequence across your messages, each as a bullet with its number in bold (`- **7** …`), never as a markdown numbered list (`7. …`), which a display renumbers. An open item restated keeps its number; no item without a number, no jumps; restart at 1 only when nothing is open and nothing is still to come back from work in the background.
 EOF
