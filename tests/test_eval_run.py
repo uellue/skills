@@ -85,6 +85,31 @@ class TestEvalRun(unittest.TestCase):
         self.assertEqual((a.count("--runs"), a[a.index("--runs") + 1]), (1, "3"))
         self.assertEqual((a.count("--ablation"), a[a.index("--ablation") + 1]), (1, "with-without"))
 
+    def test_two_runs_in_one_second_get_their_own_folders(self):
+        # review of 2026-11-11: same label, same second: one folder, one result counted twice
+        self.run_it("--new-stretch", "10")
+        procs = [subprocess.Popen([sys.executable, str(SCRIPT), "same", "--max-cost-usd", "1"], env=self.env,
+                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) for _ in range(2)]
+        for p in procs:
+            p.communicate()
+        dirs = [r["dir"] for r in json.loads((self.results / ".stretch.json").read_text())["runs"]]
+        self.assertEqual(len(set(dirs)), 2, dirs)
+
+    def test_flags_written_with_an_equals_sign_are_refused(self):
+        # review of 2026-11-11: "--runs=3" slipped past the default and "--case=a --case=b" past the check
+        self.run_it("--new-stretch", "10")
+        for arg in ("--runs=3", "--case=a-*", "--plugin=/tmp", "--max-cost-usd=1"):
+            with self.subTest(arg):
+                r = self.run_it("x", arg, "--max-cost-usd", "1")
+                self.assertEqual(r.returncode, 2, r.stderr)
+
+    def test_an_archived_stretch_is_never_overwritten(self):
+        # review of 2026-11-11: two --new-stretch --force in one second overwrote the archive
+        for b in ("10", "11", "12"):
+            self.run_it("--new-stretch", b, "--force")
+        archived = sorted(self.results.glob(".stretch-*.json"))
+        self.assertEqual(sorted(json.loads(p.read_text())["budget"] for p in archived), [10.0, 11.0])
+
     def test_a_second_case_is_refused(self):
         # claude plugin eval keeps only the last --case; twice a run of two suites ran one (2026-11-10, 2026-11-11)
         self.run_it("--new-stretch", "10")
