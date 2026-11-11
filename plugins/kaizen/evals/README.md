@@ -160,6 +160,24 @@ What changed on the way, each change run on both versions: the first draft of th
 
 `frames-first` 1.00 ($0.21). `runbook-channels` 0.40 ($1.33): channels probed; `probe-in-runbook`, `runbook-format` and `explicit-go` failed. The judges keep no reasons, so a Sonnet judge was asked again with the same criteria and the agent's reply and runbook: `probe-in-runbook` PASS (a misread by the eval's judges); `explicit-go` FAIL only because the reply still had open questions and so rightly did not hand over yet: the grader now says that case passes; `runbook-format` FAIL for two real points, the reply did not ask the person to read and adjust the steps in so many words, and one variable was set only after the recording started. A borderline case: up to three runs at acceptance.
 
+At the acceptance (`20261111-075619-B-field-test`), `probe-in-runbook` failed 3 of 3 again on a runbook that has the probe as step 3. Cause: a judge with `focus: trace` gets the trace with its middle cut out ("[…32 messages elided…]"), and the `Write` of the runbook file was in that middle, so the judge saw only later edits. The skill shows the runbook in its reply (step 5), so `probe-in-runbook` and `runbook-format` now judge the last message. A grader about a file written mid-run reads the file (`target: { source: file, … }`) or the final reply, never the trace alone.
+
+## Acceptance of 0.6.0 (2026-11-11, `be7a9b1`, one run each; repeats only for failures)
+
+In a $20 stretch through `run.py`; the whole acceptance with the stage A pre-tests cost $12.40 at list price (the earlier default of three runs each would have been about $31).
+
+| Suite | Result |
+|---|---|
+| triggers | 16 of 16 |
+| walkthrough | 3 of 3 (asks for the persona, walks the confirmed one, ignores the unrelated request) |
+| field-test | frames-first, real-world-issue, safety-first 1 of 1; existing-setups 1 of 3 (all three replies name the shared reset and that a count empties `counts.tsv` when it starts, which the grader accepts as an example; the judges still failed two: judge variance, not the skill); runbook-channels: channels probed and the start 4 of 4, probe in the runbook 1 of 3 and runbook format 0 of 3 after the graders were moved to the final reply (one reply summed the steps up in prose instead of showing the commands, the known weak point since dev.2) |
+| update | 2 of 2 |
+| sync | 1 of 1 |
+| debrief | 1 of 1 |
+| numbering, wording | 1 of 1 each |
+
+The runbook in the reply stays the weak point (ledger 302). No failure pointed to a regression in the texts changed for 0.6.0.
+
 ## Wording (ledger 297)
 
 `wording/with-line`: a term coined in the session ("the attic" for the cache folder) must not leak into an error message, and the message makes sense to a reader who was not in the conversation. A guard against getting worse, not a reproducer: on 2026-11-11 it passed with the wording line and without it (one run each, $0.40); both agents wrote `tally: cannot write cache directory <path>: <reason>`. The line rests on Alex Clausen's experience in real projects; a case that tells the two apart comes from the first slip seen in real work.
