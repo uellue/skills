@@ -69,7 +69,7 @@ class TestTrackedProject(unittest.TestCase):
 
     def test_every_key_item_of_the_scenario_cites_an_example(self):
         rows = [r for r in (BENCH / "key.md").read_text().splitlines() if "| tracked-project |" in r]
-        self.assertEqual(len(rows), 12)
+        self.assertEqual(len(rows), 14)
         for r in rows:
             self.assertRegex(r, r"\bE\d+\b", r[:12])
 

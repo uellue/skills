@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Update
 
-Text id `9b34b628`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py update 9b34b628` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `8eae1b0a`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py update 8eae1b0a` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 An update must never feel like a regression: whatever the project's people established, chose on purpose or said they liked stays as it is until they confirm a change. The person stays in control of every line that changes; the update proposes, shows and asks.
 
@@ -26,4 +26,4 @@ Use plain words with the person: explain a term of this plugin the first time yo
 - Never change the instruction file, a record or anything upstream without the person's yes for that item; one yes may take a numbered list.
 - Say which layer each finding is about: the plugin, the project, or the work with the agent.
 - Ideas dropped on the way and offers left open go into the inbox at once (`${CLAUDE_PLUGIN_ROOT}/references/ledger.md`).
-- At the end, one line into the project's ledger: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).
+- At the end, one line into the project's ledger, under `## Skill friction`: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).

@@ -55,7 +55,11 @@ Written from the runs of 2026-11-05 and the fixes that followed them. Scope: "al
 | N48 | tracked-sync | After the answer, each routed note keeps only its link ("→ #22", "→ row 1"), and a line with the date of this sync is recorded | E35, E36 |
 | N49 | tracked-sync | Nothing is posted or pushed without a yes; every draft is split into a part for people and a part for agents; the push is left to the maintainer with the command shown, as they asked | E37 |
 | N50 | tracked-sync | The sync runs as `/kaizen:sync`, reached from the README, not improvised | E35 |
+| N51 | tracked-project | The participant is asked, before the run, where findings may go (the public tracker, a private place, only this session), and the findings are filed within that answer | E28; ledger 301 |
+| N52 | tracked-project | For a participant who sends the recording only afterwards, as an archive, the agent says that the live view and the probe before the run do not apply, and checks recording, packing and sending in a dry run instead | E49; ledger 301 |
 
 N32 to N43 are the agent's leans of 2026-11-09 for the principal's review, written before the plugin has anything on issue trackers (ledger 271): a run of `tracked-project` on 0.5.5 is a baseline, not a failure.
+
+N52 is not expected to hold yet: the field-test skill gets that variant from its first real case (ledger 301).
 
 Open and planned for 0.5, not yet expected to hold: a feasibility path before the full form (ledger 51); the decision record for a new project's first build (ledger 52).
