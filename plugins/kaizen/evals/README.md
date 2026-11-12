@@ -178,6 +178,14 @@ In a $20 stretch through `run.py`; the whole acceptance with the stage A pre-tes
 
 The runbook in the reply stays the weak point (ledger 302). No failure pointed to a regression in the texts changed for 0.6.0.
 
+After the acceptance, still in 0.6.0 (2026-11-12, ledger 302 a, c, d; one run each in a $5 stretch, $0.73 measured):
+
+- `runbook-channels`: the field-test skill now says to show the runbook in the reply as the file's code blocks, never summed up in prose. All five graders passed, runbook format and probe in the runbook included (0 of 3 and 1 of 3 before). One run: evidence that the sentence works, not a rate.
+- `debrief/note-without-names` (new; a note for the debrief names a colleague in full): passed on the new text and on the 0.6.0 text alike. Both agents wrote "a colleague from the beamline group" into the ledger and said why. So it is no reproducer: the gap was found by reading the texts, not seen in a run. The sentence in the debrief skill and the ledger template stays, as the rule the agent already follows; the case guards against getting worse, as `wording` does.
+- Seven skills name `## Skill friction` for their closing line; a lint test (`test_friction_line_names_its_section`) checks it, no eval needed.
+
+A run with `--plugin` on a copy outside the checkout needs `--trust-plugin`; without it `claude plugin eval` stops at once, and `run.py` counted the run's ceiling ($1) as spent, since it left no result.
+
 ## Wording (ledger 297)
 
 `wording/with-line`: a term coined in the session ("the attic" for the cache folder) must not leak into an error message, and the message makes sense to a reader who was not in the conversation. A guard against getting worse, not a reproducer: on 2026-11-11 it passed with the wording line and without it (one run each, $0.40); both agents wrote `tally: cannot write cache directory <path>: <reason>`. The line rests on Alex Clausen's experience in real projects; a case that tells the two apart comes from the first slip seen in real work.

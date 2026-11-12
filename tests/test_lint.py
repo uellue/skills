@@ -45,6 +45,14 @@ class TestSkills(unittest.TestCase):
         self.assertTrue(all(lines.values()), f"skills without the rule: {[k for k, v in lines.items() if not v]}")
         self.assertEqual(len(set(lines.values())), 1, "the plain-words rule differs between skills")
 
+    def test_friction_line_names_its_section(self):
+        # Ledger 302 (c): seven skills said "one line into the project's ledger" and a line landed under the notes.
+        for p in SKILLS:
+            for line in p.read_text().splitlines():
+                if "one line into the project's ledger" in line:
+                    with self.subTest(p.parent.name):
+                        self.assertIn("`## Skill friction`", line)
+
     def test_there_are_skills(self):
         self.assertGreaterEqual(len(SKILLS), 5)
 

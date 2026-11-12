@@ -5,7 +5,7 @@ description: Interview the person who needs a solution and write a demand and re
 
 # Requirements interview
 
-Text id `481a9d28`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements 481a9d28` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
+Text id `f920fe4b`: first run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/version.py requirements f920fe4b` as it stands and pass on what it prints, if anything (it is silent when all is well; if it fails, carry on).
 
 The questions that clarify a requirement between the person who needs a solution and the person who builds it are known; what goes wrong is that they are not asked, or are asked all at once, or are answered with a solution instead of a need. This skill asks them in short rounds, covers the sections of a demand and requirements form written at ER-C (a checklist; no institute requires it), writes down the answers in the person's words, and says plainly which items are answered, taken from the record, assumed, unknown or deferred. The questions are in `${CLAUDE_PLUGIN_ROOT}/references/requirements-questions.md`; read that file first.
 
@@ -97,5 +97,5 @@ Before saying the document is ready, run the hand-over check and show its result
 - A requirement that cannot be checked is not finished: for each main scenario, add one acceptance example ("when <situation>, then <observable outcome>") to `design/examples.md`, with the next free ID, a priority and the scenario it comes from, and cite the ID in 2.1. The examples live only there.
 - Keep names of people in the project's own record; keep them out of anything published.
 - Hand the document over with the hand-over check above, not with "ready for review" alone.
-- At the end, one line into the project's ledger: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).
+- At the end, one line into the project's ledger, under `## Skill friction`: what in this skill did not fit. If the file is new, announce it first (playbook, Rules).
 - Offer the debrief in one line (`/kaizen:debrief`) when the interview ends a stretch of work or was this skill's first use in the project.
