@@ -13,6 +13,8 @@ resolved in the rebase, a squash, a merge commit), a match whose content differs
 merge, or an unrelated commit made the same change), an ambiguous abbreviation. A line that already cites
 the new hash is left as it is. Without --apply it only reports. Hashes outside backticks are not seen.
 It works only where the branch's old commits still exist, usually the clone the branch was made in.
+When --onto is behind its upstream (as of the last fetch), it lacks the rebased commits and every citation
+would read as unmatched: a warning says so first, with the command that updates it (ledger 278).
 """
 
 import argparse
@@ -127,6 +129,16 @@ def main(argv=None):
     args = a.parse_args(argv)
     if git("rev-parse", "--verify", "--quiet", f"{args.onto}^{{commit}}", check=False).returncode != 0:
         raise SystemExit(f"--onto {args.onto}: no such commit")
+    # A local main behind its upstream lacks the rebased commits, so every citation would read as unmatched (ledger 278).
+    upstream = git("rev-parse", "--abbrev-ref", "--symbolic-full-name", f"{args.onto}@{{upstream}}", check=False)
+    if upstream.returncode == 0:
+        up = upstream.stdout.strip()
+        behind = int(git("rev-list", "--count", f"{args.onto}..{up}").stdout.strip())
+        if behind:
+            remote = git("config", f"branch.{args.onto}.remote").stdout.strip()
+            print(f"warning: {args.onto} is {behind} commit{'s' if behind > 1 else ''} behind {up} (as of the last fetch); "
+                  f"update it with `git fetch {remote} {args.onto}:{args.onto}` (a fast-forward; if git refuses it, "
+                  f"update {args.onto} by hand) and run this again")
     moves, unmatched = plan(args.onto)
     for old, (new, where) in moves.items():
         print(f"{old} -> {new}  ({sum(where.values())} in {', '.join(sorted(where))})")
