@@ -1,4 +1,4 @@
-# Run 2026-11-11: scenario tracked-sync, commit `be7a9b1` (0.6.0), Opus, about 3 minutes
+# Run 2026-11-11: scenario tracked-sync, commit `88efbe0` (0.6.0), Opus, about 3 minutes
 
 Acceptance of 0.6.0, one run (ledger 216). Opus tester; report in its own words in the session; graded by a fresh Sonnet agent that changed no skill, from the report, the key and the claims the main session checked (the changelog's tracker section names `/kaizen:sync`, the standing instructions do not: partly confirmed).
 

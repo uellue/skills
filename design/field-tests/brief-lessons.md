@@ -1,6 +1,6 @@
 # Writing a brief for a person in a field test: worked examples
 
-From the principal's edits of `devvm-brief.md`, 2026-11-09 (commits `18e81bf` to `bdaa59e`), for the field-test skill (ledger 283). The rule they show, in the principal's words: don't inject disturbances into the test case; counter what might be a disturbance caused by the person knowing it is a test, running it with instrumentation and so on. Better than asking someone to take a role is finding someone who has it naturally. The most valuable information comes when real people follow their nose and go off script; specific scripts and scenarios are for the automated hallway tests.
+From the principal's edits of `devvm-brief.md`, 2026-11-09 (commits `6170daa` to `51fe3c0`), for the field-test skill (ledger 283). The rule they show, in the principal's words: don't inject disturbances into the test case; counter what might be a disturbance caused by the person knowing it is a test, running it with instrumentation and so on. Better than asking someone to take a role is finding someone who has it naturally. The most valuable information comes when real people follow their nose and go off script; specific scripts and scenarios are for the automated hallway tests.
 
 So a brief gives the starting point and the method (how to record, how to note, what must not leave the machine, how to hand back), and nothing about how to behave, what to try, or how to answer.
 

@@ -1,4 +1,4 @@
-# Run 2026-11-11: scenario after-merge, commit `be7a9b1` (0.6.0), Opus, about 4 minutes
+# Run 2026-11-11: scenario after-merge, commit `88efbe0` (0.6.0), Opus, about 4 minutes
 
 Acceptance of 0.6.0, one run (ledger 216). Opus tester; report in its own words in the session; graded by a fresh Sonnet agent that changed no skill, from the report, the key and the claims the main session checked (the notice on a ledger without `Message size:` is by design for a pre-0.5.5 ledger, its wording is the finding; seven skills say "one line into the project's ledger" without the section: confirmed; a note for the debrief goes into the committed ledger at once: confirmed).
 

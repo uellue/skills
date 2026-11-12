@@ -1,8 +1,8 @@
-# Run 2026-11-11 (2): scenario tracked-project, commit `be7a9b1` (0.6.0), Opus, about 4 minutes
+# Run 2026-11-11 (2): scenario tracked-project, commit `88efbe0` (0.6.0), Opus, about 4 minutes
 
 Acceptance of 0.6.0, one run (ledger 216). Opus tester; report in its own words in the session; graded by a fresh Sonnet agent that changed no skill, from the report, the key and the claims the main session checked (the playbook's description does not mention an update: confirmed; a contradiction on where the ledger goes in a public repository: the quoted sentences not found, unverified).
 
-| Key | This run | Run 1 today (`c717975`) |
+| Key | This run | Run 1 today (`251d328`) |
 |---|---|---|
 | N2 | held (fired once, records older; then silent) | held |
 | N7 | held | held |
@@ -20,4 +20,4 @@ Acceptance of 0.6.0, one run (ledger 216). Opus tester; report in its own words 
 | N40, N42, N43 | held (N43 only because the newcomer typed the command) | held |
 | N41 | held (description "kaizen 0.6.0" offered) | partly |
 
-Better than run 1: N28, N39, N41 (the fixes of `5e34352`: consent in the brief, first-look date). Open: the request in words reaches `/kaizen:update` only through another skill's start-up notice (row 302).
+Better than run 1: N28, N39, N41 (the fixes of `cc1f71a`: consent in the brief, first-look date). Open: the request in words reaches `/kaizen:update` only through another skill's start-up notice (row 302).

@@ -1,4 +1,4 @@
-# Run 2026-11-11: scenario tracked-project, commit `c717975` (0.6.0-dev.3, before the release review's fixes), Opus, about 4 minutes
+# Run 2026-11-11: scenario tracked-project, commit `251d328` (0.6.0-dev.3, before the release review's fixes), Opus, about 4 minutes
 
 Pre-test of stage A before the 0.6.0 acceptance; one run (the default since 2026-11-11, ledger 216). Usage: 25,303 output tokens, 27 tool calls. Graded by a fresh Sonnet agent that changed no skill, from the report, the key and the claims the main session checked: update step 5 writes no date for the first look; "about fifteen lines" against one item per line in update step 3; `version.py` writes `.git/info/kaizen-update-noticed` without any text saying so; `record.sh --help` gave only the usage line; field-test step 5 named no path for a participant's brief; neither the field-test skill nor its brief asked the participant's consent to where findings go. All confirmed; findings 2, 6, 7 and 8 are design judgements, not checked.
 
