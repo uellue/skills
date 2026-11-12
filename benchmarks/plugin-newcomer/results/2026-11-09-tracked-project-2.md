@@ -1,4 +1,4 @@
-# Runs 2026-11-09 (3 and 4): scenario tracked-project, commit `6ce5bab` (0.6.0-dev.1, the first `/kaizen:update`), Opus, about 3 minutes each
+# Runs 2026-11-09 (3 and 4): scenario tracked-project, commit `4148479` (0.6.0-dev.1, the first `/kaizen:update`), Opus, about 3 minutes each
 
 Graded by the main session, not independent (it wrote the key items and the skill). Claims checked: the update's step 4 ("created when a skill first needs it … not now") against its closing rule ("one line into the project's ledger"), both present; step 5 names no place for drafts (present); `references/changelog.md` has "Before 0.5.5" without saying which entries a block without a version line needs (present); `words.md` has no entry for standing instructions (grep: none); the issue-tracker template's only frequency slot is "Read the tracker <when>" (present).
 

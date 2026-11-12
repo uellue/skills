@@ -106,7 +106,7 @@ The fixture script is copied into each case, since a scaffold script must sit in
 
 ## Sync: reproducers from field-test run 8
 
-`sync/answers-not-drafts` (ledger 291; field-test run 8, 2026-11-10): the owner types `/kaizen:sync` on devvm one day after the update (the fixture of the self-test's `tracked-sync`, embedded in `fixture.sh`), with issue 16 from another person unanswered, and drops an idea in passing ("a glossary"). Expected, in the principal's words: no drafted replies to people on the tracker unless asked, "point out where an answer from me is needed"; the dropped idea lands in the ledger's inbox at once. Written first and run against the plugin as installed in run 8 (commit `1f231b7`, a worktree with this folder copied in), where it must fail:
+`sync/answers-not-drafts` (ledger 291; field-test run 8, 2026-11-10): the owner types `/kaizen:sync` on devvm one day after the update (the fixture of the self-test's `tracked-sync`, embedded in `fixture.sh`), with issue 16 from another person unanswered, and drops an idea in passing ("a glossary"). Expected, in the principal's words: no drafted replies to people on the tracker unless asked, "point out where an answer from me is needed"; the dropped idea lands in the ledger's inbox at once. Written first and run against the plugin as installed in run 8 (commit `4bf6403`, a worktree with this folder copied in), where it must fail:
 
 With the graders as they stand (five runs each, sonnet judge, results `20261110-082239-sync-run8` and `20261110-082242-sync-dev2`):
 
@@ -162,7 +162,7 @@ What changed on the way, each change run on both versions: the first draft of th
 
 At the acceptance (`20261111-075619-B-field-test`), `probe-in-runbook` failed 3 of 3 again on a runbook that has the probe as step 3. Cause: a judge with `focus: trace` gets the trace with its middle cut out ("[…32 messages elided…]"), and the `Write` of the runbook file was in that middle, so the judge saw only later edits. The skill shows the runbook in its reply (step 5), so `probe-in-runbook` and `runbook-format` now judge the last message. A grader about a file written mid-run reads the file (`target: { source: file, … }`) or the final reply, never the trace alone.
 
-## Acceptance of 0.6.0 (2026-11-11, `be7a9b1`, one run each; repeats only for failures)
+## Acceptance of 0.6.0 (2026-11-11, `88efbe0`, one run each; repeats only for failures)
 
 In a $20 stretch through `run.py`; the whole acceptance with the stage A pre-tests cost $12.40 at list price (the earlier default of three runs each would have been about $31).
 

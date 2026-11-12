@@ -1,4 +1,4 @@
-# Runs 2026-11-09 (1 and 2): scenario tracked-sync, commit `2512ddc` (0.6.0-dev.1, the first `/kaizen:sync`), Opus, about 2.5 minutes each
+# Runs 2026-11-09 (1 and 2): scenario tracked-sync, commit `20cb8d6` (0.6.0-dev.1, the first `/kaizen:sync`), Opus, about 2.5 minutes each
 
 Graded by the main session, not independent (it wrote the skill and the key). Claims checked: `sync/SKILL.md` step 2 said "links one that closed" (present; settled by the fix to "settles"); step 4 named no ignore check for `.claude/drafts/` (present); step 5 had no form for a link before posting (present); the changelog's tracker template had no slot for who runs changing commands (present); `words.md` had no "inbox" or "sync" (grep: none). Setup misfit, both runs: the fixture has no `kaizen-0.6.0` branch and no remote, and the tracker's dates (2026-11-10) lie after the system date; both runs simulated the fetch and dated their work 11-10.
 

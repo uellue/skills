@@ -3,7 +3,7 @@
 Confidence after the answers: answered by the principal, 2026-11-09; the runbook is `design/field-tests/devvm-runbook.md`.
 
 Persona: the plugin maintainer (stakeholder record), outer role; the same person plays the manager in devvm, inner role (variant 1). Variant 1 runs exactly as variant 2 would, where a colleague plays the inner role, so that the handovers are tested. Confidence: confirmed by the principal, 2026-11-09 (the persona, the process, the layers, the reset).
-What exists: branch `field-tests-269` pushed at `fe7586f` (kaizen 0.6.0-dev.1: `/kaizen:update`, `/kaizen:sync`, the notice); `transcript.py locate <dir>` reads another project's sessions; `benchmarks/plugin-newcomer/` (self-test scenarios `tracked-project`, `tracked-sync`, keys N32 to N50); the research notes on field tests; devvm at github.com/modama-rdm/devvm (checkout `~/src/devvm`). Walked on paper; nothing run.
+What exists: branch `field-tests-269` pushed at `4663102` (kaizen 0.6.0-dev.1: `/kaizen:update`, `/kaizen:sync`, the notice); `transcript.py locate <dir>` reads another project's sessions; `benchmarks/plugin-newcomer/` (self-test scenarios `tracked-project`, `tracked-sync`, keys N32 to N50); the research notes on field tests; devvm at github.com/modama-rdm/devvm (checkout `~/src/devvm`). Walked on paper; nothing run.
 
 Layers (principal, 2026-11-09):
 - **L1**, this repository and session: kaizen on kaizen; the maintainer prepares, analyses, improves the plugin.
