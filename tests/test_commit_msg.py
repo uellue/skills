@@ -95,6 +95,14 @@ class TestCommitMsg(unittest.TestCase):
         self.assertIn("add 'Refs #13'", r.stderr)
         self.assertNotIn("closes the issue", r.stderr)
 
+    def test_a_reference_among_the_trailers_is_named(self):  # 47c7383: "Refs #13" between Ledger: and Co-Authored-By:
+        r = self.commit("plugins/x/SKILL.md", "Merged\n\nLedger: 312, 313\nRefs #13\nCo-Authored-By: t <t@t>")
+        self.assertEqual(r.returncode, 0)
+        self.assertIn("not read as a trailer", r.stderr)
+        self.assertIn("put 'Refs #<n>' in the body", r.stderr)
+        r = self.commit("plugins/y/SKILL.md", "Merged\n\nRefs #13\n\nLedger: 312, 313\nCo-Authored-By: t <t@t>")
+        self.assertNotIn("trailer", r.stderr)
+
     def test_other_files_need_no_trailer(self):
         r = self.commit("tests/test_x.py", "A test")
         self.assertEqual(r.returncode, 0)

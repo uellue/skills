@@ -12,8 +12,13 @@ top=$(git rev-parse --show-toplevel)
 body=$(sed '/^# -* >8 -*$/,$d' "$msg" | grep -v '^#')
 if git diff --cached --name-only | grep -q -E '^(plugins|design|benchmarks)/'; then
     # Case-sensitive, as `git log --grep` is; a rewording amend with nothing staged is not checked.
-    git interpret-trailers --parse "$msg" | grep -q '^Ledger: *[0-9]' ||
+    if git interpret-trailers --parse "$msg" | grep -q '^Ledger: *[0-9]'; then :
+    elif printf '%s\n' "$body" | grep -q '^Ledger: *[0-9]'; then
+        # a line such as "Refs #13" among the trailers makes git read none of them (2026-11-19, 47c7383)
+        echo "commit-msg: the Ledger: line is not read as a trailer: the last paragraph must hold only 'Key: value' lines; put 'Refs #<n>' in the body. Committed anyway." >&2
+    else
         echo "commit-msg: no 'Ledger: <rows>' trailer; add one if this commit serves ledger rows (CLAUDE.md). Committed anyway." >&2
+    fi
 fi
 keywords='(refs|close[sd]?|fix(e[sd])?|resolve[sd]?)'
 rows=$(git interpret-trailers --parse "$msg" | sed -n 's/^Ledger: *//p' | tr -c '0-9\n' ' ')
