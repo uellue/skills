@@ -138,6 +138,22 @@ class TestVary(unittest.TestCase):  # item 50: varied scenarios, replayable from
                 self.assertEqual((folder / "fitpeaks.py").exists(), axes["project"] == "fitpeaks")
                 self.assertFalse(axes["project"] == "empty" and axes["request"] == "try it")
 
+    def test_a_newer_plugin_asks_for_a_review_of_the_evidence_first(self):  # item 53
+        import tempfile
+        v = self.vary
+        self.assertEqual(v.review_notice(v.REVIEWED["version"]), "")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            subprocess_run = __import__("subprocess").run
+            subprocess_run(["git", "init", "-q", str(root)], check=True)
+            (root / "design").mkdir()
+            (root / "design" / "kaizen.md").write_text(
+                f"- 2000-01-01, principal: old note\n- 2999-01-01, principal: a field test showed something new\n")
+            notice = v.review_notice("9.9.9", root)
+        self.assertIn(f"last checked against real use for {v.REVIEWED['version']}", notice)
+        self.assertIn("a field test showed something new", notice)
+        self.assertNotIn("old note", notice)
+
     def test_generated_scenarios_stay_out_of_git(self):
         import subprocess
         r = subprocess.run(["git", "-C", str(REPO), "check-ignore", "-q", "benchmarks/plugin-newcomer/scenarios/varied-3.md"])

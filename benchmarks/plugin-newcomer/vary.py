@@ -13,11 +13,46 @@ name of its own and becomes a fixed scenario. Then run it as any other: brief.py
 import argparse
 import json
 import random
+import re
 import shutil
+import subprocess
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SCENARIOS = HERE / "scenarios"
+REPO = HERE.parents[1]
+# The plugin version and date up to which the axes were checked against evidence from real use. Once per version,
+# before a varied run, review what came in since and move this on (principal 2026-11-19, item 53).
+REVIEWED = {"version": "0.6.1-dev.2", "date": "2026-11-19"}
+
+
+def evidence_since(date: str, root: Path = REPO) -> list[str]:
+    """What came in from real use after `date`: field-test records, ledger notes, feedback entries."""
+    found = []
+    log = subprocess.run(["git", "-C", str(root), "log", f"--since={date}T23:59:59", "--name-only", "--format=",
+                          "--", "design/field-tests"], capture_output=True, text=True).stdout.split()
+    found += [f"field test: {f}" for f in sorted(set(log))]
+    for name, pattern in (("design/kaizen.md", r"^- (\d{4}-\d{2}-\d{2}), "), ("design/feedback.md", r"^- (\d{4}-\d{2}-\d{2}) \| ")):
+        try:
+            text = (root / name).read_text()
+        except OSError:
+            continue
+        found += [f"{name}: {line[:100]}" for line in text.splitlines()
+                  if (m := re.match(pattern, line)) and m.group(1) > date]
+    return found
+
+
+def review_notice(installed: str, root: Path = REPO) -> str:
+    """Empty when the axes were reviewed for the installed version; otherwise what to look at first."""
+    if installed == REVIEWED["version"]:
+        return ""
+    new = evidence_since(REVIEWED["date"], root)
+    lines = [f"The axes were last checked against real use for {REVIEWED['version']} ({REVIEWED['date']}); "
+             f"the plugin is at {installed}. Before a varied run, look at what came in since, propose changes to "
+             f"the axes, then set REVIEWED in vary.py. Also the issue tracker since {REVIEWED['date']}."]
+    lines += [f"  {item}" for item in new] or ["  nothing new in the field tests, the ledger's notes or the feedback"]
+    return "\n".join(lines)
 
 AXES = {
     "project": ["tally", "fitpeaks", "empty"],
@@ -117,6 +152,10 @@ def main():
     ap.add_argument("--seed", type=int, required=True)
     ap.add_argument("--print", action="store_true", help="print the scenario, write nothing")
     a = ap.parse_args()
+    installed = json.loads((REPO / "plugins" / "kaizen" / ".claude-plugin" / "plugin.json").read_text())["version"]
+    notice = review_notice(installed)
+    if notice:
+        print(notice, file=sys.stderr)
     axes = draw(a.seed)
     if a.print:
         print(scenario(a.seed, axes))
