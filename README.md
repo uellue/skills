@@ -10,21 +10,29 @@ claude plugin install kaizen@uellue --scope user
 ```
 
 Or inside a session: `/plugin marketplace add uellue/skills`, then `/plugin install kaizen@uellue`.
-To follow updates, turn on auto-update for the `uellue` marketplace under `/plugin` → Marketplaces. After an update, the first kaizen skill you run in a project says once, when the project's records are from an older version, that `/kaizen:update` shows what changed and brings the project up to date on a branch, asking before each change.
+
+**Then, once in each project**, in a Claude Code session there: `/kaizen:update`. In a project that has never used the plugin, it rolls the plugin out: it finds what the project already has (its instruction file, design documents, issue tracker, test command, review habits), proposes the plugin's standing instructions as one section of the existing instruction file with the overlaps named, and fits its records beside the project's own; everything on a branch, asking before each change.
+
+**Keeping up to date.** Turn on auto-update for the `uellue` marketplace under `/plugin` → Marketplaces. After an update, the first kaizen skill you run in a project says once, when the project's records are from an older version, that `/kaizen:update` shows what changed and brings the project up to date. `/kaizen:sync` keeps the project and its upstream in step: it reads the issue tracker, routes the notes dropped during work, and lists what waits to go out. Both start only when you type them, by design: asking in words ("let's sync") does not start them, since they change your instructions or talk to your upstream.
+
+**Recommended companions.** The plugin works without them, but we would not want to work without them: Matt Pocock's `domain-modeling` keeps the project's glossary, and OpenSpec keeps its specifications. The playbook says when each helps. Install them as their own pages describe:
+- [Matt Pocock's skills](https://github.com/mattpocock/skills#readme) (MIT), for discovery, a glossary (`domain-modeling`) and specifications. Their Claude Code plugin installs all of them at once.
+- [OpenSpec](https://github.com/Fission-AI/OpenSpec#readme) (MIT), for specifications. It needs Node.js, and it collects anonymous usage statistics unless you turn them off (its page says how).
 
 ## First steps
 
-In a Claude Code session in your project:
+In a Claude Code session in your project, along the life of a piece of work:
 
 ```text
 /kaizen:playbook      which step of the work this is, and which skill fits now
+/kaizen:requirements  what is needed, and for whom: a short interview, written down as requirements
+/kaizen:walkthrough   how it would go for one of its users, step by step: the questions and examples nobody wrote down
 /kaizen:hallway-test  a tool that already works, before others use it: a fresh first user tries it
+/kaizen:field-test    you try it for real, on real data or a real machine, while the agent follows along
 /kaizen:debrief       after a stretch of work: how it went (it lists the sessions and asks before reading)
-/kaizen:update        after the plugin was updated: what changed, and the project brought up to date
-/kaizen:sync          the project and its upstream in step: tracker read, notes routed, what waits to go out
 ```
 
-`/kaizen:update` and `/kaizen:sync` start only when you type them: asking in words ("let's sync") does not start them, by design, since they change your instructions or talk to your upstream. Not sure where you are? Start with `/kaizen:playbook`; it offers two further skills, requirements and walk-through, when they fit. The words the skills use are explained in [Words you will see](plugins/kaizen/references/words.md).
+Not sure where you are? Start with `/kaizen:playbook`. The words the skills use are explained in [Words you will see](plugins/kaizen/references/words.md).
 
 ## Plugins
 
@@ -48,7 +56,7 @@ kaizen alone
        ─► decision record (design/changes/) ─► build
        ─► /kaizen:hallway-test ─► pull request ─► merge ─► /kaizen:debrief
 
-with OpenSpec and/or Matt Pocock's skills (each optional, never installed unasked)
+with OpenSpec and/or Matt Pocock's skills (both recommended, never installed unasked)
   idea ─► /mattpocock-skills:grill-me or /mattpocock-skills:grill-with-docs
           (discovery, when there is no idea yet)
        ─► /kaizen:requirements, /kaizen:walkthrough, design/examples.md (IDs)

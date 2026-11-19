@@ -473,6 +473,23 @@ class TestProjectNotice(unittest.TestCase):
         (self.project / "CLAUDE.md").write_text(f"Kaizen standing instructions, version {self.installed}: x\n" + self.OLD_BLOCK)
         self.assertEqual(self.start(), "")
 
+    def test_project_report_names_a_first_rollout_where_the_plugin_was_never_used(self):  # E51, issue 13
+        env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+
+        def report():
+            return subprocess.run([sys.executable, SCRIPTS / "version.py", "--project"], cwd=self.project,
+                                  capture_output=True, text=True, env=env).stdout
+
+        (self.project / "CLAUDE.md").write_text("# tally\n\nTests: `python3 -m pytest`.\n")
+        self.assertIn("first rollout", report())
+        self.assertEqual(self.start(), "")  # the skills' start-up line stays silent: nothing to update
+        (self.project / "CLAUDE.md").write_text(f"Kaizen standing instructions, version {self.installed}: x\n" + self.OLD_BLOCK)
+        self.assertIn("nothing older found", report())
+        (self.project / "CLAUDE.md").write_text("# tally\n")
+        (self.project / "design").mkdir()
+        (self.project / "design" / "kaizen.md").write_text("# Kaizen ledger\n\nPublic: no\nMessage size: comfortable\n")
+        self.assertNotIn("first rollout", report())  # a ledger means the plugin was used here
+
     def test_the_update_skill_itself_does_not_point_at_itself(self):
         (self.project / "CLAUDE.md").write_text(self.OLD_BLOCK)
         update = SCRIPTS.parent / "skills" / "update" / "SKILL.md"

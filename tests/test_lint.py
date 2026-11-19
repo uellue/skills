@@ -108,6 +108,18 @@ class TestReferences(unittest.TestCase):
         readme_block = block(readme[readme.index("### What you paste for the agent"):])
         self.assertEqual(block(ref), readme_block, "references/standing-instructions.md and the README block differ")
 
+    def test_readme_first_steps_name_every_skill(self):  # E50, issue 13: requirements and walkthrough were missing
+        readme = (REPO / "README.md").read_text()
+        install = readme[readme.index("## Install"):readme.index("## First steps")]
+        first = readme[readme.index("## First steps"):readme.index("## Plugins")]
+        for skill in SKILLS:
+            name = skill.parent.name
+            where = install if name in ("update", "sync") else first
+            self.assertIn(f"/kaizen:{name}", where, f"/kaizen:{name} missing from the README's "
+                          + ("install section" if where is install else "first steps"))
+        for companion in ("https://github.com/mattpocock/skills", "https://github.com/Fission-AI/OpenSpec"):
+            self.assertIn(companion, install, f"the link to {companion} missing from the README's install section")
+
     def files(self):
         return [*SKILLS, *sorted((PLUGIN / "references").glob("*"))]
 

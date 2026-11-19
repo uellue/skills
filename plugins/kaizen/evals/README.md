@@ -34,6 +34,10 @@ The commands below show each suite's arguments; give them to `run.py` without th
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-update; mkdir -p "$out"
     PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'update-*' --scaffold --allow-tools Bash --runs 1 --ablation none --no-publish -j 2 --max-cost-usd 2 --output-dir "$out" 2>&1 | tee "$out/run.log"
 
+    # the first rollout (first-rollout/, E51): the update in a project that never used the plugin; its own fixture, so its own folder
+    out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-first-rollout; mkdir -p "$out"
+    PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'update-first-rollout' --scaffold --allow-tools Bash Write Edit --runs 1 --ablation none --no-publish --judge-model sonnet --max-cost-usd 2 --output-dir "$out" 2>&1 | tee "$out/run.log"
+
     # the sync reproducer (sync/): Bash for git, Write and Edit to see whether drafts are written; a sonnet judge
     out=plugins/kaizen/evals/results/$(date +%Y%m%d-%H%M%S)-sync; mkdir -p "$out"
     PATH="/usr/bin:$PATH" claude plugin eval plugins/kaizen --case 'sync-*' --scaffold --allow-tools Bash Write Edit --ablation none --no-publish --max-cost-usd 1 --judge-model sonnet --output-dir "$out" 2>&1 | tee "$out/run.log"

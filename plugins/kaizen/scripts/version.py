@@ -6,7 +6,8 @@
                           text, and a short status line in the maintainer's checkout
     version.py SKILL      the full line: plugin version, commit in a checkout, the skill's text id
     version.py --stamp    write the current text id into every SKILL.md (maintainer's checkout only)
-    version.py --project  which version the project's records belong to, against the installed plugin
+    version.py --project  which version the project's records belong to, against the installed plugin,
+                          or "first rollout" where it has none
 
 With SKILL and ID it also looks at the project it runs in (the git top level of the working directory): when
 the project's records belong to an older version of the plugin than the installed one, it prints one line
@@ -108,6 +109,17 @@ def project_records(root: Path, installed: str) -> list[str]:
     return older
 
 
+def never_used(root: Path) -> bool:
+    """No standing-instruction block in any instruction file and no ledger: the plugin's first rollout (E51)."""
+    for name in ("CLAUDE.md", "AGENTS.md", ".claude/CLAUDE.md", "CLAUDE.local.md"):
+        f = root / name
+        if f.is_file():
+            text = f.read_text(errors="replace")
+            if MARKER.search(text) or BLOCK_START in text:
+                return False
+    return not (root / "design" / "kaizen.md").is_file()
+
+
 def noticed_file(root: Path) -> Path | None:
     """Where this clone (each worktree has its own) remembers the version it was told about; None outside git."""
     gitdir = subprocess.run(["git", "-C", str(root), "rev-parse", "--absolute-git-dir"], capture_output=True, text=True)
@@ -184,7 +196,10 @@ def main():
     if sys.argv[1] == "--project":
         root = project_root()
         older = project_records(root, version)
-        print(f"kaizen {version} installed; project {root}: " + ("; ".join(older) if older else "nothing older found"))
+        state = ("; ".join(older) if older
+                 else "no standing instructions and no ledger yet: first rollout" if never_used(root)
+                 else "nothing older found")
+        print(f"kaizen {version} installed; project {root}: {state}")
         return
     p = PLUGIN / "skills" / sys.argv[1].removeprefix("kaizen:") / "SKILL.md"
     if not p.is_file():
