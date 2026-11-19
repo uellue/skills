@@ -111,5 +111,20 @@ class TestTrackedSync(unittest.TestCase):
         self.assertIn("Invented for this scenario", (self.SYNC / "SOURCE.md").read_text())
 
 
+class TestBrief(unittest.TestCase):
+    def test_the_newcomer_gets_an_empty_home(self):  # ledger 315 f: every run saw the host's ~/.claude/CLAUDE.md
+        import subprocess
+        import sys
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            scratch = Path(tmp) / "run"
+            r = subprocess.run([sys.executable, str(BENCH / "brief.py"), "existing-tool", "--scratch", str(scratch)],
+                               capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertTrue((scratch / "home").is_dir())
+            self.assertEqual(list((scratch / "home").iterdir()), [])
+            self.assertIn(f"HOME={scratch}/home", r.stdout)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -468,6 +468,12 @@ class TestProjectNotice(unittest.TestCase):
         self.assertIn("AGENTS.md: standing instructions from 0.5.9", out)
         self.assertIn("design/kaizen.md: no Public: line", out)
 
+    def test_a_ledger_without_a_message_size_line_is_not_older(self):  # ledger 302 e, 315 d: only the debrief writes it
+        (self.project / "CLAUDE.md").write_text(f"Kaizen standing instructions, version {self.installed}: x\n" + self.OLD_BLOCK)
+        (self.project / "design").mkdir()
+        (self.project / "design" / "kaizen.md").write_text("# Kaizen ledger\n\nPublic: no, asked 2026-11-19.\n")
+        self.assertEqual(self.start(), "")
+
     def test_silent_when_current_or_when_the_project_never_used_the_plugin(self):
         self.assertEqual(self.start(), "")
         (self.project / "CLAUDE.md").write_text(f"Kaizen standing instructions, version {self.installed}: x\n" + self.OLD_BLOCK)

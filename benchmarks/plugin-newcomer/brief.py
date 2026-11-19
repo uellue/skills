@@ -38,6 +38,7 @@ def main():
     if scratch.exists() and (not scratch.is_dir() or any(scratch.iterdir())):
         sys.exit(f"{scratch} exists and is not an empty directory")
     scratch.mkdir(parents=True, exist_ok=True)
+    (scratch / "home").mkdir()  # the newcomer's empty home: the host's ~/.claude/CLAUDE.md is the maintainer's (ledger 315 f)
     copy = scratch / "kaizen"
     shutil.copytree(REPO / "plugins" / "kaizen", copy / "plugins" / "kaizen", ignore=shutil.ignore_patterns("__pycache__"))
     shutil.copy2(REPO / "README.md", copy / "README.md")

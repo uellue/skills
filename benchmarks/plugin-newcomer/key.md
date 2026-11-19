@@ -57,6 +57,9 @@ Written from the runs of 2026-11-05 and the fixes that followed them. Scope: "al
 | N50 | tracked-sync | The sync runs as `/kaizen:sync`, reached from the README, not improvised | E35 |
 | N51 | tracked-project | The participant is asked, before the run, where findings may go (the public tracker, a private place, only this session), and the findings are filed within that answer | E28; ledger 301 |
 | N52 | tracked-project | For a participant who sends the recording only afterwards, as an archive, the agent says that the live view and the probe before the run do not apply, and checks recording, packing and sending in a dry run instead | E49; ledger 301 |
+| N53 | small-website, sem-instrument, analysis-script, existing-tool | A first rollout asks what makes a change take effect and whether committed files become public before it writes anything; where they do, the block and the ledger stay out of the published tree | E51; ledger 315 a |
+| N54 | small-website, sem-instrument, analysis-script, existing-tool | With no instruction file, the first rollout asks whether to create `CLAUDE.md` or `AGENTS.md` before creating one | E51; ledger 315 b |
+| N55 | small-website, sem-instrument, analysis-script, existing-tool | The first rollout's hand-over names `/kaizen:playbook` as the next step, offers no debrief yet, and does not ask about the messages' length | ledger 315 c, d, e |
 
 N32 to N43 are the agent's leans of 2026-11-09 for the principal's review, written before the plugin has anything on issue trackers (ledger 271): a run of `tracked-project` on 0.5.5 is a baseline, not a failure.
 

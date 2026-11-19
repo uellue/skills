@@ -34,4 +34,4 @@ What `/kaizen:update` brings into a project, newest first: what a project adopts
 
 ## Before 0.5.5
 
-Projects from these versions have the standing instructions without a version line, and so do projects from 0.5.5: a block without one takes the sections of 0.5.5 and 0.6.0, and the comparison line by line covers its wording. Records were the same as in 0.5.5 except for what that section lists.
+Projects from these versions have the standing instructions without a version line, and so do projects from 0.5.5: a block without one takes every section from 0.5.5 on, and the comparison line by line covers its wording. Records were the same as in 0.5.5 except for what that section lists.

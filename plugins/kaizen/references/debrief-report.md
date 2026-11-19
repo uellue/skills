@@ -32,7 +32,7 @@ Coverage: <sessions read, how; compaction noted; what the renderer or readers co
 
 ## Coaching for <the person>
 Keep doing: <the moves that helped, as a list in one line>.
-1. **<habit>.** <evidence> and <what to do instead>, one or two sentences.
+- **<n>** **<habit>.** <evidence> and <what to do instead>, one or two sentences; <n> continues the numbering of the chat, never a markdown list.
 
 ## Models and effort
 <one paragraph: proportionate or not, and the numbers that say so>
