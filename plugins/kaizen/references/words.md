@@ -8,6 +8,7 @@ The kaizen skills use a few words of their own. When an agent uses one with you 
 - **Inbox**: the ledger's notes section ("Notes for the next debrief") in its other role: ideas you drop during work wait there until `/kaizen:sync` or the debrief routes each to its place (an issue, a comment, a ledger row, or the bin) and leaves only the link.
 - **Sync**: `/kaizen:sync`, bringing the project and its upstream (the remote repository and the issue tracker) in step in both directions; you type it yourself.
 - **Standing instructions**: the short block of rules for the agent that a project copies into its `CLAUDE.md` or `AGENTS.md`; its first line names the plugin version it is from, so that `/kaizen:update` can show what changed since.
+- **First rollout**: bringing the plugin into a project that has never used it: `/kaizen:update` fits it to the project's own instruction file, records and habits, and duplicates nothing.
 - **Persona**: a described user (who they are, what they want, what they know), whose shoes a walk-through or a hallway test steps into.
 - **Stakeholder**: anyone with a stake in the tool: its users, whoever maintains it, whoever owns what it touches, whoever reads what it produces.
 - **Stakeholder record**: the file listing the personas (`design/stakeholders.md`), and whether each was described by the people it describes or imagined.

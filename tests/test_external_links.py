@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from external_links import MANIFEST, last_release, report
+from external_links import MANIFEST, answers, last_release, report
 
 
 class TestExternalLinks(unittest.TestCase):
@@ -58,6 +58,20 @@ class TestExternalLinks(unittest.TestCase):
         self.assertIn("claims checked before the last release: 1 of 2", text)
         self.assertIn("2026-11-05  README.md:2", text)
         self.assertNotIn("2026-11-15  plugins", text)
+
+    def test_punctuation_placeholders_and_bad_urls(self):  # review L3, L4 of pull request 14
+        (self.root / "README.md").write_text(
+            "See https://example.org/a, then https://github.com/<owner>/<repo> and https://example.org:port/x.\n"
+            "Docs: code.claude.com/docs/en/plugins/loading.md (checked on 2026-11-01).\n")
+        self.release("0.6.0", "2026-11-12")
+        # the real fetch only for the bad port, which fails before any connection; no network in tests
+        lines, broken = report(self.root, fetch=lambda u: answers(u) if ":port" in u else "ok")
+        text = "\n".join(lines)
+        self.assertIn("https://example.org/a  (", text)
+        self.assertNotIn("<owner", text)
+        self.assertIn("invalid", text)
+        self.assertIn("https://code.claude.com/docs/en/plugins/loading.md", text)
+        self.assertIn("2026-11-01  README.md:2", text)
 
     def test_offline_fetches_nothing(self):
         (self.root / "README.md").write_text("https://example.org/x\n")

@@ -12,6 +12,7 @@ so it is not part of check.sh. The last release is the last commit that set a ve
 in the plugin's plugin.json.
 """
 
+import http.client
 import json
 import re
 import subprocess
@@ -24,8 +25,8 @@ REPO = Path(__file__).resolve().parents[1]
 MANIFEST = "plugins/kaizen/.claude-plugin/plugin.json"
 FILES = ["README.md", "CLAUDE.md", "CODING_STANDARDS.md", "GLOSSARY.md"]
 GLOBS = ["plugins/kaizen/skills/*/SKILL.md", "plugins/kaizen/references/*.md", "plugins/kaizen/evals/README.md"]
-LINK = re.compile(r"https?://[^\s)\]>`'\"]+|(?<![\w/.])(?:github\.com|gitlab\.com|skills\.sh)/[^\s)\]>`'\",;]+")
-CHECKED = re.compile(r"\bchecked (\d{4}-\d{2}-\d{2})\b")
+LINK = re.compile(r"https?://[^\s)\]<>`'\"]+|(?<![\w/.])(?:github\.com|gitlab\.com|skills\.sh|code\.claude\.com)/[^\s)\]<>`'\"]+")
+CHECKED = re.compile(r"\bchecked(?: on|:)? (\d{4}-\d{2}-\d{2})\b")
 
 
 def sources(root: Path) -> list[Path]:
@@ -41,7 +42,9 @@ def scan(path: Path, root: Path):
     for n, line in enumerate(path.read_text(errors="replace").splitlines(), 1):
         where = f"{path.relative_to(root)}:{n}"
         for m in LINK.finditer(line):
-            url = m.group(0).rstrip(".:")
+            url = m.group(0).rstrip(".:,;")
+            if line[m.end():m.end() + 1] == "<":
+                continue  # a placeholder such as https://github.com/<owner>/<repo>, not a link
             links.append((url if url.startswith("http") else "https://" + url, where))
         for m in CHECKED.finditer(line):
             claims.append((m.group(1), where, line.strip()))
@@ -62,14 +65,16 @@ def last_release(root: Path) -> str | None:
 
 def answers(url: str, timeout: float = 15) -> str:
     """'ok' or the reason it does not answer; a generic client name, no personal details."""
-    req = urllib.request.Request(url, method="GET", headers={"User-Agent": "link-check"})
     try:
+        req = urllib.request.Request(url, method="GET", headers={"User-Agent": "link-check"})
         with urllib.request.urlopen(req, timeout=timeout) as r:
             return "ok" if r.status < 400 else f"HTTP {r.status}"
     except urllib.error.HTTPError as e:
         return f"HTTP {e.code}"
     except (urllib.error.URLError, TimeoutError, OSError) as e:
         return f"no answer ({getattr(e, 'reason', e)})"
+    except (http.client.HTTPException, ValueError) as e:  # InvalidURL, e.g. a port that is not a number
+        return f"invalid ({e})"
 
 
 def report(root: Path, fetch=answers, offline=False) -> tuple[list[str], int]:
@@ -80,7 +85,8 @@ def report(root: Path, fetch=answers, offline=False) -> tuple[list[str], int]:
             links.setdefault(url, []).append(where)
         claims += c
     release = last_release(root)
-    out, broken = [f"last release: {release or 'none found'}", f"external links: {len(links)}"], 0
+    found = release or "none found (in a shallow clone, fetch the history first), so no claim is listed as old"
+    out, broken = [f"last release: {found}", f"external links: {len(links)}"], 0
     for url, wheres in sorted(links.items()):
         state = "not fetched" if offline else fetch(url)
         broken += state not in ("ok", "not fetched")

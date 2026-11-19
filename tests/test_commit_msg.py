@@ -68,7 +68,20 @@ class TestCommitMsg(unittest.TestCase):
         self.assertEqual(r.returncode, 0)
         self.assertNotIn("add 'Refs #13'", r.stderr)
         self.assertIn("'Closes #13' closes the issue", r.stderr)
-        self.assertIn("only after the manager confirmed", r.stderr)
+        self.assertIn("only after the person confirmed", r.stderr)
+
+    def test_only_issues_count_and_any_closing_keyword_references(self):  # review L1, L2 of pull request 14
+        self.ledger("| 320 | Discussed in pull request #14 and run #3 | x | small | done |\n"
+                    "| 321 | From issue 13 | x | small | done |\n")
+        r = self.commit("plugins/a/SKILL.md", "A\n\nLedger: 320")
+        self.assertEqual(r.stderr, "")
+        r = self.commit("plugins/b/SKILL.md", "B\n\nFixed #13\n\nLedger: 321")
+        self.assertNotIn("add 'Refs #13'", r.stderr)
+        self.assertIn("'Fixed #13' closes the issue", r.stderr)
+        r = self.commit("plugins/c/SKILL.md", "C, which closes #13.\n\nLedger: 321")
+        self.assertIn("'closes #13' closes the issue", r.stderr)
+        r = self.commit("plugins/d/SKILL.md", "D\n\nLedger: 321\n# Refs #13")
+        self.assertIn("add 'Refs #13'", r.stderr)  # a comment line does not count
 
     def test_other_files_need_no_trailer(self):
         r = self.commit("tests/test_x.py", "A test")

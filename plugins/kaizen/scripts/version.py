@@ -87,14 +87,43 @@ def project_root() -> Path:
     return Path(r.stdout.strip()) if r.returncode == 0 and r.stdout.strip() else Path.cwd()
 
 
+INSTRUCTION_FILES = ("CLAUDE.md", "AGENTS.md", ".claude/CLAUDE.md", "CLAUDE.local.md")
+IMPORT = re.compile(r"(?:^|\s)@([\w./-]+\.md)\b", re.M)  # "@docs/agents.md" in an instruction file
+
+
+def instruction_texts(root: Path) -> list[tuple[str, str]]:
+    """(name, text) of the project's instruction files and the files inside the project they import (review M2)."""
+    found, queue, seen = [], [root / n for n in INSTRUCTION_FILES], set()
+    while queue:
+        f = queue.pop(0)
+        try:
+            f = f.resolve()
+            name = str(f.relative_to(root.resolve()))
+        except (OSError, ValueError):
+            continue  # outside the project, or unreadable
+        if name in seen or not f.is_file():
+            continue
+        seen.add(name)
+        text = f.read_text(errors="replace")
+        found.append((name, text))
+        queue += [f.parent / m for m in IMPORT.findall(text)]
+    return found
+
+
+def personal_copy() -> bool:
+    """Whether the person's own ~/.claude/CLAUDE.md carries the block."""
+    f = Path.home() / ".claude" / "CLAUDE.md"
+    try:
+        text = f.read_text(errors="replace")
+    except OSError:
+        return False
+    return bool(MARKER.search(text)) or BLOCK_START in text
+
+
 def project_records(root: Path, installed: str) -> list[str]:
     """What in the project belongs to an older version of the plugin; empty when nothing does."""
     older = []
-    for name in ("CLAUDE.md", "AGENTS.md", ".claude/CLAUDE.md", "CLAUDE.local.md"):
-        f = root / name
-        if not f.is_file():
-            continue
-        text = f.read_text(errors="replace")
+    for name, text in instruction_texts(root):
         m = MARKER.search(text)
         if m and version_key(m.group(1)) < version_key(installed):
             older.append(f"{name}: standing instructions from {m.group(1)}")
@@ -111,12 +140,8 @@ def project_records(root: Path, installed: str) -> list[str]:
 
 def never_used(root: Path) -> bool:
     """No standing-instruction block in any instruction file and no ledger: the plugin's first rollout (E51)."""
-    for name in ("CLAUDE.md", "AGENTS.md", ".claude/CLAUDE.md", "CLAUDE.local.md"):
-        f = root / name
-        if f.is_file():
-            text = f.read_text(errors="replace")
-            if MARKER.search(text) or BLOCK_START in text:
-                return False
+    if any(MARKER.search(text) or BLOCK_START in text for _, text in instruction_texts(root)):
+        return False
     return not (root / "design" / "kaizen.md").is_file()
 
 
@@ -197,7 +222,8 @@ def main():
         root = project_root()
         older = project_records(root, version)
         state = ("; ".join(older) if older
-                 else "no standing instructions and no ledger yet: first rollout" if never_used(root)
+                 else "no standing instructions and no ledger yet: first rollout"
+                 + ("; a copy in your ~/.claude/CLAUDE.md" if personal_copy() else "") if never_used(root)
                  else "nothing older found")
         print(f"kaizen {version} installed; project {root}: {state}")
         return

@@ -1,4 +1,4 @@
 schema_version: "1.1"
-name: update-first-rollout
+name: first-rollout-existing-project
 context:
   scaffold_script: fixture.sh

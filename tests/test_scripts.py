@@ -490,6 +490,29 @@ class TestProjectNotice(unittest.TestCase):
         (self.project / "design" / "kaizen.md").write_text("# Kaizen ledger\n\nPublic: no\nMessage size: comfortable\n")
         self.assertNotIn("first rollout", report())  # a ledger means the plugin was used here
 
+    def test_a_block_in_an_imported_file_or_the_personal_copy_is_seen(self):  # review M2 of pull request 14
+        home = Path(self.tmp.name) / "home"
+        (home / ".claude").mkdir(parents=True)
+        env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")} | {"HOME": str(home)}
+
+        def report():
+            return subprocess.run([sys.executable, SCRIPTS / "version.py", "--project"], cwd=self.project,
+                                  capture_output=True, text=True, env=env).stdout
+
+        block = f"Kaizen standing instructions, version {self.installed}: x\n" + self.OLD_BLOCK
+        (self.project / "CLAUDE.md").write_text("# tally\n\n@docs/agents.md\n")
+        (self.project / "docs").mkdir()
+        (self.project / "docs" / "agents.md").write_text(block)
+        self.assertIn("nothing older found", report())
+        (self.project / "docs" / "agents.md").write_text("Kaizen standing instructions, version 0.5.9: x\n" + self.OLD_BLOCK)
+        self.assertIn("docs/agents.md: standing instructions from 0.5.9", report())
+        (self.project / "docs" / "agents.md").write_text("# rules\n")
+        out = report()
+        self.assertIn("first rollout", out)
+        self.assertNotIn("~/.claude/CLAUDE.md", out)
+        (home / ".claude" / "CLAUDE.md").write_text(block)
+        self.assertIn("first rollout; a copy in your ~/.claude/CLAUDE.md", report())
+
     def test_the_update_skill_itself_does_not_point_at_itself(self):
         (self.project / "CLAUDE.md").write_text(self.OLD_BLOCK)
         update = SCRIPTS.parent / "skills" / "update" / "SKILL.md"

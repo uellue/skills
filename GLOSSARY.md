@@ -220,6 +220,10 @@ _Avoid_: version, hash
 The block of rules for the agent that a project copies into its `CLAUDE.md` or `AGENTS.md`, merged with its own rules; its first line is the version line.
 _Avoid_: working rules (a project's own heading for it), the paste block
 
+**First rollout**:
+Bringing the plugin into a project that has never used it, by `/kaizen:update`: fitted to the project's own instruction file, records, tracker and test command, nothing duplicated or moved.
+_Avoid_: install (that is the plugin on the person's machine), init, setup
+
 **Version line**:
 The first line of the standing instructions, naming the plugin version they are from; the record of which version a project last applied.
 _Avoid_: version stamp, header
