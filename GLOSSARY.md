@@ -1,6 +1,6 @@
 # kaizen
 
-The vocabulary of the kaizen plugin and of its development in this repository, where the plugin is also used on itself. The skills and the README speak to their users in these words. A term from another tool carries its namespace ("OpenSpec scenario", "Matt Pocock's `retro`") wherever the local meaning would be read otherwise. The plugin explains the words its users meet in `plugins/kaizen/references/words.md`, in plain words; that list must agree with this file.
+The vocabulary of the kaizen plugin and of its development in this repository, where the plugin is also used on itself. The skills and the README speak to their users in these words. A term from another tool carries its namespace ("OpenSpec scenario", "Matt Pocock's `retro`") wherever the local meaning would be read otherwise. The plugin explains the words its users meet in `plugins/kaizen/references/words.md`, in plain words; every term there is defined here (`tests/test_lint.py` checks it).
 
 ## Language
 
@@ -31,6 +31,10 @@ The person who may authorise work on a real thing and who sets its limits.
 _Avoid_: admin, responsible
 
 ### Records
+
+**Stakeholder record**:
+The project's file of personas, `design/stakeholders.md`, each marked as described by the people it describes or imagined.
+_Avoid_: user list, persona file
 
 **Ledger**:
 The project's committed list of proposals with their decisions, skill friction and notes for the next debrief.
@@ -161,6 +165,22 @@ _Avoid_: behaviour test (unqualified)
 **Independent review**:
 A review by an agent that wrote none of the change, briefed with the diff and the record, ending in a verdict.
 _Avoid_: code review (unqualified), second opinion
+
+**Hand-over**:
+The moment work passes to someone else: a merge request, a release, a tool given to colleagues; the skills plan the hallway test and the debrief around it.
+_Avoid_: delivery, drop
+
+**Output tokens**:
+The unit in which an agent's work is counted against a plan or budget; the skills state cost in minutes first, output tokens in brackets.
+_Avoid_: tokens (unqualified, since input tokens are counted differently)
+
+**Two hats**:
+Asking a question once as the person who needs the tool and once as the one who builds it (requirements and walk-through interviews).
+_Avoid_: role play
+
+**Five whys**:
+Asking "why" past the first answer until a process cause or a principle is reached, or the answer leaves the project's control (debrief).
+_Avoid_: root cause analysis (unqualified)
 
 **Walk-through**:
 A step-by-step pass through a process in a persona's shoes, imagined or against the running system, that yields questions and acceptance examples.

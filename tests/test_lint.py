@@ -108,6 +108,18 @@ class TestReferences(unittest.TestCase):
         readme_block = block(readme[readme.index("### What you paste for the agent"):])
         self.assertEqual(block(ref), readme_block, "references/standing-instructions.md and the README block differ")
 
+    def test_every_word_users_see_is_a_glossary_term(self):
+        # words.md explains terms to users in plain words; GLOSSARY.md defines them for the maintainer. The glossary
+        # said "that list must agree with this file" with nothing behind it; four terms had drifted (2026-11-19).
+        import sys
+        sys.path.insert(0, str(REPO / "tests"))
+        from avoid_words import glossary
+        terms, _ = glossary((REPO / "GLOSSARY.md").read_text())
+        words = (PLUGIN / "references" / "words.md").read_text()
+        for entry in re.findall(r"^- \*\*([^*]+)\*\*", words, re.M):
+            for term in entry.split(", "):
+                self.assertIn(term.lower(), terms, f"words.md explains '{term}', which GLOSSARY.md does not define")
+
     def test_readme_first_steps_name_every_skill(self):  # E50, issue 13: requirements and walkthrough were missing
         readme = (REPO / "README.md").read_text()
         install = readme[readme.index("## Install"):readme.index("## First steps")]
