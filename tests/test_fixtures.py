@@ -154,6 +154,16 @@ class TestVary(unittest.TestCase):  # item 50: varied scenarios, replayable from
         self.assertIn("a field test showed something new", notice)
         self.assertNotIn("old note", notice)
 
+    def test_what_the_project_shows_is_not_held_back(self):  # the varied runs of 2026-11-19: DEPLOY.md vs "never volunteer"
+        v = self.vary
+        for seed in range(40):
+            axes = v.draw(seed)
+            text = v.scenario(seed, axes)
+            never = text.split("Never volunteer:", 1)[1].split("\n", 1)[0]
+            if axes["publishing"] == "deploys on push":
+                self.assertIn("`DEPLOY.md` says", text.split("Never volunteer:")[0])
+                self.assertNotIn("publishes", never)
+
     def test_generated_scenarios_stay_out_of_git(self):
         import subprocess
         r = subprocess.run(["git", "-C", str(REPO), "check-ignore", "-q", "benchmarks/plugin-newcomer/scenarios/varied-3.md"])
