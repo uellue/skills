@@ -112,6 +112,12 @@ class TestReferences(unittest.TestCase):
         readme_block = block(readme[readme.index("### What you paste for the agent"):])
         self.assertEqual(block(ref), readme_block, "references/standing-instructions.md and the README block differ")
 
+    def test_the_tester_brief_carries_what_the_skill_requires(self):  # ledger 316 b: a tester added it by hand
+        skill = (PLUGIN / "skills" / "hallway-test" / "SKILL.md").read_text()
+        brief = (PLUGIN / "references" / "tester-brief.md").read_text()
+        self.assertIn("tests its own invention", skill)
+        self.assertIn("you test your own invention", brief)
+
     def test_every_word_users_see_is_a_glossary_term(self):
         # words.md explains terms to users in plain words; GLOSSARY.md defines them for the maintainer. The glossary
         # said "that list must agree with this file" with nothing behind it; four terms had drifted (2026-11-19).
