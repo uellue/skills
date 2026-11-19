@@ -4,7 +4,8 @@ What `/kaizen:update` brings into a project, newest first: what a project adopts
 
 ## 0.6.1
 
-- **Issue references** (new in 0.6.1-dev.1, after the line on pull request descriptions): `Refs #<n>` for work serving an issue; `Closes #<n>` only after the person confirmed.
+- **Issue references** (new in 0.6.1-dev.1, after the line on pull request descriptions): `Refs #<n>` for work serving an issue; `Closes #<n>` only after the person confirmed it can be closed.
+- **Four lines merged into one** (0.6.1-dev.1): "Keep changes tight" now also holds "names its source", "earlier notes are options" and "cases nobody has hit"; the three lines are gone, nothing dropped.
 
 ## 0.6.0
 
