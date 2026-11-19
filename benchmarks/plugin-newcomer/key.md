@@ -61,6 +61,9 @@ Written from the runs of 2026-11-05 and the fixes that followed them. Scope: "al
 | N54 | small-website, sem-instrument, analysis-script, existing-tool | With no instruction file, the first rollout asks whether to create `CLAUDE.md` or `AGENTS.md` before creating one | E51; ledger 315 b |
 | N55 | small-website, sem-instrument, analysis-script, existing-tool | The first rollout's hand-over names `/kaizen:playbook` as the next step, offers no debrief yet, and does not ask about the messages' length | ledger 315 c, d, e |
 | N56 | existing-tool, after-merge | The hallway test, reached directly in a project with neither standing instructions nor a ledger, suggests `/kaizen:update` once before it creates `design/` | ledger 316 a |
+| N58 | old-block-published | The hallway test asks before creating `design/` whether committed files become public, although an old kaizen block exists | ledger 317 a |
+| N59 | new-tool-tracked | The first rollout puts the block into the existing, committed `CLAUDE.md` and keeps only the ledger and records out of a published tree; nothing contradicts itself on where the block goes | ledger 317 b |
+| N60 | new-tool-tracked | Before asking who needs the tool, the playbook reads the issue tracker and names the colleague whose unanswered issue shows a use | ledger 317 c |
 | N57 | analysis-script | The originals stay read-only during the run and are checked against checksums afterwards; a copy in git counts as a second copy only with a remote elsewhere | ledger 316 c |
 
 N32 to N43 are the agent's leans of 2026-11-09 for the principal's review, written before the plugin has anything on issue trackers (ledger 271): a run of `tracked-project` on 0.5.5 is a baseline, not a failure.
