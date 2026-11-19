@@ -19,6 +19,9 @@ SKILLS = sorted(PLUGIN.glob("skills/*/SKILL.md"))
 DESCRIPTION_MAX_CHARS = 800
 BODY_MAX_WORDS = 2500
 REFERENCE_MAX_WORDS = 1000  # a reference a skill names loads on demand; the questionnaire (962) is the largest
+# The changelog grows with every release and only /kaizen:update reads it (principal 2026-11-19); split it per minor
+# version when it outgrows this.
+REFERENCE_BUDGETS = {"changelog.md": 1500}
 
 # Strings that once meant something and now contradict the skills.
 STALE = {
@@ -72,7 +75,8 @@ class TestSkills(unittest.TestCase):
     def test_reference_budget(self):
         for p in sorted(PLUGIN.glob("references/*.md")):
             with self.subTest(p.name):
-                self.assertLessEqual(len(p.read_text().split()), REFERENCE_MAX_WORDS, "reference over budget")
+                budget = REFERENCE_BUDGETS.get(p.name, REFERENCE_MAX_WORDS)
+                self.assertLessEqual(len(p.read_text().split()), budget, "reference over budget")
 
     def test_text_ids_current(self):  # E16
         import importlib.util

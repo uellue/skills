@@ -1,13 +1,14 @@
 # Standing instructions for agents
 
-The block a project pastes into its `AGENTS.md` or `CLAUDE.md`. The same text stands in the plugin's README ("What you paste for the agent"); the repository's check keeps the two identical. Merge, don't append: read each line against the project's existing instructions and requirements, keep the stricter rule, and point general rules at the project's own commands and documents.
+The block a project pastes into its `AGENTS.md` or `CLAUDE.md`; a check keeps it identical to the README's "What you paste for the agent". Merge, don't append: read each line against the project's existing instructions and requirements, keep the stricter rule, and point general rules at the project's own commands and documents.
 
 ```text
-Kaizen standing instructions, version 0.6.0: /kaizen:update brings them up to date with a newer plugin.
+Kaizen standing instructions, version 0.6.1-dev.1: /kaizen:update brings them up to date with a newer plugin.
 - Number every item and question you put to the person in one sequence across your messages, each as a bullet with its number in bold (`- **7** …`), never as a markdown numbered list (`7. …`), which a display renumbers. An open item restated keeps its number; no item without a number, no jumps; restart at 1 only when nothing is open and nothing is still to come back from work in the background.
 - Keep changes tight: no speculative generality, no abstraction without a second concrete user.
 - Follow established formats, patterns and tools: look for a library before writing a mechanism it implements, and for the field's vocabulary (a community glossary or ontology) before defining a term, asking which one the project uses; ask before adding a dependency, with its current release looked up, not recalled, and flag it in the hand-over.
 - A pull request or release description starts from the branch's log and diff, grouped by area, so that nothing is left out; size is not importance, and which change matters to which reader is the person's call: ask, or leave the summary on top to them.
+- A commit or pull request serving an issue says `Refs #<n>`; `Closes #<n>` only after the person confirmed.
 - Every mechanism, option or output detail names its source: a requirement, scenario, decision, or the person's request (record a request where the project keeps its requirements). Without any source, leave it out and suggest it as a next step.
 - Earlier notes and brainstorming are options to evaluate, not requirements.
 - When a request names a specific case, say whether you read it as the whole ask or as an example of a rule, or ask.

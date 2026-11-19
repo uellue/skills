@@ -48,6 +48,28 @@ class TestCommitMsg(unittest.TestCase):
             r = self.commit(f"design/{i}.md", message)
             self.assertIn("no 'Ledger: <rows>' trailer", r.stderr, message)
 
+    def ledger(self, text):
+        (self.repo / "design").mkdir(exist_ok=True)
+        (self.repo / "design" / "kaizen.md").write_text(text)
+
+    def test_a_row_that_cites_an_issue_wants_a_reference(self):  # ledger 312: f326b60 served issue 13 without one
+        self.ledger("| 310 | Onboarding (issue 13, S8) | README | small | built |\n| 311 | Links | tests | small | built |\n")
+        r = self.commit("plugins/x/SKILL.md", "Onboarding of first-time users (issue 13)\n\nLedger: 310")
+        self.assertEqual(r.returncode, 0)
+        self.assertIn("ledger row 310 cites issue 13; add 'Refs #13'", r.stderr)
+        r = self.commit("plugins/y/SKILL.md", "Onboarding\n\nRefs #13\n\nLedger: 310, 311")
+        self.assertEqual(r.stderr, "")
+        r = self.commit("plugins/z/SKILL.md", "Links\n\nLedger: 311")
+        self.assertEqual(r.stderr, "")
+
+    def test_closing_an_issue_reminds_of_the_managers_confirmation(self):
+        self.ledger("| 310 | Onboarding (issue 13) | README | small | built |\n")
+        r = self.commit("plugins/x/SKILL.md", "Onboarding\n\nCloses #13\n\nLedger: 310")
+        self.assertEqual(r.returncode, 0)
+        self.assertNotIn("add 'Refs #13'", r.stderr)
+        self.assertIn("'Closes #13' closes the issue", r.stderr)
+        self.assertIn("only after the manager confirmed", r.stderr)
+
     def test_other_files_need_no_trailer(self):
         r = self.commit("tests/test_x.py", "A test")
         self.assertEqual(r.returncode, 0)

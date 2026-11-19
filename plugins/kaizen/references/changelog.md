@@ -2,6 +2,10 @@
 
 What `/kaizen:update` brings into a project, newest first: what a project adopts, changes or keeps when the plugin moves past the version its records are from. Changes inside the skills that need nothing from the project are not listed; the skills apply them on their own. The standing instructions are compared line by line with the project's copy, so their wording is not repeated here.
 
+## 0.6.1
+
+- **Issue references** (new in 0.6.1-dev.1, after the line on pull request descriptions): `Refs #<n>` for work serving an issue; `Closes #<n>` only after the person confirmed.
+
 ## 0.6.0
 
 - **Numbering across messages** (new in 0.6.0-dev.2, first line of the block after the version line). Items and questions are numbered in one sequence across the agent's messages, never restarting while any is open, no item without a number, no jumps. From a field test in real use, where restarts across messages kept recurring.
