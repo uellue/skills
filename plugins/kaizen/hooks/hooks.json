@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "input=$(cat); case \"$input\" in *commit*) printf '%s' \"$input\" | python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/commit_check.py\" 2>/dev/null;; esac; exit 0",
+            "command": "input=$(cat); case \"$input\" in *commit*) { printf '%s' \"$input\" | python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/commit_check.py\"; } 2>/dev/null;; esac; exit 0",
             "timeout": 10
           }
         ]

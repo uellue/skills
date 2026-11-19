@@ -22,17 +22,22 @@ HOOK_COMMAND = json.loads((PLUGIN / "hooks" / "hooks.json").read_text())["hooks"
 
 LEDGER = ("| 310 | Onboarding (issue 13, S8) | README | small | built |\n"
           "| 311 | Links | tests | small | built |\n"
-          "| 320 | Discussed in pull request #14 and run #3 | x | small | done |\n")
+          "| 320 | Discussed in pull request #14 and run #3 | x | small | done |\n"
+          "| 321 | A tissue 5 sample | x | small | done |\n")
 
 # (message, warnings expected: substrings, one per warning); both hooks must give exactly these
 CASES = [
-    ("Onboarding\n\nLedger: 310", ["ledger row 310 cites issue 13; add 'Refs #13'"]),
+    ("Onboarding\n\nLedger: 310", ["ledger row 310 cites issue 13"]),
     ("Onboarding\n\nRefs #13\n\nLedger: 310, 311", []),
     ("Links\n\nLedger: 311", []),
     ("Numbers\n\nLedger: 320", []),
     ("Onboarding\n\nCloses #13\n\nLedger: 310", ["'Closes #13' closes the issue"]),
     ("Onboarding, which fixes #13.\n\nLedger: 310", ["'fixes #13' closes the issue"]),
     ("Merged\n\nLedger: 310\nRefs #13\nCo-Authored-By: t <t@t>", ["the Ledger: line is not read as a trailer"]),
+    # review of a1ebc1b, finding 4: where the two hooks disagreed
+    ("Two trailers\n\nLedger: 311\nLedger: 310", ["ledger row 310 cites issue 13"]),
+    ("Tissue\n\nLedger: 321", []),
+    ("Spaces\n\nfixes  #7\n\nLedger: 311", ["'fixes #7' closes the issue"]),
 ]
 
 
@@ -66,11 +71,11 @@ class TestCommitCheck(unittest.TestCase):
         self.tmp = Path(tmp.name)
         self.repo = Repo(self.tmp / "project")
 
-    def hook(self, command="git commit -m x", cwd=None, stdin=None, path=None):
+    def hook(self, command="git commit -m x", cwd=None, stdin=None, path=None, **extra):
         """Run the hooks.json command as Claude Code does, with the hook's JSON on stdin."""
         data = stdin if stdin is not None else json.dumps(
             {"hook_event_name": "PostToolUse", "tool_name": "Bash", "cwd": str(cwd or self.repo.root),
-             "tool_input": {"command": command}})
+             "tool_input": {"command": command}, **extra})
         env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")} | {"CLAUDE_PLUGIN_ROOT": str(PLUGIN)}
         if path is not None:
             env["PATH"] = path
@@ -82,7 +87,7 @@ class TestCommitCheck(unittest.TestCase):
     def test_a_commit_that_misses_its_reference_is_named_once(self):
         self.repo.commit("Onboarding\n\nLedger: 310")
         out = self.hook()
-        self.assertIn("ledger row 310 cites issue 13; add 'Refs #13'", out)
+        self.assertIn("ledger row 310 cites issue 13 and the message has no 'Refs #13'", out)
         self.assertRegex(out, r"^kaizen, on commit [0-9a-f]{7}:\n- ")
         self.assertEqual(self.hook(), "")  # the same commit again: already said
 
@@ -97,6 +102,30 @@ class TestCommitCheck(unittest.TestCase):
         plain.mkdir()
         self.assertEqual(self.hook(cwd=plain), "")  # not a repository
         self.assertEqual(self.hook(cwd=self.tmp / "missing"), "")
+
+    def test_the_agent_is_told_what_to_do(self):  # review finding 1: the commit may already be pushed
+        self.repo.commit("Onboarding\n\nLedger: 310")
+        out = self.hook()
+        self.assertIn("if the commit is not pushed, add it with git commit --amend", out)
+        self.assertIn("otherwise tell the person instead of rewriting a pushed commit", out)
+        self.repo.commit("Onboarding\n\nCloses #13\n\nLedger: 310")
+        self.assertIn("ask the person whether it can be closed, or write 'Refs' instead", self.hook())
+
+    def test_options_that_take_a_value_are_not_the_subcommand(self):  # review finding 2b
+        self.repo.commit("Onboarding\n\nLedger: 310")
+        for command in ("git -c commit.gpgsign=false log -1", "git -C commit status"):
+            self.assertEqual(self.hook(command=command), "", command)
+
+    def test_a_commit_older_than_the_command_is_not_its_own(self):  # review finding 2a
+        self.repo.commit("Person's own\n\nCloses #9\n\nLedger: 311")
+        time.sleep(3.2)  # the person committed a few seconds ago; the agent's commit then failed
+        self.assertEqual(self.hook(command='git commit -m "agent"; git log --oneline -1', duration_ms=120), "")
+        self.assertIn("'Closes #9'", self.hook(duration_ms=5000))  # made while the command ran: its own
+
+    def test_output_that_names_commit_starts_python_silently(self):  # review finding 6: the filter sees the output too
+        self.repo.commit("Onboarding\n\nLedger: 310")
+        self.hook()
+        self.assertEqual(self.hook(command="git log", tool_response={"stdout": "commit abc\n" * 1000}), "")
 
     def test_an_old_commit_is_not_the_one_just_made(self):
         old = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(time.time() - 600))
@@ -119,6 +148,19 @@ class TestCommitCheck(unittest.TestCase):
                 (bindir / tool).symlink_to(found)
         self.repo.commit("Onboarding\n\nLedger: 310")
         self.assertEqual(self.hook(path=str(bindir)), "")
+
+    def test_a_python3_that_exits_at_once_leaves_no_stderr(self):  # review finding 7: printf into a closed pipe
+        bindir = self.tmp / "fakebin"
+        bindir.mkdir()
+        (bindir / "python3").write_text("#!/bin/sh\nexit 1\n")
+        (bindir / "python3").chmod(0o755)
+        data = json.dumps({"cwd": str(self.repo.root), "tool_input": {"command": "git commit -m x"},
+                           "tool_response": {"stdout": "x" * 200000}})
+        env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")} | {
+            "CLAUDE_PLUGIN_ROOT": str(PLUGIN), "PATH": f"{bindir}:{os.environ['PATH']}"}
+        r = subprocess.run(["sh", "-c", "trap '' PIPE; " + HOOK_COMMAND], input=data, capture_output=True, text=True,
+                           env=env, timeout=30)
+        self.assertEqual((r.returncode, r.stdout, r.stderr), (0, "", ""))
 
     def test_without_a_ledger_only_the_closing_reminder(self):
         (self.repo.root / "design" / "kaizen.md").unlink()

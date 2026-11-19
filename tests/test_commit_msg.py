@@ -99,7 +99,7 @@ class TestCommitMsg(unittest.TestCase):
         r = self.commit("plugins/x/SKILL.md", "Merged\n\nLedger: 312, 313\nRefs #13\nCo-Authored-By: t <t@t>")
         self.assertEqual(r.returncode, 0)
         self.assertIn("not read as a trailer", r.stderr)
-        self.assertIn("put 'Refs #<n>' in the body", r.stderr)
+        self.assertIn("a 'Refs #<n>' line belongs in the body", r.stderr)
         r = self.commit("plugins/y/SKILL.md", "Merged\n\nRefs #13\n\nLedger: 312, 313\nCo-Authored-By: t <t@t>")
         self.assertNotIn("trailer", r.stderr)
 

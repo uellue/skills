@@ -15,7 +15,7 @@ if git diff --cached --name-only | grep -q -E '^(plugins|design|benchmarks)/'; t
     if git interpret-trailers --parse "$msg" | grep -q '^Ledger: *[0-9]'; then :
     elif printf '%s\n' "$body" | grep -q '^Ledger: *[0-9]'; then
         # a line such as "Refs #13" among the trailers makes git read none of them (2026-11-19, 47c7383)
-        echo "commit-msg: the Ledger: line is not read as a trailer: the last paragraph must hold only 'Key: value' lines; put 'Refs #<n>' in the body. Committed anyway." >&2
+        echo "commit-msg: the Ledger: line is not read as a trailer: the last paragraph must hold only 'Key: value' lines (a 'Refs #<n>' line belongs in the body). Committed anyway." >&2
     else
         echo "commit-msg: no 'Ledger: <rows>' trailer; add one if this commit serves ledger rows (CLAUDE.md). Committed anyway." >&2
     fi
@@ -24,7 +24,7 @@ keywords='(refs|close[sd]?|fix(e[sd])?|resolve[sd]?)'
 rows=$(git interpret-trailers --parse "$msg" | sed -n 's/^Ledger: *//p' | tr -c '0-9\n' ' ')
 for row in $rows; do
     line=$(cat "$top/design/kaizen.md" "$top"/design/archive/*.md 2>/dev/null | grep -m 1 -E "^\| $row \|")
-    for n in $(printf '%s\n' "$line" | grep -o -i -E 'issues? #?[0-9]+' | grep -o -E '[0-9]+' | sort -u); do
+    for n in $(printf '%s\n' "$line" | grep -o -i -E '(^|[^a-z])issues? #?[0-9]+' | grep -o -E '[0-9]+$' | sort -u); do
         printf '%s\n' "$body" | grep -q -i -E "(^|[^a-z])$keywords:? +#$n([^0-9]|$)" ||
             echo "commit-msg: ledger row $row cites issue $n; add 'Refs #$n' (or 'Closes #$n' once the person confirmed the issue can be closed). Committed anyway." >&2
     done

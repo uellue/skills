@@ -3,8 +3,14 @@
 
 The plugin's PostToolUse hook on Bash (hooks/hooks.json) runs this with the hook's JSON on stdin. It looks at
 the commit only when the command runs `git ... commit` and the repository's newest reflog entry is a commit made
-in the last two minutes that it has not looked at yet. Warnings reach the agent as `additionalContext` beside
-the command's output; nothing is ever blocked, and any error ends it silently, since it runs in every project.
+while the command ran (within two minutes when the input has no duration) that it has not looked at yet.
+Warnings reach the agent as `additionalContext` beside the command's output; nothing is ever blocked, and any
+error ends it silently, since it runs in every project. So it has no version guard, unlike the other scripts
+(E11): on a Python older than 3.7 it does not start, and the hook's command keeps that silent.
+
+Not seen: a commit in another directory than the session's (`git -C <path> commit`, `cd <path> && ...`), and
+a commit in a command that fails as a whole (`git commit ... && git push` with a failed push): Claude Code runs
+PostToolUseFailure then, not this hook.
 
     commit_check.py              read the hook's JSON from stdin (what the hook runs)
     commit_check.py --message F  check the message in file F against the ledger of the current repository and
@@ -25,9 +31,11 @@ import sys
 import time
 from pathlib import Path
 
-# git, its global options (-C <path>, -c <key=value>, --no-pager, ...), then the subcommand commit
-COMMAND = re.compile(r"\bgit(?:\s+(?:-[Cc]\s+\S+|--?[\w-]+(?:=\S+)?))*\s+commit(?![\w-])")
-RECENT = 120  # seconds: a commit older than this was not made by the command that just ran
+# git, its global options (-C <path>, -c <key=value>, --no-pager, -p, ...), then the subcommand commit;
+# -C and -c always take a value, so "git -c x=y log" and "git -C commit status" are not commits (review 2b)
+COMMAND = re.compile(r"\bgit(?:\s+(?:-[Cc]\s+\S+|--[\w-]+(?:=\S+)?|-[pPh]))*\s+commit(?![\w-])")
+RECENT = 120  # seconds: without the command's duration in the hook input, a commit older than this is not its own
+SLACK = 2  # seconds added to the command's duration: the reflog stamps whole seconds
 SEEN = "kaizen-commit-checked"  # in .git/info: the last commit looked at, so a second command does not repeat it
 SCISSORS = re.compile(r"^# -+ >8 -+$", re.M)
 KEYWORDS = r"(?:refs|close[sd]?|fix(?:e[sd])?|resolve[sd]?)"
@@ -67,32 +75,38 @@ def warnings(message: str, cwd: str) -> list[str]:
     text = body(message)
     out = []
     parsed = trailers(message, cwd)
-    led = re.search(r"^Ledger: *(.+)$", parsed, re.M)
+    led = re.findall(r"^Ledger: *(.+)$", parsed, re.M)  # every Ledger: trailer (review 4)
     if not led and re.search(r"^Ledger: *\d", text, re.M):
         out.append("the Ledger: line is not read as a trailer: the last paragraph must hold only 'Key: value' "
-                   "lines; put 'Refs #<n>' in the body")
+                   "lines (a 'Refs #<n>' line belongs in the body)")
     if led:
         top = Path(git(cwd, "rev-parse", "--show-toplevel").strip() or cwd)
         rows = ledger_rows(top)
-        for row in re.findall(r"\d+", led.group(1)):
+        for row in re.findall(r"\d+", " ".join(led)):
             line = re.search(rf"^\| {row} \|.*$", rows, re.M)
             for n in sorted({int(i) for i in ISSUE_IN_ROW.findall(line.group(0))} if line else set()):
                 if not re.search(rf"(?:^|[^a-z]){KEYWORDS}:? +#{n}(?!\d)", text, re.I | re.M):
-                    out.append(f"ledger row {row} cites issue {n}; add 'Refs #{n}' (or 'Closes #{n}' once the "
-                               "person confirmed the issue can be closed)")
+                    out.append(f"ledger row {row} cites issue {n} and the message has no 'Refs #{n}'; if the "
+                               "commit is not pushed, add it with git commit --amend, otherwise tell the person "
+                               "instead of rewriting a pushed commit")
     for ref in CLOSING.findall(text):
-        out.append(f"'{ref}' closes the issue when this reaches the default branch; only after the person "
-                   "confirmed it can be closed")
+        ref = re.sub(r"\s+", " ", ref)
+        out.append(f"'{ref}' closes the issue when this reaches the default branch: ask the person whether it "
+                   "can be closed, or write 'Refs' instead")
     return out
 
 
-def new_commit(cwd: str) -> str | None:
-    """The hash of the commit the command just made, or None (no commit, an old one, or already looked at)."""
+def new_commit(cwd: str, duration_ms=None) -> str | None:
+    """The hash of the commit the command just made, or None (no commit, an old one, or already looked at).
+
+    With the command's duration from the hook input, only a commit made while it ran counts, so a commit the
+    person made a moment before in their own terminal is not taken for the agent's (review 2a)."""
     entry = git(cwd, "reflog", "-1", "--date=unix", "--format=%H %gd %gs").split(" ", 2)
     if len(entry) < 3 or not entry[2].startswith("commit"):
         return None
     stamp = re.search(r"\{(\d+)\}", entry[1])
-    if not stamp or time.time() - int(stamp.group(1)) > RECENT:
+    window = duration_ms / 1000 + SLACK if isinstance(duration_ms, (int, float)) and duration_ms >= 0 else RECENT
+    if not stamp or time.time() - int(stamp.group(1)) > window:
         return None
     seen = Path(git(cwd, "rev-parse", "--absolute-git-dir").strip() or ".") / "info" / SEEN
     try:
@@ -114,7 +128,7 @@ def hook() -> None:
     cwd = data.get("cwd") or "."
     if not COMMAND.search(command):
         return
-    commit = new_commit(cwd)
+    commit = new_commit(cwd, data.get("duration_ms"))
     if not commit:
         return
     found = warnings(git(cwd, "log", "-1", "--format=%B", commit), cwd)
