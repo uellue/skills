@@ -1,5 +1,5 @@
 #!/bin/bash
-# Fixture for update-first-rollout (E51, issue 13): the tool tally in a project that has its own ways of working
+# Fixture for first-rollout-existing-project (E51, issue 13): the tool tally in a project that has its own ways of working
 # (an instruction file with rules, decision records in docs/decisions/, a test command) and has never used the
 # kaizen plugin: no standing-instruction block, no design/kaizen.md.
 set -euo pipefail

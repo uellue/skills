@@ -8,7 +8,8 @@
 # - when the message closes an issue on merge (Closes, Fixes, Resolves): only after the person confirmed.
 msg="$1"
 top=$(git rev-parse --show-toplevel)
-body=$(grep -v '^#' "$msg")  # git drops comment lines from the message
+# git drops comment lines, and with `commit -v` everything below its scissors line (the staged diff)
+body=$(sed '/^# -* >8 -*$/,$d' "$msg" | grep -v '^#')
 if git diff --cached --name-only | grep -q -E '^(plugins|design|benchmarks)/'; then
     # Case-sensitive, as `git log --grep` is; a rewording amend with nothing staged is not checked.
     git interpret-trailers --parse "$msg" | grep -q '^Ledger: *[0-9]' ||

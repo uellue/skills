@@ -83,6 +83,18 @@ class TestCommitMsg(unittest.TestCase):
         r = self.commit("plugins/d/SKILL.md", "D\n\nLedger: 321\n# Refs #13")
         self.assertIn("add 'Refs #13'", r.stderr)  # a comment line does not count
 
+    def test_the_diff_below_the_scissors_line_is_not_the_message(self):  # re-review N1: `git commit -v`
+        self.ledger("| 401 | From issue 13 | x | small | done |\n")
+        (self.repo / "plugins").mkdir()
+        (self.repo / "plugins" / "fixture.txt").write_text("Fixes #13\n")
+        self.git("add", "plugins/fixture.txt")
+        msg = self.repo / "MSG"
+        msg.write_text("Add a fixture\n\nLedger: 401\n# ------------------------ >8 ------------------------\n"
+                       "# Do not modify or remove the line above.\ndiff --git a/plugins/fixture.txt\n+Fixes #13\n+Refs #13\n")
+        r = subprocess.run(["sh", str(HOOK), str(msg)], cwd=self.repo, capture_output=True, text=True)
+        self.assertIn("add 'Refs #13'", r.stderr)
+        self.assertNotIn("closes the issue", r.stderr)
+
     def test_other_files_need_no_trailer(self):
         r = self.commit("tests/test_x.py", "A test")
         self.assertEqual(r.returncode, 0)
