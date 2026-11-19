@@ -1,0 +1,17 @@
+{
+  "description": "kaizen: after the agent runs git commit, warn it about issue references in the new commit (ledger 314); never blocks",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "input=$(cat); case \"$input\" in *commit*) printf '%s' \"$input\" | python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/commit_check.py\" 2>/dev/null;; esac; exit 0",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
